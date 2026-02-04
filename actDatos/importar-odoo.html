@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Importar desde Odoo</title>
+
+  <style>
+    body {
+      font-family: Arial;
+      padding: 30px;
+      background: #f4f6f8;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+      background: white;
+    }
+    th, td {
+      padding: 8px;
+      border: 1px solid #ccc;
+      font-size: 13px;
+    }
+    th {
+      background: #222;
+      color: white;
+    }
+  </style>
+</head>
+
+<body>
+
+<h2>Importar Excel desde Odoo</h2>
+
+<input type="file" id="excelFile" accept=".xlsx,.xls">
+<br><br>
+<button onclick="subirOdoo()">Procesar Excel</button>
+
+<p id="estado"></p>
+
+<table id="tablaNuevos" style="display:none;">
+  <thead>
+    <tr>
+      <th>Referencia</th>
+      <th>Nombre</th>
+      <th>Cantidad</th>
+      <th>Unidad</th>
+      <th>Etiquetas</th>
+    </tr>
+  </thead>
+  <tbody id="tbodyNuevos"></tbody>
+</table>
+
+<script src="importar-odoo.js"></script>
+</body>
+</html>
