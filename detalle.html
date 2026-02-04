@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Detalle de Refacción</title>
+<style>
+  :root {
+    --primary: #33c94f;
+    --primary-hover: #16ae41;
+    --text-main: #333333;
+    --text-muted: #666666;
+    --bg: #ebebeb;
+    --white: #ffffff;
+    --border: rgba(0,0,0,0.1);
+  }
+
+  body {
+    font-family: "Proxima Nova", -apple-system, sans-serif;
+    background-color: var(--bg);
+    margin: 0;
+    padding: 20px;
+    color: var(--text-main);
+  }
+
+  .container {
+    max-width: 1100px;
+    margin: 0 auto;
+    background: var(--white);
+    border-radius: 8px;
+    display: flex;
+    flex-wrap: wrap;
+    overflow: hidden;
+    box-shadow: 0 1px 2px 0 rgba(0,0,0,0.1);
+  }
+
+  /* COLUMNA IZQUIERDA: IMAGEN */
+  .gallery-col {
+    flex: 1 1 600px;
+    padding: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-right: 1px solid var(--border);
+  }
+
+  .gallery-col img {
+    max-width: 100%;
+    max-height: 500px;
+    object-fit: contain;
+  }
+
+  /* COLUMNA DERECHA: INFO Y COMPRA */
+  .info-col {
+    flex: 1 1 350px;
+    padding: 32px;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .condition {
+    font-size: 14px;
+    color: var(--text-muted);
+    margin-bottom: 8px;
+  }
+
+  .title {
+    font-size: 24px;
+    font-weight: 600;
+    margin: 0 0 16px 0;
+    line-height: 1.18;
+  }
+
+  .price-tag {
+    font-size: 36px;
+    font-weight: 300;
+    margin-bottom: 24px;
+  }
+
+  .stock-info {
+    font-size: 16px;
+    font-weight: 600;
+    margin-bottom: 20px;
+  }
+
+  /* BOTONES */
+  .btn {
+    width: 100%;
+    padding: 12px;
+    border-radius: 6px;
+    font-weight: 600;
+    text-align: center;
+    text-decoration: none;
+    margin-bottom: 12px;
+    transition: 0.2s;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+  }
+
+  .btn-primary { background: var(--primary); color: white; }
+  .btn-primary:hover { background: #0d802d; }
+
+  .btn-secondary { background: rgba(65,137,230,0.15); color: var(--primary); }
+  .btn-secondary:hover { background: rgba(65,137,230,0.2); }
+
+  /* TABLA DE ESPECIFICACIONES */
+  .specs-section {
+    width: 100%;
+    padding: 40px;
+    border-top: 1px solid var(--border);
+  }
+
+  .specs-section h2 {
+    font-size: 24px;
+    margin-bottom: 24px;
+  }
+
+  .specs-table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+
+  .specs-table tr {
+    background-color: #f5f5f5;
+    border-bottom: 2px solid white;
+  }
+
+  .specs-table td {
+    padding: 12px 16px;
+    font-size: 14px;
+  }
+
+  .specs-table td:first-child {
+    font-weight: 600;
+    width: 30%;
+    background-color: #ebebeb;
+  }
+
+  @media (max-width: 768px) {
+    .gallery-col { border-right: none; border-bottom: 1px solid var(--border); }
+  }
+</style>
+</head>
+<body>
+
+<div style="max-width:1100px; margin: 0 auto 10px;">
+  <a href="javascript:history.back()" style="color: var(--primary); text-decoration: none; font-size: 14px;">← Volver al listado</a>
+</div>
+
+<div class="container" id="product-container">
+  </div>
+
+<script>
+  const params = new URLSearchParams(window.location.search);
+  const productId = params.get("id");
+  const dataGlobal = JSON.parse(localStorage.getItem("inventario") || "[]");
+
+  // Buscamos el producto por ID (asumiendo que tu Excel tiene una columna ID)
+  const p = dataGlobal.find(item => String(item.ID) === productId);
+
+  if (!p) {
+    document.getElementById("product-container").innerHTML = "<p style='padding:40px;'>Producto no encontrado.</p>";
+  } else {
+    renderDetail(p);
+  }
+
+  function renderDetail(p) {
+    const cont = document.getElementById("product-container");
+    const imgUrl = p.Imagen || "https://static.vecteezy.com/system/resources/previews/004/141/669/non_2x/no-photo-or-blank-image-icon-loading-images-or-missing-image-mark-image-not-available-or-image-coming-soon-sign-simple-nature-silhouette-in-frame-isolated-illustration-vector.jpg";
+
+    // Generar filas de la tabla automáticamente con los datos que existan
+    let specsHtml = "";
+    for (let key in p) {
+      if (key !== "Imagen" && p[key]) {
+        specsHtml += `<tr><td>${key}</td><td>${p[key]}</td></tr>`;
+      }
+    }
+
+    cont.innerHTML = `
+      <div class="gallery-col">
+        <img src="${imgUrl}" alt="${p.Nombre}">
+      </div>
+
+      <div class="info-col">
+        <span class="condition">Estado | Nuevo</span>
+        <h1 class="title">${p.Nombre}</h1>
+        <div class="price-tag">Ref: ${p.ID}</div>
+        
+        <p class="stock-info" style="color: var(--success)">Stock ${p.Cantidad} ${p.Unidad}</p>
+        
+        <button class="btn btn-primary" onclick="alert('Funcionalidad de solicitud en desarrollo')">Solicitar pieza</button>
+        <h1 class="" style="color: var(--primary);">Ubicacion ${p.Ubicación}</h1>
+
+
+
+        <div style="margin-top: 20px; font-size: 14px; color: var(--text-muted);">
+          <p><h3>⚙</h3> <strong>Para maquina:</strong> 5</p>
+          <p><h3>⚒</h3> <strong>Compatible con: </strong> del vendedor: 6</p>
+        </div>
+      </div>
+
+      <div class="specs-section">
+        <h2>Características principales</h2>
+        <table class="specs-table">
+          ${specsHtml}
+        </table>
+      </div>
+    `;
+
+generarMapa(p.Ubicacion || "A1");
+
+  }
+
+function generarMapa(ubicacion) {
+  const mapa = document.getElementById("mapa-almacen");
+
+  const racks = ["A1","A2","A3","E1","E2","E3","AP1","AP2","AP3"];
+  let html = `<div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;">`;
+
+  racks.forEach(r => {
+    const activo = ubicacion.includes(r);
+    html += `
+      <div style="
+        padding:15px;
+        text-align:center;
+        border-radius:6px;
+        font-weight:600;
+        background:${activo ? "#33c94f" : "#e5e5e5"};
+        color:${activo ? "white" : "#333"};
+      ">
+        ${r}
+      </div>
+    `;
+  });
+
+  html += `</div>`;
+  mapa.innerHTML = html;
+}
+
+</script>
+
+</body>
+</html>

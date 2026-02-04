@@ -1,0 +1,393 @@
+<!-- <!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>IEMCO - Refacciones Visual</title>
+<style>
+  :root {
+    --primary: #1f8c33;
+    --bg: #f4f7f6;
+    --text: #333;
+    --white: #fff;
+  }
+
+  body {
+    font-family: 'Segoe UI', sans-serif;
+    background-color: var(--bg);
+    margin: 0;
+    padding: 20px;
+  }
+
+  .grid-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  /* Estilo de la Tarjeta */
+  .card {
+    background: var(--white);
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    cursor: pointer;
+    transition: transform 0.3s ease;
+    border: 2px solid transparent;
+  }
+
+  .card:hover {
+    transform: translateY(-5px);
+    border-color: var(--primary);
+  }
+
+  .card-image {
+    width: 100%;
+    height: 150px;
+    background-color: #eee;
+    object-fit: cover; /* Esto hace que la imagen se vea bien */
+  }
+
+  .card-info {
+    padding: 15px;
+    text-align: center;
+  }
+
+  .card-info h3 {
+    margin: 0;
+    color: var(--primary);
+    font-size: 1.4rem;
+  }
+
+  /* El panel que se despliega */
+  .dropdown-content {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.4s ease-out;
+    background: #fff;
+    border-top: 1px solid #eee;
+  }
+
+  /* Cuando la tarjeta está activa */
+  .card.active .dropdown-content {
+    max-height: 500px; /* Ajustar según contenido */
+    padding-bottom: 15px;
+  }
+
+  /* Estilo de las opciones dentro del despliegue */
+  .option-link {
+    display: block;
+    padding: 12px 20px;
+    text-decoration: none;
+    color: #555;
+    border-bottom: 1px solid #f9f9f9;
+    font-size: 0.95rem;
+    transition: background 0.2s;
+  }
+
+  .option-link:hover {
+    background: #f0fdf4;
+    color: var(--primary);
+    padding-left: 30px; /* Efecto de desplazamiento */
+  }
+
+  .option-link::before {
+    content: '⚙️';
+    margin-right: 10px;
+  }
+
+</style>
+</head>
+<body>
+
+<h2 style="text-align:center; color: var(--primary); margin-bottom: 30px;">Selecciona la Marca de la Máquina</h2>
+
+<div class="grid-container">
+
+  <div class="card" onclick="toggleCard(this)">
+    <img src="https://via.placeholder.com/300x150?text=Logo+ASB" alt="Máquinas ASB" class="card-image">
+    <div class="card-info">
+      <h3>ASB</h3>
+      <p style="color: #888; font-size: 0.8rem;">Click para ver modelos</p>
+    </div>
+    <div class="dropdown-content">
+      <a href="asb-70dp.html" class="option-link">Modelo ASB-70DP</a>
+      <a href="#" class="option-link">Modelo ASB-150DP</a>
+      <a href="#" class="option-link">Modelo PF6-2B</a>
+    </div>
+  </div>
+
+  <div class="card" onclick="toggleCard(this)">
+    <img src="https://via.placeholder.com/300x150?text=Logo+Sumitomo" alt="Máquinas Sumitomo" class="card-image">
+    <div class="card-info">
+      <h3>SUMITOMO</h3>
+      <p style="color: #888; font-size: 0.8rem;">Click para ver modelos</p>
+    </div>
+    <div class="dropdown-content">
+      <a href="#" class="option-link">Modelo SE180EV</a>
+      <a href="#" class="option-link">Modelo SE280EV</a>
+    </div>
+  </div>
+
+  <div class="card" onclick="toggleCard(this)">
+    <img src="https://via.placeholder.com/300x150?text=Logo+Nissei" alt="Máquinas Nissei" class="card-image">
+    <div class="card-info">
+      <h3>NISSEI</h3>
+      <p style="color: #888; font-size: 0.8rem;">Click para ver modelos</p>
+    </div>
+    <div class="dropdown-content">
+      <a href="#" class="option-link">Modelo GTR-50</a>
+      <a href="#" class="option-link">Modelo GTR-100</a>
+    </div>
+  </div>
+
+</div>
+
+<script>
+  function toggleCard(card) {
+    // Cerrar otras tarjetas si se desea (opcional)
+    /*
+    document.querySelectorAll('.card').forEach(c => {
+      if(c !== card) c.classList.remove('active');
+    });
+    */
+    
+    // Alternar la tarjeta actual
+    card.classList.toggle('active');
+  }
+</script>
+
+</body>
+</html> -->
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>IEMCO - Carrusel de Máquinas</title>
+<style>
+  :root {
+    --primary: #1f8c33;
+    --bg: #f8fafc;
+    --white: #ffffff;
+  }
+
+  body {
+    font-family: 'Inter', sans-serif;
+    background-color: var(--bg);
+    margin: 0;
+    padding: 20px;
+    overflow-x: hidden;
+  }
+
+  .carousel-wrapper {
+    position: relative;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 40px;
+  }
+
+  /* Contenedor del scroll horizontal */
+  .carousel-container {
+    display: flex;
+    overflow-x: auto;
+    scroll-behavior: smooth;
+    gap: 20px;
+    padding: 20px 0;
+    scrollbar-width: none; /* Oculta scroll en Firefox */
+  }
+
+  .carousel-container::-webkit-scrollbar { display: none; } /* Oculta scroll en Chrome */
+
+  /* Estilo de la Card */
+  .card {
+    min-width: 250px;
+    background: var(--white);
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border: 2px solid transparent;
+    flex-shrink: 0;
+  }
+
+  .card:hover {
+    transform: scale(1.05);
+    border-color: var(--primary);
+  }
+
+  .card.active {
+    border-color: var(--primary);
+    background: #f0fdf4;
+  }
+
+  .card img {
+    width: 100%;
+    height: 140px;
+    object-fit: cover;
+    border-bottom: 1px solid #eee;
+  }
+
+  .card-info { padding: 15px; text-align: center; }
+  .card-info h3 { margin: 0; font-size: 1.1rem; }
+
+  /* Botones de Navegación */
+  .nav-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: var(--primary);
+    color: white;
+    border: none;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    cursor: pointer;
+    z-index: 10;
+    font-weight: bold;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+  }
+
+  .prev { left: 0; }
+  .next { right: 0; }
+
+  /* Panel de Opciones (Desplegable abajo) */
+  #options-panel {
+    max-width: 1200px;
+    margin: 20px auto;
+    background: white;
+    border-radius: 12px;
+    padding: 0;
+    max-height: 0;
+    overflow: hidden;
+    transition: all 0.4s ease;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+  }
+
+  #options-panel.open {
+    padding: 20px;
+    max-height: 500px;
+    border: 1px solid var(--primary);
+  }
+
+  .options-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 15px;
+  }
+
+  .option-item {
+    padding: 12px;
+    background: #f1f5f9;
+    border-radius: 8px;
+    text-decoration: none;
+    color: #334155;
+    font-weight: 500;
+    text-align: center;
+    transition: 0.2s;
+  }
+
+  .option-item:hover {
+    background: var(--primary);
+    color: white;
+  }
+</style>
+</head>
+<body>
+
+<h2 style="text-align:center; color: var(--primary);">Catálogo de Máquinas</h2>
+
+<div class="carousel-wrapper">
+  <button class="nav-btn prev" onclick="scrollCarousel(-300)">❮</button>
+  
+  <div class="carousel-container" id="carousel">
+    <div class="card" onclick="showOptions('ASB', this)">
+      <img src="https://th.bing.com/th/id/R.356ff2bf1c37afc5ab369cf6f3059a67?rik=%2fWgCBPo4zTEnzQ&riu=http%3a%2f%2fnisseiasb.co.jp%2fen%2fimg%2fasb150dp_pic_01.png&ehk=Fm2j3hrYt%2bXSpawgZ2IpNZQtztdkxl5jeZDWzRrymtE%3d&risl=&pid=ImgRaw&r=0" alt="ASB">
+      <div class="card-info"><h3>ASB</h3></div>
+    </div>
+    <div class="card" onclick="showOptions('SUMITOMO', this)">
+      <img src="https://www.schmidkonz-gmbh.de/wp-content/uploads/Maschine5.jpg" alt="Sumitomo">
+      <div class="card-info"><h3>SUMITOMO</h3></div>
+    </div>
+    <div class="card" onclick="showOptions('NISSEI', this)">
+      <img src="https://telarcorp.com/wp-content/uploads/2023/07/lg-fnx110iii-18a-usa-1242x665-revised-2-4.gif" alt="Nissei">
+      <div class="card-info"><h3>NISSEI</h3></div>
+    </div>
+    <div class="card" onclick="showOptions('AOKI', this)">
+      <img src="https://static.machinetools.com/uploads/2605437/mt45.jpg" alt="Aoki">
+      <div class="card-info"><h3>AOKI</h3></div>
+    </div>
+    <div class="card" onclick="showOptions('ENLAINADORA', this)">
+      <img src="https://www.tecnamachines.com/images/mp/enla_img.jpg" alt="Enlainadora">
+      <div class="card-info"><h3>ENLAINADORAS</h3></div>
+    </div>
+    <div class="card" onclick="showOptions('REVOLVEDORAS', this)">
+      <img src="https://maincasa.com.mx/66510-large_default/xhs-50kg.webp" alt="Revolvedora">
+      <div class="card-info"><h3>REVOLVEDORAS</h3></div>
+    </div>
+    <div class="card" onclick="showOptions('MOLINO', this)">
+      <img src="https://tse1.mm.bing.net/th/id/OIP.giWgjWftp8fHE5hQFynAOAAAAA?rs=1&pid=ImgDetMain&o=7&rm=3" alt="Molino">
+      <div class="card-info"><h3>MOLINO</h3></div>
+    </div>
+  </div>
+
+  <button class="nav-btn next" onclick="scrollCarousel(300)">❯</button>
+</div>
+
+<div id="options-panel">
+  <h4 id="selected-title" style="margin-top:0; color:var(--primary);"></h4>
+  <div class="options-grid" id="options-list">
+    </div>
+</div>
+
+<script>
+  const maquinasData = {
+    'ASB': ['MAQUINA ISBM 7 - ASB 150DPSB-70DP','MAQUINA ISBM 8 - ASB 150DPSB-70DP','MAQUINA ISBM 9 - ASB 150DPSB-70DP', 'MAQUINA ISBM 10 - ASB 150 DP STD', 'MAQUINA ISBM 12M #1 - ASB 12M'],
+    'SUMITOMO': ['SE180EV', 'SE280EV', 'SE500EV'],
+    'NISSEI': ['GTR-50', 'GTR-100', 'Nex-Series'],
+    'AOKI': ['MAQUINA ISBM 2 - AOKI SBIII-500-150', 'MAQUINA ISBM 3 - AOKI SBIII-500-150', 'MAQUINA ISBM 4 - AOKI SBIII-500-150', , 'MAQUINA ISBM 5 - AOKI SBIII-500-150', 'MAQUINA ISBM 6 - AOKI SBIII-500-150'],
+    'ENLAINADORA': ['Modelo E-100', 'Modelo E-200'],
+    'REVOLVEDORAS': ['Modelo E-100', 'Modelo E-200'],
+    'MOLINO': ['Modelo E-100', 'Modelo E-200'],
+  };
+
+  function scrollCarousel(distance) {
+    document.getElementById('carousel').scrollBy({ left: distance, behavior: 'smooth' });
+  }
+
+  function showOptions(marca, cardElement) {
+    const panel = document.getElementById('options-panel');
+    const list = document.getElementById('options-list');
+    const title = document.getElementById('selected-title');
+
+    // Quitar clase active de todas las cards
+    document.querySelectorAll('.card').forEach(c => c.classList.remove('active'));
+    cardElement.classList.add('active');
+
+    // Limpiar y llenar lista
+    list.innerHTML = '';
+    title.innerText = "Modelos disponibles para " + marca;
+    
+    maquinasData[marca].forEach(modelo => {
+      const link = document.createElement('a');
+      link.href = "#"; // Aquí iría el link a la página del modelo
+      link.className = 'option-item';
+      link.innerText = modelo;
+      list.appendChild(link);
+    });
+
+    // Abrir panel
+    panel.classList.add('open');
+    
+    // Scroll suave hasta el panel
+    setTimeout(() => {
+        panel.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }, 200);
+  }
+</script>
+
+</body>
+</html>

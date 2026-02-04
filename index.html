@@ -1,0 +1,953 @@
+<!-- <!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>IEMCO Refacciones</title>
+<script src="https://cdn.jsdelivr.net/npm/xlsx/dist/xlsx.full.min.js"></script>
+
+<style>
+  :root {
+    --primary: #33c94f;
+    --primary-hover: #16ae41;
+    --bg: #f8fafc;
+    --card-bg: #ffffff;
+    --text-main: #1e293b;
+    --text-muted: #64748b;
+    --border: #e2e8f0;
+    --radius: 12px;
+    --shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+  }
+
+  body {
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    background-color: var(--bg);
+    color: var(--text-main);
+    margin: 0;
+    line-height: 1.5;
+  }
+
+  .navbar {
+    background: white;
+    padding: 1rem 2rem;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .navbar h1 {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--primary);
+    margin: 0;
+  }
+
+  .container {
+    max-width: 900px;
+    margin: 40px auto;
+    padding: 0 20px;
+  }
+
+  /* ESTILO DEL BUSCADOR PRINCIPAL */
+  .search-section {
+    position: relative;
+    margin-bottom: 30px;
+  }
+
+  .main-search {
+    width: 100%;
+    padding: 16px 20px;
+    font-size: 1.1rem;
+    border: 2px solid transparent;
+    border-radius: var(--radius);
+    background: white;
+    box-shadow: var(--shadow);
+    transition: all 0.3s ease;
+    box-sizing: border-box;
+  }
+
+  .main-search:focus {
+    outline: none;
+    border-color: var(--primary);
+    box-shadow: 0 10px 15px -3px rgba(37, 99, 235, 0.1);
+  }
+
+  #sugerencias {
+    position: absolute;
+    top: 65px;
+    width: 100%;
+    background: white;
+    border-radius: var(--radius);
+    box-shadow: 0 20px 25px -5px rgba(0,0,0,0.1);
+    z-index: 100;
+    overflow: hidden;
+    border: 1px solid var(--border);
+  }
+
+  #sugerencias div {
+    padding: 12px 20px;
+    border-bottom: 1px solid var(--border);
+    transition: background 0.2s;
+  }
+
+  #sugerencias div:hover {
+    background: #f1f5f9;
+    color: var(--primary);
+  }
+
+  /* TARJETA DE FILTROS */
+  .filter-card {
+    background: white;
+    padding: 24px;
+    border-radius: var(--radius);
+    border: 1px solid var(--border);
+    box-shadow: var(--shadow);
+  }
+
+  .filter-card h3 {
+    margin-top: 0;
+    margin-bottom: 20px;
+    font-size: 1rem;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  .filter-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr auto;
+    gap: 15px;
+    align-items: end;
+  }
+
+  @media (max-width: 600px) {
+    .filter-grid { grid-template-columns: 1fr; }
+  }
+
+  label {
+    display: block;
+    font-size: 0.875rem;
+    font-weight: 500;
+    margin-bottom: 6px;
+  }
+
+  select {
+    width: 100%;
+    padding: 10px;
+    border-radius: 8px;
+    border: 1px solid var(--border);
+    background-color: #fcfcfc;
+    font-size: 0.95rem;
+    cursor: pointer;
+  }
+
+  .btn-primary {
+    padding: 11px 25px;
+    background: var(--primary);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-weight: 600;
+    transition: all 0.2s;
+  }
+
+  .btn-primary:hover:not(:disabled) {
+    background: var(--primary-hover);
+    transform: translateY(-1px);
+  }
+
+  .btn-primary:disabled {
+    background: #cbd5e1;
+    cursor: not-allowed;
+  }
+
+  /* INPUT FILE DISCRETO */
+  .upload-area {
+    margin-top: 20px;
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    text-align: center;
+  }
+  /* Asegura que el contenedor sea relativo para posicionar la lista */
+.search-section {
+    position: relative;
+    margin-bottom: 30px;
+}
+
+#sugerencias {
+    position: absolute;
+    top: 100%; /* Justo debajo del input */
+    left: 0;
+    right: 0;
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 0 0 var(--radius) var(--radius);
+    box-shadow: var(--shadow);
+    z-index: 1000;
+    max-height: 300px;
+    overflow-y: auto;
+    display: none; /* Oculto por defecto */
+}
+
+#sugerencias div {
+    padding: 12px 20px;
+    cursor: pointer;
+    border-bottom: 1px solid #f1f5f9;
+}
+
+#sugerencias div:hover {
+    background-color: #f8fafc;
+    color: var(--primary);
+}
+
+/* Efecto de pulso suave para el siguiente paso */
+select:not(:disabled) {
+    border: 2px solid var(--primary);
+    animation: highlight 1.5s infinite;
+}
+
+@keyframes highlight {
+    0% { box-shadow: 0 0 0 0px rgba(51, 201, 79, 0.2); }
+    70% { box-shadow: 0 0 0 10px rgba(51, 201, 79, 0); }
+    100% { box-shadow: 0 0 0 0px rgba(51, 201, 79, 0); }
+}
+
+/* Estilo para los selects deshabilitados */
+select:disabled {
+    background-color: #f1f5f9;
+    cursor: not-allowed;
+    opacity: 0.6;
+}
+</style>
+</head>
+<body>
+
+<nav class="navbar">
+  <h1>IEMCO Refacciones</h1>
+  <div style="font-size: 0.8rem; color: var(--text-muted);">v1.0</div>
+</nav>
+
+<div class="container">
+  
+  <div class="search-section">
+    <input type="text" id="search" class="main-search" placeholder="Escribe el nombre de la refacción..." />
+    <div id="sugerencias"></div>
+  </div>
+
+  <div class="filter-card">
+    <h3>Búsqueda por categoría</h3>
+    <div class="filter-grid">
+      <div>
+        <label>Departamento</label>
+        <select id="filtroMaquina">
+          <option value="">Selecciona departamento...</option>
+        </select>
+      </div>
+      <div>
+        <label>Categoría</label>
+        <select id="filtroCategoria" disabled>
+          <option value="">Selecciona categoria ...</option>
+        </select>
+      </div>
+      <button id="btnBuscar" class="btn-primary" disabled>Buscar</button>
+    </div>
+  </div>
+
+  <div class="upload-area">
+    <p>Cargar base de datos (Excel):</p>
+    <input type="file" id="input" style="width: auto;"/>
+  </div>
+
+</div>
+
+<script>
+let dataGlobal = [];
+
+// ELEMENTOS
+const filtroMaquina = document.getElementById("filtroMaquina");
+const filtroCategoria = document.getElementById("filtroCategoria");
+const btnBuscar = document.getElementById("btnBuscar");
+const buscador = document.getElementById("search");
+const sugerencias = document.getElementById("sugerencias");
+
+// ==========================
+// VALIDAR FILTROS (OBLIGATORIOS)
+// ==========================
+function validarFiltros() {
+  if (filtroMaquina.value && filtroCategoria.value) {
+    btnBuscar.disabled = false;
+    btnBuscar.style.cursor = "pointer";
+    btnBuscar.style.opacity = "1";
+  } else {
+    btnBuscar.disabled = true;
+    btnBuscar.style.cursor = "not-allowed";
+    btnBuscar.style.opacity = "0.6";
+  }
+}
+
+filtroMaquina.addEventListener("change", validarFiltros);
+filtroCategoria.addEventListener("change", validarFiltros);
+
+// ==========================
+// BOTÓN BUSCAR (ÚNICA REDIRECCIÓN)
+// ==========================
+filtroMaquina.addEventListener("change", () => {
+  filtroCategoria.innerHTML = `<option value="">Selecciona categoría</option>`;
+  filtroCategoria.disabled = true;
+  filtroCategoria.value = "";
+
+  const maquinaSeleccionada = filtroMaquina.value;
+  if (!maquinaSeleccionada) {
+    validarFiltros();
+    return;
+  }
+
+  const categoriasFiltradas = [
+    ...new Set(
+      dataGlobal
+        .filter(d => d.Maquina === maquinaSeleccionada)
+        .map(d => d.Categoria)
+        .filter(Boolean)
+    )
+  ];
+
+  categoriasFiltradas.forEach(c => {
+    filtroCategoria.innerHTML += `<option value="${c}">${c}</option>`;
+  });
+
+  filtroCategoria.disabled = false;
+  validarFiltros();
+});
+
+btnBuscar.addEventListener("click", () => {
+  const maquina = filtroMaquina.value;
+  const categoria = filtroCategoria.value;
+
+  if (!maquina || !categoria) return;
+
+  window.location.href =
+    `resultados.html?maquina=${encodeURIComponent(maquina)}&categoria=${encodeURIComponent(categoria)}`;
+});
+
+// ==========================
+// CARGAR DESDE LOCALSTORAGE
+// ==========================
+const guardado = localStorage.getItem("inventario");
+if (guardado) {
+  dataGlobal = JSON.parse(guardado);
+  cargarFiltros();
+}
+
+// ==========================
+// CARGAR ARCHIVO EXCEL
+// ==========================
+document.getElementById("input").addEventListener("change", e => {
+  const reader = new FileReader();
+  reader.onload = evt => {
+    const wb = XLSX.read(evt.target.result, { type: "binary" });
+    const sheet = wb.Sheets[wb.SheetNames[0]];
+    dataGlobal = XLSX.utils.sheet_to_json(sheet, { defval: "" });
+
+    localStorage.setItem("inventario", JSON.stringify(dataGlobal));
+    cargarFiltros();
+  };
+  reader.readAsBinaryString(e.target.files[0]);
+});
+
+// ==========================
+// BUSCADOR INTELIGENTE
+// ==========================
+// ==========================
+// BUSCADOR CON AUTOCOMPLETADO
+// ==========================
+buscador.addEventListener("input", function () {
+    const texto = this.value.toLowerCase().trim();
+    sugerencias.innerHTML = "";
+
+    if (texto.length < 2) {
+        sugerencias.style.display = "none";
+        return;
+    }
+
+    // Filtramos buscando coincidencias en la columna "Nombre"
+    const resultados = dataGlobal.filter(d => {
+        const nombreRefaccion = String(d.Nombre || "").toLowerCase();
+        return nombreRefaccion.includes(texto);
+    }).slice(0, 10); // Limitamos a 10 sugerencias para no saturar
+
+    if (resultados.length > 0) {
+        resultados.forEach(r => {
+            const div = document.createElement("div");
+            // Mostramos el nombre y, opcionalmente, la categoría para ayudar al usuario
+            div.innerHTML = `<strong>${r.Nombre}</strong> <small style="color:gray">(${r.Categoria || ''})</small>`;
+            
+            div.onclick = () => {
+                buscador.value = r.Nombre; // Rellena el input
+                sugerencias.style.display = "none"; // Cierra la lista
+                // Redirigimos a los resultados
+                window.location.href = `resultados.html?q=${encodeURIComponent(r.Nombre)}`;
+            };
+            sugerencias.appendChild(div);
+        });
+        sugerencias.style.display = "block";
+    } else {
+        sugerencias.style.display = "none";
+    }
+});
+
+// Cerrar sugerencias si el usuario hace clic fuera del buscador
+document.addEventListener("click", function(event) {
+    if (!buscador.contains(event.target) && !sugerencias.contains(event.target)) {
+        sugerencias.style.display = "none";
+    }
+});
+
+// ==========================
+// CARGAR FILTROS (SIN REDIRIGIR)
+// ==========================
+function cargarFiltros() {
+  filtroMaquina.innerHTML = `<option value="">Selecciona departamento</option>`;
+  filtroCategoria.innerHTML = `<option value="">Selecciona categoría</option>`;
+  filtroCategoria.disabled = true;
+
+  const maquinas = [...new Set(
+    dataGlobal.map(d => d.Maquina).filter(Boolean)
+  )];
+
+  maquinas.forEach(m => {
+    filtroMaquina.innerHTML += `<option value="${m}">${m}</option>`;
+  });
+}
+function limpiarBusquedas() {
+  // limpiar buscador texto
+  const search = document.getElementById("search");
+  const sugerencias = document.getElementById("sugerencias");
+
+  if (search) search.value = "";
+  if (sugerencias) {
+    sugerencias.innerHTML = "";
+    sugerencias.style.display = "none";
+  }
+
+  // reset selects
+  filtroMaquina.value = "";
+  filtroCategoria.innerHTML = `<option value="">Selecciona categoría</option>`;
+  filtroCategoria.disabled = true;
+
+  // desactivar botón
+  btnBuscar.disabled = true;
+  btnBuscar.style.opacity = "0.6";
+  btnBuscar.style.cursor = "not-allowed";
+}
+window.addEventListener("pageshow", () => {
+  limpiarBusquedas();
+});
+
+
+</script>
+
+</body>
+</html> -->
+
+<!DOCTYPE html>
+<html lang="es" data-bs-theme="light">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Dashboard Elegante · Bootstrap</title>
+    
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
+    <style>
+        :root {
+            --sidebar-width: 280px;
+        }
+
+        body {
+            min-height: 100vh;
+            background-color: #f8f9fa;
+        }
+
+        /* Contenedor principal para ocupar toda la pantalla */
+        .app-container {
+            display: flex;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        /* Sidebar estilizado */
+        .sidebar {
+            width: var(--sidebar-width);
+            background: white;
+            border-right: 1px solid #dee2e6;
+            display: flex;
+            flex-direction: column;
+            flex-shrink: 0;
+            transition: all 0.3s;
+        }
+
+        /* Área de contenido principal */
+        .content-area {
+            flex-grow: 1;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Botones del menú lateral */
+        .btn-toggle {
+            padding: .5rem .75rem;
+            width: 100%;
+            text-align: left;
+            font-weight: 500;
+            color: #495057;
+            border: none;
+            background: transparent;
+        }
+
+        .btn-toggle:hover {
+            background-color: #f1f3f5;
+            color: #007a33;
+        }
+
+        .btn-toggle::before {
+            width: 1.25em;
+            line-height: 0;
+            content: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='rgba%280,0,0,.5%29' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M5 14l6-6-6-6'/%3e%3c/svg%3e");
+            transition: transform .35s ease;
+            transform-origin: .5em 50%;
+            margin-right: .5rem;
+        }
+
+        .btn-toggle[aria-expanded="true"]::before {
+            transform: rotate(90deg);
+        }
+
+        .btn-toggle-nav a {
+            padding: .1875rem .5rem;
+            margin-top: .125rem;
+            margin-left: 2rem;
+            display: block;
+            text-decoration: none;
+            color: #6c757d;
+            font-size: 0.9rem;
+        }
+
+        .btn-toggle-nav a:hover {
+            color: #007a33;
+        }
+
+        .header-main {
+            background: white;
+            border-bottom: 1px solid #dee2e6;
+            padding: 1rem 2rem;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="app-container">
+        <aside class="sidebar p-3 shadow-sm">
+            <a href="/" class="d-flex justify-content-center align-items-center mb-3 mb-md-0 me-md-auto text-decoration-none border-bottom pb-3 w-100">
+    <img 
+        src="https://iemcousa.com/application/files/9615/2838/9508/logo.png" 
+        alt="IEMCO Logo" 
+        style="width: 100%; max-width: 180px; height: auto; padding: 10px; object-fit: contain;"
+    >
+</a>
+
+            <div class="mt-3 overflow-auto">
+                <ul class="list-unstyled ps-0">
+                    <li class="mb-1">
+                        <button class="btn btn-toggle d-inline-flex align-items-center rounded collapsed" data-bs-toggle="collapse" data-bs-target="#maquinas-collapse" aria-expanded="false">
+                            MAQUINAS
+                        </button>
+    
+                        <div class="collapse" id="maquinas-collapse">
+                            <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+            <!-- AOKI -->
+                                <li>
+                                    <button class="btn btn-toggle d-inline-flex align-items-center rounded collapsed" data-bs-toggle="collapse" data-bs-target="#AOKI-collapse" aria-expanded="false" style="margin-left: 1.5rem; font-size: 0.85rem;">
+                                        AOKI
+                                    </button>
+                                    <div class="collapse" id="AOKI-collapse">
+                                        <ul class="list-unstyled fw-normal pb-1 small" style="margin-left: 3rem;">
+                                            <li class="border-top my-3"></li>
+                                            <h5 style="font-size: 15px;">AOKI SBIII-500-150</h5>
+                                            <li class="border-top my-3"></li>
+                                            <li><a href="#" class="link-body-emphasis">MAQUINA ISBM 2</a></li>
+                                            <li><a href="#" class="link-body-emphasis">MAQUINA ISBM 3</a></li>
+                                            <li><a href="#" class="link-body-emphasis">MAQUINA ISBM 4</a></li>
+                                            <li><a href="#" class="link-body-emphasis">MAQUINA ISBM 5</a></li>
+                                            <li><a href="#" class="link-body-emphasis">MAQUINA ISBM 6</a></li>
+                                            <li class="border-top my-3"></li>
+                                        </ul>
+                                    </div>
+                                </li>
+            <!-- ASB -->
+                                <li>
+                                    <button class="btn btn-toggle d-inline-flex align-items-center rounded collapsed" data-bs-toggle="collapse" data-bs-target="#ASB-collapse" aria-expanded="false" style="margin-left: 1.5rem; font-size: 0.85rem;">
+                                        ASB
+                                    </button>
+                                    <div class="collapse" id="ASB-collapse">
+                                        <ul class="list-unstyled fw-normal pb-1 small" style="margin-left: 3rem;">
+
+                                            <li class="border-top my-3"></li>
+                                            <h5 style="font-size: 15px;">ASB 150DP</h5>
+                                            <li class="border-top my-3"></li>
+                                            <li><a href="#" class="link-body-emphasis">MAQUINA ISBM 7</a></li>
+                                            <li><a href="#" class="link-body-emphasis">MAQUINA ISBM 8</a></li>
+                                            <li><a href="#" class="link-body-emphasis">MAQUINA ISBM 9</a></li>
+
+                                            <li class="border-top my-3"></li>
+                                            <h5 style="font-size: 15px;">ASB 150 DP STD</h5>
+                                            <li class="border-top my-3"></li>
+                                            <li><a href="#" class="link-body-emphasis">MAQUINA ISBM 10</a></li>
+
+                                            <li class="border-top my-3"></li>
+                                            <h5 style="font-size: 15px;">ASB 12M</h5>
+                                            <li class="border-top my-3"></li>
+                                            <li><a href="#" class="link-body-emphasis">MAQUINA ISBM 12</a></li>
+                                            <li class="border-top my-3"></li>
+                                        </ul>
+                                    </div>
+                                </li>
+            <!-- NISSEI -->
+                                <li>
+                                    <button class="btn btn-toggle d-inline-flex align-items-center rounded collapsed" data-bs-toggle="collapse" data-bs-target="#NISSEI-collapse" aria-expanded="false" style="margin-left: 1.5rem; font-size: 0.85rem;">
+                                        NISSEI
+                                    </button>
+                                    <div class="collapse" id="NISSEI-collapse">
+                                        <ul class="list-unstyled fw-normal pb-1 small" style="margin-left: 3rem;">
+
+                                            <li class="border-top my-3"></li>
+                                            <h5 style="font-size: 15px;">NISSEI FS 160</h5>
+                                            <li class="border-top my-3"></li>
+                                            <li><a href="#" class="link-body-emphasis">INYECTORA 1</a></li>
+
+                                            <li class="border-top my-3"></li>
+                                            <h5 style="font-size: 15px;">NISSEI FN3000</h5>
+                                            <li class="border-top my-3"></li>
+                                            <li><a href="#" class="link-body-emphasis">INYECTORA 3</a></li>
+
+                                            <li class="border-top my-3"></li>
+                                            <h5 style="font-size: 15px;">NISSEI FNX280</h5>
+                                            <li class="border-top my-3"></li>
+                                            <li><a href="#" class="link-body-emphasis">INYECTORA 5</a></li>
+
+                                            <li class="border-top my-3"></li>
+                                            <h5 style="font-size: 15px;">NISSEI FNX220</h5>
+                                            <li class="border-top my-3"></li>
+                                            <li><a href="#" class="link-body-emphasis">INYECTORA 11</a></li>
+                                            <li class="border-top my-3"></li>
+                                        </ul>
+                                    </div>
+                                </li>
+            <!-- SUMITOMO -->
+                                <li>
+                                    <button class="btn btn-toggle d-inline-flex align-items-center rounded collapsed" data-bs-toggle="collapse" data-bs-target="#SUMITOMO-collapse" aria-expanded="false" style="margin-left: 1.5rem; font-size: 0.85rem;">
+                                        SUMITOMO
+                                    </button>
+                                    <div class="collapse" id="SUMITOMO-collapse">
+                                        <ul class="list-unstyled fw-normal pb-1 small" style="margin-left: 3rem;">
+
+                                            <li class="border-top my-3"></li>
+                                            <h5 style="font-size: 15px;">SUMITOMO SYSTEC 280</h5>
+                                            <li class="border-top my-3"></li>
+                                            <li><a href="#" class="link-body-emphasis">INYECTORA 6</a></li>
+                                            <li><a href="#" class="link-body-emphasis">INYECTORA 9</a></li>
+
+                                            <li class="border-top my-3"></li>
+                                            <h5 style="font-size: 15px;">SUMITOMO SYSTEC 580</h5>
+                                            <li class="border-top my-3"></li>
+                                            <li><a href="#" class="link-body-emphasis">INYECTORA 7</a></li>
+                                            <li><a href="#" class="link-body-emphasis">INYECTORA 10</a></li>
+
+                                            <li class="border-top my-3"></li>
+                                            <h5 style="font-size: 15px;">SUMITOMO INTELECT2 S 220</h5>
+                                            <li class="border-top my-3"></li>
+                                            <li><a href="#" class="link-body-emphasis">INYECTORA 8</a></li>
+                                            <li class="border-top my-3"></li>
+                                        </ul>
+                                    </div>
+                                </li>
+            <!-- ENLAINADORA -->
+                                <li>
+                                    <button class="btn btn-toggle d-inline-flex align-items-center rounded collapsed" data-bs-toggle="collapse" data-bs-target="#ENLAINADORAS-collapse" aria-expanded="false" style="margin-left: 1.5rem; font-size: 0.85rem;">
+                                        ENLAINADORAS
+                                    </button>
+                                    <div class="collapse" id="ENLAINADORAS-collapse">
+                                        <ul class="list-unstyled fw-normal pb-1 small" style="margin-left: 3rem;">
+
+                                            <li class="border-top my-3"></li>
+                                            <h5 style="font-size: 15px;">AUTING SMN-03</h5>
+                                            <li class="border-top my-3"></li>
+                                            <li><a href="#" class="link-body-emphasis">ENLAINADORA 1</a></li>
+
+                                            <li class="border-top my-3"></li>
+                                            <h5 style="font-size: 15px;">AUTING LSM-025</h5>
+                                            <li class="border-top my-3"></li>
+                                            <li><a href="#" class="link-body-emphasis">ENLAINADORA 2</a></li>
+                                            <li><a href="#" class="link-body-emphasis">ENLAINADORA 3</a></li>
+                                            <li class="border-top my-3"></li>
+                                        </ul>
+                                    </div>
+                                </li>
+            <!-- REVOLVEDORAS -->
+                                <li>
+                                    <button class="btn btn-toggle d-inline-flex align-items-center rounded collapsed" data-bs-toggle="collapse" data-bs-target="#REVOLVEDORAS-collapse" aria-expanded="false" style="margin-left: 1.5rem; font-size: 0.85rem;">
+                                        REVOLVEDORAS
+                                    </button>
+                                    <div class="collapse" id="REVOLVEDORAS-collapse">
+                                        <ul class="list-unstyled fw-normal pb-1 small" style="margin-left: 3rem;">
+
+                                            <li class="border-top my-3"></li>
+                                            <li><a href="#" class="link-body-emphasis">REVOLVEDORA 1</a></li>
+
+                                            <li class="border-top my-3"></li>
+                                            <h5 style="font-size: 15px;">XHS-50KGS</h5>
+                                            <li class="border-top my-3"></li>
+                                            <li><a href="#" class="link-body-emphasis">REVOLVEDORA 2</a></li>
+                                            <li class="border-top my-3"></li>
+                                        </ul>
+                                    </div>
+                                </li>
+
+            <!-- MOLINO -->
+                                <li>
+                                    <button class="btn btn-toggle d-inline-flex align-items-center rounded collapsed" data-bs-toggle="collapse" data-bs-target="#MOLINO-collapse" aria-expanded="false" style="margin-left: 1.5rem; font-size: 0.85rem;">
+                                        MOLINO
+                                    </button>
+                                    <div class="collapse" id="MOLINO-collapse">
+                                        <ul class="list-unstyled fw-normal pb-1 small" style="margin-left: 3rem;">
+
+                                            <li class="border-top my-3"></li>
+                                            <h5 style="font-size: 15px;">PAGANI</h5>
+                                            <li class="border-top my-3"></li>
+                                            <li><a href="#" class="link-body-emphasis">MOLINO 1</a></li>
+
+                                            <li class="border-top my-3"></li>
+                                            <h5 style="font-size: 15px;">RAPID</h5>
+                                            <li class="border-top my-3"></li>
+                                            <li><a href="#" class="link-body-emphasis">MOLINO RAPID 2</a></li>
+                                            <li><a href="#" class="link-body-emphasis">MOLINO RAPID 3</a></li>
+                                            <li class="border-top my-3"></li>
+                                        </ul>
+                                    </div>
+                                </li>
+                              
+                            </ul>
+                        </div>
+                    </li>
+
+                    <li class="mb-1">
+                        <button class="btn btn-toggle d-inline-flex align-items-center rounded collapsed" data-bs-toggle="collapse" data-bs-target="#moldes-collapse" aria-expanded="false">
+                            MOLDES
+                        </button>
+                        <div class="collapse" id="moldes-collapse">
+                            <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+                                <li><a href="#">Vistas semanales</a></li>
+                                <li><a href="#">Análisis anual</a></li>
+                            </ul>
+                        </div>
+                    </li>
+
+                    <li class="mb-1">
+                        <button class="btn btn-toggle d-inline-flex align-items-center rounded collapsed" data-bs-toggle="collapse" data-bs-target="#compresores-collapse" aria-expanded="false">
+                            COMPRESORES
+                        </button>
+                        <div class="collapse" id="compresores-collapse">
+                            <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+                                <li><a href="#">Nuevos pedidos</a></li>
+                                <li><a href="#">Enviados</a></li>
+                                <li><a href="#">Devoluciones</a></li>
+                            </ul>
+                        </div>
+                    </li>
+
+                    <li class="mb-1">
+                        <button class="btn btn-toggle d-inline-flex align-items-center rounded collapsed" data-bs-toggle="collapse" data-bs-target="#redagua-collapse" aria-expanded="false">
+                            RED DE AGUA
+                        </button>
+                        <div class="collapse" id="redagua-collapse">
+                            <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+                                <li><a href="#">Nuevos pedidos</a></li>
+                                <li><a href="#">Enviados</a></li>
+                                <li><a href="#">Devoluciones</a></li>
+                            </ul>
+                        </div>
+                    </li>
+
+                    <li class="mb-1">
+                        <button class="btn btn-toggle d-inline-flex align-items-center rounded collapsed" data-bs-toggle="collapse" data-bs-target="#cuartos-collapse" aria-expanded="false">
+                            CUARTOS/ALMACENES
+                        </button>
+                        <div class="collapse" id="cuartos-collapse">
+                            <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+                                <li><a href="#">Nuevos pedidos</a></li>
+                                <li><a href="#">Enviados</a></li>
+                                <li><a href="#">Devoluciones</a></li>
+                            </ul>
+                        </div>
+                    </li>
+                <li class="mb-1">
+                    <button class="btn btn-toggle d-inline-flex align-items-center rounded collapsed" data-bs-toggle="collapse" data-bs-target="#subestaciones-collapse" aria-expanded="false">
+                        SUBESTACIONES
+                    </button>
+                    <div class="collapse" id="subestaciones-collapse">
+                        <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+                            <li><a href="#">Nuevos pedidos</a></li>
+                            <li><a href="#">Enviados</a></li>
+                            <li><a href="#">Devoluciones</a></li>
+                        </ul>
+                    </div>
+                </li>
+                <li class="mb-1">
+                    <button class="btn btn-toggle d-inline-flex align-items-center rounded collapsed" data-bs-toggle="collapse" data-bs-target="#transportes-collapse" aria-expanded="false">
+                        TRANSPORTES
+                    </button>
+                    <div class="collapse" id="transportes-collapse">
+                        <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+                            <li><a href="#">Nuevos pedidos</a></li>
+                            <li><a href="#">Enviados</a></li>
+                            <li><a href="#">Devoluciones</a></li>
+                        </ul>
+                    </div>
+                </li>
+                <li class="mb-1">
+                    <button class="btn btn-toggle d-inline-flex align-items-center rounded collapsed" data-bs-toggle="collapse" data-bs-target="#equipos-collapse" aria-expanded="false">
+                        EQUIPOS AUXILIARES
+                    </button>
+                    <div class="collapse" id="equipos-collapse">
+                        <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+                            <li><a href="#">Nuevos pedidos</a></li>
+                            <li><a href="#">Enviados</a></li>
+                            <li><a href="#">Devoluciones</a></li>
+                        </ul>
+                    </div>
+                </li>
+                <li class="mb-1">
+                    <button class="btn btn-toggle d-inline-flex align-items-center rounded collapsed" data-bs-toggle="collapse" data-bs-target="#servicios-collapse" aria-expanded="false">
+                        SERVICIOS
+                    </button>
+                    <div class="collapse" id="servicios-collapse">
+                        <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+                            <li><a href="#">Nuevos pedidos</a></li>
+                            <li><a href="#">Enviados</a></li>
+                            <li><a href="#">Devoluciones</a></li>
+                        </ul>
+                    </div>
+                </li>
+                <li class="border-top my-3"></li>
+                <li class="mb-1">
+                    <button class="btn btn-toggle d-inline-flex align-items-center rounded collapsed" data-bs-toggle="collapse" data-bs-target="#account-collapse" aria-expanded="false">
+                        Mi Cuenta
+                    </button>
+                    <div class="collapse" id="account-collapse">
+                        <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+                            <li><a href="#">Perfil de usuario</a></li>
+                            <li><a href="#">Configuración</a></li>
+                            <li><a href="#" class="text-danger">Cerrar Sesión</a></li>
+                        </ul>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </aside>
+
+    <main class="content-area">
+        <header class="header-main d-flex justify-content-between align-items-center">
+            <h1 class="h5 mb-0 fw-bold">REFACCIONES</h1>
+            <nav>
+                <ul class="nav nav-pills small" style="color: #007a33;">
+                    <li class="nav-item"><a href="../defi/pri.html" class="nav-link" aria-current="page" style="color: #007a33;">INICIO</a></li>
+                    <li class="nav-item"><a href="../index.html" class="nav-link" style="color: #007a33;">BUSCADOR</a></li>
+                    <li class="nav-item"><a href="actDatos/actDatos.html" class="nav-link" style="color: #007a33;">ACTUALIZAR DATOS</a></li>
+                    <li class="nav-item"><a href="#" class="nav-link" style="color: #007a33;">AYUDA</a></li>
+                </ul>
+            </nav>
+        </header>
+
+        <div class="p-4">
+    <div class="container-fluid">
+        <div class="row g-4">
+            
+            <div class="col-12 col-md-6 col-lg-4">
+                <div class="card h-100 border-0 shadow-sm border-start border-4 border-primary">
+                    <div class="card-body">
+                        <div class="d-flex align-items-center mb-3">
+                            <div class="flex-shrink-0 bg-primary bg-opacity-10 p-3 rounded">
+                                <i class="bi bi-clock-history text-primary fs-4"></i>
+                            </div>
+                            <div class="ms-3">
+                                <h6 class="card-subtitle text-muted fw-light">Última Actualización</h6>
+                                <h5 class="card-title mb-0 fw-bold text-dark">Hoy, 10:45 AM</h5>
+                            </div>
+                        </div>
+                        <p class="card-text small text-secondary">Sincronización de inventario completada con éxito en la planta.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-12 col-md-6 col-lg-4">
+                <div class="card h-100 border-0 shadow-sm border-start border-4 border-success">
+                    <div class="card-body">
+                        <div class="d-flex align-items-center mb-3">
+                            <div class="flex-shrink-0 bg-success bg-opacity-10 p-3 rounded">
+                                <i class="bi bi-box-seam text-success fs-4"></i>
+                            </div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
+                            <div class="ms-3">
+                                <h6 class="card-subtitle text-muted fw-light">Total de Refacciones</h6>
+                                <h5 class="card-title mb-0 fw-bold text-dark">12,450 Unidades</h5>
+                            </div>
+                        </div>
+                        <div class="progress" style="height: 6px;">
+                            <div class="progress-bar bg-success" role="progressbar" style="width: 85%"></div>
+                        </div>
+                        <p class="mt-2 mb-0 small text-muted text-end">85% en stock disponible</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-12 col-lg-4">
+                <div class="card h-100 border-0 shadow-sm border-start border-4 border-warning">
+                    <div class="card-body">
+                        <div class="d-flex align-items-center mb-2">
+                            <div class="flex-shrink-0 bg-warning bg-opacity-10 p-3 rounded">
+                                <i class="bi bi-graph-up-arrow text-warning fs-4"></i>
+                            </div>
+                            <div class="ms-3">
+                                <h6 class="card-subtitle text-muted fw-light">Lo más buscado</h6>
+                                <h5 class="card-title mb-0 fw-bold text-dark">Moldes Inyección</h5>
+                            </div>
+                        </div>
+                        <div class="d-flex flex-wrap gap-2 mt-3">
+                            <span class="badge bg-light text-dark border rounded-pill px-3">Compresores</span>
+                            <span class="badge bg-light text-dark border rounded-pill px-3">Válvulas</span>
+                            <span class="badge bg-light text-dark border rounded-pill px-3">Motores</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div> <div class="row mt-4">
+            <div class="col-12">
+                <div class="card border-0 shadow-sm">
+                    <div class="card-header bg-white py-3">
+                        <h6 class="mb-0 fw-bold">Detalle General de Operaciones</h6>
+                    </div>
+                    <div class="card-body text-center py-5">
+                        <p class="text-muted">Aquí puedes colocar una tabla detallada o gráficas de rendimiento.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+    </main>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

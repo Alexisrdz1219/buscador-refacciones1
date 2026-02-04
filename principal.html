@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>IEMCO Refacciones</title>
+<script src="https://cdn.jsdelivr.net/npm/xlsx/dist/xlsx.full.min.js"></script>
+
+<style>
+  :root {
+    --primary: #1f8c33;
+    --primary-hover: #147b31;
+    --bg: #f8fafc;
+    --card-bg: #ffffff;
+    --text-main: #1e293b;
+    --text-muted: #64748b;
+    --border: #e2e8f0;
+    --radius: 12px;
+    --shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+  }
+
+  body {
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    background-color: var(--bg);
+    color: var(--text-main);
+    margin: 0;
+    line-height: 1.5;
+  }
+
+  .navbar {
+    background: white;
+    padding: 1rem 2rem;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .navbar h1 {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--primary);
+    margin: 0;
+  }
+
+  .container {
+    max-width: 900px;
+    margin: 40px auto;
+    padding: 0 20px;
+  }
+
+  .section-title {
+    text-align: center;
+    margin-bottom: 2rem;
+    color: var(--text-main);
+    font-weight: 800;
+  }
+
+  .grid-menu {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1.5rem;
+  }
+
+  .card {
+    background: var(--card-bg);
+    text-decoration: none; /* Quitar subrayado de link */
+    color: inherit;
+    padding: 1.5rem;
+    border-radius: var(--radius);
+    border: 1px solid var(--border);
+    display: flex;
+    flex-direction: column;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    overflow: hidden;
+    box-shadow: var(--shadow);
+  }
+
+  /* Animación al pasar el mouse */
+  .card:hover {
+    transform: translateY(-8px);
+    border-color: var(--primary);
+    box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+  }
+
+  .card-icon {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+    background: #f0fdf4; /* Un verde muy clarito */
+    width: 50px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 10px;
+  }
+
+  .card h3 {
+    margin: 0 0 0.5rem 0;
+    font-size: 1.1rem;
+    color: var(--text-main);
+  }
+
+  .card p {
+    margin: 0;
+    font-size: 0.875rem;
+    color: var(--text-muted);
+  }
+
+  .card-arrow {
+    margin-top: 1.5rem;
+    color: var(--primary);
+    font-weight: bold;
+    opacity: 0;
+    transform: translateX(-10px);
+    transition: all 0.3s ease;
+  }
+
+  .card:hover .card-arrow {
+    opacity: 1;
+    transform: translateX(0);
+  }
+</style>
+</head>
+<body>
+
+<nav class="navbar">
+  <h1>IEMCO Refacciones</h1>
+  <div style="font-size: 0.8rem; color: var(--text-muted);">v1.0</div>
+</nav>
+
+<div class="container">
+  <h2 class="section-title">Categorías</h2>
+  
+  <div class="grid-menu">
+    <a href="Maquinas.html" class="card">
+      <div class="card-icon">⚙️</div>
+      <div class="card-content">
+        <h3>Máquinas</h3>
+        <p>AOKI, ASB, NISSEI, SUMITOMO</p>
+      </div>
+      <div class="card-arrow">→</div>
+    </a>
+
+    <a href="moldes.html" class="card">
+      <div class="card-icon">🧱</div>
+      <div class="card-content">
+        <h3>Moldes</h3>
+        <p>Molde T70, Molde 19L, Molde GLC</p>
+      </div>
+      <div class="card-arrow">→</div>
+    </a>
+
+    <a href="compresores.html" class="card">
+      <div class="card-icon">💨</div>
+      <div class="card-content">
+        <h3>Compresores</h3>
+        <p>Mantenimiento, Refacciones</p>
+      </div>
+      <div class="card-arrow">→</div>
+    </a>
+
+    <a href="agua.html" class="card">
+      <div class="card-icon">💧</div>
+      <div class="card-content">
+        <h3>Red de Agua</h3>
+        <p>Tubos, pegamentos, refacciones.</p>
+      </div>
+      <div class="card-arrow">→</div>
+    </a>
+    <a href="agua.html" class="card">
+      <div class="card-icon">🏚</div>
+      <div class="card-content">
+        <h3>Cuartos/Almacenes</h3>
+        <p></p>
+      </div>
+      <div class="card-arrow">→</div>
+    </a>
+    <a href="agua.html" class="card">
+      <div class="card-icon">👷‍♂️</div>
+      <div class="card-content">
+        <h3>Subestacion</h3>
+        <p></p>
+      </div>
+      <div class="card-arrow">→</div>
+    </a>
+    <a href="agua.html" class="card">
+      <div class="card-icon">🚐</div>
+      <div class="card-content">
+        <h3>Transportes</h3>
+        <p></p>
+      </div>
+      <div class="card-arrow">→</div>
+    </a>
+    <a href="agua.html" class="card">
+      <div class="card-icon">🛄</div>
+      <div class="card-content">
+        <h3>Equipos Auxiliares</h3>
+        <p>Barredora, Filtradores</p>
+      </div>
+      <div class="card-arrow">→</div>
+    </a>
+    <a href="agua.html" class="card">
+      <div class="card-icon">👩‍💼</div>
+      <div class="card-content">
+        <h3>Servicios</h3>
+        <p>Calidad</p>
+      </div>
+      <div class="card-arrow">→</div>
+    </a>
+  </div>
+</div>
+
+<script>
+
+
+</script>
+
+</body>
+</html>

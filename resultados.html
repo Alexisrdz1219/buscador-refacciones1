@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Catálogo de Refacciones</title>
+<script src="https://cdn.jsdelivr.net/npm/xlsx/dist/xlsx.full.min.js"></script>
+
+<style>
+  :root {
+    --primary: #33c94f;
+    --primary-hover: #16ae41;
+    --text-main: #1e293b;
+    --text-muted: #64748b;
+    --bg: #f1f5f9;
+    --white: #ffffff;
+    --border: #e2e8f0;
+    --radius: 12px;
+    --shadow: 0 4px 6px -1px rgba(0,0,0,0.1);
+  }
+
+  body {
+    font-family: system-ui, sans-serif;
+    background-color: var(--bg);
+    color: var(--text-main);
+    margin: 0;
+    padding: 20px;
+  }
+
+  header {
+    max-width: 1200px;
+    margin: 0 auto 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .btn-back {
+    text-decoration: none;
+    color: var(--primary);
+    font-weight: 600;
+  }
+
+  .filters {
+    max-width: 1200px;
+    margin: 0 auto 20px;
+  }
+
+  select {
+    padding: 8px;
+    border-radius: 6px;
+    border: 1px solid var(--border);
+  }
+
+  #resultados {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .card {
+    background: white;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: var(--shadow);
+    border: 1px solid var(--border);
+    display: flex;
+    flex-direction: column;
+  }
+
+  .image-container {
+    height: 180px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #f8fafc;
+  }
+
+  .image-container img {
+    max-width: 90%;
+    max-height: 90%;
+    object-fit: contain;
+  }
+
+  .content {
+    padding: 12px;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+  }
+
+  .category-tag {
+    font-size: 12px;
+    font-weight: bold;
+    color: var(--primary);
+  }
+
+  .btn-detail {
+    margin-top: auto;
+    padding: 8px;
+    background: #f1f5f9;
+    text-align: center;
+    border-radius: 6px;
+    text-decoration: none;
+    color: black;
+    font-weight: bold;
+  }
+
+  .btn-detail:hover {
+    background: var(--primary);
+    color: white;
+  }
+
+  .empty-state {
+    grid-column: 1 / -1;
+    text-align: center;
+    padding: 50px;
+    color: gray;
+  }
+</style>
+</head>
+
+<body>
+
+<header>
+  <a href="index.html" class="btn-back">← Volver</a>
+  <h2>Resultados</h2>
+</header>
+
+
+<div class="filters">
+  <label>Subcategoría:</label>
+  <select id="filtroSubcategoria">
+    <option value="">Todas</option>
+  </select>
+</div>
+
+<div id="resultados"></div>
+
+<script>
+const params = new URLSearchParams(window.location.search);
+const q = params.get("q")?.toLowerCase();
+const maquina = params.get("maquina");
+const categoria = params.get("categoria");
+
+const dataGlobal = JSON.parse(localStorage.getItem("inventario") || "[]");
+
+let resultadosBase = [];
+const filtroSub = document.getElementById("filtroSubcategoria");
+
+filtrarInicial();
+
+function filtrarInicial() {
+  let filtrado = dataGlobal;
+
+  if (q) {
+    filtrado = filtrado.filter(d =>
+      Object.values(d).some(v => String(v).toLowerCase().includes(q))
+    );
+  }
+
+  if (maquina) filtrado = filtrado.filter(d => d.Maquina === maquina);
+  if (categoria) filtrado = filtrado.filter(d => d.Categoria === categoria);
+
+  resultadosBase = filtrado;
+  cargarSubcategorias(filtrado);
+  render(filtrado);
+}
+
+function cargarSubcategorias(data) {
+  filtroSub.innerHTML = `<option value="">Todas</option>`;
+
+  const subs = [...new Set(data.map(d => d.Subcategoria).filter(Boolean))];
+
+  subs.forEach(s => {
+    filtroSub.innerHTML += `<option value="${s}">${s}</option>`;
+  });
+}
+
+filtroSub.addEventListener("change", function () {
+  const sub = this.value;
+  const filtrado = sub
+    ? resultadosBase.filter(d => d.Subcategoria === sub)
+    : resultadosBase;
+
+  render(filtrado);
+});
+
+function render(data) {
+  const cont = document.getElementById("resultados");
+  cont.innerHTML = "";
+
+
+  
+  if (!data.length) {
+    cont.innerHTML = `<div class="empty-state">No hay resultados</div>`;
+    return;
+  }
+
+  data.forEach(p => {
+    const imgUrl = p.Imagen?.trim() ? p.Imagen : "https://static.vecteezy.com/system/resources/previews/004/141/669/non_2x/no-photo-or-blank-image-icon-loading-images-or-missing-image-mark-image-not-available-or-image-coming-soon-sign-simple-nature-silhouette-in-frame-isolated-illustration-vector.jpg";
+
+    cont.innerHTML += `
+      <div class="card">
+        <div class="image-container">
+          <img src="${imgUrl}">
+        </div>
+        <div class="content">
+          <span class="category-tag">${p.Subcategoria || p.Categoria}</span>
+          <h3>${p.Nombre}</h3>
+          <small>ID: ${p.ID}</small>
+          <small>Máquina: ${p.Maquina}</small>
+          <a href="detalle.html?id=${p.ID}" class="btn-detail">Ver Detalles</a>
+        </div>
+      </div>
+    `;
+  });
+}
+</script>
+
+</body>
+</html>
