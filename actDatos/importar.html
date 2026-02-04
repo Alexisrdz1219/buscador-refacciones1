@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Importar Excel</title>
+
+  <style>
+    body {
+      font-family: Arial;
+      padding: 30px;
+      background: #f4f6f8;
+    }
+    input, button {
+      padding: 10px;
+      margin-top: 10px;
+    }
+    #estado {
+      margin-top: 15px;
+      font-weight: bold;
+    }
+  </style>
+</head>
+
+<body>
+
+<h2>Importar / Actualizar Refacciones</h2>
+
+<p>
+Sube un Excel.<br>
+Si la <b>Referencia Interna existe</b> → se actualiza cantidad.<br>
+Si <b>no existe</b> → se crea el registro.
+</p>
+
+<input type="file" id="excelFile" accept=".xlsx,.xls" />
+<br>
+<button onclick="subirExcel()">Procesar Excel</button>
+
+<p id="estado"></p>
+
+<script src="importar.js"></script>
+</body>
+</html>
