@@ -1,4 +1,5 @@
 console.log("🔥 script.js cargado correctamente");
+const API_URL = "https://buscador-refaccionesbackend.onrender.com";
 
 fetch("https://buscador-refaccionesbackend.onrender.com/health")
   .then(res => res.json())
@@ -28,3 +29,5 @@ fetch("https://buscador-refaccionesbackend.onrender.com/health")
     statusDiv.innerHTML = "❌ No se pudo conectar al backend";
     console.error(err);
   });
+
+  
