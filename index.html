@@ -901,38 +901,38 @@ window.addEventListener("pageshow", () => {
                                 <i class="bi bi-box-seam text-success fs-4"></i>
                             </div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
                             <div class="ms-3">
-                                <h6 class="card-subtitle text-muted fw-light">Total de Refacciones</h6>
-                                <h5 class="card-title mb-0 fw-bold text-dark">12,450 Unidades</h5>
-                            </div>
+    <h6 class="card-subtitle text-muted fw-light">Total de Refacciones</h6>
+    <h5 id="totalRefacciones" class="card-title mb-0 fw-bold text-dark">Cargando...</h5>
+</div>
+
                         </div>
-                        <div class="progress" style="height: 6px;">
+                        <!-- <div class="progress" style="height: 6px;">
                             <div class="progress-bar bg-success" role="progressbar" style="width: 85%"></div>
                         </div>
-                        <p class="mt-2 mb-0 small text-muted text-end">85% en stock disponible</p>
+                        <p class="mt-2 mb-0 small text-muted text-end">85% en stock disponible</p> -->
                     </div>
                 </div>
             </div>
 
             <div class="col-12 col-lg-4">
-                <div class="card h-100 border-0 shadow-sm border-start border-4 border-warning">
-                    <div class="card-body">
-                        <div class="d-flex align-items-center mb-2">
-                            <div class="flex-shrink-0 bg-warning bg-opacity-10 p-3 rounded">
-                                <i class="bi bi-graph-up-arrow text-warning fs-4"></i>
-                            </div>
-                            <div class="ms-3">
-                                <h6 class="card-subtitle text-muted fw-light">Lo más buscado</h6>
-                                <h5 class="card-title mb-0 fw-bold text-dark">Moldes Inyección</h5>
-                            </div>
-                        </div>
-                        <div class="d-flex flex-wrap gap-2 mt-3">
-                            <span class="badge bg-light text-dark border rounded-pill px-3">Compresores</span>
-                            <span class="badge bg-light text-dark border rounded-pill px-3">Válvulas</span>
-                            <span class="badge bg-light text-dark border rounded-pill px-3">Motores</span>
-                        </div>
-                    </div>
+    <div class="card h-100 border-0 shadow-sm border-start border-4 border-warning">
+        <div class="card-body">
+            <div class="d-flex align-items-center mb-2">
+                <div class="flex-shrink-0 bg-warning bg-opacity-10 p-3 rounded">
+                    <i class="bi bi-graph-up-arrow text-warning fs-4"></i>
+                </div>
+                <div class="ms-3">
+                    <h6 class="card-subtitle text-muted fw-light">Lo más reciente</h6>
+                    <h5 id="ultimoProducto" class="card-title mb-0 fw-bold text-dark">Cargando...</h5>
                 </div>
             </div>
+            <div id="ultimasEtiquetas" class="d-flex flex-wrap gap-2 mt-3">
+                <!-- Badges se generarán aquí -->
+            </div>
+        </div>
+    </div>
+</div>
+
 
         </div> <div class="row mt-4">
             <div class="col-12">
