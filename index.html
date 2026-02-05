@@ -549,49 +549,9 @@
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 <script src="script.js"></script>
+<script src="navegador.js"></script>
 
-<script>
-const API = "https://buscador-refaccionesbackend.onrender.com";
 
-document.querySelectorAll(".maquina-link").forEach(link => {
-  link.addEventListener("click", async (e) => {
-    e.preventDefault();
-
-    const marca = link.dataset.marca;
-    const modelo = link.dataset.modelo;
-    const maquina = link.dataset.maquina;
-
-    const res = await fetch(
-      `${API}/refacciones?marca=${encodeURIComponent(marca)}&modelo=${encodeURIComponent(modelo)}&maquina=${encodeURIComponent(maquina)}`
-    );
-
-    const data = await res.json();
-    mostrarResultados(data);
-  });
-});
-
-function mostrarResultados(refacciones) {
-  const contenedor = document.getElementById("resultados");
-  contenedor.innerHTML = "";
-
-  if (refacciones.length === 0) {
-    contenedor.innerHTML = "<p>No hay refacciones para esta máquina</p>";
-    return;
-  }
-
-  refacciones.forEach(r => {
-    contenedor.innerHTML += `
-      <div class="card mb-2 shadow-sm">
-        <div class="card-body">
-          <strong>${r.nombreprod}</strong><br>
-          <small class="text-muted">${r.refinterna}</small><br>
-          <span>Cantidad: ${r.cantidad}</span>
-        </div>
-      </div>
-    `;
-  });
-}
-</script>
 
 </body>
 </html>
