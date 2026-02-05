@@ -30,27 +30,22 @@
 
 <body>
 
-<h2>Importar Excel desde Odoo</h2>
+<h2>Importar desde Odoo</h2>
+
+<p>
+Este archivo:
+<ul>
+  <li>Actualiza <b>cantidad</b> por referencia interna</li>
+  <li>Agrega refacciones nuevas si no existen</li>
+</ul>
+</p>
 
 <input type="file" id="excelFile" accept=".xlsx,.xls">
-<br><br>
-<button onclick="subirOdoo()">Procesar Excel</button>
+<button onclick="subirOdoo()">Procesar Odoo</button>
 
 <p id="estado"></p>
 
-<table id="tablaNuevos" style="display:none;">
-  <thead>
-    <tr>
-      <th>Referencia</th>
-      <th>Nombre</th>
-      <th>Cantidad</th>
-      <th>Unidad</th>
-      <th>Etiquetas</th>
-    </tr>
-  </thead>
-  <tbody id="tbodyNuevos"></tbody>
-</table>
-
 <script src="importar-odoo.js"></script>
+
 </body>
 </html>
