@@ -9,14 +9,14 @@
 <input type="file" id="excel" />
 <button onclick="importar()">Importar Odoo</button>
 
-<input type="file" id="excel" />
-<button onclick="importar()">Importar Odoo</button>
 
 <div style="margin-top:10px; width:300px; background:#ddd; height:20px;">
   <div id="barra" style="height:100%; width:0%; background:#4caf50;"></div>
 </div>
 
 <p id="estado"></p>
+<div id="duplicados"></div>
+
 
 
 <script>
@@ -48,14 +48,29 @@ function importar() {
   };
 
   xhr.onload = function () {
-    if (xhr.status === 200) {
-      const data = JSON.parse(xhr.responseText);
-      estado.textContent = `✅ Insertados: ${data.insertados} | 🔁 Actualizados: ${data.actualizados}`;
-      barra.style.width = "100%";
-    } else {
-      estado.textContent = "❌ Error al importar";
+  if (xhr.status === 200) {
+    const data = JSON.parse(xhr.responseText);
+
+    estado.textContent =
+      `✅ Insertados: ${data.insertados} | 🔁 Duplicados: ${data.duplicados.length}`;
+
+    barra.style.width = "100%";
+
+    if (data.duplicados.length > 0) {
+      let html = "<h3>⚠️ Refacciones duplicadas</h3><ul>";
+
+      data.duplicados.forEach(d => {
+        html += `<li><b>${d.refInterna}</b> - ${d.nombre}</li>`;
+      });
+
+      html += "</ul>";
+      document.getElementById("duplicados").innerHTML = html;
     }
-  };
+  } else {
+    estado.textContent = "❌ Error al importar";
+  }
+};
+
 
   xhr.onerror = function () {
     estado.textContent = "❌ Error de conexión";
