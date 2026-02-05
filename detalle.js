@@ -18,6 +18,18 @@ async function cargarDetalle() {
   });
 }
 
+// 👉 marcar compatibilidad
+if (Array.isArray(r.compatibilidad)) {
+  document
+    .querySelectorAll('input[type="checkbox"]')
+    .forEach(cb => {
+      if (r.compatibilidad.includes(cb.value)) {
+        cb.checked = true;
+      }
+    });
+}
+
+
 /* ---------- CARGAR OPCIONES ---------- */
 async function cargarOpciones(endpoint, selectId) {
   const res = await fetch(`${API}${endpoint}`);
@@ -47,6 +59,16 @@ document.getElementById("form").addEventListener("submit", async e => {
   document.querySelectorAll("input, textarea, select").forEach(el => {
     data[el.id] = el.value;
   });
+
+  // 👉 recoger compatibilidad
+const compatibilidad = [];
+
+document
+  .querySelectorAll('input[type="checkbox"]:checked')
+  .forEach(cb => compatibilidad.push(cb.value));
+
+data.compatibilidad = compatibilidad;
+
 
   await fetch(`${API}/refacciones/${id}`, {
     method: "PUT",
