@@ -1,455 +1,3 @@
-<!-- <!DOCTYPE html>
-<html lang="es">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>IEMCO Refacciones</title>
-<script src="https://cdn.jsdelivr.net/npm/xlsx/dist/xlsx.full.min.js"></script>
-
-<style>
-  :root {
-    --primary: #33c94f;
-    --primary-hover: #16ae41;
-    --bg: #f8fafc;
-    --card-bg: #ffffff;
-    --text-main: #1e293b;
-    --text-muted: #64748b;
-    --border: #e2e8f0;
-    --radius: 12px;
-    --shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
-  }
-
-  body {
-    font-family: 'Inter', system-ui, -apple-system, sans-serif;
-    background-color: var(--bg);
-    color: var(--text-main);
-    margin: 0;
-    line-height: 1.5;
-  }
-
-  .navbar {
-    background: white;
-    padding: 1rem 2rem;
-    border-bottom: 1px solid var(--border);
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-
-  .navbar h1 {
-    font-size: 1.25rem;
-    font-weight: 700;
-    color: var(--primary);
-    margin: 0;
-  }
-
-  .container {
-    max-width: 900px;
-    margin: 40px auto;
-    padding: 0 20px;
-  }
-
-  /* ESTILO DEL BUSCADOR PRINCIPAL */
-  .search-section {
-    position: relative;
-    margin-bottom: 30px;
-  }
-
-  .main-search {
-    width: 100%;
-    padding: 16px 20px;
-    font-size: 1.1rem;
-    border: 2px solid transparent;
-    border-radius: var(--radius);
-    background: white;
-    box-shadow: var(--shadow);
-    transition: all 0.3s ease;
-    box-sizing: border-box;
-  }
-
-  .main-search:focus {
-    outline: none;
-    border-color: var(--primary);
-    box-shadow: 0 10px 15px -3px rgba(37, 99, 235, 0.1);
-  }
-
-  #sugerencias {
-    position: absolute;
-    top: 65px;
-    width: 100%;
-    background: white;
-    border-radius: var(--radius);
-    box-shadow: 0 20px 25px -5px rgba(0,0,0,0.1);
-    z-index: 100;
-    overflow: hidden;
-    border: 1px solid var(--border);
-  }
-
-  #sugerencias div {
-    padding: 12px 20px;
-    border-bottom: 1px solid var(--border);
-    transition: background 0.2s;
-  }
-
-  #sugerencias div:hover {
-    background: #f1f5f9;
-    color: var(--primary);
-  }
-
-  /* TARJETA DE FILTROS */
-  .filter-card {
-    background: white;
-    padding: 24px;
-    border-radius: var(--radius);
-    border: 1px solid var(--border);
-    box-shadow: var(--shadow);
-  }
-
-  .filter-card h3 {
-    margin-top: 0;
-    margin-bottom: 20px;
-    font-size: 1rem;
-    color: var(--text-muted);
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-  }
-
-  .filter-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr auto;
-    gap: 15px;
-    align-items: end;
-  }
-
-  @media (max-width: 600px) {
-    .filter-grid { grid-template-columns: 1fr; }
-  }
-
-  label {
-    display: block;
-    font-size: 0.875rem;
-    font-weight: 500;
-    margin-bottom: 6px;
-  }
-
-  select {
-    width: 100%;
-    padding: 10px;
-    border-radius: 8px;
-    border: 1px solid var(--border);
-    background-color: #fcfcfc;
-    font-size: 0.95rem;
-    cursor: pointer;
-  }
-
-  .btn-primary {
-    padding: 11px 25px;
-    background: var(--primary);
-    color: white;
-    border: none;
-    border-radius: 8px;
-    font-weight: 600;
-    transition: all 0.2s;
-  }
-
-  .btn-primary:hover:not(:disabled) {
-    background: var(--primary-hover);
-    transform: translateY(-1px);
-  }
-
-  .btn-primary:disabled {
-    background: #cbd5e1;
-    cursor: not-allowed;
-  }
-
-  /* INPUT FILE DISCRETO */
-  .upload-area {
-    margin-top: 20px;
-    font-size: 0.8rem;
-    color: var(--text-muted);
-    text-align: center;
-  }
-  /* Asegura que el contenedor sea relativo para posicionar la lista */
-.search-section {
-    position: relative;
-    margin-bottom: 30px;
-}
-
-#sugerencias {
-    position: absolute;
-    top: 100%; /* Justo debajo del input */
-    left: 0;
-    right: 0;
-    background: white;
-    border: 1px solid var(--border);
-    border-radius: 0 0 var(--radius) var(--radius);
-    box-shadow: var(--shadow);
-    z-index: 1000;
-    max-height: 300px;
-    overflow-y: auto;
-    display: none; /* Oculto por defecto */
-}
-
-#sugerencias div {
-    padding: 12px 20px;
-    cursor: pointer;
-    border-bottom: 1px solid #f1f5f9;
-}
-
-#sugerencias div:hover {
-    background-color: #f8fafc;
-    color: var(--primary);
-}
-
-/* Efecto de pulso suave para el siguiente paso */
-select:not(:disabled) {
-    border: 2px solid var(--primary);
-    animation: highlight 1.5s infinite;
-}
-
-@keyframes highlight {
-    0% { box-shadow: 0 0 0 0px rgba(51, 201, 79, 0.2); }
-    70% { box-shadow: 0 0 0 10px rgba(51, 201, 79, 0); }
-    100% { box-shadow: 0 0 0 0px rgba(51, 201, 79, 0); }
-}
-
-/* Estilo para los selects deshabilitados */
-select:disabled {
-    background-color: #f1f5f9;
-    cursor: not-allowed;
-    opacity: 0.6;
-}
-</style>
-</head>
-<body>
-
-<nav class="navbar">
-  <h1>IEMCO Refacciones</h1>
-  <div style="font-size: 0.8rem; color: var(--text-muted);">v1.0</div>
-</nav>
-
-<div class="container">
-  
-  <div class="search-section">
-    <input type="text" id="search" class="main-search" placeholder="Escribe el nombre de la refacción..." />
-    <div id="sugerencias"></div>
-  </div>
-
-  <div class="filter-card">
-    <h3>Búsqueda por categoría</h3>
-    <div class="filter-grid">
-      <div>
-        <label>Departamento</label>
-        <select id="filtroMaquina">
-          <option value="">Selecciona departamento...</option>
-        </select>
-      </div>
-      <div>
-        <label>Categoría</label>
-        <select id="filtroCategoria" disabled>
-          <option value="">Selecciona categoria ...</option>
-        </select>
-      </div>
-      <button id="btnBuscar" class="btn-primary" disabled>Buscar</button>
-    </div>
-  </div>
-
-  <div class="upload-area">
-    <p>Cargar base de datos (Excel):</p>
-    <input type="file" id="input" style="width: auto;"/>
-  </div>
-
-</div>
-
-<script>
-let dataGlobal = [];
-
-// ELEMENTOS
-const filtroMaquina = document.getElementById("filtroMaquina");
-const filtroCategoria = document.getElementById("filtroCategoria");
-const btnBuscar = document.getElementById("btnBuscar");
-const buscador = document.getElementById("search");
-const sugerencias = document.getElementById("sugerencias");
-
-// ==========================
-// VALIDAR FILTROS (OBLIGATORIOS)
-// ==========================
-function validarFiltros() {
-  if (filtroMaquina.value && filtroCategoria.value) {
-    btnBuscar.disabled = false;
-    btnBuscar.style.cursor = "pointer";
-    btnBuscar.style.opacity = "1";
-  } else {
-    btnBuscar.disabled = true;
-    btnBuscar.style.cursor = "not-allowed";
-    btnBuscar.style.opacity = "0.6";
-  }
-}
-
-filtroMaquina.addEventListener("change", validarFiltros);
-filtroCategoria.addEventListener("change", validarFiltros);
-
-// ==========================
-// BOTÓN BUSCAR (ÚNICA REDIRECCIÓN)
-// ==========================
-filtroMaquina.addEventListener("change", () => {
-  filtroCategoria.innerHTML = `<option value="">Selecciona categoría</option>`;
-  filtroCategoria.disabled = true;
-  filtroCategoria.value = "";
-
-  const maquinaSeleccionada = filtroMaquina.value;
-  if (!maquinaSeleccionada) {
-    validarFiltros();
-    return;
-  }
-
-  const categoriasFiltradas = [
-    ...new Set(
-      dataGlobal
-        .filter(d => d.Maquina === maquinaSeleccionada)
-        .map(d => d.Categoria)
-        .filter(Boolean)
-    )
-  ];
-
-  categoriasFiltradas.forEach(c => {
-    filtroCategoria.innerHTML += `<option value="${c}">${c}</option>`;
-  });
-
-  filtroCategoria.disabled = false;
-  validarFiltros();
-});
-
-btnBuscar.addEventListener("click", () => {
-  const maquina = filtroMaquina.value;
-  const categoria = filtroCategoria.value;
-
-  if (!maquina || !categoria) return;
-
-  window.location.href =
-    `resultados.html?maquina=${encodeURIComponent(maquina)}&categoria=${encodeURIComponent(categoria)}`;
-});
-
-// ==========================
-// CARGAR DESDE LOCALSTORAGE
-// ==========================
-const guardado = localStorage.getItem("inventario");
-if (guardado) {
-  dataGlobal = JSON.parse(guardado);
-  cargarFiltros();
-}
-
-// ==========================
-// CARGAR ARCHIVO EXCEL
-// ==========================
-document.getElementById("input").addEventListener("change", e => {
-  const reader = new FileReader();
-  reader.onload = evt => {
-    const wb = XLSX.read(evt.target.result, { type: "binary" });
-    const sheet = wb.Sheets[wb.SheetNames[0]];
-    dataGlobal = XLSX.utils.sheet_to_json(sheet, { defval: "" });
-
-    localStorage.setItem("inventario", JSON.stringify(dataGlobal));
-    cargarFiltros();
-  };
-  reader.readAsBinaryString(e.target.files[0]);
-});
-
-// ==========================
-// BUSCADOR INTELIGENTE
-// ==========================
-// ==========================
-// BUSCADOR CON AUTOCOMPLETADO
-// ==========================
-buscador.addEventListener("input", function () {
-    const texto = this.value.toLowerCase().trim();
-    sugerencias.innerHTML = "";
-
-    if (texto.length < 2) {
-        sugerencias.style.display = "none";
-        return;
-    }
-
-    // Filtramos buscando coincidencias en la columna "Nombre"
-    const resultados = dataGlobal.filter(d => {
-        const nombreRefaccion = String(d.Nombre || "").toLowerCase();
-        return nombreRefaccion.includes(texto);
-    }).slice(0, 10); // Limitamos a 10 sugerencias para no saturar
-
-    if (resultados.length > 0) {
-        resultados.forEach(r => {
-            const div = document.createElement("div");
-            // Mostramos el nombre y, opcionalmente, la categoría para ayudar al usuario
-            div.innerHTML = `<strong>${r.Nombre}</strong> <small style="color:gray">(${r.Categoria || ''})</small>`;
-            
-            div.onclick = () => {
-                buscador.value = r.Nombre; // Rellena el input
-                sugerencias.style.display = "none"; // Cierra la lista
-                // Redirigimos a los resultados
-                window.location.href = `resultados.html?q=${encodeURIComponent(r.Nombre)}`;
-            };
-            sugerencias.appendChild(div);
-        });
-        sugerencias.style.display = "block";
-    } else {
-        sugerencias.style.display = "none";
-    }
-});
-
-// Cerrar sugerencias si el usuario hace clic fuera del buscador
-document.addEventListener("click", function(event) {
-    if (!buscador.contains(event.target) && !sugerencias.contains(event.target)) {
-        sugerencias.style.display = "none";
-    }
-});
-
-// ==========================
-// CARGAR FILTROS (SIN REDIRIGIR)
-// ==========================
-function cargarFiltros() {
-  filtroMaquina.innerHTML = `<option value="">Selecciona departamento</option>`;
-  filtroCategoria.innerHTML = `<option value="">Selecciona categoría</option>`;
-  filtroCategoria.disabled = true;
-
-  const maquinas = [...new Set(
-    dataGlobal.map(d => d.Maquina).filter(Boolean)
-  )];
-
-  maquinas.forEach(m => {
-    filtroMaquina.innerHTML += `<option value="${m}">${m}</option>`;
-  });
-}
-function limpiarBusquedas() {
-  // limpiar buscador texto
-  const search = document.getElementById("search");
-  const sugerencias = document.getElementById("sugerencias");
-
-  if (search) search.value = "";
-  if (sugerencias) {
-    sugerencias.innerHTML = "";
-    sugerencias.style.display = "none";
-  }
-
-  // reset selects
-  filtroMaquina.value = "";
-  filtroCategoria.innerHTML = `<option value="">Selecciona categoría</option>`;
-  filtroCategoria.disabled = true;
-
-  // desactivar botón
-  btnBuscar.disabled = true;
-  btnBuscar.style.opacity = "0.6";
-  btnBuscar.style.cursor = "not-allowed";
-}
-window.addEventListener("pageshow", () => {
-  limpiarBusquedas();
-});
-
-
-</script>
-
-</body>
-</html> -->
-
 <!DOCTYPE html>
 <html lang="es" data-bs-theme="light">
 <head>
@@ -543,6 +91,17 @@ window.addEventListener("pageshow", () => {
             border-bottom: 1px solid #dee2e6;
             padding: 1rem 2rem;
         }
+        #backend-status {
+  background: rgba(0,122,51,.08);
+  color: #007a33;
+  font-weight: 500;
+  font-size: .85rem;
+}
+
+.card-header h6 {
+  letter-spacing: .08em;
+}
+
     </style>
 </head>
 <body>
@@ -862,11 +421,11 @@ window.addEventListener("pageshow", () => {
             <nav>
                 <ul class="nav nav-pills small" style="color: #000000;">
                     <li class="nav-item"><a href="index.html" class="nav-link" aria-current="page" style="color: #000000;">INICIO</a></li>
-                    <li class="nav-item"><a href="" class="nav-link" style="color: #000000;">BUSCADOR</a></li>
-                    <li class="nav-item"><a href="actDatos/importar.html" class="nav-link" style="color: #000000;">ACTUALIZAR DATOS</a></li>
+                    <!-- <li class="nav-item"><a href="" class="nav-link" style="color: #000000;">BUSCADOR</a></li> -->
+                    <!-- <li class="nav-item"><a href="actDatos/importar.html" class="nav-link" style="color: #000000;">ACTUALIZAR DATOS</a></li> -->
                               <li class="nav-item"><a href="actDatos/importar-odoo.html" class="nav-link" style="color: #000000;">ODDO DATOS</a></li>
                     <li class="nav-item"><a href="refacciones.html" class="nav-link" style="color: #000000;">TABLA DATOS</a></li>
-                    <li class="nav-item"><a href="#" class="nav-link" style="color: #000000;">AYUDA</a></li>
+                    <!-- <li class="nav-item"><a href="#" class="nav-link" style="color: #000000;">AYUDA</a></li> -->
                 </ul>
             </nav>
         </header>
@@ -922,7 +481,7 @@ window.addEventListener("pageshow", () => {
                     <i class="bi bi-graph-up-arrow text-warning fs-4"></i>
                 </div>
                 <div class="ms-3">
-                    <h6 class="card-subtitle text-muted fw-light">Lo más reciente</h6>
+                    <h6 class="card-subtitle text-muted fw-light">Ultimo agregado</h6>
                     <h5 id="ultimoProducto" class="card-title mb-0 fw-bold text-dark">Cargando...</h5>
                 </div>
             </div>
@@ -936,18 +495,46 @@ window.addEventListener("pageshow", () => {
 
         </div> <div class="row mt-4">
             <div class="col-12">
-                <div class="card border-0 shadow-sm">
-                    <div class="card-header bg-white py-3">
-                        <h6 class="mb-0 fw-bold">Detalle General de Operaciones</h6>
-                    </div>
-                    <div class="card-body text-center py-5">
-                        <p class="text-muted">Aquí puedes colocar una tabla detallada o gráficas de rendimiento.</p>
-                    </div>
-                    <h3>Estado del sistema</h3>
-<div id="backend-status">Verificando conexión...</div>
+  <div class="card border-0 shadow-sm h-100">
 
-                </div>
-            </div>
+    <!-- Header -->
+    <div class="card-header bg-white py-3 d-flex justify-content-between align-items-center">
+      <h6 class="mb-0 fw-bold text-uppercase">
+        Detalle General de Operaciones
+      </h6>
+
+      <span class="badge bg-success bg-opacity-10 text-success">
+        Sistema
+      </span>
+    </div>
+
+    <!-- Body -->
+    <div class="card-body py-4">
+
+      <!-- Contenido principal -->
+      <div class="text-center mb-4">
+        <p class="text-muted mb-0">
+          Aquí puedes colocar una tabla detallada o gráficas de rendimiento.
+        </p>
+      </div>
+
+      <hr>
+
+      <!-- Estado del sistema -->
+      <div class="d-flex justify-content-between align-items-center mt-3">
+        <h6 class="fw-semibold mb-0">
+          Estado del sistema
+        </h6>
+
+        <div id="backend-status" class="px-3 py-2 rounded">
+          Verificando conexión...
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
         </div>
     </div>
 </div>
