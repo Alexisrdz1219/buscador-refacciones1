@@ -30,22 +30,27 @@
 
 <body>
 
-<h2>Importar desde Odoo</h2>
+<input type="file" id="excel" />
+<button onclick="importar()">Importar Odoo</button>
 
-<p>
-Este archivo:
-<ul>
-  <li>Actualiza <b>cantidad</b> por referencia interna</li>
-  <li>Agrega refacciones nuevas si no existen</li>
-</ul>
-</p>
+<script>
+async function importar() {
+  const file = document.getElementById("excel").files[0];
+  if (!file) return alert("Selecciona un archivo");
 
-<input type="file" id="excelFile" accept=".xlsx,.xls">
-<button onclick="subirOdoo()">Procesar Odoo</button>
+  const formData = new FormData();
+  formData.append("file", file);
 
-<p id="estado"></p>
+  const res = await fetch("http://localhost:5000/api/import/odoo", {
+    method: "POST",
+    body: formData
+  });
 
-<script src="importar-odoo.js"></script>
+  const data = await res.json();
+  alert(`Insertados: ${data.insertados} | Actualizados: ${data.actualizados}`);
+}
+</script>
+
 
 </body>
 </html>
