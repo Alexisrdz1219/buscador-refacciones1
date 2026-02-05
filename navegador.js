@@ -12,8 +12,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
       try {
         const res = await fetch(
-          `${API}/refacciones-filtradas?marca=${encodeURIComponent(marca)}&modelo=${encodeURIComponent(modelo)}&maquina=${encodeURIComponent(maquina)}`
-        );
+  `${API}/refacciones-filtradas?categoriaprin=${encodeURIComponent(marca)}&maquinamod=${encodeURIComponent(modelo)}&maquinaesp=${encodeURIComponent(maquina)}`
+);
+
 
         const data = await res.json();
         mostrarResultados(data);
