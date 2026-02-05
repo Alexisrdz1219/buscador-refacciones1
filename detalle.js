@@ -66,3 +66,23 @@ document.getElementById("form").addEventListener("submit", async e => {
   await cargarOpciones("/opciones/maquinamod", "maquinamod");
   await cargarOpciones("/opciones/maquinaesp", "maquinaesp");
 })();
+
+async function cargarMaquinasCompatibles(refaccionId) {
+  const maquinas = await fetch(`${API}/maquinas`).then(r => r.json());
+  const compatibles = await fetch(`${API}/refacciones/${refaccionId}/compatibles`)
+    .then(r => r.json());
+
+  const idsCompatibles = compatibles.map(m => m.id);
+  const cont = document.getElementById("lista-maquinas");
+  cont.innerHTML = "";
+
+  maquinas.forEach(m => {
+    const checked = idsCompatibles.includes(m.id) ? "checked" : "";
+    cont.innerHTML += `
+      <label>
+        <input type="checkbox" value="${m.id}" ${checked}>
+        ${m.maquinamod} ${m.maquinaesp} - ${m.nombre}
+      </label><br>
+    `;
+  });
+}
