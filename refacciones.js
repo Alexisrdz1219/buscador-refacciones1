@@ -163,8 +163,8 @@ async function cargarTabla() {
         </div>
 
         <div class="card-actions">
-          <button onclick="editar(${r.id}, ${r.cantidad}, '${r.ubicacion || ""}', '${r.observacion || ""}')">✏️</button>
-          <button onclick="eliminar(${r.id})">🗑️</button>
+          <button onclick="verDetalle(${r.id})">Editar</button>
+          <button onclick="eliminar(${r.id})">Eliminar</button>
         </div>
       </div>
     `;
@@ -215,3 +215,7 @@ function eliminar(id) {
 }
 
 cargarTabla();
+
+function verDetalle(id) {
+  window.location.href = `detalle.html?id=${id}`;
+}
