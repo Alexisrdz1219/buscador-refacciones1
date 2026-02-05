@@ -107,6 +107,24 @@
 
 <h2>Inventario de Refacciones</h2>
 
+<div style="margin-bottom:20px; display:flex; gap:10px; flex-wrap:wrap;">
+  <input
+    type="text"
+    id="busqueda"
+    placeholder="🔍 Buscar por nombre, referencia o palabras clave"
+    style="padding:10px; width:280px;"
+    oninput="buscar()"
+  />
+
+  <select id="filtroStock" onchange="buscar()">
+    <option value="">Todos</option>
+    <option value="ok">Stock OK</option>
+    <option value="low">Stock Bajo</option>
+    <option value="zero">Sin Stock</option>
+  </select>
+</div>
+
+
 <div id="cardsContainer" class="cards-grid">
   <p class="empty">Cargando refacciones...</p>
 </div>
@@ -117,6 +135,10 @@
   <button onclick="next()">Siguiente ➡️</button>
 </div>
 
+<span class="badge ${stockClass}">
+  ${stockClass === "ok" ? "Disponible" :
+    stockClass === "low" ? "Bajo stock" : "Agotado"}
+</span>
 
 
 <script src="refacciones.js"></script>
