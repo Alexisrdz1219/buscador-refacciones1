@@ -58,6 +58,11 @@ async function cargarTabla() {
     `Página ${paginaActual} / ${Math.ceil(data.total / LIMITE)}`;
 }
 
+<span class="badge ${stockClass}">
+  ${stockClass === "ok" ? "Disponible" :
+    stockClass === "low" ? "Bajo stock" : "Agotado"}
+</span>
+
 function next() {
   paginaActual++;
   cargarTabla();

@@ -4,27 +4,69 @@
   <meta charset="UTF-8">
   <title>Detalle de Refacción</title>
 </head>
+<style>
+  select {
+  width: 100%;
+  padding: 8px;
+  margin-bottom: 12px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+}
+label {
+  font-size: 13px;
+  font-weight: bold;
+  display: block;
+  margin-top: 10px;
+}
+
+</style>
 <body>
 
 <h2>Editar Refacción</h2>
 
 <form id="form">
-  <input type="text" id="nombreprod" placeholder="Nombre"><br>
-  <input type="text" id="categoriaprin" placeholder="Categoría"><br>
-  <input type="text" id="maquinamod" placeholder="Máquina Mod"><br>
-  <input type="text" id="maquinaesp" placeholder="Máquina Esp"><br>
-  <input type="text" id="tipoprod" placeholder="Tipo"><br>
-  <input type="text" id="modelo" placeholder="Modelo"><br>
-  <input type="text" id="refinterna" placeholder="Referencia Interna"><br>
-  <input type="text" id="palclave" placeholder="Palabras clave"><br>
-  <input type="number" id="cantidad" placeholder="Cantidad"><br>
-  <input type="text" id="unidad" placeholder="Unidad"><br>
-  <input type="text" id="ubicacion" placeholder="Ubicación"><br>
-  <textarea id="observacion" placeholder="Observación"></textarea><br>
-  <input type="text" id="imagen" placeholder="URL Imagen"><br>
+  <label>Nombre</label>
+  <input type="text" id="nombreprod" required>
+
+  <label>Categoría</label>
+  <select id="categoriaprin" required></select>
+
+  <label>Máquina (Modelo)</label>
+  <select id="maquinamod"></select>
+
+  <label>Máquina (Específica)</label>
+  <select id="maquinaesp"></select>
+
+  <label>Tipo</label>
+  <input type="text" id="tipoprod">
+
+  <label>Modelo</label>
+  <input type="text" id="modelo">
+
+  <label>Referencia Interna</label>
+  <input type="text" id="refinterna" required>
+
+  <label>Palabras clave</label>
+  <input type="text" id="palclave">
+
+  <label>Cantidad</label>
+  <input type="number" id="cantidad" min="0" step="1" required>
+
+  <label>Unidad</label>
+  <input type="text" id="unidad">
+
+  <label>Ubicación</label>
+  <input type="text" id="ubicacion">
+
+  <label>Observación</label>
+  <textarea id="observacion"></textarea>
+
+  <label>Imagen (URL)</label>
+  <input type="text" id="imagen">
 
   <button type="submit">💾 Guardar cambios</button>
 </form>
+
 
 <script src="detalle.js"></script>
 </body>

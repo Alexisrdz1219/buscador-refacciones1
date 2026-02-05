@@ -6,6 +6,11 @@ async function cargarDetalle() {
   const res = await fetch(`${API}/refacciones/${id}`);
   const r = await res.json();
 
+cargarOpciones("/opciones/categorias", "categoriaprin", "valor");
+cargarOpciones("/opciones/maquinamod", "maquinamod", "valor");
+cargarOpciones("/opciones/maquinaesp", "maquinaesp", "valor");
+
+
   Object.keys(r).forEach(key => {
     const el = document.getElementById(key);
     if (el) el.value = r[key] ?? "";
@@ -31,3 +36,27 @@ document.getElementById("form").addEventListener("submit", async e => {
 });
 
 cargarDetalle();
+
+
+async function cargarOpciones(endpoint, selectId, campo, valorActual = "") {
+  const res = await fetch(`${API}${endpoint}`);
+  const data = await res.json();
+
+  const select = document.getElementById(selectId);
+  select.innerHTML = `<option value="">-- Selecciona --</option>`;
+
+  data.forEach(item => {
+    const opt = document.createElement("option");
+    opt.value = item[campo];
+    opt.textContent = item[campo];
+
+    if (item[campo] === valorActual) {
+      opt.selected = true;
+    }
+
+    select.appendChild(opt);
+  });
+}
+
+
+
