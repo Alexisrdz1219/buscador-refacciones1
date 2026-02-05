@@ -3,37 +3,15 @@
 <head>
   <meta charset="UTF-8">
   <title>Importar desde Odoo</title>
-
-  <style>
-    body {
-      font-family: Arial;
-      padding: 30px;
-      background: #f4f6f8;
-    }
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      margin-top: 20px;
-      background: white;
-    }
-    th, td {
-      padding: 8px;
-      border: 1px solid #ccc;
-      font-size: 13px;
-    }
-    th {
-      background: #222;
-      color: white;
-    }
-  </style>
 </head>
-
 <body>
 
 <input type="file" id="excel" />
 <button onclick="importar()">Importar Odoo</button>
 
 <script>
+const API = "https://buscador-refaccionesbackend.onrender.com";
+
 async function importar() {
   const file = document.getElementById("excel").files[0];
   if (!file) return alert("Selecciona un archivo");
@@ -41,16 +19,26 @@ async function importar() {
   const formData = new FormData();
   formData.append("file", file);
 
-  const res = await fetch("http://localhost:5000/api/import/odoo", {
-    method: "POST",
-    body: formData
-  });
+  try {
+    const res = await fetch(`${API}/importar-odoo`, {
+      method: "POST",
+      body: formData
+    });
 
-  const data = await res.json();
-  alert(`Insertados: ${data.insertados} | Actualizados: ${data.actualizados}`);
+    const data = await res.json();
+
+    if (data.ok) {
+      alert(`🟢 Insertados: ${data.insertados} | 🔁 Actualizados: ${data.actualizados}`);
+    } else {
+      alert("❌ Error en importación");
+    }
+
+  } catch (err) {
+    alert("❌ No se pudo conectar con el backend");
+    console.error(err);
+  }
 }
 </script>
-
 
 </body>
 </html>
