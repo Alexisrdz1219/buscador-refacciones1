@@ -25,6 +25,7 @@ label {
 <h2>Editar Refacción</h2>
 
 <form id="form">
+
   <label>Nombre</label>
   <input type="text" id="nombreprod" required>
 
@@ -64,39 +65,21 @@ label {
   <label>Imagen (URL)</label>
   <input type="text" id="imagen">
 
-  <div class="mt-3">
-  <div class="mt-3">
-  <h6>Compatibilidad</h6>
+  <hr>
 
-  <label>
-    <input type="checkbox" value="1">
-    AOKI · ISBM 2
-  </label>
+  <h3>Máquinas compatibles</h3>
+  <div id="lista-maquinas"></div>
 
-  <label>
-    <input type="checkbox" value="2">
-    AOKI · ISBM 3
-  </label>
-
-  <label>
-    <input type="checkbox" value="3">
-    AOKI · ISBM 4
-  </label>
-
-  <label>
-    <input type="checkbox" value="999">
-    Otros
-  </label>
-</div>
-
-</div>
-
-
+  <br>
 
   <button type="submit">💾 Guardar cambios</button>
+
 </form>
 
+<!-- IMPORTANTÍSIMO: defer -->
+<script src="detalle.js" defer></script>
 
-<script src="detalle.js"></script>
 </body>
+
+
 </html>
