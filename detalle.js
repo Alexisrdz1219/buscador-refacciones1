@@ -56,7 +56,7 @@ document.getElementById("form").addEventListener("submit", async e => {
   e.preventDefault();
 
   const data = {};
-  document.querySelectorAll("input, textarea, select").forEach(el => {
+  document.querySelectorAll("input:not([type=checkbox]), textarea").forEach(el => {
     data[el.id] = el.value;
   });
 
@@ -68,6 +68,7 @@ document
   .forEach(cb => compatibilidad.push(cb.value));
 
 data.compatibilidad = compatibilidad;
+
 
 
   await fetch(`${API}/refacciones/${id}`, {
