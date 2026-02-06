@@ -1,14 +1,18 @@
 const API = "https://buscador-refaccionesbackend.onrender.com";
 const params = new URLSearchParams(window.location.search);
 const id = params.get("id");
-let valoresActuales = {};
 
-/* ---------- CARGAR DETALLE ---------- */
+let valoresActuales = {};
+let maquinasCompatibles = [];
+
+/* =========================
+   CARGAR DETALLE REFACCIÓN
+========================= */
 async function cargarDetalle() {
   const res = await fetch(`${API}/refacciones/${id}`);
   const r = await res.json();
 
-  valoresActuales = r; // 🔑 guardamos valores
+  valoresActuales = r;
 
   Object.keys(r).forEach(key => {
     const el = document.getElementById(key);
@@ -18,19 +22,9 @@ async function cargarDetalle() {
   });
 }
 
-// 👉 marcar compatibilidad
-if (Array.isArray(r.compatibilidad)) {
-  document
-    .querySelectorAll('input[type="checkbox"]')
-    .forEach(cb => {
-      if (r.compatibilidad.includes(cb.value)) {
-        cb.checked = true;
-      }
-    });
-}
-
-
-/* ---------- CARGAR OPCIONES ---------- */
+/* =========================
+   CARGAR OPCIONES SELECT
+========================= */
 async function cargarOpciones(endpoint, selectId) {
   const res = await fetch(`${API}${endpoint}`);
   const data = await res.json();
@@ -45,31 +39,54 @@ async function cargarOpciones(endpoint, selectId) {
     select.appendChild(opt);
   });
 
-  // 🔥 aplicar valor guardado
   if (valoresActuales[selectId]) {
     select.value = valoresActuales[selectId];
   }
 }
 
-/* ---------- GUARDAR ---------- */
+/* =========================
+   CARGAR CHECKLIST MAQUINAS
+========================= */
+async function cargarMaquinasCompatibles() {
+  const maquinas = await fetch(`${API}/maquinas`).then(r => r.json());
+  maquinasCompatibles = await fetch(`${API}/refacciones/${id}/compatibles`)
+    .then(r => r.json());
+
+  const idsCompatibles = maquinasCompatibles.map(m => m.id);
+  const cont = document.getElementById("lista-maquinas");
+  cont.innerHTML = "";
+
+  maquinas.forEach(m => {
+    const checked = idsCompatibles.includes(m.id) ? "checked" : "";
+    cont.innerHTML += `
+      <label style="display:block">
+        <input type="checkbox" value="${m.id}" ${checked}>
+        ${m.maquinamod} ${m.maquinaesp} - ${m.nombre}
+      </label>
+    `;
+  });
+}
+
+/* =========================
+   GUARDAR CAMBIOS
+========================= */
 document.getElementById("form").addEventListener("submit", async e => {
   e.preventDefault();
 
   const data = {};
-  document.querySelectorAll("input:not([type=checkbox]), textarea").forEach(el => {
-    data[el.id] = el.value;
-  });
 
-  // 👉 recoger compatibilidad
-const compatibilidad = [];
+  document
+    .querySelectorAll("input:not([type=checkbox]), textarea, select")
+    .forEach(el => {
+      data[el.id] = el.value;
+    });
 
-document
-  .querySelectorAll('input[type="checkbox"]:checked')
-  .forEach(cb => compatibilidad.push(cb.value));
+  const compatibilidad = [];
+  document
+    .querySelectorAll('#lista-maquinas input[type="checkbox"]:checked')
+    .forEach(cb => compatibilidad.push(cb.value));
 
-data.compatibilidad = compatibilidad;
-
-
+  data.compatibilidad = compatibilidad;
 
   await fetch(`${API}/refacciones/${id}`, {
     method: "PUT",
@@ -77,35 +94,19 @@ data.compatibilidad = compatibilidad;
     body: JSON.stringify(data)
   });
 
-  alert("✅ Refacción actualizada");
+  alert("✅ Refacción actualizada correctamente");
   window.location.href = "refacciones.html";
 });
 
-/* ---------- EJECUCIÓN CORRECTA ---------- */
+/* =========================
+   EJECUCIÓN ORDENADA
+========================= */
 (async () => {
   await cargarDetalle();
 
   await cargarOpciones("/opciones/categorias", "categoriaprin");
   await cargarOpciones("/opciones/maquinamod", "maquinamod");
   await cargarOpciones("/opciones/maquinaesp", "maquinaesp");
+
+  await cargarMaquinasCompatibles();
 })();
-
-async function cargarMaquinasCompatibles(refaccionId) {
-  const maquinas = await fetch(`${API}/maquinas`).then(r => r.json());
-  const compatibles = await fetch(`${API}/refacciones/${refaccionId}/compatibles`)
-    .then(r => r.json());
-
-  const idsCompatibles = compatibles.map(m => m.id);
-  const cont = document.getElementById("lista-maquinas");
-  cont.innerHTML = "";
-
-  maquinas.forEach(m => {
-    const checked = idsCompatibles.includes(m.id) ? "checked" : "";
-    cont.innerHTML += `
-      <label>
-        <input type="checkbox" value="${m.id}" ${checked}>
-        ${m.maquinamod} ${m.maquinaesp} - ${m.nombre}
-      </label><br>
-    `;
-  });
-}
