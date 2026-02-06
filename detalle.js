@@ -49,10 +49,11 @@ async function cargarOpciones(endpoint, selectId) {
 ========================= */
 async function cargarMaquinasCompatibles() {
   const maquinas = await fetch(`${API}/maquinas`).then(r => r.json());
-  maquinasCompatibles = await fetch(`${API}/refacciones/${id}/compatibles`)
+  const resp = await fetch(`${API}/refacciones/${id}/compatibles`)
     .then(r => r.json());
 
-  const idsCompatibles = maquinasCompatibles.map(m => m.id);
+  const idsCompatibles = resp.maquinas || [];
+
   const cont = document.getElementById("lista-maquinas");
   cont.innerHTML = "";
 
@@ -61,11 +62,12 @@ async function cargarMaquinasCompatibles() {
     cont.innerHTML += `
       <label style="display:block">
         <input type="checkbox" value="${m.id}" ${checked}>
-        ${m.maquinamod} ${m.maquinaesp} - ${m.nombre}
+        ${m.maquinamod} ${m.maquinaesp}
       </label>
     `;
   });
 }
+
 
 /* =========================
    GUARDAR CAMBIOS
@@ -88,11 +90,21 @@ document.getElementById("form").addEventListener("submit", async e => {
 
   data.compatibilidad = compatibilidad;
 
-  await fetch(`${API}/refacciones/${id}`, {
-    method: "PUT",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(data)
-  });
+  const res = await fetch(`${API}/refacciones/${id}`, {
+  method: "PUT",
+  headers: { "Content-Type": "application/json" },
+  body: JSON.stringify(data)
+});
+
+if (!res.ok) {
+  const text = await res.text();
+  console.error("Error backend:", text);
+  alert("❌ Error al guardar");
+  return;
+}
+
+
+
 
   alert("✅ Refacción actualizada correctamente");
   window.location.href = "refacciones.html";
