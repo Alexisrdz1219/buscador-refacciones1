@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!-- <!DOCTYPE html>
 <html lang="es">
 <head>
   <meta charset="UTF-8">
@@ -82,4 +82,253 @@ label {
 </body>
 
 
+</html> -->
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Edición de Refacción | Sistema IEMCO</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
+
+  <style>
+    :root {
+      --iemco-green: #007a33;
+      --slate-700: #334155;
+      --border-color: #e2e8f0;
+    }
+
+    body {
+      background-color: #f1f5f9;
+      font-family: 'Inter', sans-serif;
+      padding: 30px 0;
+      color: var(--slate-700);
+    }
+
+    .form-container {
+      max-width: 900px;
+      margin: 0 auto;
+      background: white;
+      border-radius: 8px;
+      box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1);
+      overflow: hidden;
+      border: 1px solid var(--border-color);
+    }
+
+    .form-header {
+      background: #ffffff;
+      padding: 24px 32px;
+      border-bottom: 1px solid var(--border-color);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .form-header h2 {
+      font-size: 1.25rem;
+      font-weight: 700;
+      margin: 0;
+      color: #0f172a;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .form-body {
+      padding: 32px;
+    }
+
+    .section-title {
+      font-size: 0.85rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      color: var(--iemco-green);
+      margin-bottom: 20px;
+      margin-top: 10px;
+      border-bottom: 2px solid #f1f5f9;
+      padding-bottom: 8px;
+    }
+
+    label {
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: #64748b;
+      margin-bottom: 6px;
+      display: block;
+    }
+
+    input, select, textarea {
+      width: 100%;
+      padding: 10px 12px;
+      font-size: 0.9rem;
+      border: 1px solid var(--border-color);
+      border-radius: 5px;
+      background-color: #f8fafc;
+      transition: all 0.2s;
+      outline: none;
+    }
+
+    input:focus, select:focus, textarea:focus {
+      border-color: var(--iemco-green);
+      background-color: #fff;
+      box-shadow: 0 0 0 3px rgba(0, 122, 51, 0.1);
+    }
+
+    textarea {
+      min-height: 80px;
+      resize: vertical;
+    }
+
+    .grid-form {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+    }
+
+    .full-width {
+      grid-column: span 2;
+    }
+
+    hr {
+      margin: 30px 0;
+      opacity: 0.1;
+    }
+
+    .compat-box {
+      background: #f8fafc;
+      border: 1px solid var(--border-color);
+      padding: 15px;
+      border-radius: 6px;
+      min-height: 50px;
+    }
+
+    .btn-save {
+      background-color: var(--iemco-green);
+      color: white;
+      border: none;
+      padding: 12px 30px;
+      font-weight: 700;
+      font-size: 0.9rem;
+      border-radius: 4px;
+      transition: all 0.2s;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .btn-save:hover {
+      background-color: #006329;
+      transform: translateY(-1px);
+      box-shadow: 0 4px 12px rgba(0, 122, 51, 0.2);
+    }
+
+    /* Estilo para pantallas pequeñas */
+    @media (max-width: 768px) {
+      .grid-form { grid-template-columns: 1fr; }
+      .full-width { grid-column: span 1; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="form-container">
+  <div class="form-header">
+    <h2><i class="bi bi-pencil-square me-2"></i>Editar Refacción</h2>
+    <span class="badge bg-light text-dark border">ID: <span id="ref-id-display">---</span></span>
+  </div>
+
+  <form id="form" class="form-body">
+    
+    <div class="section-title">Información Principal</div>
+    <div class="grid-form">
+      <div class="full-width">
+        <label>Nombre del Producto / Descripción</label>
+        <input type="text" id="nombreprod" placeholder="Ej. Rodamiento de bolas sellado" required>
+      </div>
+
+      <div>
+        <label>Referencia Interna (Odoo/ERP)</label>
+        <input type="text" id="refinterna" placeholder="REF-0000" required>
+      </div>
+
+      <div>
+        <label>Categoría General</label>
+        <select id="categoriaprin" required></select>
+      </div>
+    </div>
+
+    <div class="section-title mt-4">Clasificación de Maquinaria</div>
+    <div class="grid-form">
+      <div>
+        <label>Máquina (Modelo)</label>
+        <select id="maquinamod"></select>
+      </div>
+      <div>
+        <label>Unidad Específica</label>
+        <select id="maquinaesp"></select>
+      </div>
+    </div>
+
+    <div class="section-title mt-4">Especificaciones Técnicas</div>
+    <div class="grid-form">
+      <div>
+        <label>Tipo de Producto</label>
+        <input type="text" id="tipoprod" placeholder="Ej. Mecánico">
+      </div>
+      <div>
+        <label>Modelo Técnico</label>
+        <input type="text" id="modelo" placeholder="Ej. SKF-2024">
+      </div>
+      <div>
+        <label>Palabras Clave (Búsqueda)</label>
+        <input type="text" id="palclave" placeholder="motor, polea, repuesto">
+      </div>
+      <div>
+        <label>URL de Imagen</label>
+        <input type="text" id="imagen" placeholder="https://sitio.com/foto.jpg">
+      </div>
+    </div>
+
+    <div class="section-title mt-4">Inventario y Ubicación</div>
+    <div class="grid-form">
+      <div>
+        <label>Cantidad en Stock</label>
+        <input type="number" id="cantidad" min="0" step="1" required>
+      </div>
+      <div>
+        <label>Unidad de Medida</label>
+        <input type="text" id="unidad" placeholder="Pzas, Kg, Mts">
+      </div>
+      <div class="full-width">
+        <label>Ubicación Física</label>
+        <input type="text" id="ubicacion" placeholder="Pasillo A - Estante 4">
+      </div>
+      <div class="full-width">
+        <label>Observaciones Adicionales</label>
+        <textarea id="observacion" placeholder="Detalles sobre el proveedor o estado del lote..."></textarea>
+      </div>
+    </div>
+
+    <hr>
+
+    <div class="section-title">Máquinas Compatibles</div>
+    <div id="lista-maquinas" class="compat-box mb-4">
+      <p class="text-muted small m-0 italic">No hay máquinas adicionales vinculadas.</p>
+    </div>
+
+    <div class="d-flex justify-content-end border-top pt-4">
+      <button type="button" class="btn btn-light me-2" onclick="window.history.back()">Cancelar</button>
+      <button type="submit" class="btn-save">
+        <i class="bi bi-floppy"></i> GUARDAR CAMBIOS
+      </button>
+    </div>
+
+  </form>
+</div>
+
+<script src="detalle.js" defer></script>
+
+</body>
 </html>
