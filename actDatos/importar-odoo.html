@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!-- <!DOCTYPE html>
 <html lang="es">
 <head>
   <meta charset="UTF-8">
@@ -80,6 +80,265 @@ function importar() {
 }
 </script>
 
+
+</body>
+</html> -->
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Importar desde Odoo | Panel Administrativo</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
+
+  <style>
+    :root {
+      --iemco-green: #007a33;
+      --bg-light: #f8fafc;
+      --border-color: #e2e8f0;
+    }
+
+    body {
+      background-color: var(--bg-light);
+      font-family: 'Inter', sans-serif;
+      color: #1e293b;
+      padding: 40px 20px;
+    }
+
+    .import-container {
+      max-width: 650px;
+      margin: 0 auto;
+      background: #ffffff;
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      padding: 32px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    }
+
+    .header-title {
+      font-weight: 700;
+      font-size: 1.25rem;
+      letter-spacing: -0.02em;
+      margin-bottom: 24px;
+      color: #0f172a;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    /* Estilo del Input File */
+    .file-drop-area {
+      position: relative;
+      display: flex;
+      align-items: center;
+      flex-direction: column;
+      padding: 40px;
+      border: 2px dashed var(--border-color);
+      border-radius: 6px;
+      background-color: #fcfcfc;
+      transition: 0.2s;
+      cursor: pointer;
+    }
+
+    .file-drop-area:hover {
+      border-color: var(--iemco-green);
+      background-color: #f0fdf4;
+    }
+
+    .file-input {
+      position: absolute;
+      left: 0; top: 0; height: 100%; width: 100%;
+      opacity: 0;
+      cursor: pointer;
+    }
+
+    .upload-icon {
+      font-size: 2.5rem;
+      color: #94a3b8;
+      margin-bottom: 10px;
+    }
+
+    /* Botón de acción */
+    .btn-import {
+      background-color: var(--iemco-green);
+      border: none;
+      padding: 12px 24px;
+      font-weight: 600;
+      font-size: 0.9rem;
+      width: 100%;
+      margin-top: 20px;
+      border-radius: 4px;
+      transition: all 0.2s;
+    }
+
+    .btn-import:hover {
+      background-color: #006329;
+      transform: translateY(-1px);
+    }
+
+    /* Barra de Progreso */
+    .progress-wrapper {
+      margin-top: 25px;
+      display: none; /* Se activa con JS */
+    }
+
+    .progress {
+      height: 8px;
+      background-color: #e2e8f0;
+      border-radius: 10px;
+      overflow: hidden;
+    }
+
+    .progress-bar {
+      background-color: var(--iemco-green);
+      transition: width 0.3s ease;
+    }
+
+    #estado {
+      font-size: 0.85rem;
+      font-weight: 500;
+      margin-top: 10px;
+      color: #64748b;
+    }
+
+    /* Lista de Duplicados */
+    .duplicados-container {
+      margin-top: 30px;
+      border-top: 1px solid var(--border-color);
+      padding-top: 20px;
+    }
+
+    .duplicados-container h3 {
+      font-size: 0.9rem;
+      font-weight: 700;
+      color: #991b1b;
+      text-transform: uppercase;
+      margin-bottom: 15px;
+    }
+
+    .list-duplicados {
+      max-height: 200px;
+      overflow-y: auto;
+      font-size: 0.8rem;
+      background: #fff5f5;
+      border-radius: 4px;
+      padding: 15px;
+      list-style: none;
+      border: 1px solid #fee2e2;
+    }
+
+    .list-duplicados li {
+      padding: 4px 0;
+      border-bottom: 1px solid #fecaca;
+      color: #7f1d1d;
+    }
+    
+    .list-duplicados li:last-child { border: none; }
+  </style>
+</head>
+<body>
+
+<div class="import-container">
+  <div class="header-title">
+    <i class="bi bi-file-earmark-excel text-success"></i>
+    Sincronización de Inventario Odoo
+  </div>
+
+  <p class="text-muted small">Cargue el archivo .xlsx exportado de Odoo para actualizar el inventario de refacciones.</p>
+
+  <div class="file-drop-area" id="drop-area">
+    <i class="bi bi-cloud-arrow-up upload-icon"></i>
+    <span class="fw-bold">Haga clic o arrastre el archivo aquí</span>
+    <span class="text-muted small" id="file-name">No se ha seleccionado ningún archivo</span>
+    <input type="file" id="excel" class="file-input" accept=".xlsx, .xls" onchange="updateFileName()" />
+  </div>
+
+  <button class="btn btn-primary btn-import" onclick="importar()">
+    <i class="bi bi-box-arrow-in-down me-2"></i> INICIAR IMPORTACIÓN
+  </button>
+
+  <div class="progress-wrapper" id="progreso-seccion">
+    <div class="progress">
+      <div id="barra" class="progress-bar" role="progressbar" style="width: 0%"></div>
+    </div>
+    <p id="estado">Esperando archivo...</p>
+  </div>
+
+  <div id="duplicados" class="duplicados-container" style="display: none;"></div>
+</div>
+
+<script>
+  const API = "https://buscador-refaccionesbackend.onrender.com";
+
+  function updateFileName() {
+    const file = document.getElementById("excel").files[0];
+    const label = document.getElementById("file-name");
+    if (file) {
+      label.textContent = `Archivo seleccionado: ${file.name}`;
+      label.classList.remove("text-muted");
+      label.classList.add("text-success", "fw-bold");
+    }
+  }
+
+  function importar() {
+    const file = document.getElementById("excel").files[0];
+    const barra = document.getElementById("barra");
+    const estado = document.getElementById("estado");
+    const wrapper = document.getElementById("progreso-seccion");
+    const duplicadosDiv = document.getElementById("duplicados");
+
+    if (!file) {
+      alert("Por favor, seleccione un archivo de Excel primero.");
+      return;
+    }
+
+    wrapper.style.display = "block";
+    duplicadosDiv.style.display = "none";
+    
+    const formData = new FormData();
+    formData.append("file", file);
+
+    const xhr = new XMLHttpRequest();
+    xhr.open("POST", `${API}/importar-odoo`);
+
+    xhr.upload.onprogress = function (e) {
+      if (e.lengthComputable) {
+        const percent = Math.round((e.loaded / e.total) * 100);
+        barra.style.width = percent + "%";
+        estado.innerHTML = `<i class="bi bi-info-circle"></i> Subiendo archivo: ${percent}%`;
+      }
+    };
+
+    xhr.onload = function () {
+      if (xhr.status === 200) {
+        const data = JSON.parse(xhr.responseText);
+        barra.classList.add("bg-success");
+        estado.innerHTML = `<strong>✅ Éxito:</strong> ${data.insertados} insertados | <strong>🔁 Duplicados:</strong> ${data.duplicados.length}`;
+
+        if (data.duplicados.length > 0) {
+          duplicadosDiv.style.display = "block";
+          let html = `<h3>⚠️ Refacciones omitidas (Duplicadas)</h3><ul class="list-duplicados">`;
+          data.duplicados.forEach(d => {
+            html += `<li><strong>${d.refInterna}</strong> - ${d.nombre}</li>`;
+          });
+          html += "</ul>";
+          duplicadosDiv.innerHTML = html;
+        }
+      } else {
+        estado.innerHTML = "❌ Error crítico al procesar el archivo.";
+        barra.classList.add("bg-danger");
+      }
+    };
+
+    xhr.onerror = () => {
+      estado.textContent = "❌ Error de conexión con el servidor.";
+    };
+
+    xhr.send(formData);
+  }
+</script>
 
 </body>
 </html>
