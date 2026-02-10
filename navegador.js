@@ -1,24 +1,40 @@
 const API = "https://buscador-refaccionesbackend.onrender.com";
 
+// document.addEventListener("DOMContentLoaded", () => {
+//   document.querySelectorAll(".maquina-link").forEach(link => {
+//     link.addEventListener("click", async e => {
+//       e.preventDefault();
+
+//       const categoriaprin = link.dataset.categoriaprin;
+//       const maquinamod = link.dataset.maquinamod;
+//       const maquinaesp = link.dataset.maquinaesp;
+
+//       console.log("BUSCANDO:", categoriaprin, maquinamod, maquinaesp);
+
+//       const res = await fetch(
+//         `${API}/refacciones-filtradas?` +
+//         `categoriaprin=${encodeURIComponent(categoriaprin)}` +
+//         `&maquinamod=${encodeURIComponent(maquinamod)}` +
+//         `&maquinaesp=${encodeURIComponent(maquinaesp)}`
+//       );
+
+//       const data = await res.json();
+//       mostrarResultados(data);
+//     });
+//   });
+// });
 document.addEventListener("DOMContentLoaded", () => {
   document.querySelectorAll(".maquina-link").forEach(link => {
     link.addEventListener("click", async e => {
       e.preventDefault();
 
-      const categoriaprin = link.dataset.categoriaprin;
-      const maquinamod = link.dataset.maquinamod;
-      const maquinaesp = link.dataset.maquinaesp;
+      const maquinaId = link.dataset.maquinaid;
 
-      console.log("BUSCANDO:", categoriaprin, maquinamod, maquinaesp);
+      console.log("BUSCANDO POR MAQUINA ID:", maquinaId);
 
-      const res = await fetch(
-        `${API}/refacciones-filtradas?` +
-        `categoriaprin=${encodeURIComponent(categoriaprin)}` +
-        `&maquinamod=${encodeURIComponent(maquinamod)}` +
-        `&maquinaesp=${encodeURIComponent(maquinaesp)}`
-      );
-
+      const res = await fetch(`${API}/refacciones-por-maquina/${maquinaId}`);
       const data = await res.json();
+
       mostrarResultados(data);
     });
   });
