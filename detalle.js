@@ -72,41 +72,76 @@ async function cargarMaquinasCompatibles() {
 /* =========================
    GUARDAR CAMBIOS
 ========================= */
+// document.getElementById("form").addEventListener("submit", async e => {
+//   e.preventDefault();
+
+//   const data = {};
+
+//   document
+//     .querySelectorAll("input:not([type=checkbox]), textarea, select")
+//     .forEach(el => {
+//       data[el.id] = el.value;
+//     });
+
+//   const compatibilidad = [];
+//   document
+//     .querySelectorAll('#lista-maquinas input[type="checkbox"]:checked')
+//     .forEach(cb => compatibilidad.push(cb.value));
+
+//   data.compatibilidad = compatibilidad;
+
+//   const res = await fetch(`${API}/refacciones/${id}`, {
+//   method: "PUT",
+//   headers: { "Content-Type": "application/json" },
+//   body: JSON.stringify(data)
+// });
+
+// if (!res.ok) {
+//   const text = await res.text();
+//   console.error("Error backend:", text);
+//   alert("❌ Error al guardar");
+//   return;
+// }
+
+
+
+
+//   alert("✅ Refacción actualizada correctamente");
+//   window.location.href = "refacciones.html";
+// });
+
 document.getElementById("form").addEventListener("submit", async e => {
   e.preventDefault();
 
-  const data = {};
+  const fd = new FormData();
 
   document
-    .querySelectorAll("input:not([type=checkbox]), textarea, select")
+    .querySelectorAll("input:not([type=checkbox]):not([type=file]), textarea, select")
     .forEach(el => {
-      data[el.id] = el.value;
+      fd.append(el.id, el.value);
     });
+
+  const file = document.getElementById("imagen").files[0];
+  if (file) fd.append("imagen", file);
 
   const compatibilidad = [];
   document
     .querySelectorAll('#lista-maquinas input[type="checkbox"]:checked')
     .forEach(cb => compatibilidad.push(cb.value));
 
-  data.compatibilidad = compatibilidad;
+  fd.append("compatibilidad", JSON.stringify(compatibilidad));
 
   const res = await fetch(`${API}/refacciones/${id}`, {
-  method: "PUT",
-  headers: { "Content-Type": "application/json" },
-  body: JSON.stringify(data)
-});
+    method: "PUT",
+    body: fd
+  });
 
-if (!res.ok) {
-  const text = await res.text();
-  console.error("Error backend:", text);
-  alert("❌ Error al guardar");
-  return;
-}
+  if (!res.ok) {
+    alert("❌ Error al guardar");
+    return;
+  }
 
-
-
-
-  alert("✅ Refacción actualizada correctamente");
+  alert("✅ Refacción actualizada");
   window.location.href = "refacciones.html";
 });
 

@@ -34,7 +34,8 @@ async function cargarTabla() {
     card.className = "card-ref";
 
     card.innerHTML = `
-      <img src="${r.imagen || 'https://via.placeholder.com/300x200?text=Sin+Imagen'}">
+      <img src="${r.imagen || 'no-image.png'}" style="width:100%;max-height:150px;object-fit:contain">
+
 
       <div class="card-body">
         <h4>${r.nombreprod || "Sin nombre"}</h4>
