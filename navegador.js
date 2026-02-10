@@ -44,10 +44,10 @@ lista.forEach(r => {
   cont.innerHTML += `
     <div class="card ref-card">
       <div class="ref-img">
-        <img 
-          src="${r.imagen || 'https://via.placeholder.com/150'}" 
-          alt="${r.nombreprod}"
-        >
+        <img
+  src="${r.imagen || 'no-image.png'}"
+  style="width:100%; max-height:200px; object-fit:cover"
+/>
       </div>
 
       <div class="ref-body">
