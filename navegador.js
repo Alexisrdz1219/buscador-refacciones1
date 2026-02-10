@@ -58,16 +58,13 @@ function mostrarResultados(lista) {
 
 lista.forEach(r => {
   cont.innerHTML += `
-    <div class="card ref-card">
+    <div class="ref-card">
       <div class="ref-img">
-        <img
-  src="${r.imagen || 'no-image.png'}"
-  style="width:100%; max-height:200px; object-fit:cover"
-/>
+        <img src="${r.imagen || 'no-image.png'}" alt="${r.nombreprod}">
       </div>
 
       <div class="ref-body">
-        <h3>${r.nombreprod}</h3>
+        <h3 class="ref-title">${r.nombreprod}</h3>
 
         <p class="categoria">${r.categoriaprin || 'Sin categoría'}</p>
 
@@ -79,7 +76,7 @@ lista.forEach(r => {
           <span><b>Ubicación:</b> ${r.ubicacion || '-'}</span>
         </div>
 
-        ${r.observacion ? `<p class="obs">${r.observacion}</p>` : ''}
+        
 
         <div class="ref-actions">
           <a href="detalle.html?id=${r.id}" class="btn-ver">Ver / Editar</a>
@@ -88,5 +85,6 @@ lista.forEach(r => {
     </div>
   `;
 });
+
 
 }
