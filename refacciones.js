@@ -34,7 +34,10 @@ async function cargarTabla() {
     card.className = "card-ref";
 
     card.innerHTML = `
-      <img src="${r.imagen || 'no-image.png'}" style="width:100%;max-height:150px;object-fit:contain">
+      <img
+  src="${r.imagen || 'no-image.png'}"
+  style="width:100%; max-height:200px; object-fit:cover"
+/>
 
 
       <div class="card-body">
