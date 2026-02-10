@@ -287,6 +287,7 @@ document.getElementById("form").addEventListener("submit", async e => {
   await cargarOpciones("/opciones/categorias", "categoriaprin");
   await cargarOpciones("/opciones/maquinamod", "maquinamod");
   await cargarOpciones("/opciones/maquinaesp", "maquinaesp");
+await cargarOpciones("/opciones/nummaquina", "nummaquina");
 
   await cargarMaquinasCompatibles();
 })();
