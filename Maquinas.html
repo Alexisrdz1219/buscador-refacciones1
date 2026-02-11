@@ -98,114 +98,109 @@
             padding: 1rem 2rem;
         }
 
-        /* Paleta de colores: Rojo AutoZone, Negro Carbón y Blanco */
+        /* Paleta de colores personalizada */
 :root {
-    --az-red: #d9272e;
-    --az-black: #1a1a1a;
-    --az-gray: #f4f4f4;
-    --az-orange: #ff8200; /* Para resaltar stock o ubicaciones */
+    --brand-green: #007a33;  /* Verde principal (Confianza) */
+    --brand-gray: #7e8990;   /* Gris (Detalles técnicos) */
+    --brand-white: #ffffff;
+    --light-bg: #f8f9fa;     /* Gris muy claro para el fondo */
 }
 
 #resultados {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-    gap: 20px;
-    padding: 20px;
-    background-color: var(--az-gray);
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 25px;
+    padding: 30px;
+    background-color: var(--light-bg);
 }
 
 .card-refa {
-    background: #fff;
-    border: 1px solid #ddd;
-    border-radius: 4px;
+    background: var(--brand-white);
+    border: none;
+    border-radius: 12px; /* Bordes más redondeados para un look amigable */
     overflow: hidden;
-    transition: transform 0.2s, box-shadow 0.2s;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    transition: all 0.3s ease;
     display: flex;
     flex-direction: column;
 }
 
 .card-refa:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+    transform: translateY(-8px);
+    box-shadow: 0 12px 24px rgba(0,122,51,0.15); /* Sombra con un toque verde */
 }
 
-/* Contenedor de Imagen y Badge de Ubicación */
+/* Contenedor de Imagen */
 .img-wrap {
     position: relative;
     width: 100%;
-    height: 200px;
+    height: 180px;
     background: #fff;
-    border-bottom: 2px solid var(--az-red);
+    padding: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .img-wrap img {
-    width: 100%;
-    height: 100%;
-    object-fit: contain; /* Para que la pieza se vea completa */
-    padding: 10px;
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
 }
 
-/* El foco central: La Ubicación */
+/* Badge de Ubicación: Ahora es el protagonista */
 .badge-ubi {
     position: absolute;
-    bottom: 0;
-    right: 0;
-    background-color: var(--az-black);
-    color: #fff;
-    padding: 8px 15px;
-    font-weight: bold;
-    font-size: 0.9rem;
-    border-top-left-radius: 8px;
-    text-transform: uppercase;
-    box-shadow: -2px -2px 5px rgba(0,0,0,0.2);
-}
-
-.badge-ubi::before {
-    content: "📍 ";
+    top: 12px;
+    left: 12px;
+    background-color: var(--brand-green);
+    color: white;
+    padding: 6px 14px;
+    font-weight: 600;
+    font-size: 0.8rem;
+    border-radius: 20px; /* Estilo píldora */
+    box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+    letter-spacing: 0.5px;
 }
 
 /* Información de la Refacción */
 .info-refa {
-    padding: 15px;
-    flex-grow: 1;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
+    padding: 20px;
+    border-top: 1px solid #eee;
 }
 
 .info-refa h3 {
-    margin: 0 0 10px 0;
-    font-size: 1.1rem;
-    color: var(--az-black);
-    text-transform: uppercase;
-    line-height: 1.2;
-    min-height: 2.4em; /* Mantiene alineación */
+    margin: 0 0 12px 0;
+    font-size: 1.05rem;
+    color: #333;
+    font-weight: 700;
+    line-height: 1.3;
+    min-height: 2.6em;
 }
 
 .datos {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    border-top: 1px dashed #ccc;
-    padding-top: 10px;
 }
 
 /* Referencia Interna */
 .datos span:first-child {
-    font-family: 'Courier New', Courier, monospace;
-    font-weight: bold;
-    color: #555;
-    font-size: 0.85rem;
+    font-size: 0.8rem;
+    color: var(--brand-gray);
+    font-weight: 500;
+    text-transform: uppercase;
 }
 
 /* Cantidad / Stock */
 .datos span:last-child {
-    background: var(--az-orange);
-    color: #000;
-    padding: 2px 8px;
-    border-radius: 3px;
-    font-weight: 800;
-    font-size: 0.9rem;
+    background: #e6f2eb; /* Un verde muy pálido de fondo */
+    color: var(--brand-green);
+    padding: 4px 10px;
+    border-radius: 6px;
+    font-weight: 700;
+    font-size: 0.85rem;
+    border: 1px solid rgba(0,122,51,0.2);
 }
     </style>
 </head>
