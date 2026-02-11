@@ -40,16 +40,11 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 });
 
-document.querySelectorAll(".opcion-maquina").forEach(btn => {
-  btn.addEventListener("click", () => {
-
-    const maquina = btn.dataset.maquina; // ejemplo: data-maquina="Inyectora 5"
-
-    localStorage.setItem("maquinaSeleccionada", maquina);
-
-    location.reload(); // opcional si necesitas refrescar
-  });
-});
+function mostrarseleccionada() {
+    const titulo = document.getElementById("tituloMaquina");
+    const maquinaId = titulo.dataset.maquinaid;
+    titulo.textContent = `Resultados para máquina ID: ${maquinaId}`;
+}
 
 
 function mostrarResultados(lista) {
