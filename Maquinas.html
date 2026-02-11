@@ -101,176 +101,50 @@
 .card-header h6 {
   letter-spacing: .08em;
 }
-.ref-card {
-  display: flex;
-  gap: 15px;
-  border: 1px solid #ddd;
-  border-radius: 10px;
-  padding: 12px;
-  margin-bottom: 15px;
-  background: #fff;
-  box-shadow: 0 2px 6px rgba(0,0,0,.08);
+.ref-card{
+  display:flex;
+  align-items:center;
+  gap:20px;
+  background:#ffffff;
+  border-radius:16px;
+  padding:15px;
+  margin-bottom:15px;
+  box-shadow:0 6px 18px rgba(0,0,0,.08);
+  transition:.25s;
 }
 
-.ref-img img {
-  width: 140px;
-  height: 140px;
-  object-fit: cover;
-  border-radius: 8px;
+.ref-card:hover{
+  transform:translateY(-4px);
+  box-shadow:0 10px 25px rgba(0,0,0,.12);
 }
 
-.ref-body {
-  flex: 1;
+.ref-img img{
+  width:90px;
+  height:90px;
+  object-fit:cover;
+  border-radius:12px;
 }
 
-.ref-body h3 {
-  margin: 0;
-  font-size: 1.2rem;
+.ref-info h3{
+  margin:0;
+  font-size:18px;
 }
 
-.categoria {
-  font-size: 0.85rem;
-  color: #666;
-  margin-bottom: 8px;
+.ref-meta{
+  margin:4px 0 10px;
+  color:#777;
+  font-size:14px;
 }
 
-.ref-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-  gap: 6px;
-  font-size: 0.9rem;
-}
-
-.obs {
-  margin-top: 8px;
-  font-style: italic;
-  color: #444;
-}
-
-.ref-actions {
-  margin-top: 10px;
-}
-
-.btn-ver {
-  display: inline-block;
-  padding: 6px 12px;
-  background: #0d6efd;
-  color: #fff;
-  text-decoration: none;
-  border-radius: 6px;
-  font-size: 0.85rem;
-}
-.btn-ver:hover {
-  background: #084298;
-}
-
-/* CONTENEDOR GENERAL */
-#resultados {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(330px, 1fr));
-  gap: 20px;
-}
-
-/* CARD */
-.ref-card {
-  background: #fff;
-  border-radius: 14px;
-  overflow: hidden;
-  box-shadow: 0 10px 25px rgba(0,0,0,.08);
-  display: flex;
-  flex-direction: column;
-  transition: transform .25s ease, box-shadow .25s ease;
-}
-
-.ref-card:hover {
-  transform: translateY(-6px);
-  box-shadow: 0 18px 35px rgba(0,0,0,.15);
-}
-
-/* IMAGEN */
-.ref-img {
-  height: 200px;
-  background: #f2f2f2;
-  overflow: hidden;
-}
-
-.ref-img img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
-/* BODY */
-.ref-body {
-  padding: 18px;
-  display: flex;
-  flex-direction: column;
-  height: 100%;
-}
-
-/* TITULO */
-.ref-title {
-  font-size: 1.05rem;
-  font-weight: 700;
-  margin: 0 0 6px;
-  line-height: 1.25;
-}
-
-/* CATEGORIA */
-.categoria {
-  font-size: 0.75rem;
-  font-weight: 600;
-  color: #fff;
-  background: #0d6efd;
-  display: inline-block;
-  padding: 4px 10px;
-  border-radius: 50px;
-  width: fit-content;
-  margin-bottom: 12px;
-}
-
-/* GRID INFO */
-.ref-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 6px 12px;
-  font-size: 0.82rem;
-  color: #333;
-}
-
-.ref-grid span b {
-  color: #000;
-}
-
-/* OBSERVACION */
-.obs {
-  margin-top: 10px;
-  font-size: 0.8rem;
-  color: #555;
-  background: #f8f9fa;
-  padding: 8px 10px;
-  border-left: 4px solid #0d6efd;
-  border-radius: 6px;
-}
-
-/* ACCIONES */
-.ref-actions {
-  margin-top: auto;
-  text-align: right;
-}
-
-.btn-ver {
-  background: #111;
-  color: #fff;
-  padding: 8px 14px;
-  border-radius: 8px;
-  font-size: 0.8rem;
-  text-decoration: none;
-  transition: background .2s ease;
-}
-
-.btn-ver:hover {
-  background: #000;
+.ubicacion-box{
+  background:linear-gradient(135deg,#4facfe,#00f2fe);
+  color:white;
+  font-weight:bold;
+  padding:10px 16px;
+  border-radius:10px;
+  display:inline-block;
+  font-size:15px;
+  letter-spacing:.5px;
 }
 
     </style>
@@ -632,7 +506,7 @@
 
     <main class="content-area">
         <header class="header-main d-flex justify-content-between align-items-center">
-            <h1 class="h5 mb-0 fw-bold">${maquinaId}</h1>
+            <h1 class="h5 mb-0 fw-bold">"${maquinaId}"</h1>
             <nav>
                 <ul class="nav nav-pills small" style="color: #000000;">
                     <li class="nav-item"><a href="index.html" class="nav-link" aria-current="page" style="color: #000000;">INICIO</a></li>
@@ -752,8 +626,8 @@
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-<script src="script.js"></script>
-<script src="navegador.js"></script>
+<script src="scriptTouch.js"></script>
+<script src="navegadorTouch.js"></script>
 
 
 
