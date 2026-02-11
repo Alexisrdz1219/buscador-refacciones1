@@ -1,393 +1,761 @@
-<!-- <!DOCTYPE html>
-<html lang="es">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>IEMCO - Refacciones Visual</title>
-<style>
-  :root {
-    --primary: #1f8c33;
-    --bg: #f4f7f6;
-    --text: #333;
-    --white: #fff;
-  }
-
-  body {
-    font-family: 'Segoe UI', sans-serif;
-    background-color: var(--bg);
-    margin: 0;
-    padding: 20px;
-  }
-
-  .grid-container {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 20px;
-    max-width: 1200px;
-    margin: 0 auto;
-  }
-
-  /* Estilo de la Tarjeta */
-  .card {
-    background: var(--white);
-    border-radius: 15px;
-    overflow: hidden;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-    cursor: pointer;
-    transition: transform 0.3s ease;
-    border: 2px solid transparent;
-  }
-
-  .card:hover {
-    transform: translateY(-5px);
-    border-color: var(--primary);
-  }
-
-  .card-image {
-    width: 100%;
-    height: 150px;
-    background-color: #eee;
-    object-fit: cover; /* Esto hace que la imagen se vea bien */
-  }
-
-  .card-info {
-    padding: 15px;
-    text-align: center;
-  }
-
-  .card-info h3 {
-    margin: 0;
-    color: var(--primary);
-    font-size: 1.4rem;
-  }
-
-  /* El panel que se despliega */
-  .dropdown-content {
-    max-height: 0;
-    overflow: hidden;
-    transition: max-height 0.4s ease-out;
-    background: #fff;
-    border-top: 1px solid #eee;
-  }
-
-  /* Cuando la tarjeta está activa */
-  .card.active .dropdown-content {
-    max-height: 500px; /* Ajustar según contenido */
-    padding-bottom: 15px;
-  }
-
-  /* Estilo de las opciones dentro del despliegue */
-  .option-link {
-    display: block;
-    padding: 12px 20px;
-    text-decoration: none;
-    color: #555;
-    border-bottom: 1px solid #f9f9f9;
-    font-size: 0.95rem;
-    transition: background 0.2s;
-  }
-
-  .option-link:hover {
-    background: #f0fdf4;
-    color: var(--primary);
-    padding-left: 30px; /* Efecto de desplazamiento */
-  }
-
-  .option-link::before {
-    content: '⚙️';
-    margin-right: 10px;
-  }
-
-</style>
-</head>
-<body>
-
-<h2 style="text-align:center; color: var(--primary); margin-bottom: 30px;">Selecciona la Marca de la Máquina</h2>
-
-<div class="grid-container">
-
-  <div class="card" onclick="toggleCard(this)">
-    <img src="https://via.placeholder.com/300x150?text=Logo+ASB" alt="Máquinas ASB" class="card-image">
-    <div class="card-info">
-      <h3>ASB</h3>
-      <p style="color: #888; font-size: 0.8rem;">Click para ver modelos</p>
-    </div>
-    <div class="dropdown-content">
-      <a href="asb-70dp.html" class="option-link">Modelo ASB-70DP</a>
-      <a href="#" class="option-link">Modelo ASB-150DP</a>
-      <a href="#" class="option-link">Modelo PF6-2B</a>
-    </div>
-  </div>
-
-  <div class="card" onclick="toggleCard(this)">
-    <img src="https://via.placeholder.com/300x150?text=Logo+Sumitomo" alt="Máquinas Sumitomo" class="card-image">
-    <div class="card-info">
-      <h3>SUMITOMO</h3>
-      <p style="color: #888; font-size: 0.8rem;">Click para ver modelos</p>
-    </div>
-    <div class="dropdown-content">
-      <a href="#" class="option-link">Modelo SE180EV</a>
-      <a href="#" class="option-link">Modelo SE280EV</a>
-    </div>
-  </div>
-
-  <div class="card" onclick="toggleCard(this)">
-    <img src="https://via.placeholder.com/300x150?text=Logo+Nissei" alt="Máquinas Nissei" class="card-image">
-    <div class="card-info">
-      <h3>NISSEI</h3>
-      <p style="color: #888; font-size: 0.8rem;">Click para ver modelos</p>
-    </div>
-    <div class="dropdown-content">
-      <a href="#" class="option-link">Modelo GTR-50</a>
-      <a href="#" class="option-link">Modelo GTR-100</a>
-    </div>
-  </div>
-
-</div>
-
-<script>
-  function toggleCard(card) {
-    // Cerrar otras tarjetas si se desea (opcional)
-    /*
-    document.querySelectorAll('.card').forEach(c => {
-      if(c !== card) c.classList.remove('active');
-    });
-    */
-    
-    // Alternar la tarjeta actual
-    card.classList.toggle('active');
-  }
-</script>
-
-</body>
-</html> -->
-
 <!DOCTYPE html>
-<html lang="es">
+<html lang="es" data-bs-theme="light">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>IEMCO - Carrusel de Máquinas</title>
-<style>
-  :root {
-    --primary: #1f8c33;
-    --bg: #f8fafc;
-    --white: #ffffff;
-  }
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>IEMCO REFACCIONES</title>
+    
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
+    <style>
+        :root {
+            --sidebar-width: 280px;
+        }
 
-  body {
-    font-family: 'Inter', sans-serif;
-    background-color: var(--bg);
-    margin: 0;
-    padding: 20px;
-    overflow-x: hidden;
-  }
+        body {
+            min-height: 100vh;
+            background-color: #f8f9fa;
+        }
 
-  .carousel-wrapper {
-    position: relative;
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 0 40px;
-  }
+        /* Contenedor principal para ocupar toda la pantalla */
+        .app-container {
+            display: flex;
+            height: 100vh;
+            overflow: hidden;
+        }
 
-  /* Contenedor del scroll horizontal */
-  .carousel-container {
-    display: flex;
-    overflow-x: auto;
-    scroll-behavior: smooth;
-    gap: 20px;
-    padding: 20px 0;
-    scrollbar-width: none; /* Oculta scroll en Firefox */
-  }
+        /* Sidebar estilizado */
+        .sidebar {
+            width: var(--sidebar-width);
+            background: white;
+            border-right: 1px solid #dee2e6;
+            display: flex;
+            flex-direction: column;
+            flex-shrink: 0;
+            transition: all 0.3s;
+        }
 
-  .carousel-container::-webkit-scrollbar { display: none; } /* Oculta scroll en Chrome */
+        /* Área de contenido principal */
+        .content-area {
+            flex-grow: 1;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+        }
 
-  /* Estilo de la Card */
-  .card {
-    min-width: 250px;
-    background: var(--white);
-    border-radius: 12px;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
-    cursor: pointer;
-    transition: all 0.3s ease;
-    border: 2px solid transparent;
-    flex-shrink: 0;
-  }
+        /* Botones del menú lateral */
+        .btn-toggle {
+            padding: .5rem .75rem;
+            width: 100%;
+            text-align: left;
+            font-weight: 500;
+            color: #495057;
+            border: none;
+            background: transparent;
+        }
 
-  .card:hover {
-    transform: scale(1.05);
-    border-color: var(--primary);
-  }
+        .btn-toggle:hover {
+            background-color: #f1f3f5;
+            color: #007a33;
+        }
 
-  .card.active {
-    border-color: var(--primary);
-    background: #f0fdf4;
-  }
+        .btn-toggle::before {
+            width: 1.25em;
+            line-height: 0;
+            content: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='rgba%280,0,0,.5%29' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M5 14l6-6-6-6'/%3e%3c/svg%3e");
+            transition: transform .35s ease;
+            transform-origin: .5em 50%;
+            margin-right: .5rem;
+        }
 
-  .card img {
-    width: 100%;
-    height: 140px;
-    object-fit: cover;
-    border-bottom: 1px solid #eee;
-  }
+        .btn-toggle[aria-expanded="true"]::before {
+            transform: rotate(90deg);
+        }
 
-  .card-info { padding: 15px; text-align: center; }
-  .card-info h3 { margin: 0; font-size: 1.1rem; }
+        .btn-toggle-nav a {
+            padding: .1875rem .5rem;
+            margin-top: .125rem;
+            margin-left: 2rem;
+            display: block;
+            text-decoration: none;
+            color: #6c757d;
+            font-size: 0.9rem;
+        }
 
-  /* Botones de Navegación */
-  .nav-btn {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    background: var(--primary);
-    color: white;
-    border: none;
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    cursor: pointer;
-    z-index: 10;
-    font-weight: bold;
-    box-shadow: 0 4px 6px rgba(0,0,0,0.2);
-  }
+        .btn-toggle-nav a:hover {
+            color: #007a33;
+        }
 
-  .prev { left: 0; }
-  .next { right: 0; }
+        .header-main {
+            background: white;
+            border-bottom: 1px solid #dee2e6;
+            padding: 1rem 2rem;
+        }
+        #backend-status {
+  background: rgba(0,122,51,.08);
+  color: #007a33;
+  font-weight: 500;
+  font-size: .85rem;
+}
 
-  /* Panel de Opciones (Desplegable abajo) */
-  #options-panel {
-    max-width: 1200px;
-    margin: 20px auto;
-    background: white;
-    border-radius: 12px;
-    padding: 0;
-    max-height: 0;
-    overflow: hidden;
-    transition: all 0.4s ease;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-  }
+.card-header h6 {
+  letter-spacing: .08em;
+}
+.ref-card {
+  display: flex;
+  gap: 15px;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  padding: 12px;
+  margin-bottom: 15px;
+  background: #fff;
+  box-shadow: 0 2px 6px rgba(0,0,0,.08);
+}
 
-  #options-panel.open {
-    padding: 20px;
-    max-height: 500px;
-    border: 1px solid var(--primary);
-  }
+.ref-img img {
+  width: 140px;
+  height: 140px;
+  object-fit: cover;
+  border-radius: 8px;
+}
 
-  .options-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-    gap: 15px;
-  }
+.ref-body {
+  flex: 1;
+}
 
-  .option-item {
-    padding: 12px;
-    background: #f1f5f9;
-    border-radius: 8px;
-    text-decoration: none;
-    color: #334155;
-    font-weight: 500;
-    text-align: center;
-    transition: 0.2s;
-  }
+.ref-body h3 {
+  margin: 0;
+  font-size: 1.2rem;
+}
 
-  .option-item:hover {
-    background: var(--primary);
-    color: white;
-  }
-</style>
+.categoria {
+  font-size: 0.85rem;
+  color: #666;
+  margin-bottom: 8px;
+}
+
+.ref-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 6px;
+  font-size: 0.9rem;
+}
+
+.obs {
+  margin-top: 8px;
+  font-style: italic;
+  color: #444;
+}
+
+.ref-actions {
+  margin-top: 10px;
+}
+
+.btn-ver {
+  display: inline-block;
+  padding: 6px 12px;
+  background: #0d6efd;
+  color: #fff;
+  text-decoration: none;
+  border-radius: 6px;
+  font-size: 0.85rem;
+}
+.btn-ver:hover {
+  background: #084298;
+}
+
+/* CONTENEDOR GENERAL */
+#resultados {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(330px, 1fr));
+  gap: 20px;
+}
+
+/* CARD */
+.ref-card {
+  background: #fff;
+  border-radius: 14px;
+  overflow: hidden;
+  box-shadow: 0 10px 25px rgba(0,0,0,.08);
+  display: flex;
+  flex-direction: column;
+  transition: transform .25s ease, box-shadow .25s ease;
+}
+
+.ref-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 18px 35px rgba(0,0,0,.15);
+}
+
+/* IMAGEN */
+.ref-img {
+  height: 200px;
+  background: #f2f2f2;
+  overflow: hidden;
+}
+
+.ref-img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* BODY */
+.ref-body {
+  padding: 18px;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+/* TITULO */
+.ref-title {
+  font-size: 1.05rem;
+  font-weight: 700;
+  margin: 0 0 6px;
+  line-height: 1.25;
+}
+
+/* CATEGORIA */
+.categoria {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: #fff;
+  background: #0d6efd;
+  display: inline-block;
+  padding: 4px 10px;
+  border-radius: 50px;
+  width: fit-content;
+  margin-bottom: 12px;
+}
+
+/* GRID INFO */
+.ref-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 6px 12px;
+  font-size: 0.82rem;
+  color: #333;
+}
+
+.ref-grid span b {
+  color: #000;
+}
+
+/* OBSERVACION */
+.obs {
+  margin-top: 10px;
+  font-size: 0.8rem;
+  color: #555;
+  background: #f8f9fa;
+  padding: 8px 10px;
+  border-left: 4px solid #0d6efd;
+  border-radius: 6px;
+}
+
+/* ACCIONES */
+.ref-actions {
+  margin-top: auto;
+  text-align: right;
+}
+
+.btn-ver {
+  background: #111;
+  color: #fff;
+  padding: 8px 14px;
+  border-radius: 8px;
+  font-size: 0.8rem;
+  text-decoration: none;
+  transition: background .2s ease;
+}
+
+.btn-ver:hover {
+  background: #000;
+}
+
+    </style>
 </head>
 <body>
 
-<h2 style="text-align:center; color: var(--primary);">Catálogo de Máquinas</h2>
+    <div class="app-container">
+        <aside class="sidebar p-3 shadow-sm">
+            <a href="/" class="d-flex justify-content-center align-items-center mb-3 mb-md-0 me-md-auto text-decoration-none border-bottom pb-3 w-100">
+    <img 
+        src="https://iemcousa.com/application/files/9615/2838/9508/logo.png" 
+        alt="IEMCO Logo" 
+        style="width: 100%; max-width: 180px; height: auto; padding: 10px; object-fit: contain;"
+    >
+</a>
 
-<div class="carousel-wrapper">
-  <button class="nav-btn prev" onclick="scrollCarousel(-300)">❮</button>
-  
-  <div class="carousel-container" id="carousel">
-    <div class="card" onclick="showOptions('ASB', this)">
-      <img src="https://th.bing.com/th/id/R.356ff2bf1c37afc5ab369cf6f3059a67?rik=%2fWgCBPo4zTEnzQ&riu=http%3a%2f%2fnisseiasb.co.jp%2fen%2fimg%2fasb150dp_pic_01.png&ehk=Fm2j3hrYt%2bXSpawgZ2IpNZQtztdkxl5jeZDWzRrymtE%3d&risl=&pid=ImgRaw&r=0" alt="ASB">
-      <div class="card-info"><h3>ASB</h3></div>
+            <div class="mt-3 overflow-auto">
+                <ul class="list-unstyled ps-0">
+                    <li class="mb-1">
+                        <button class="btn btn-toggle d-inline-flex align-items-center rounded collapsed" data-bs-toggle="collapse" data-bs-target="#maquinas-collapse" aria-expanded="false">
+                            MAQUINAS
+                        </button>
+    
+                        <div class="collapse" id="maquinas-collapse">
+                            <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+            <!-- AOKI -->
+                                <li>
+  <button
+    class="btn btn-toggle d-inline-flex align-items-center rounded collapsed"
+    data-bs-toggle="collapse"
+    data-bs-target="#AOKI-collapse"
+    aria-expanded="false"
+    style="margin-left: 1.5rem; font-size: 0.85rem; background-color: rgb(162, 232, 162);"
+  >
+    AOKI
+  </button>
+
+  <div class="collapse" id="AOKI-collapse">
+    <ul class="list-unstyled fw-normal pb-1 small" style="margin-left: 3rem;">
+
+      <li class="border-top my-3"></li>
+      <h5 style="font-size: 15px;">AOKI SBIII-500-150</h5>
+      <li class="border-top my-3"></li>
+
+      <a href="javascript:void(0)" class="link-body-emphasis maquina-link d-block"
+        data-categoriaprin="Maquinas"
+        data-maquinamod="AOKI"
+        data-maquinaesp="AOKI SBIII-500-150"
+        data-maquinaid="1">
+        MAQUINA ISBM 2
+      </a>
+
+      <a href="javascript:void(0)" class="link-body-emphasis maquina-link d-block"
+        data-categoriaprin="Maquinas"
+        data-maquinamod="AOKI"
+        data-maquinaesp="AOKI SBIII-500-150"
+        data-maquinaid="2">
+        MAQUINA ISBM 3
+      </a>
+
+      <a href="javascript:void(0)" class="link-body-emphasis maquina-link d-block"
+        data-categoriaprin="Maquinas"
+        data-maquinamod="AOKI"
+        data-maquinaesp="AOKI SBIII-500-150"
+        data-maquinaid="3">
+        MAQUINA ISBM 4
+      </a>
+
+      <a href="javascript:void(0)" class="link-body-emphasis maquina-link d-block"
+        data-categoriaprin="Maquinas"
+        data-maquinamod="AOKI"
+        data-maquinaesp="AOKI SBIII-500-150"
+        data-maquinaid="4">
+        MAQUINA ISBM 5
+      </a>
+
+      <a href="javascript:void(0)" class="link-body-emphasis maquina-link d-block"
+        data-categoriaprin="Maquinas"
+        data-maquinamod="AOKI"
+        data-maquinaesp="AOKI SBIII-500-150"
+        data-maquinaid="5">
+        MAQUINA ISBM 6
+      </a>
+      <li class="border-top my-3"></li>
+    </ul>
+  </div>
+</li>
+
+            <!-- ASB -->
+                                <li>
+                                    <button class="btn btn-toggle d-inline-flex align-items-center rounded collapsed" data-bs-toggle="collapse" data-bs-target="#ASB-collapse" aria-expanded="false" style="margin-left: 1.5rem; font-size: 0.85rem; background-color: rgb(88, 171, 248);">
+                                        ASB
+                                    </button>
+                                    <div class="collapse" id="ASB-collapse">
+                                        <ul class="list-unstyled fw-normal pb-1 small" style="margin-left: 3rem;">
+
+                                            <li class="border-top my-3"></li>
+                                            <h5 style="font-size: 15px;">ASB 150DP</h5>
+                                            <li class="border-top my-3"></li>
+                                            <li><a href="#" class="link-body-emphasis">MAQUINA ISBM 7</a></li>
+                                            <li><a href="#" class="link-body-emphasis">MAQUINA ISBM 8</a></li>
+                                            <li><a href="#" class="link-body-emphasis">MAQUINA ISBM 9</a></li>
+
+                                            <li class="border-top my-3"></li>
+                                            <h5 style="font-size: 15px;">ASB 150 DP STD</h5>
+                                            <li class="border-top my-3"></li>
+                                            <li><a href="#" class="link-body-emphasis">MAQUINA ISBM 10</a></li>
+
+                                            <li class="border-top my-3"></li>
+                                            <h5 style="font-size: 15px;">ASB 12M</h5>
+                                            <li class="border-top my-3"></li>
+                                            <li><a href="#" class="link-body-emphasis">MAQUINA ISBM 12</a></li>
+                                            <li class="border-top my-3"></li>
+                                        </ul>
+                                    </div>
+                                </li>
+            <!-- NISSEI -->
+                                <li>
+                                    <button class="btn btn-toggle d-inline-flex align-items-center rounded collapsed" data-bs-toggle="collapse" data-bs-target="#NISSEI-collapse" aria-expanded="false" style="margin-left: 1.5rem; font-size: 0.85rem; background-color: rgb(221, 49, 46);">
+                                        NISSEI
+                                    </button>
+                                    <div class="collapse" id="NISSEI-collapse">
+                                        <ul class="list-unstyled fw-normal pb-1 small" style="margin-left: 3rem;">
+
+                                            <li class="border-top my-3"></li>
+                                            <h5 style="font-size: 15px;">NISSEI FS 160</h5>
+                                            <li class="border-top my-3"></li>
+                                            <li><a href="#" class="link-body-emphasis">INYECTORA 1</a></li>
+
+                                            <li class="border-top my-3"></li>
+                                            <h5 style="font-size: 15px;">NISSEI FN3000</h5>
+                                            <li class="border-top my-3"></li>
+                                            <li><a href="#" class="link-body-emphasis">INYECTORA 3</a></li>
+
+                                            <li class="border-top my-3"></li>
+                                            <h5 style="font-size: 15px;">NISSEI FNX280</h5>
+                                            <li class="border-top my-3"></li>
+                                            <li><a href="#" class="link-body-emphasis">INYECTORA 5</a></li>
+
+                                            <li class="border-top my-3"></li>
+                                            <h5 style="font-size: 15px;">NISSEI FNX220</h5>
+                                            <li class="border-top my-3"></li>
+                                            <li><a href="#" class="link-body-emphasis">INYECTORA 11</a></li>
+                                            <li class="border-top my-3"></li>
+                                        </ul>
+                                    </div>
+                                </li>
+            <!-- SUMITOMO -->
+                                <li>
+                                    <button class="btn btn-toggle d-inline-flex align-items-center rounded collapsed" data-bs-toggle="collapse" data-bs-target="#SUMITOMO-collapse" aria-expanded="false" style="margin-left: 1.5rem; font-size: 0.85rem; background-color: rgb(18, 113, 207);">
+                                        SUMITOMO
+                                    </button>
+                                    <div class="collapse" id="SUMITOMO-collapse">
+                                        <ul class="list-unstyled fw-normal pb-1 small" style="margin-left: 3rem;">
+
+                                            <li class="border-top my-3"></li>
+                                            <h5 style="font-size: 15px;">SUMITOMO SYSTEC 280</h5>
+                                            <li class="border-top my-3"></li>
+                                            <li><a href="#" class="link-body-emphasis">INYECTORA 6</a></li>
+                                            <li><a href="#" class="link-body-emphasis">INYECTORA 9</a></li>
+
+                                            <li class="border-top my-3"></li>
+                                            <h5 style="font-size: 15px;">SUMITOMO SYSTEC 580</h5>
+                                            <li class="border-top my-3"></li>
+                                            <li><a href="#" class="link-body-emphasis">INYECTORA 7</a></li>
+                                            <li><a href="#" class="link-body-emphasis">INYECTORA 10</a></li>
+
+                                            <li class="border-top my-3"></li>
+                                            <h5 style="font-size: 15px;">SUMITOMO INTELECT2 S 220</h5>
+                                            <li class="border-top my-3"></li>
+                                            <li><a href="#" class="link-body-emphasis">INYECTORA 8</a></li>
+                                            <li class="border-top my-3"></li>
+                                        </ul>
+                                    </div>
+                                </li>
+            <!-- ENLAINADORA -->
+                                <li>
+                                    <button class="btn btn-toggle d-inline-flex align-items-center rounded collapsed" data-bs-toggle="collapse" data-bs-target="#ENLAINADORAS-collapse" aria-expanded="false" style="margin-left: 1.5rem; font-size: 0.85rem; background-color: rgb(162, 162, 162);">
+                                        ENLAINADORAS
+                                    </button>
+                                    <div class="collapse" id="ENLAINADORAS-collapse">
+                                        <ul class="list-unstyled fw-normal pb-1 small" style="margin-left: 3rem;">
+
+                                            <li class="border-top my-3"></li>
+                                            <h5 style="font-size: 15px;">AUTING SMN-03</h5>
+                                            <li class="border-top my-3"></li>
+                                            <li><a href="#" class="link-body-emphasis">ENLAINADORA 1</a></li>
+
+                                            <li class="border-top my-3"></li>
+                                            <h5 style="font-size: 15px;">AUTING LSM-025</h5>
+                                            <li class="border-top my-3"></li>
+                                            <li><a href="#" class="link-body-emphasis">ENLAINADORA 2</a></li>
+                                            <li><a href="#" class="link-body-emphasis">ENLAINADORA 3</a></li>
+                                            <li class="border-top my-3"></li>
+                                        </ul>
+                                    </div>
+                                </li>
+            <!-- REVOLVEDORAS -->
+                                <li>
+                                    <button class="btn btn-toggle d-inline-flex align-items-center rounded collapsed" data-bs-toggle="collapse" data-bs-target="#REVOLVEDORAS-collapse" aria-expanded="false" style="margin-left: 1.5rem; font-size: 0.85rem; background-color: rgb(194, 168, 247);">
+                                        REVOLVEDORAS
+                                    </button>
+                                    <div class="collapse" id="REVOLVEDORAS-collapse">
+                                        <ul class="list-unstyled fw-normal pb-1 small" style="margin-left: 3rem;">
+
+                                            <li class="border-top my-3"></li>
+                                            <li><a href="#" class="link-body-emphasis">REVOLVEDORA 1</a></li>
+
+                                            <li class="border-top my-3"></li>
+                                            <h5 style="font-size: 15px;">XHS-50KGS</h5>
+                                            <li class="border-top my-3"></li>
+                                            <li><a href="#" class="link-body-emphasis">REVOLVEDORA 2</a></li>
+                                            <li class="border-top my-3"></li>
+                                        </ul>
+                                    </div>
+                                </li>
+
+            <!-- MOLINO -->
+                                <li>
+                                    <button class="btn btn-toggle d-inline-flex align-items-center rounded collapsed" data-bs-toggle="collapse" data-bs-target="#MOLINO-collapse" aria-expanded="false" style="margin-left: 1.5rem; font-size: 0.85rem; background-color: rgb(232, 195, 162);">
+                                        MOLINO
+                                    </button>
+                                    <div class="collapse" id="MOLINO-collapse">
+                                        <ul class="list-unstyled fw-normal pb-1 small" style="margin-left: 3rem;">
+
+                                            <li class="border-top my-3"></li>
+                                            <h5 style="font-size: 15px;">PAGANI</h5>
+                                            <li class="border-top my-3"></li>
+                                            <li><a href="#" class="link-body-emphasis">MOLINO 1</a></li>
+
+                                            <li class="border-top my-3"></li>
+                                            <h5 style="font-size: 15px;">RAPID</h5>
+                                            <li class="border-top my-3"></li>
+                                            <li><a href="#" class="link-body-emphasis">MOLINO RAPID 2</a></li>
+                                            <li><a href="#" class="link-body-emphasis">MOLINO RAPID 3</a></li>
+                                            <li class="border-top my-3"></li>
+                                        </ul>
+                                    </div>
+                                </li>
+                              
+                            </ul>
+                        </div>
+                    </li>
+
+                    <li class="mb-1">
+                        <button class="btn btn-toggle d-inline-flex align-items-center rounded collapsed" data-bs-toggle="collapse" data-bs-target="#moldes-collapse" aria-expanded="false">
+                            MOLDES
+                        </button>
+                        <div class="collapse" id="moldes-collapse">
+                            <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+                                <li><a href="#">Vistas semanales</a></li>
+                                <li><a href="#">Análisis anual</a></li>
+                            </ul>
+                        </div>
+                    </li>
+
+                    <li class="mb-1">
+                        <button class="btn btn-toggle d-inline-flex align-items-center rounded collapsed" data-bs-toggle="collapse" data-bs-target="#compresores-collapse" aria-expanded="false">
+                            COMPRESORES
+                        </button>
+                        <div class="collapse" id="compresores-collapse">
+                            <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+                                <li><a href="#">Nuevos pedidos</a></li>
+                                <li><a href="#">Enviados</a></li>
+                                <li><a href="#">Devoluciones</a></li>
+                            </ul>
+                        </div>
+                    </li>
+
+                    <li class="mb-1">
+                        <button class="btn btn-toggle d-inline-flex align-items-center rounded collapsed" data-bs-toggle="collapse" data-bs-target="#redagua-collapse" aria-expanded="false">
+                            RED DE AGUA
+                        </button>
+                        <div class="collapse" id="redagua-collapse">
+                            <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+                                <li><a href="#">Nuevos pedidos</a></li>
+                                <li><a href="#">Enviados</a></li>
+                                <li><a href="#">Devoluciones</a></li>
+                            </ul>
+                        </div>
+                    </li>
+
+                    <li class="mb-1">
+                        <button class="btn btn-toggle d-inline-flex align-items-center rounded collapsed" data-bs-toggle="collapse" data-bs-target="#cuartos-collapse" aria-expanded="false">
+                            CUARTOS/ALMACENES
+                        </button>
+                        <div class="collapse" id="cuartos-collapse">
+                            <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+                                <li><a href="#">Nuevos pedidos</a></li>
+                                <li><a href="#">Enviados</a></li>
+                                <li><a href="#">Devoluciones</a></li>
+                            </ul>
+                        </div>
+                    </li>
+                <li class="mb-1">
+                    <button class="btn btn-toggle d-inline-flex align-items-center rounded collapsed" data-bs-toggle="collapse" data-bs-target="#subestaciones-collapse" aria-expanded="false">
+                        SUBESTACIONES
+                    </button>
+                    <div class="collapse" id="subestaciones-collapse">
+                        <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+                            <li><a href="#">Nuevos pedidos</a></li>
+                            <li><a href="#">Enviados</a></li>
+                            <li><a href="#">Devoluciones</a></li>
+                        </ul>
+                    </div>
+                </li>
+                <li class="mb-1">
+                    <button class="btn btn-toggle d-inline-flex align-items-center rounded collapsed" data-bs-toggle="collapse" data-bs-target="#transportes-collapse" aria-expanded="false">
+                        TRANSPORTES
+                    </button>
+                    <div class="collapse" id="transportes-collapse">
+                        <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+                            <li><a href="#">Nuevos pedidos</a></li>
+                            <li><a href="#">Enviados</a></li>
+                            <li><a href="#">Devoluciones</a></li>
+                        </ul>
+                    </div>
+                </li>
+                <li class="mb-1">
+                    <button class="btn btn-toggle d-inline-flex align-items-center rounded collapsed" data-bs-toggle="collapse" data-bs-target="#equipos-collapse" aria-expanded="false">
+                        EQUIPOS AUXILIARES
+                    </button>
+                    <div class="collapse" id="equipos-collapse">
+                        <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+                            <li><a href="#">Nuevos pedidos</a></li>
+                            <li><a href="#">Enviados</a></li>
+                            <li><a href="#">Devoluciones</a></li>
+                        </ul>
+                    </div>
+                </li>
+                <li class="mb-1">
+                    <button class="btn btn-toggle d-inline-flex align-items-center rounded collapsed" data-bs-toggle="collapse" data-bs-target="#servicios-collapse" aria-expanded="false">
+                        SERVICIOS
+                    </button>
+                    <div class="collapse" id="servicios-collapse">
+                        <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+                            <li><a href="#">Nuevos pedidos</a></li>
+                            <li><a href="#">Enviados</a></li>
+                            <li><a href="#">Devoluciones</a></li>
+                        </ul>
+                    </div>
+                </li>
+                <li class="border-top my-3"></li>
+                <li class="mb-1">
+                    <button class="btn btn-toggle d-inline-flex align-items-center rounded collapsed" data-bs-toggle="collapse" data-bs-target="#account-collapse" aria-expanded="false">
+                        Mi Cuenta
+                    </button>
+                    <div class="collapse" id="account-collapse">
+                        <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+                            <li><a href="#">Perfil de usuario</a></li>
+                            <li><a href="#">Configuración</a></li>
+                            <li><a href="#" class="text-danger">Cerrar Sesión</a></li>
+                        </ul>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </aside>
+
+    <main class="content-area">
+        <header class="header-main d-flex justify-content-between align-items-center">
+            <h1 class="h5 mb-0 fw-bold">${maquinaId}</h1>
+            <nav>
+                <ul class="nav nav-pills small" style="color: #000000;">
+                    <li class="nav-item"><a href="index.html" class="nav-link" aria-current="page" style="color: #000000;">INICIO</a></li>
+                    <li class="nav-item"><a href="Maquinas.html" class="nav-link" style="color: #000000;">BUSCADOR</a></li>
+                    <!-- <li class="nav-item"><a href="actDatos/importar.html" class="nav-link" style="color: #000000;">ACTUALIZAR DATOS</a></li> -->
+                              <li class="nav-item"><a href="actDatos/importar-odoo.html" class="nav-link" style="color: #000000;">ODDO DATOS</a></li>
+                    <li class="nav-item"><a href="refacciones.html" class="nav-link" style="color: #000000;">TABLA DATOS</a></li>
+                    <!-- <li class="nav-item"><a href="#" class="nav-link" style="color: #000000;">AYUDA</a></li> -->
+                </ul>
+            </nav>
+        </header>
+
+        <div class="p-4">
+    <div class="container-fluid">
+        <div class="row g-4">
+            
+            <!-- <div class="col-12 col-md-6 col-lg-4">
+                <div class="card h-100 border-0 shadow-sm border-start border-4 border-primary">
+                    <div class="card-body">
+                        <div class="d-flex align-items-center mb-3">
+                            <div class="flex-shrink-0 bg-primary bg-opacity-10 p-3 rounded">
+                                <i class="bi bi-clock-history text-primary fs-4"></i>
+                            </div>
+                            <div class="ms-3">
+    <h6 class="card-subtitle text-muted fw-light">Última Actualización</h6>
+    <h5 id="ultimaActualizacion" class="card-title mb-0 fw-bold text-dark">Cargando...</h5>
+</div>
+
+                        </div>
+                        <p class="card-text small text-secondary">Sincronización de inventario completada con éxito en la planta.</p>
+                    </div>
+                </div>
+            </div> -->
+
+            <!-- <div class="col-12 col-md-6 col-lg-4">
+                <div class="card h-100 border-0 shadow-sm border-start border-4 border-success">
+                    <div class="card-body">
+                        <div class="d-flex align-items-center mb-3">
+                            <div class="flex-shrink-0 bg-success bg-opacity-10 p-3 rounded">
+                                <i class="bi bi-box-seam text-success fs-4"></i>
+                            </div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
+                            <div class="ms-3">
+    <h6 class="card-subtitle text-muted fw-light">Total de Refacciones</h6>
+    <h5 id="totalRefacciones" class="card-title mb-0 fw-bold text-dark">Cargando...</h5>
+</div>
+
+                        </div>
+                        <!-- <div class="progress" style="height: 6px;">
+                            <div class="progress-bar bg-success" role="progressbar" style="width: 85%"></div>
+                        </div>
+                        <p class="mt-2 mb-0 small text-muted text-end">85% en stock disponible</p> -->
+                    <!-- </div>
+                </div> -->
+            <!-- </div> --> 
+
+            <!-- <div class="col-12 col-lg-4">
+    <div class="card h-100 border-0 shadow-sm border-start border-4 border-warning">
+        <div class="card-body">
+            <div class="d-flex align-items-center mb-2">
+                <div class="flex-shrink-0 bg-warning bg-opacity-10 p-3 rounded">
+                    <i class="bi bi-graph-up-arrow text-warning fs-4"></i>
+                </div>
+                <div class="ms-3">
+                    <h6 class="card-subtitle text-muted fw-light">Ultimo agregado</h6>
+                    <h5 id="ultimoProducto" class="card-title mb-0 fw-bold text-dark">Cargando...</h5>
+                </div>
+            </div>
+            <div id="ultimasEtiquetas" class="d-flex flex-wrap gap-2 mt-3">
+                <!-- Badges se generarán aquí -->
+            <!-- </div>
+        </div>
     </div>
-    <div class="card" onclick="showOptions('SUMITOMO', this)">
-      <img src="https://www.schmidkonz-gmbh.de/wp-content/uploads/Maschine5.jpg" alt="Sumitomo">
-      <div class="card-info"><h3>SUMITOMO</h3></div>
+</div> -->
+
+
+        </div> <div class="row mt-4">
+            <div class="col-12">
+  <div class="card border-0 shadow-sm h-100">
+
+    <!-- Header -->
+    <div class="card-header bg-white py-3 d-flex justify-content-between align-items-center">
+      BUSCADOR
     </div>
-    <div class="card" onclick="showOptions('NISSEI', this)">
-      <img src="https://telarcorp.com/wp-content/uploads/2023/07/lg-fnx110iii-18a-usa-1242x665-revised-2-4.gif" alt="Nissei">
-      <div class="card-info"><h3>NISSEI</h3></div>
-    </div>
-    <div class="card" onclick="showOptions('AOKI', this)">
-      <img src="https://static.machinetools.com/uploads/2605437/mt45.jpg" alt="Aoki">
-      <div class="card-info"><h3>AOKI</h3></div>
-    </div>
-    <div class="card" onclick="showOptions('ENLAINADORA', this)">
-      <img src="https://www.tecnamachines.com/images/mp/enla_img.jpg" alt="Enlainadora">
-      <div class="card-info"><h3>ENLAINADORAS</h3></div>
-    </div>
-    <div class="card" onclick="showOptions('REVOLVEDORAS', this)">
-      <img src="https://maincasa.com.mx/66510-large_default/xhs-50kg.webp" alt="Revolvedora">
-      <div class="card-info"><h3>REVOLVEDORAS</h3></div>
-    </div>
-    <div class="card" onclick="showOptions('MOLINO', this)">
-      <img src="https://tse1.mm.bing.net/th/id/OIP.giWgjWftp8fHE5hQFynAOAAAAA?rs=1&pid=ImgDetMain&o=7&rm=3" alt="Molino">
-      <div class="card-info"><h3>MOLINO</h3></div>
+
+    <!-- Body -->
+    <div class="card-body py-4">
+
+      <!-- Contenido principal -->
+      <div class="text-center mb-4">
+        <p class="text-muted mb-0">
+        
+        </p>
+        <div id="resultados" class="mt-3"></div>
+      </div>
+
+      <hr>
+
+      <!-- Estado del sistema -->
+      <!-- <div class="d-flex justify-content-between align-items-center mt-3">
+        <h6 class="fw-semibold mb-0">
+          Estado del sistema
+        </h6>
+
+        <div id="backend-status" class="px-3 py-2 rounded">
+          Verificando conexión...
+        </div>
+      </div> -->
+
     </div>
   </div>
-
-  <button class="nav-btn next" onclick="scrollCarousel(300)">❯</button>
 </div>
 
-<div id="options-panel">
-  <h4 id="selected-title" style="margin-top:0; color:var(--primary);"></h4>
-  <div class="options-grid" id="options-list">
+        </div>
     </div>
 </div>
+    </main>
+</div>
 
-<script>
-  const maquinasData = {
-    'ASB': ['MAQUINA ISBM 7 - ASB 150DPSB-70DP','MAQUINA ISBM 8 - ASB 150DPSB-70DP','MAQUINA ISBM 9 - ASB 150DPSB-70DP', 'MAQUINA ISBM 10 - ASB 150 DP STD', 'MAQUINA ISBM 12M #1 - ASB 12M'],
-    'SUMITOMO': ['SE180EV', 'SE280EV', 'SE500EV'],
-    'NISSEI': ['GTR-50', 'GTR-100', 'Nex-Series'],
-    'AOKI': ['MAQUINA ISBM 2 - AOKI SBIII-500-150', 'MAQUINA ISBM 3 - AOKI SBIII-500-150', 'MAQUINA ISBM 4 - AOKI SBIII-500-150', , 'MAQUINA ISBM 5 - AOKI SBIII-500-150', 'MAQUINA ISBM 6 - AOKI SBIII-500-150'],
-    'ENLAINADORA': ['Modelo E-100', 'Modelo E-200'],
-    'REVOLVEDORAS': ['Modelo E-100', 'Modelo E-200'],
-    'MOLINO': ['Modelo E-100', 'Modelo E-200'],
-  };
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script src="script.js"></script>
+<script src="navegador.js"></script>
 
-  function scrollCarousel(distance) {
-    document.getElementById('carousel').scrollBy({ left: distance, behavior: 'smooth' });
-  }
 
-  function showOptions(marca, cardElement) {
-    const panel = document.getElementById('options-panel');
-    const list = document.getElementById('options-list');
-    const title = document.getElementById('selected-title');
-
-    // Quitar clase active de todas las cards
-    document.querySelectorAll('.card').forEach(c => c.classList.remove('active'));
-    cardElement.classList.add('active');
-
-    // Limpiar y llenar lista
-    list.innerHTML = '';
-    title.innerText = "Modelos disponibles para " + marca;
-    
-    maquinasData[marca].forEach(modelo => {
-      const link = document.createElement('a');
-      link.href = "#"; // Aquí iría el link a la página del modelo
-      link.className = 'option-item';
-      link.innerText = modelo;
-      list.appendChild(link);
-    });
-
-    // Abrir panel
-    panel.classList.add('open');
-    
-    // Scroll suave hasta el panel
-    setTimeout(() => {
-        panel.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-    }, 200);
-  }
-</script>
 
 </body>
 </html>
