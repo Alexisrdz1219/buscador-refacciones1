@@ -40,6 +40,18 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 });
 
+document.querySelectorAll(".opcion-maquina").forEach(btn => {
+  btn.addEventListener("click", () => {
+
+    const maquina = btn.dataset.maquina; // ejemplo: data-maquina="Inyectora 5"
+
+    localStorage.setItem("maquinaSeleccionada", maquina);
+
+    location.reload(); // opcional si necesitas refrescar
+  });
+});
+
+
 function mostrarResultados(lista) {
   const cont = document.getElementById("resultados");
   if (!cont) {
