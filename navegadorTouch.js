@@ -58,21 +58,23 @@ function mostrarResultados(lista) {
 
 lista.forEach(r => {
  cont.innerHTML += `
-  <div class="ref-card">
-    <div class="ref-img">
+  <div class="card-refa">
+    
+    <div class="img-wrap">
       <img src="${r.imagen || 'no-image.png'}" alt="${r.nombreprod}">
+      <span class="badge-ubi">${r.ubicacion || 'Sin ubicación'}</span>
     </div>
 
-    <div class="ref-info">
+    <div class="info-refa">
       <h3>${r.nombreprod}</h3>
-      <p class="ref-meta">
-        Ref: ${r.refinterna} • ${r.cantidad} ${r.unidad || ''}
-      </p>
 
-      <div class="ubicacion-box">
-        📍 ${r.ubicacion || 'Sin ubicación'}
+      <div class="datos">
+        <span>Ref: ${r.refinterna}</span>
+        <span>${r.cantidad} ${r.unidad || ''}</span>
       </div>
+
     </div>
+
   </div>
 `;
 });
