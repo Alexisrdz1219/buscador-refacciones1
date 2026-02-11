@@ -42,10 +42,22 @@ document.addEventListener("DOMContentLoaded", () => {
 
 function mostrarseleccionada() {
     const titulo = document.getElementById("tituloMaquina");
-    const maquinaId = titulo.dataset.maquinaid;
-    titulo.textContent = `Resultados para máquina ID: ${maquinaId}`;
+    if (!titulo) {
+    console.error("❌ No existe #tituloMaquina");
+    return;
+  }
+  titulo.innerHTML = "";
+if (lista.length === 0) {
+    titulo.innerHTML = "<p>No hay refacciones</p>";
+    return;
+  }
+ titulo.innerHTML = "";
+lista.forEach(r => {
+ titulo.innerHTML += `
+  <h1 class="h5 mb-0 fw-bold">${r.maquinaesp || 'Máquina sin nombre'}</h1>
+`;
+});
 }
-
 
 function mostrarResultados(lista) {
   const cont = document.getElementById("resultados");
@@ -63,28 +75,26 @@ function mostrarResultados(lista) {
 
   cont.innerHTML = ""; // limpia antes, por salud mental
 
-lista.forEach(r => {
- cont.innerHTML += `
-  <div class="card-refa">
-    
-    <div class="img-wrap">
-      <img src="${r.imagen || 'no-image.png'}" alt="${r.nombreprod}">
-      <span class="badge-ubi">${r.ubicacion || 'Sin ubicación'}</span>
-    </div>
+  lista.forEach(r => {
+    cont.innerHTML += `
+      <div class="card-refa">
+        
+        <div class="img-wrap">
+          <img src="${r.imagen || 'no-image.png'}" alt="${r.nombreprod}">
+          <span class="badge-ubi">${r.ubicacion || 'Sin ubicación'}</span>
+        </div>
 
-    <div class="info-refa">
-      <h3>${r.nombreprod}</h3>
+        <div class="info-refa">
+          <h3>${r.nombreprod}</h3>
 
-      <div class="datos">
-        <span>Ref: ${r.refinterna}</span>
-        <span>${r.cantidad} ${r.unidad || ''}</span>
+          <div class="datos">
+            <span>Ref: ${r.refinterna}</span>
+            <span>${r.cantidad} ${r.unidad || ''}</span>
+          </div>
+
+        </div>
+
       </div>
-
-    </div>
-
-  </div>
-`;
-});
-
-
+    `;
+  });
 }
