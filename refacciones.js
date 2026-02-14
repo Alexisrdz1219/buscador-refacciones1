@@ -1,4 +1,4 @@
-
+console.log("Refacciones.js cargado correctamente");
 const API = "https://buscador-refaccionesbackend.onrender.com";
 
 let textoBusqueda = "";

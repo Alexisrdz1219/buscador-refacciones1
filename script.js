@@ -1,4 +1,4 @@
-console.log("🔥 script.js cargado correctamente");
+console.log("Script.js cargado correctamente");
 const API_URL = "https://buscador-refaccionesbackend.onrender.com";
 
 fetch("https://buscador-refaccionesbackend.onrender.com/health")
@@ -17,16 +17,16 @@ fetch("https://buscador-refaccionesbackend.onrender.com/health")
   .then(data => {
     if (data.ok) {
       statusDiv.innerHTML = `
-        <p style="color:green;">✅ Backend conectado</p>
-        <p style="color:green;">✅ Base de datos conectada</p>
-        <p>🕒 Hora servidor: ${data.time}</p>
+        <p style="color:green;">Backend Conectado</p>
+        <p style="color:green;">Base de datos Conectada</p>
+        <p>Hora servidor: ${data.time}</p>
       `;
     } else {
-      statusDiv.innerHTML = "⚠️ Backend respondió, pero algo falló";
+      statusDiv.innerHTML = "Backend respondió, pero algo falló";
     }
   })
   .catch(err => {
-    statusDiv.innerHTML = "❌ No se pudo conectar al backend";
+    statusDiv.innerHTML = "No se pudo conectar al backend";
     console.error(err);
   });
 
