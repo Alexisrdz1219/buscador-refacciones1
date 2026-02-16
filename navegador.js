@@ -1,6 +1,7 @@
 const API = "https://buscador-refaccionesbackend.onrender.com";
 let modeloSeleccionado = "";
 let resultadosActuales = [];
+let tagsActivos = [];
 
 
 
@@ -31,6 +32,25 @@ document.getElementById("buscarRef")?.addEventListener("input", aplicarFiltros);
   document.getElementById("buscarPalabras")
   ?.addEventListener("input", aplicarFiltros);
 
+const inputTag = document.getElementById("inputTag");
+const contenedorTags = document.getElementById("contenedorTags");
+
+inputTag.addEventListener("keydown", function(e) {
+  if (e.key === "Enter") {
+    e.preventDefault();
+
+    const valor = inputTag.value.trim().toLowerCase();
+    if (!valor) return;
+
+    if (!tagsActivos.includes(valor)) {
+      tagsActivos.push(valor);
+      crearTagVisual(valor);
+      aplicarFiltros();
+    }
+
+    inputTag.value = "";
+  }
+});
 
   document.querySelectorAll(".maquina-link").forEach(link => {
     link.addEventListener("click", async e => {
@@ -245,10 +265,11 @@ function aplicarFiltros() {
       !unidad || r.unidad === unidad;
 
     const coincidePalabras =
-      palabras.length === 0 ||
-      palabras.every(p =>
-        String(r.palclave || "").toLowerCase().includes(p)
-      );
+  tagsActivos.length === 0 ||
+  tagsActivos.every(p =>
+    String(r.palclave || "").toLowerCase().includes(p)
+  );
+
 
     return coincideRef &&
            coincideModelo &&
@@ -280,4 +301,26 @@ function llenarSelects(data) {
   unidadesUnicas.forEach(unidad => {
     selectUnidad.innerHTML += `<option value="${unidad}">${unidad}</option>`;
   });
+}
+
+function crearTagVisual(texto) {
+
+  const tag = document.createElement("span");
+  tag.className = "badge bg-primary d-flex align-items-center";
+  tag.style.gap = "6px";
+  tag.textContent = texto;
+
+  const btn = document.createElement("span");
+  btn.textContent = "✕";
+  btn.style.cursor = "pointer";
+
+  btn.onclick = function() {
+    tagsActivos = tagsActivos.filter(t => t !== texto);
+    tag.remove();
+    aplicarFiltros();
+  };
+
+  tag.appendChild(btn);
+
+  contenedorTags.insertBefore(tag, inputTag);
 }
