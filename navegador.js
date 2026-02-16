@@ -23,6 +23,12 @@ let resultadosActuales = [];
 //   });
 // });
 document.addEventListener("DOMContentLoaded", () => {
+
+document.getElementById("buscarRef")?.addEventListener("input", aplicarFiltros);
+  document.getElementById("buscarModelo")?.addEventListener("input", aplicarFiltros);
+  document.getElementById("filtroTipo")?.addEventListener("change", aplicarFiltros);
+  document.getElementById("filtroUnidad")?.addEventListener("change", aplicarFiltros);
+
   document.querySelectorAll(".maquina-link").forEach(link => {
     link.addEventListener("click", async e => {
       e.preventDefault();
@@ -48,8 +54,7 @@ llenarSelects(data);       // 🔥 llenamos tipos y unidades dinámicamente
   });
 });
 
-document.addEventListener("input", aplicarFiltros);
-document.addEventListener("change", aplicarFiltros);
+
 
 // function actualizarTitulo() {
 //   const titulo = document.getElementById("tituloRefacciones");
@@ -157,18 +162,26 @@ lista.forEach(r => {
 }
 
 function aplicarFiltros() {
-  const ref = document.getElementById("buscarRef").value.toLowerCase().trim();
-  const modelo = document.getElementById("buscarModelo").value.toLowerCase().trim();
-  const tipo = document.getElementById("filtroTipo").value;
-  const unidad = document.getElementById("filtroUnidad").value;
+
+  if (!resultadosActuales.length) return;
+
+  const refInput = document.getElementById("buscarRef");
+  const modeloInput = document.getElementById("buscarModelo");
+  const tipoSelect = document.getElementById("filtroTipo");
+  const unidadSelect = document.getElementById("filtroUnidad");
+
+  const ref = refInput ? refInput.value.toLowerCase().trim() : "";
+  const modelo = modeloInput ? modeloInput.value.toLowerCase().trim() : "";
+  const tipo = tipoSelect ? tipoSelect.value : "";
+  const unidad = unidadSelect ? unidadSelect.value : "";
 
   const filtrados = resultadosActuales.filter(r => {
 
     const coincideRef =
-      !ref || r.refinterna?.toLowerCase().includes(ref);
+      !ref || String(r.refinterna || "").toLowerCase().includes(ref);
 
     const coincideModelo =
-      !modelo || r.modelo?.toLowerCase().includes(modelo);
+      !modelo || String(r.modelo || "").toLowerCase().includes(modelo);
 
     const coincideTipo =
       !tipo || r.tipoprod === tipo;
@@ -181,6 +194,7 @@ function aplicarFiltros() {
 
   mostrarResultados(filtrados);
 }
+
 
 
 function llenarSelects(data) {
