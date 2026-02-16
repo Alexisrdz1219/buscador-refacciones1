@@ -42,15 +42,41 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 });
 
+// function actualizarTitulo() {
+//   const titulo = document.getElementById("tituloRefacciones");
+
+//   if (!titulo) return;
+
+//   if (modeloSeleccionado) {
+//     titulo.textContent = `Refacciones IEMCO - ${modeloSeleccionado}`;
+//   } else {
+//     titulo.textContent = "Refacciones IEMCO";
+//   }
+// }
+
 function actualizarTitulo() {
   const titulo = document.getElementById("tituloRefacciones");
-
   if (!titulo) return;
 
-  if (modeloSeleccionado) {
-    titulo.textContent = `Refacciones IEMCO - ${modeloSeleccionado}`;
+  titulo.textContent = `Refacciones IEMCO - ${modeloSeleccionado}`;
+
+  // Limpia clases anteriores
+  titulo.classList.remove(
+    "titulo-default",
+    "titulo-aoki",
+    "titulo-asb",
+    "titulo-nissei"
+  );
+
+  // Detecta palabra y asigna color
+  if (modeloSeleccionado.toLowerCase().includes("AOKI SBIII-500-150")) {
+    titulo.classList.add("titulo-aoki");
+  } else if (modeloSeleccionado.toLowerCase().includes("ASB")) {
+    titulo.classList.add("titulo-asb");
+  } else if (modeloSeleccionado.toLowerCase().includes("NISSEI")) {
+    titulo.classList.add("titulo-nissei");
   } else {
-    titulo.textContent = "Refacciones IEMCO";
+    titulo.classList.add("titulo-default");
   }
 }
 
