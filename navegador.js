@@ -69,11 +69,11 @@ function actualizarTitulo() {
   );
 
   // Detecta palabra y asigna color
-  if (modeloSeleccionado.toLowerCase().includes("AOKI SBIII-500-150")) {
+  if (modeloSeleccionado.toLowerCase().includes("aoki")) {
     titulo.classList.add("titulo-aoki");
-  } else if (modeloSeleccionado.toLowerCase().includes("ASB")) {
+  } else if (modeloSeleccionado.toLowerCase().includes("asb")) {
     titulo.classList.add("titulo-asb");
-  } else if (modeloSeleccionado.toLowerCase().includes("NISSEI")) {
+  } else if (modeloSeleccionado.toLowerCase().includes("nissei")) {
     titulo.classList.add("titulo-nissei");
   } else {
     titulo.classList.add("titulo-default");
