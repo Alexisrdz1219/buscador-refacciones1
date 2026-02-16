@@ -1,28 +1,32 @@
 const API = "https://buscador-refaccionesbackend.onrender.com";
-// por id
+let modeloSeleccionado = "";
+
+
 // document.addEventListener("DOMContentLoaded", () => {
 //   document.querySelectorAll(".maquina-link").forEach(link => {
 //     link.addEventListener("click", async e => {
 //       e.preventDefault();
 
-//       const maquinaId = link.dataset.maquinaid;
+//       const maquinamod = link.dataset.maquinamod;
 
-//       console.log("BUSCANDO POR MAQUINA ID:", maquinaId);
+//       console.log("BUSCANDO POR MODELO:", maquinamod);
 
-//       const res = await fetch(`${API}/refacciones-por-maquina/${maquinaId}`);
+//       const res = await fetch(
+//         `${API}/refacciones-por-maquinamod?maquinamod=${encodeURIComponent(maquinamod)}`
+//       );
+
 //       const data = await res.json();
-
 //       mostrarResultados(data);
 //     });
 //   });
 // });
-
 document.addEventListener("DOMContentLoaded", () => {
   document.querySelectorAll(".maquina-link").forEach(link => {
     link.addEventListener("click", async e => {
       e.preventDefault();
 
       const maquinamod = link.dataset.maquinamod;
+      modeloSeleccionado = maquinamod; // 🔥 guardamos el modelo
 
       console.log("BUSCANDO POR MODELO:", maquinamod);
 
@@ -31,10 +35,24 @@ document.addEventListener("DOMContentLoaded", () => {
       );
 
       const data = await res.json();
+
+      actualizarTitulo(); // 🔥 actualizamos título
       mostrarResultados(data);
     });
   });
 });
+
+function actualizarTitulo() {
+  const titulo = document.getElementById("tituloRefacciones");
+
+  if (!titulo) return;
+
+  if (modeloSeleccionado) {
+    titulo.textContent = `Refacciones IEMCO - ${modeloSeleccionado}`;
+  } else {
+    titulo.textContent = "Refacciones IEMCO";
+  }
+}
 
 
 function mostrarResultados(lista) {
