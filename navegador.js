@@ -175,6 +175,15 @@ function aplicarFiltros() {
   const tipo = tipoSelect ? tipoSelect.value : "";
   const unidad = unidadSelect ? unidadSelect.value : "";
 
+  const palabrasInput = document.getElementById("buscarPalabras");
+const palabrasTexto = palabrasInput ? palabrasInput.value.toLowerCase().trim() : "";
+
+// separar por espacios y eliminar vacíos
+const palabras = palabrasTexto
+  ? palabrasTexto.split(" ").filter(p => p.length > 0)
+  : [];
+
+
   const filtrados = resultadosActuales.filter(r => {
 
     const coincideRef =
@@ -189,7 +198,14 @@ function aplicarFiltros() {
     const coincideUnidad =
       !unidad || r.unidad === unidad;
 
-    return coincideRef && coincideModelo && coincideTipo && coincideUnidad;
+      const coincidePalabras =
+  palabras.length === 0 ||
+  palabras.every(p =>
+    String(r.palClave || "").toLowerCase().includes(p)
+  );
+
+
+    return coincideRef && coincideModelo && coincideTipo && coincideUnidad && coincidePalabras;
   });
 
   mostrarResultados(filtrados);
