@@ -28,6 +28,9 @@ document.getElementById("buscarRef")?.addEventListener("input", aplicarFiltros);
   document.getElementById("buscarModelo")?.addEventListener("input", aplicarFiltros);
   document.getElementById("filtroTipo")?.addEventListener("change", aplicarFiltros);
   document.getElementById("filtroUnidad")?.addEventListener("change", aplicarFiltros);
+  document.getElementById("buscarPalabras")
+  ?.addEventListener("input", aplicarFiltros);
+
 
   document.querySelectorAll(".maquina-link").forEach(link => {
     link.addEventListener("click", async e => {
