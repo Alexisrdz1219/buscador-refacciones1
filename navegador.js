@@ -65,7 +65,11 @@ function actualizarTitulo() {
     "titulo-default",
     "titulo-aoki",
     "titulo-asb",
-    "titulo-nissei"
+    "titulo-nissei",
+    "titulo-sumitomo",
+    "titulo-enlainadora",
+    "titulo-revolvedora",
+    "titulo-molino"
   );
 
   // Detecta palabra y asigna color
@@ -73,8 +77,16 @@ function actualizarTitulo() {
     titulo.classList.add("titulo-aoki");
   } else if (modeloSeleccionado.toLowerCase().includes("asb")) {
     titulo.classList.add("titulo-asb");
-  } else if (modeloSeleccionado.toLowerCase().includes("nissei")) {
-    titulo.classList.add("titulo-nissei");
+    } else if (modeloSeleccionado.toLowerCase().includes("nissei")) {
+      titulo.classList.add("titulo-nissei");
+    } else if (modeloSeleccionado.toLowerCase().includes("sumitomo")) {
+      titulo.classList.add("titulo-sumitomo");
+    } else if (modeloSeleccionado.toLowerCase().includes("enlainadora")) {
+      titulo.classList.add("titulo-enlainadora");
+    } else if (modeloSeleccionado.toLowerCase().includes("revolvedora")) {
+      titulo.classList.add("titulo-revolvedora");
+    } else if (modeloSeleccionado.toLowerCase().includes("molino")) {
+      titulo.classList.add("titulo-molino");
   } else {
     titulo.classList.add("titulo-default");
   }
