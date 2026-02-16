@@ -244,7 +244,7 @@ function aplicarFiltros() {
     const coincidePalabras =
       palabras.length === 0 ||
       palabras.every(p =>
-        String(r.palClave || "").toLowerCase().includes(p)
+        String(r.palclave || "").toLowerCase().includes(p)
       );
 
     return coincideRef &&
