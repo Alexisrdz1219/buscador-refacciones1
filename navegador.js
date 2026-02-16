@@ -69,7 +69,8 @@ function actualizarTitulo() {
     "titulo-sumitomo",
     "titulo-enlainadora",
     "titulo-revolvedora",
-    "titulo-molino"
+    "titulo-pagani",
+    "titulo-rapid"
   );
 
   // Detecta palabra y asigna color
@@ -83,10 +84,14 @@ function actualizarTitulo() {
       titulo.classList.add("titulo-sumitomo");
     } else if (modeloSeleccionado.toLowerCase().includes("enlainadora")) {
       titulo.classList.add("titulo-enlainadora");
-    } else if (modeloSeleccionado.toLowerCase().includes("revolvedora")) {
+    } else if (modeloSeleccionado.toLowerCase().includes("XHS-50KGS")) {
       titulo.classList.add("titulo-revolvedora");
     } else if (modeloSeleccionado.toLowerCase().includes("molino")) {
       titulo.classList.add("titulo-molino");
+    } else if (modeloSeleccionado.toLowerCase().includes("pagani")) {
+      titulo.classList.add("titulo-pagani");
+    } else if (modeloSeleccionado.toLowerCase().includes("rapid")) {
+      titulo.classList.add("titulo-rapid");
   } else {
     titulo.classList.add("titulo-default");
   }
