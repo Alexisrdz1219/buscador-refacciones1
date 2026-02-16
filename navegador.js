@@ -154,33 +154,70 @@ function mostrarResultados(lista) {
   cont.innerHTML = ""; // limpia antes, por salud mental
 
 lista.forEach(r => {
-  cont.innerHTML += `
-    <div class="ref-card">
-      <div class="ref-img">
-        <img src="${r.imagen || 'no-image.jpg'}" alt="${r.nombreprod}" onerror="this.onerror=null; this.src='no-image.jpg';">
-      </div>
+  // cont.innerHTML += `
+  //   <div class="ref-card">
+  //     <div class="ref-img">
+  //       <img src="${r.imagen || 'no-image.jpg'}" alt="${r.nombreprod}" onerror="this.onerror=null; this.src='no-image.jpg';">
+  //     </div>
 
-      <div class="ref-body">
-        <h3 class="ref-title">${r.nombreprod}</h3>
+  //     <div class="ref-body">
+  //       <h3 class="ref-title">${r.nombreprod}</h3>
 
-        <p class="categoria">${r.categoriaprin || 'Sin categoría'}</p>
+  //       <p class="categoria">${r.categoriaprin || 'Sin categoría'}</p>
 
-        <div class="ref-grid">
-          <span><b>Modelo:</b> ${r.modelo || '-'}</span>
-          <span><b>Tipo:</b> ${r.tipoprod || '-'}</span>
-          <span><b>Ref:</b> ${r.refinterna}</span>
-          <span><b>Cantidad:</b> ${r.cantidad} ${r.unidad || ''}</span>
-          <span><b>Ubicación:</b> ${r.ubicacion || '-'}</span>
-        </div>
+  //       <div class="ref-grid">
+  //         <span><b>Modelo:</b> ${r.modelo || '-'}</span>
+  //         <span><b>Tipo:</b> ${r.tipoprod || '-'}</span>
+  //         <span><b>Ref:</b> ${r.refinterna}</span>
+  //         <span><b>Cantidad:</b> ${r.cantidad} ${r.unidad || ''}</span>
+  //         <span><b>Ubicación:</b> ${r.ubicacion || '-'}</span>
+  //       </div>
 
         
 
-        <div class="ref-actions">
-          <a href="detalle.html?id=${r.id}" class="btn-ver">Ver / Editar</a>
-        </div>
-      </div>
+  //       <div class="ref-actions">
+  //         <a href="detalle.html?id=${r.id}" class="btn-ver">Ver / Editar</a>
+  //       </div>
+  //     </div>
+  //   </div>
+  // `;
+  cont.innerHTML += `
+  <div class="ref-card">
+    
+    <div class="ref-img">
+      <img src="${r.imagen || 'no-image.jpg'}"
+           alt="${r.nombreprod}"
+           onerror="this.onerror=null; this.src='no-image.jpg';">
     </div>
-  `;
+
+    <div class="ref-body">
+
+      <!-- NOMBRE (principal) -->
+      <h3 class="ref-title">${r.nombreprod}</h3>
+
+      <!-- MODELO -->
+      <div class="ref-modelo">
+        Modelo: <strong>${r.modelo || '-'}</strong>
+      </div>
+
+      <!-- CANTIDAD -->
+      <div class="ref-cantidad">
+        Cantidad: <strong>${r.cantidad} ${r.unidad || ''}</strong>
+      </div>
+
+      <!-- UBICACIÓN (DESTACADA) -->
+      <div class="ref-ubicacion">
+        📍 ${r.ubicacion || 'Sin ubicación'}
+      </div>
+
+      <div class="ref-actions">
+        <a href="detalle.html?id=${r.id}" class="btn-ver">Ver / Editar</a>
+      </div>
+
+    </div>
+  </div>
+`;
+
 });
 
 
