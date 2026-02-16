@@ -43,6 +43,8 @@ document.getElementById("buscarRef")?.addEventListener("input", aplicarFiltros);
       );
 
       const data = await res.json();
+      console.log(data[0]);
+
       resultadosActuales = data; // 🔥 guardamos lo que vino del backend
  // 🔥 guardamos los datos
 llenarSelects(data);       // 🔥 llenamos tipos y unidades dinámicamente
