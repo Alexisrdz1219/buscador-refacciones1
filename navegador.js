@@ -157,7 +157,7 @@ lista.forEach(r => {
   cont.innerHTML += `
     <div class="ref-card">
       <div class="ref-img">
-        <img src="${r.imagen || 'no-image.png'}" alt="${r.nombreprod}" onerror="this.onerror=null; this.src='no-image.jpg';">
+        <img src="${r.imagen || 'no-image.jpg'}" alt="${r.nombreprod}" onerror="this.onerror=null; this.src='no-image.jpg';">
       </div>
 
       <div class="ref-body">
