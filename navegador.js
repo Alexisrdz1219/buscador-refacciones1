@@ -161,28 +161,69 @@ lista.forEach(r => {
 
 }
 
+// function aplicarFiltros() {
+
+//   if (!resultadosActuales.length) return;
+
+//   const refInput = document.getElementById("buscarRef");
+//   const modeloInput = document.getElementById("buscarModelo");
+//   const tipoSelect = document.getElementById("filtroTipo");
+//   const unidadSelect = document.getElementById("filtroUnidad");
+
+//   const ref = refInput ? refInput.value.toLowerCase().trim() : "";
+//   const modelo = modeloInput ? modeloInput.value.toLowerCase().trim() : "";
+//   const tipo = tipoSelect ? tipoSelect.value : "";
+//   const unidad = unidadSelect ? unidadSelect.value : "";
+
+//   const palabrasInput = document.getElementById("buscarPalabras");
+// const palabrasTexto = palabrasInput ? palabrasInput.value.toLowerCase().trim() : "";
+
+// // separar por espacios y eliminar vacíos
+// const palabras = palabrasTexto
+//   ? palabrasTexto.split(" ").filter(p => p.length > 0)
+//   : [];
+
+
+//   const filtrados = resultadosActuales.filter(r => {
+
+//     const coincideRef =
+//       !ref || String(r.refinterna || "").toLowerCase().includes(ref);
+
+//     const coincideModelo =
+//       !modelo || String(r.modelo || "").toLowerCase().includes(modelo);
+
+//     const coincideTipo =
+//       !tipo || r.tipoprod === tipo;
+
+//     const coincideUnidad =
+//       !unidad || r.unidad === unidad;
+
+//       const coincidePalabras =
+//   palabras.length === 0 ||
+//   palabras.every(p =>
+//     String(r.palClave || "").toLowerCase().includes(p)
+//   );
+
+
+//     return coincideRef && coincideModelo && coincideTipo && coincideUnidad && coincidePalabras;
+//   });
+
+//   mostrarResultados(filtrados);
+// }
 function aplicarFiltros() {
 
   if (!resultadosActuales.length) return;
 
-  const refInput = document.getElementById("buscarRef");
-  const modeloInput = document.getElementById("buscarModelo");
-  const tipoSelect = document.getElementById("filtroTipo");
-  const unidadSelect = document.getElementById("filtroUnidad");
+  const ref = document.getElementById("buscarRef")?.value.toLowerCase().trim() || "";
+  const modelo = document.getElementById("buscarModelo")?.value.toLowerCase().trim() || "";
+  const tipo = document.getElementById("filtroTipo")?.value || "";
+  const unidad = document.getElementById("filtroUnidad")?.value || "";
 
-  const ref = refInput ? refInput.value.toLowerCase().trim() : "";
-  const modelo = modeloInput ? modeloInput.value.toLowerCase().trim() : "";
-  const tipo = tipoSelect ? tipoSelect.value : "";
-  const unidad = unidadSelect ? unidadSelect.value : "";
+  const palabrasTexto = document.getElementById("buscarPalabras")?.value.toLowerCase().trim() || "";
 
-  const palabrasInput = document.getElementById("buscarPalabras");
-const palabrasTexto = palabrasInput ? palabrasInput.value.toLowerCase().trim() : "";
-
-// separar por espacios y eliminar vacíos
-const palabras = palabrasTexto
-  ? palabrasTexto.split(" ").filter(p => p.length > 0)
-  : [];
-
+  const palabras = palabrasTexto
+    ? palabrasTexto.split(" ").filter(p => p.length > 0)
+    : [];
 
   const filtrados = resultadosActuales.filter(r => {
 
@@ -198,14 +239,17 @@ const palabras = palabrasTexto
     const coincideUnidad =
       !unidad || r.unidad === unidad;
 
-      const coincidePalabras =
-  palabras.length === 0 ||
-  palabras.every(p =>
-    String(r.palClave || "").toLowerCase().includes(p)
-  );
+    const coincidePalabras =
+      palabras.length === 0 ||
+      palabras.every(p =>
+        String(r.palClave || "").toLowerCase().includes(p)
+      );
 
-
-    return coincideRef && coincideModelo && coincideTipo && coincideUnidad && coincidePalabras;
+    return coincideRef &&
+           coincideModelo &&
+           coincideTipo &&
+           coincideUnidad &&
+           coincidePalabras;
   });
 
   mostrarResultados(filtrados);
