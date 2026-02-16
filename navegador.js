@@ -68,7 +68,7 @@ function actualizarTitulo() {
     "titulo-nissei",
     "titulo-sumitomo",
     "titulo-enlainadora",
-    "titulo-revolvedora",
+    "titulo-xhs-50kgs",
     "titulo-pagani",
     "titulo-rapid"
   );
@@ -85,7 +85,7 @@ function actualizarTitulo() {
     } else if (modeloSeleccionado.toLowerCase().includes("enlainadora")) {
       titulo.classList.add("titulo-enlainadora");
     } else if (modeloSeleccionado.toLowerCase().includes("XHS-50KGS")) {
-      titulo.classList.add("titulo-revolvedora");
+      titulo.classList.add("titulo-xhs-50kgs");
     } else if (modeloSeleccionado.toLowerCase().includes("molino")) {
       titulo.classList.add("titulo-molino");
     } else if (modeloSeleccionado.toLowerCase().includes("pagani")) {
