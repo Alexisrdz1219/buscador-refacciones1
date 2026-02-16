@@ -317,7 +317,218 @@
 <body>
 
 <main>
+  <aside class="sidebar-container d-flex flex-column p-3" id="sidebar">
+                <div class="d-flex align-items-center mb-3">
+                    <a href="/" class="text-decoration-none flex-grow-1 text-center">
+                        <img src="https://iemcousa.com/application/files/9615/2838/9508/logo.png" 
+                            alt="IEMCO" style="max-width: 160px; height: auto;">
+                    </a>
+                    <button class="btn-close d-lg-none ms-2" id="btnClose" aria-label="Close"></button>
+                </div>
+                
+                <hr>
+                
+                <ul class="nav nav-pills flex-column mb-auto">
+                    <li class="nav-item">
+                        <a href="#" class="nav-link active"><i class="bi bi-house-door me-2"></i> Inicio</a>
+                    </li>
+                    <li class="mb-1">
+                        <button class="btn-toggle collapsed" data-bs-toggle="collapse" data-bs-target="#dash-collapse">
+                            <i class="bi bi-pencil-square me-2"></i> Acciones
+                        </button>
+                        <div class="collapse" id="dash-collapse">
+                            <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+                                <li><a href="actDatos/importar-odoo.html">Actualizar refacciones</a></li>
+                                <li><a href="refacciones.html">Editar refacciones</a></li>
+                            </ul>
+                        </div>
+                    </li>
 
+                    <li class="mb-1">
+                        <button class="btn-toggle collapsed" data-bs-toggle="collapse" data-bs-target="#MAQU-collapse">
+                            <i class="bi bi-tools me-2"></i> Maquinas
+                        </button>
+                        <div class="collapse" id="MAQU-collapse">
+                            <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+                                <li><a href="javascript:void(0)" class="link-body-emphasis maquina-link d-block fw-bold" data-categoriaprin="Maquinas" data-maquinamod="AOKI SBIII-500-150">AOKI</a></li>
+                                <li class="mb-2"><a href="#collapseASB" class="link-body-emphasis  d-block fw-bold" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="collapseASB">ASB</a>
+                                    <div class="collapse mt-2 ps-3" id="collapseASB">
+                                        <div class="card card-body pt-1 pb-1 border-start border-0 rounded-0">
+                                            <a href="javascript:void(0)" class="link-body-emphasis maquina-link d-block" data-categoriaprin="Maquinas" data-maquinamod="ASB 150DP"><small class="text-muted">ASB 150DP</small></a>
+                                        </div>
+                                        <div class="card card-body pt-1 pb-1 border-start border-0 rounded-0">
+                                            <a href="javascript:void(0)" class="link-body-emphasis maquina-link d-block" data-categoriaprin="Maquinas" data-maquinamod="ASB 150 DP STD"><small class="text-muted">ASB 150DP STD</small></a>
+                                        </div>
+                                        <div class="card card-body pt-1 pb-1 border-start border-0 rounded-0">
+                                            <a href="javascript:void(0)" class="link-body-emphasis maquina-link d-block" data-categoriaprin="Maquinas" data-maquinamod="ASB 12M"><small class="text-muted">ASB 12M</small></a>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="mb-2"><a href="#collapseNISSEI" class="link-body-emphasis  d-block fw-bold" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="collapseNISSEI">NISSEI</a>
+                                    <div class="collapse mt-2 ps-3" id="collapseNISSEI">
+                                        <div class="card card-body pt-1 pb-1 border-start border-0 rounded-0">
+                                            <a href="javascript:void(0)" class="link-body-emphasis maquina-link d-block" data-categoriaprin="Maquinas" data-maquinamod="NISSEI FS 160"><small class="text-muted">NISSEI FS 160</small></a>
+                                        </div>
+                                        <div class="card card-body pt-1 pb-1 border-start border-0 rounded-0">
+                                            <a href="javascript:void(0)" class="link-body-emphasis maquina-link d-block" data-categoriaprin="Maquinas" data-maquinamod="NISSEI FN3000"><small class="text-muted">NISSEI FN3000</small></a>
+                                        </div>
+                                        <div class="card card-body pt-1 pb-1 border-start border-0 rounded-0">
+                                            <a href="javascript:void(0)" class="link-body-emphasis maquina-link d-block" data-categoriaprin="Maquinas" data-maquinamod="NISSEI FNX280"><small class="text-muted">NISSEI FNX280</small></a>
+                                        </div>
+                                        <div class="card card-body pt-1 pb-1 border-start border-0 rounded-0">
+                                            <a href="javascript:void(0)" class="link-body-emphasis maquina-link d-block" data-categoriaprin="Maquinas" data-maquinamod="NISSEI FNX220"><small class="text-muted">NISSEI FNX220</small></a>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="mb-2"><a href="#collapseSuMITOMO" class="link-body-emphasis  d-block fw-bold" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="collapseSuMITOMO">SUMITOMO</a>
+                                    <div class="collapse mt-2 ps-3" id="collapseSuMITOMO">
+                                        <div class="card card-body pt-1 pb-1 border-start border-0 rounded-0">
+                                            <a href="javascript:void(0)" class="link-body-emphasis maquina-link d-block" data-categoriaprin="Maquinas" data-maquinamod="SUMITOMO SYSTEC 280"><small class="text-muted">SUMITOMO SYSTEC 280</small></a>
+                                        </div>
+                                        <div class="card card-body pt-1 pb-1 border-start border-0 rounded-0">
+                                            <a href="javascript:void(0)" class="link-body-emphasis maquina-link d-block" data-categoriaprin="Maquinas" data-maquinamod="SUMITOMO SYSTEC 580"><small class="text-muted">SUMITOMO SYSTEC 580</small></a>
+                                        </div>
+                                        <div class="card card-body pt-1 pb-1 border-start border-0 rounded-0">
+                                            <a href="javascript:void(0)" class="link-body-emphasis maquina-link d-block" data-categoriaprin="Maquinas" data-maquinamod="SUMITOMO INTELECT2 S 220"><small class="text-muted">SUMITOMO INTELECT2 S 220</small></a>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="mb-2"><a href="#collapseENLAINADORA" class="link-body-emphasis  d-block fw-bold" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="collapseENLAINADORA">ENLAINADORAS</a>
+                                    <div class="collapse mt-2 ps-3" id="collapseENLAINADORA">
+                                        <div class="card card-body pt-1 pb-1 border-start border-0 rounded-0">
+                                            <a href="javascript:void(0)" class="link-body-emphasis maquina-link d-block" data-categoriaprin="Maquinas" data-maquinamod="AUTING SMN-03"><small class="text-muted">ENLAINADORA 1</small></a>
+                                        </div>
+                                        <div class="card card-body pt-1 pb-1 border-start border-0 rounded-0">
+                                            <a href="javascript:void(0)" class="link-body-emphasis maquina-link d-block" data-categoriaprin="Maquinas" data-maquinamod="AUTING LSM-025"><small class="text-muted">ENLAINADORA 2</small></a>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="mb-2"><a href="#collapseREVOLV" class="link-body-emphasis  d-block fw-bold" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="collapseREVOLV">REVOLVEDORAS</a>
+                                    <div class="collapse mt-2 ps-3" id="collapseREVOLV">
+                                        <div class="card card-body pt-1 pb-1 border-start border-0 rounded-0">
+                                            <a href="javascript:void(0)" class="link-body-emphasis maquina-link d-block" data-categoriaprin="Maquinas" data-maquinamod="XHS-50KGS"><small class="text-muted">REVOLVEDORA 1</small></a>
+                                        </div>
+                                        <div class="card card-body pt-1 pb-1 border-start border-0 rounded-0">
+                                            <a href="javascript:void(0)" class="link-body-emphasis maquina-link d-block" data-categoriaprin="Maquinas" data-maquinamod="XHS-50KGS"><small class="text-muted">REVOLVEDORA 2</small></a>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="mb-2"><a href="#collapseMOLINO" class="link-body-emphasis  d-block fw-bold" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="collapseMOLINO">MOLINOS</a>
+                                    <div class="collapse mt-2 ps-3" id="collapseMOLINO">
+                                        <div class="card card-body pt-1 pb-1 border-start border-0 rounded-0">
+                                            <a href="javascript:void(0)" class="link-body-emphasis maquina-link d-block" data-categoriaprin="Maquinas" data-maquinamod="PAGANI"><small class="text-muted">MOLINO PAGANI</small></a>
+                                        </div>
+                                        <div class="card card-body pt-1 pb-1 border-start border-0 rounded-0">
+                                            <a href="javascript:void(0)" class="link-body-emphasis maquina-link d-block" data-categoriaprin="Maquinas" data-maquinamod="RAPID"><small class="text-muted">MOLINO RAPID</small></a>
+                                        </div>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
+
+                    <li class="mb-1">
+                        <button class="btn-toggle collapsed" data-bs-toggle="collapse" data-bs-target="#COMP-collapse">
+                            <i class="bi bi-gear-wide-connected me-2"></i> Compresores
+                        </button>
+                        <div class="collapse" id="COMP-collapse">
+                            <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+                                <li><a href="#">AOKI</a></li>
+                                <li><a href="#">ASB</a></li>
+                                <li><a href="#">NISSEI</a></li>
+                            </ul>
+                        </div>
+                    </li>
+
+                    <li class="mb-1">
+                        <button class="btn-toggle collapsed" data-bs-toggle="collapse" data-bs-target="#RedAg-collapse">
+                            <i class="bi bi-droplet-fill me-2"></i> Red de Agua
+                        </button>
+                        <div class="collapse" id="RedAg-collapse">
+                            <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+                                <li><a href="#">AOKI</a></li>
+                                <li><a href="#">ASB</a></li>
+                                <li><a href="#">NISSEI</a></li>
+                                <li><a href="#">SUMITOMO</a></li>
+                                <li><a href="#">ENLAINADORAS</a></li>
+                                <li><a href="#">REVOLVEDORAS</a></li>
+                                <li><a href="#">MOLINO</a></li>
+                            </ul>
+                        </div>
+                    </li>
+
+                    <li class="mb-1">
+                        <button class="btn-toggle collapsed" data-bs-toggle="collapse" data-bs-target="#Subestacion-collapse">
+                            <i class="bi bi-lightning-charge-fill me-2"></i> Subestacion
+                        </button>
+                        <div class="collapse" id="Subestacion-collapse">
+                            <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+                                <li><a href="#">AOKI</a></li>
+                                <li><a href="#">ASB</a></li>
+                                <li><a href="#">NISSEI</a></li>
+                                <li><a href="#">SUMITOMO</a></li>
+                                <li><a href="#">ENLAINADORAS</a></li>
+                                <li><a href="#">REVOLVEDORAS</a></li>
+                                <li><a href="#">MOLINO</a></li>
+                            </ul>
+                        </div>
+                    </li>
+
+                    <li class="mb-1">
+                        <button class="btn-toggle collapsed" data-bs-toggle="collapse" data-bs-target="#TRransportes-collapse">
+                            <i class="bi bi-truck me-2"></i> Transportes
+                        </button>
+                        <div class="collapse" id="TRransportes-collapse">
+                            <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+                                <li><a href="#">AOKI</a></li>
+                                <li><a href="#">ASB</a></li>
+                                <li><a href="#">NISSEI</a></li>
+                                <li><a href="#">SUMITOMO</a></li>
+                                <li><a href="#">ENLAINADORAS</a></li>
+                                <li><a href="#">REVOLVEDORAS</a></li>
+                                <li><a href="#">MOLINO</a></li>
+                            </ul>
+                        </div>
+                    </li>
+
+                    <li class="mb-1">
+                        <button class="btn-toggle collapsed" data-bs-toggle="collapse" data-bs-target="#EquiposAuxiliares-collapse">
+                            <i class="bi bi-wrench-adjustable me-2"></i> Equipos Auxiliares
+                        </button>
+                        <div class="collapse" id="EquiposAuxiliares-collapse">
+                            <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+                                <li><a href="#">AOKI</a></li>
+                                <li><a href="#">ASB</a></li>
+                            </ul>
+                        </div>
+                    </li>
+
+                    <li class="mb-1">
+                        <button class="btn-toggle collapsed" data-bs-toggle="collapse" data-bs-target="#SERV-collapse">
+                            <i class="bi bi-person-gear me-2"></i> Servicios
+                        </button>
+                        <div class="collapse" id="SERV-collapse">
+                            <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+                                <li><a href="#">AOKI</a></li>
+                                <li><a href="#">ASB</a></li>
+                            </ul>
+                        </div>
+                    </li>
+                </ul>
+                
+                <hr>
+                <div class="dropdown">
+                    <a href="#" class="d-flex align-items-center link-dark text-decoration-none dropdown-toggle" data-bs-toggle="dropdown">
+                        <img src="https://static.vecteezy.com/system/resources/thumbnails/019/896/008/small_2x/male-user-avatar-icon-in-flat-design-style-person-signs-illustration-png.png" width="32" height="32" class="rounded-circle me-2">
+                        <strong>Personal</strong>
+                    </a>
+                    <ul class="dropdown-menu shadow">
+                        <li><a class="dropdown-item" href="#">Perfil</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item" href="#">Salir</a></li>
+                    </ul>
+                </div>
+            </aside>
   <!-- 🔵 AQUÍ VA TU SIDEBAR (puedes pegar el mismo aside que ya tienes en tu sistema principal) -->
 
   <section class="content-area">
