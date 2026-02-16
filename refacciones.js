@@ -36,7 +36,7 @@ async function cargarTabla() {
     card.innerHTML = `
       <img
   src="${r.imagen || 'no-image.png'}"
-  style="width:100%; max-height:200px; object-fit:cover"
+  style="width:100%; max-height:200px; object-fit:cover" onerror="this.onerror=null; this.src='no-image.jpg';"
 />
 
 
