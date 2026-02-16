@@ -38,18 +38,18 @@ document.addEventListener("DOMContentLoaded", () => {
 
       const data = await res.json();
       resultadosActuales = data; // 🔥 guardamos lo que vino del backend
+ // 🔥 guardamos los datos
+llenarSelects(data);       // 🔥 llenamos tipos y unidades dinámicamente
+
 
       actualizarTitulo(); // 🔥 actualizamos título
-      mostrarResultados(resultadosActuales); // 🔥 mostramos resultados
+      mostrarResultados(data); // 🔥 mostramos resultados
     });
   });
 });
 
-document.querySelector(".btn-outline-primary")
-  .addEventListener("click", aplicarFiltros);
-
-document.querySelector('input[aria-label="Buscador"]')
-  .addEventListener("input", aplicarFiltros);
+document.addEventListener("input", aplicarFiltros);
+document.addEventListener("change", aplicarFiltros);
 
 // function actualizarTitulo() {
 //   const titulo = document.getElementById("tituloRefacciones");
@@ -157,23 +157,48 @@ lista.forEach(r => {
 }
 
 function aplicarFiltros() {
-  const texto = document.querySelector('input[aria-label="Buscador"]').value.toLowerCase();
-  const categoria = document.querySelector('select[aria-label="Filtrar por Categoría"]').value;
+  const ref = document.getElementById("buscarRef").value.toLowerCase().trim();
+  const modelo = document.getElementById("buscarModelo").value.toLowerCase().trim();
+  const tipo = document.getElementById("filtroTipo").value;
+  const unidad = document.getElementById("filtroUnidad").value;
 
   const filtrados = resultadosActuales.filter(r => {
 
-    const coincideTexto =
-      !texto ||
-      r.nombreprod?.toLowerCase().includes(texto) ||
-      r.modelo?.toLowerCase().includes(texto) ||
-      r.refinterna?.toLowerCase().includes(texto);
+    const coincideRef =
+      !ref || r.refinterna?.toLowerCase().includes(ref);
 
-    const coincideCategoria =
-      !categoria || r.categoriaprin === categoria;
+    const coincideModelo =
+      !modelo || r.modelo?.toLowerCase().includes(modelo);
 
-    return coincideTexto && coincideCategoria;
+    const coincideTipo =
+      !tipo || r.tipoprod === tipo;
+
+    const coincideUnidad =
+      !unidad || r.unidad === unidad;
+
+    return coincideRef && coincideModelo && coincideTipo && coincideUnidad;
   });
 
   mostrarResultados(filtrados);
 }
 
+
+function llenarSelects(data) {
+  const selectTipo = document.getElementById("filtroTipo");
+  const selectUnidad = document.getElementById("filtroUnidad");
+
+  // limpiar excepto la primera opción
+  selectTipo.innerHTML = `<option value="">Todos los tipos</option>`;
+  selectUnidad.innerHTML = `<option value="">Todas las unidades</option>`;
+
+  const tiposUnicos = [...new Set(data.map(r => r.tipoprod).filter(Boolean))];
+  const unidadesUnicas = [...new Set(data.map(r => r.unidad).filter(Boolean))];
+
+  tiposUnicos.forEach(tipo => {
+    selectTipo.innerHTML += `<option value="${tipo}">${tipo}</option>`;
+  });
+
+  unidadesUnicas.forEach(unidad => {
+    selectUnidad.innerHTML += `<option value="${unidad}">${unidad}</option>`;
+  });
+}

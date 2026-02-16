@@ -489,48 +489,35 @@
             <div class="card border-0 shadow-sm mb-4">
                 <div class="card-body p-3">
                     <form class="row g-3">
-                        <div class="col-12 col-lg-4">
-                            <div class="input-group">
-                                <span class="input-group-text bg-white border-end-0">
-                                    <i class="bi bi-search text-muted"></i>
-                                </span>
-                                <input type="text" class="form-control border-start-0" placeholder="Buscar producto, modelo o referencia..." aria-label="Buscador">
-                            </div>
-                        </div>
 
-                        <div class="col-6 col-md-4 col-lg-2">
-                            <select class="form-select" aria-label="Filtrar por Categoría">
-                                <option selected disabled>Categoría</option>
-                                <option value="1">ELECTRICA</option>
-                                <option value="2">HIDRAULICA</option>
-                                <option value="3">NEUMATICA</option>
-                            </select>
-                        </div>
+  <!-- Buscar por referencia interna -->
+  <div class="col-12 col-lg-3">
+    <input type="text" id="buscarRef" class="form-control"
+      placeholder="Buscar por Ref. Interna">
+  </div>
 
-                        <div class="col-6 col-md-4 col-lg-2">
-                            <select class="form-select" aria-label="Filtrar por Estado">
-                                <option selected disabled>Estado</option>
-                                <option value="1">Pendiente</option>
-                                <option value="2">En Proceso</option>
-                                <option value="3">Completado</option>
-                            </select>
-                        </div>
+  <!-- Buscar por modelo -->
+  <div class="col-12 col-lg-3">
+    <input type="text" id="buscarModelo" class="form-control"
+      placeholder="Buscar por Modelo">
+  </div>
 
-                        <div class="col-12 col-md-4 col-lg-2">
-                            <select class="form-select" aria-label="Filtrar por Fecha">
-                                <option selected disabled>Rango Fecha</option>
-                                <option value="1">Hoy</option>
-                                <option value="2">Últimos 7 días</option>
-                                <option value="3">Este mes</option>
-                            </select>
-                        </div>
+  <!-- Filtrar por Tipo -->
+  <div class="col-6 col-lg-3">
+    <select id="filtroTipo" class="form-select">
+      <option value="">Todos los tipos</option>
+    </select>
+  </div>
 
-                        <div class="col-12 col-lg-2 d-grid">
-                            <button type="button" class="btn btn-outline-primary">
-                                <i class="bi bi-funnel me-1"></i> Filtrar
-                            </button>
-                        </div>
-                    </form>
+  <!-- Filtrar por Unidad -->
+  <div class="col-6 col-lg-3">
+    <select id="filtroUnidad" class="form-select">
+      <option value="">Todas las unidades</option>
+    </select>
+  </div>
+
+</form>
+
                 </div>
             </div>
 
