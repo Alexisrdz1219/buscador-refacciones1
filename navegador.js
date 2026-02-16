@@ -1,5 +1,7 @@
 const API = "https://buscador-refaccionesbackend.onrender.com";
 let modeloSeleccionado = "";
+let resultadosActuales = [];
+
 
 
 // document.addEventListener("DOMContentLoaded", () => {
@@ -35,12 +37,19 @@ document.addEventListener("DOMContentLoaded", () => {
       );
 
       const data = await res.json();
+      resultadosActuales = data; // 🔥 guardamos lo que vino del backend
 
       actualizarTitulo(); // 🔥 actualizamos título
-      mostrarResultados(data);
+      mostrarResultados(resultadosActuales); // 🔥 mostramos resultados
     });
   });
 });
+
+document.querySelector(".btn-outline-primary")
+  .addEventListener("click", aplicarFiltros);
+
+document.querySelector('input[aria-label="Buscador"]')
+  .addEventListener("input", aplicarFiltros);
 
 // function actualizarTitulo() {
 //   const titulo = document.getElementById("tituloRefacciones");
@@ -146,3 +155,25 @@ lista.forEach(r => {
 
 
 }
+
+function aplicarFiltros() {
+  const texto = document.querySelector('input[aria-label="Buscador"]').value.toLowerCase();
+  const categoria = document.querySelector('select[aria-label="Filtrar por Categoría"]').value;
+
+  const filtrados = resultadosActuales.filter(r => {
+
+    const coincideTexto =
+      !texto ||
+      r.nombreprod?.toLowerCase().includes(texto) ||
+      r.modelo?.toLowerCase().includes(texto) ||
+      r.refinterna?.toLowerCase().includes(texto);
+
+    const coincideCategoria =
+      !categoria || r.categoriaprin === categoria;
+
+    return coincideTexto && coincideCategoria;
+  });
+
+  mostrarResultados(filtrados);
+}
+
