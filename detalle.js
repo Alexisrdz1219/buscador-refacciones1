@@ -59,26 +59,26 @@ async function cargarOpciones(endpoint, selectId) {
 /* =========================
    CARGAR CHECKLIST MAQUINAS
 ========================= */
-async function cargarMaquinasCompatibles() {
-  const maquinas = await fetch(`${API}/maquinas`).then(r => r.json());
-  const resp = await fetch(`${API}/refacciones/${id}/compatibles`)
-    .then(r => r.json());
+// async function cargarMaquinasCompatibles() {
+//   const maquinas = await fetch(`${API}/maquinas`).then(r => r.json());
+//   const resp = await fetch(`${API}/refacciones/${id}/compatibles`)
+//     .then(r => r.json());
 
-  const idsCompatibles = resp.maquinas || [];
+//   const idsCompatibles = resp.maquinas || [];
 
-  const cont = document.getElementById("lista-maquinas");
-  cont.innerHTML = "";
+//   const cont = document.getElementById("lista-maquinas");
+//   cont.innerHTML = "";
 
-  maquinas.forEach(m => {
-    const checked = idsCompatibles.includes(m.id) ? "checked" : "";
-    cont.innerHTML += `
-      <label style="display:block">
-        <input type="checkbox" value="${m.id}" ${checked}>
-        ${m.maquinamod} ${m.maquinaesp}
-      </label>
-    `;
-  });
-}
+//   maquinas.forEach(m => {
+//     const checked = idsCompatibles.includes(m.id) ? "checked" : "";
+//     cont.innerHTML += `
+//       <label style="display:block">
+//         <input type="checkbox" value="${m.id}" ${checked}>
+//         ${m.maquinamod} ${m.maquinaesp}
+//       </label>
+//     `;
+//   });
+// }
 
 /* =========================
    GUARDAR CAMBIOS
@@ -99,12 +99,16 @@ document.getElementById("form").addEventListener("submit", async e => {
     fd.append("imagen", fileInput.files[0]);
   }
 
-  const compatibilidad = [];
-  document
-    .querySelectorAll('#lista-maquinas input[type="checkbox"]:checked')
-    .forEach(cb => compatibilidad.push(cb.value));
+  // const compatibilidad = [];
+  // document
+  //   .querySelectorAll('#lista-maquinas input[type="checkbox"]:checked')
+  //   .forEach(cb => compatibilidad.push(cb.value));
 
-  fd.append("compatibilidad", JSON.stringify(compatibilidad));
+  // fd.append("compatibilidad", JSON.stringify(compatibilidad));
+fd.append(
+  "compatibilidad",
+  JSON.stringify(maquinasSeleccionadas)
+);
 
   const res = await fetch(`${API}/refacciones/${id}`, {
     method: "PUT",
@@ -131,7 +135,9 @@ document.getElementById("form").addEventListener("submit", async e => {
   await cargarOpciones("/opciones/maquinaesp", "maquinaesp");
 await cargarOpciones("/opciones/nummaquina", "nummaquina");
 
-  await cargarMaquinasCompatibles();
+  // await cargarMaquinasCompatibles();
+  await inicializarMaquinas();
+
 })();
 
 function renderCompatibles(maquinas) {
@@ -150,67 +156,179 @@ function renderCompatibles(maquinas) {
   });
 }
 
+// let maquinasDisponibles = [];
+// let maquinasSeleccionadas = [];
+
+// // Simulación (aquí deberías cargar desde tu API)
+// maquinasDisponibles = [
+//   {id:1, nombre:"AOKI SBIII-500"},
+//   {id:2, nombre:"AOKI SBIII-250"},
+//   {id:3, nombre:"NISSEI FNX-300"},
+//   {id:4, nombre:"NISSEI FNX-100"}
+// ];
+
+// const listaModal = document.getElementById("lista-maquinas-modal");
+
+// function renderModal(lista) {
+//   listaModal.innerHTML = "";
+
+//   lista.forEach(m => {
+//     listaModal.innerHTML += `
+//       <div class="col-md-6">
+//         <div class="machine-item">
+//           <input type="checkbox"
+//                  value="${m.id}"
+//                  ${maquinasSeleccionadas.includes(m.id) ? "checked" : ""}>
+//           ${m.nombre}
+//         </div>
+//       </div>
+//     `;
+//   });
+// }
+
+// renderModal(maquinasDisponibles);
+
+// // Buscador
+// document.getElementById("buscarMaquina").addEventListener("input", e => {
+//   const texto = e.target.value.toLowerCase();
+//   const filtradas = maquinasDisponibles.filter(m =>
+//     m.nombre.toLowerCase().includes(texto)
+//   );
+//   renderModal(filtradas);
+// });
+
+// // Confirmar selección
+// document.getElementById("confirmarMaquinas").addEventListener("click", () => {
+//   const checks = listaModal.querySelectorAll("input:checked");
+//   maquinasSeleccionadas = Array.from(checks).map(c => Number(c.value));
+
+//   renderChips();
+//   bootstrap.Modal.getInstance(
+//     document.getElementById("modalMaquinas")
+//   ).hide();
+// });
+
+// function renderChips(){
+//   const cont = document.getElementById("lista-maquinas");
+//   cont.innerHTML = "";
+
+//   maquinasSeleccionadas.forEach(id=>{
+//     const maquina = maquinasDisponibles.find(m=>m.id===id);
+//     cont.innerHTML += `
+//       <span class="compat-chip">
+//         ${maquina.nombre}
+//         <button onclick="quitarMaquina(${id})">
+//           <i class="bi bi-x"></i>
+//         </button>
+//       </span>
+//     `;
+//   });
+// }
+
+// function quitarMaquina(id){
+//   maquinasSeleccionadas = maquinasSeleccionadas.filter(m=>m!==id);
+//   renderChips();
+// }
 let maquinasDisponibles = [];
 let maquinasSeleccionadas = [];
 
-// Simulación (aquí deberías cargar desde tu API)
-maquinasDisponibles = [
-  {id:1, nombre:"AOKI SBIII-500"},
-  {id:2, nombre:"AOKI SBIII-250"},
-  {id:3, nombre:"NISSEI FNX-300"},
-  {id:4, nombre:"NISSEI FNX-100"}
-];
+/* =========================
+   CARGAR MAQUINAS EN MODAL
+========================= */
+async function inicializarMaquinas() {
+  // Traer todas las máquinas
+  maquinasDisponibles = await fetch(`${API}/maquinas`)
+    .then(r => r.json());
 
-const listaModal = document.getElementById("lista-maquinas-modal");
+  // Traer compatibles actuales
+  const resp = await fetch(`${API}/refacciones/${id}/compatibles`)
+    .then(r => r.json());
 
+  maquinasSeleccionadas = resp.maquinas || [];
+
+  renderModal(maquinasDisponibles);
+  renderChips();
+}
+
+/* =========================
+   RENDER MODAL
+========================= */
 function renderModal(lista) {
+  const listaModal = document.getElementById("lista-maquinas-modal");
+  if (!listaModal) return;
+
   listaModal.innerHTML = "";
 
   lista.forEach(m => {
+    const checked = maquinasSeleccionadas.includes(m.id) ? "checked" : "";
+
     listaModal.innerHTML += `
       <div class="col-md-6">
         <div class="machine-item">
           <input type="checkbox"
                  value="${m.id}"
-                 ${maquinasSeleccionadas.includes(m.id) ? "checked" : ""}>
-          ${m.nombre}
+                 ${checked}>
+          ${m.maquinamod} ${m.maquinaesp}
         </div>
       </div>
     `;
   });
 }
 
-renderModal(maquinasDisponibles);
+/* =========================
+   BUSCADOR MODAL
+========================= */
+document.addEventListener("input", e => {
+  if (e.target.id === "buscarMaquina") {
+    const texto = e.target.value.toLowerCase();
 
-// Buscador
-document.getElementById("buscarMaquina").addEventListener("input", e => {
-  const texto = e.target.value.toLowerCase();
-  const filtradas = maquinasDisponibles.filter(m =>
-    m.nombre.toLowerCase().includes(texto)
-  );
-  renderModal(filtradas);
+    const filtradas = maquinasDisponibles.filter(m =>
+      `${m.maquinamod} ${m.maquinaesp}`
+        .toLowerCase()
+        .includes(texto)
+    );
+
+    renderModal(filtradas);
+  }
 });
 
-// Confirmar selección
-document.getElementById("confirmarMaquinas").addEventListener("click", () => {
-  const checks = listaModal.querySelectorAll("input:checked");
-  maquinasSeleccionadas = Array.from(checks).map(c => Number(c.value));
+/* =========================
+   CONFIRMAR SELECCIÓN
+========================= */
+document.addEventListener("click", e => {
+  if (e.target.id === "confirmarMaquinas") {
+    const checks = document.querySelectorAll(
+      "#lista-maquinas-modal input:checked"
+    );
 
-  renderChips();
-  bootstrap.Modal.getInstance(
-    document.getElementById("modalMaquinas")
-  ).hide();
+    maquinasSeleccionadas = Array.from(checks)
+      .map(c => Number(c.value));
+
+    renderChips();
+
+    const modal = bootstrap.Modal.getInstance(
+      document.getElementById("modalMaquinas")
+    );
+    modal.hide();
+  }
 });
 
-function renderChips(){
+/* =========================
+   RENDER CHIPS
+========================= */
+function renderChips() {
   const cont = document.getElementById("lista-maquinas");
+  if (!cont) return;
+
   cont.innerHTML = "";
 
-  maquinasSeleccionadas.forEach(id=>{
-    const maquina = maquinasDisponibles.find(m=>m.id===id);
+  maquinasSeleccionadas.forEach(id => {
+    const maquina = maquinasDisponibles.find(m => m.id === id);
+    if (!maquina) return;
+
     cont.innerHTML += `
       <span class="compat-chip">
-        ${maquina.nombre}
+        ${maquina.maquinamod} ${maquina.maquinaesp}
         <button onclick="quitarMaquina(${id})">
           <i class="bi bi-x"></i>
         </button>
@@ -219,7 +337,9 @@ function renderChips(){
   });
 }
 
-function quitarMaquina(id){
-  maquinasSeleccionadas = maquinasSeleccionadas.filter(m=>m!==id);
+function quitarMaquina(id) {
+  maquinasSeleccionadas =
+    maquinasSeleccionadas.filter(m => m !== id);
+
   renderChips();
 }
