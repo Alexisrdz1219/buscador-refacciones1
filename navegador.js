@@ -361,3 +361,22 @@ function crearTagVisual(texto) {
 
   contenedorTags.insertBefore(tag, inputTag);
 }
+
+async function cargarTodo() {
+  const cont = document.getElementById("resultados");
+  cont.innerHTML = "Cargando...";
+
+  try {
+    const res = await fetch("https://tu-backend.com/refacciones");
+    const data = await res.json();
+
+    cont.innerHTML = "";
+
+    data.forEach(r => {
+      cont.innerHTML += crearCard(r);
+    });
+
+  } catch (error) {
+    cont.innerHTML = "Error al cargar datos";
+  }
+}
