@@ -117,7 +117,7 @@ document.getElementById("form").addEventListener("submit", async e => {
   }
 
   alert("✅ Refacción actualizada");
-  window.location.href = "refacciones.html";
+  window.location.href = "Nadd.html";
 });
 
 /* =========================
