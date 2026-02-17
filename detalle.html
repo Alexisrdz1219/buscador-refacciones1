@@ -446,14 +446,34 @@ textarea {
   height: 60px;
 }
 
-/* IMAGEN */
-#preview-imagen {
-  max-width: 100%;
-  max-height: 100px;
-  margin-top: 5px;
-  border-radius: 6px;
-  display: none;
+.image-box {
+  position: relative;
+  width: 100%;
+  height: 180px;
+  border-radius: 10px;
+  overflow: hidden;
+  background: #f1f5f9;
+  border: 1px solid var(--border-color);
 }
+
+.image-box img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.image-overlay {
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+  background: rgba(0,0,0,0.6);
+  color: white;
+  padding: 6px 10px;
+  font-size: 12px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
 
 /* BOTONES */
 .form-footer {
@@ -496,6 +516,46 @@ textarea {
     grid-template-columns: 1fr;
   }
 }
+
+.compat-container {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.compat-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.compat-chip {
+  background: #e0f2fe;
+  color: #075985;
+  padding: 6px 10px;
+  font-size: 12px;
+  border-radius: 20px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.compat-chip button {
+  background: none;
+  border: none;
+  color: #075985;
+  cursor: pointer;
+  font-size: 12px;
+}
+
+.btn-add-machine {
+  background: #f1f5f9;
+  border: 1px dashed #94a3b8;
+  padding: 6px;
+  font-size: 12px;
+  border-radius: 6px;
+}
+
 </style>
 </head>
 
@@ -553,9 +613,14 @@ textarea {
       <label>Palabras Clave</label>
       <input type="text" id="palclave">
 
-      <label>Imagen</label>
-      <input type="file" id="imagen" accept="image/*">
-      <img id="preview-imagen">
+      <div class="image-box">
+  <img id="preview-imagen" />
+  <label for="imagen" class="image-overlay">
+    <i class="bi bi-camera"></i> Cambiar
+  </label>
+  <input type="file" id="imagen" accept="image/*" hidden>
+</div>
+
     </div>
 
     <!-- INVENTARIO -->
@@ -583,9 +648,13 @@ textarea {
     <!-- COMPATIBLES -->
     <div class="section">
       <div class="section-title">Máquinas Compatibles</div>
-      <div id="lista-maquinas">
-        <p class="text-muted small m-0">No hay máquinas adicionales vinculadas.</p>
-      </div>
+      <div class="compat-container">
+  <div id="lista-maquinas" class="compat-grid"></div>
+  <button type="button" class="btn-add-machine">
+    <i class="bi bi-plus"></i> Agregar máquina
+  </button>
+</div>
+
     </div>
 
   </form>

@@ -133,3 +133,19 @@ await cargarOpciones("/opciones/nummaquina", "nummaquina");
 
   await cargarMaquinasCompatibles();
 })();
+
+function renderCompatibles(maquinas) {
+  const cont = document.getElementById("lista-maquinas");
+  cont.innerHTML = "";
+
+  maquinas.forEach(m => {
+    cont.innerHTML += `
+      <div class="compat-chip">
+        ${m.nombre}
+        <button onclick="quitarMaquina(${m.id})">
+          <i class="bi bi-x"></i>
+        </button>
+      </div>
+    `;
+  });
+}
