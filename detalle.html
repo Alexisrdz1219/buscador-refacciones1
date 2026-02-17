@@ -1,4 +1,4 @@
-<!-- <!DOCTYPE html>
+<!-- <!-- <!DOCTYPE html>
 <html lang="es">
 <head>
   <meta charset="UTF-8">
@@ -341,7 +341,7 @@ label {
 <script src="detalle.js" defer></script>
 
 </body>
-</html> -->
+</html>
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -571,7 +571,7 @@ textarea {
 
   <form id="form" class="form-body">
 
-    <!-- INFORMACIÓN PRINCIPAL -->
+  INFORMACIÓN PRINCIPAL
     <div class="section">
       <div class="section-title">Información Principal</div>
 
@@ -585,7 +585,7 @@ textarea {
       <select id="categoriaprin"></select>
     </div>
 
-    <!-- MAQUINARIA -->
+     MAQUINARIA 
     <div class="section">
       <div class="section-title">Clasificación Maquinaria</div>
 
@@ -599,7 +599,7 @@ textarea {
       <select id="nummaquina"></select>
     </div>
 
-    <!-- ESPECIFICACIONES -->
+    
     <div class="section">
       <div class="section-title">Especificaciones</div>
 
@@ -622,7 +622,7 @@ textarea {
 
     </div>
 
-    <!-- INVENTARIO -->
+    
     <div class="section">
       <div class="section-title">Inventario</div>
 
@@ -636,7 +636,7 @@ textarea {
       <input type="text" id="ubicacion">
     </div>
 
-    <!-- OBSERVACIONES -->
+
     <div class="section">
       <div class="section-title">Observaciones</div>
 
@@ -644,7 +644,7 @@ textarea {
       <textarea id="observacion"></textarea>
     </div>
 
-    <!-- COMPATIBLES -->
+ 
     <div class="section">
       <div class="section-title">Máquinas Compatibles</div>
       <div class="compat-container">
@@ -665,6 +665,233 @@ textarea {
     </button>
   </div>
 
+</div>
+
+<script src="detalle.js" defer></script>
+</body>
+</html> -->
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Editar Refacción | Sistema IEMCO</title>
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+
+<style>
+body{
+  background:#f4f6f9;
+  font-family:'Inter',sans-serif;
+}
+
+.container-edit{
+  max-width:1200px;
+  margin:40px auto;
+}
+
+.card-clean{
+  border:0;
+  border-radius:14px;
+  box-shadow:0 10px 30px rgba(0,0,0,0.05);
+}
+
+.section-title{
+  font-size:.75rem;
+  font-weight:700;
+  text-transform:uppercase;
+  color:#007a33;
+  margin-bottom:10px;
+}
+
+.form-label{
+  font-size:.75rem;
+  font-weight:600;
+  margin-bottom:4px;
+}
+
+.form-control, .form-select{
+  font-size:.85rem;
+  border-radius:8px;
+}
+
+.image-preview{
+  height:240px;
+  border-radius:12px;
+  overflow:hidden;
+  border:1px solid #e2e8f0;
+  background:#e2e8f0;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+
+.image-preview img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+}
+
+.compat-chip{
+  background:#e8f5e9;
+  color:#065f46;
+  padding:6px 12px;
+  border-radius:20px;
+  font-size:12px;
+  display:inline-flex;
+  align-items:center;
+  gap:6px;
+}
+
+.compat-chip button{
+  border:0;
+  background:none;
+  cursor:pointer;
+  font-size:12px;
+}
+
+.btn-save{
+  background:#007a33;
+  border:0;
+  font-size:.85rem;
+  padding:10px 22px;
+  border-radius:8px;
+}
+
+.btn-save:hover{
+  background:#006329;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container container-edit">
+
+<div class="row g-4">
+
+  <!-- FORM PRINCIPAL -->
+  <div class="col-lg-8">
+    <div class="card card-clean p-4">
+
+      <div class="d-flex justify-content-between align-items-center mb-3">
+        <h5 class="fw-bold m-0">
+          <i class="bi bi-pencil-square me-2"></i>Editar Refacción
+        </h5>
+        <span class="badge bg-light text-dark border">
+          ID: <span id="ref-id-display">---</span>
+        </span>
+      </div>
+
+      <form id="form">
+
+        <!-- INFORMACIÓN -->
+        <div class="section-title">Información principal</div>
+        <div class="row g-3 mb-4">
+          <div class="col-12">
+            <label class="form-label">Nombre del Producto</label>
+            <input type="text" id="nombreprod" class="form-control" required>
+          </div>
+          <div class="col-md-6">
+            <label class="form-label">Referencia Interna</label>
+            <input type="text" id="refinterna" class="form-control" required>
+          </div>
+          <div class="col-md-6">
+            <label class="form-label">Categoría</label>
+            <select id="categoriaprin" class="form-select"></select>
+          </div>
+        </div>
+
+        <!-- MAQUINARIA -->
+        <div class="section-title">Clasificación maquinaria</div>
+        <div class="row g-3 mb-4">
+          <div class="col-md-4">
+            <label class="form-label">Máquina</label>
+            <select id="maquinamod" class="form-select"></select>
+          </div>
+          <div class="col-md-4">
+            <label class="form-label">Unidad</label>
+            <select id="maquinaesp" class="form-select"></select>
+          </div>
+          <div class="col-md-4">
+            <label class="form-label">Número</label>
+            <select id="nummaquina" class="form-select"></select>
+          </div>
+        </div>
+
+        <!-- ESPECIFICACIONES -->
+        <div class="section-title">Especificaciones</div>
+        <div class="row g-3 mb-4">
+          <div class="col-md-4">
+            <label class="form-label">Tipo</label>
+            <input type="text" id="tipoprod" class="form-control">
+          </div>
+          <div class="col-md-4">
+            <label class="form-label">Modelo</label>
+            <input type="text" id="modelo" class="form-control">
+          </div>
+          <div class="col-md-4">
+            <label class="form-label">Palabras Clave</label>
+            <input type="text" id="palclave" class="form-control">
+          </div>
+        </div>
+
+        <!-- INVENTARIO -->
+        <div class="section-title">Inventario</div>
+        <div class="row g-3 mb-4">
+          <div class="col-md-4">
+            <label class="form-label">Cantidad</label>
+            <input type="number" id="cantidad" class="form-control" min="0">
+          </div>
+          <div class="col-md-4">
+            <label class="form-label">Unidad</label>
+            <input type="text" id="unidad" class="form-control">
+          </div>
+          <div class="col-md-4">
+            <label class="form-label">Ubicación</label>
+            <input type="text" id="ubicacion" class="form-control">
+          </div>
+          <div class="col-12">
+            <label class="form-label">Observación</label>
+            <textarea id="observacion" class="form-control"></textarea>
+          </div>
+        </div>
+
+        <!-- COMPATIBLES -->
+        <div class="section-title">Máquinas compatibles</div>
+        <div id="lista-maquinas" class="d-flex flex-wrap gap-2 mb-3"></div>
+        <button type="button" class="btn btn-outline-secondary btn-sm mb-4">
+          <i class="bi bi-plus"></i> Agregar máquina
+        </button>
+
+        <div class="text-end">
+          <button type="submit" class="btn btn-save text-white">
+            <i class="bi bi-floppy"></i> Guardar Cambios
+          </button>
+        </div>
+
+      </form>
+    </div>
+  </div>
+
+  <!-- PANEL LATERAL IMAGEN -->
+  <div class="col-lg-4">
+    <div class="card card-clean p-4">
+
+      <div class="section-title">Imagen del producto</div>
+
+      <div class="image-preview mb-3">
+        <img id="preview-imagen">
+      </div>
+
+      <input type="file" id="imagen" class="form-control">
+
+    </div>
+  </div>
+
+</div>
 </div>
 
 <script src="detalle.js" defer></script>
