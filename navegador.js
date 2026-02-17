@@ -377,6 +377,8 @@ async function cargarTodo() {
     });
 
   } catch (error) {
-    cont.innerHTML = "Error al cargar datos";
-  }
+  console.error(error);
+  cont.innerHTML = "Error al cargar datos";
+}
+
 }
