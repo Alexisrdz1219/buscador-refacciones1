@@ -362,25 +362,48 @@ function crearTagVisual(texto) {
   contenedorTags.insertBefore(tag, inputTag);
 }
 
-async function cargarTodo() {
+// async function cargarTodo() {
+//   const cont = document.getElementById("resultados");
+//   cont.innerHTML = "Cargando...";
+
+//   try {
+//     const res = await fetch("https://buscador-refaccionesbackend.onrender.com/refacciones");
+//     const data = await res.json();
+
+//     cont.innerHTML = "";
+
+//     data.forEach(r => {
+//       cont.innerHTML += crearCard(r);
+//     });
+
+//   } catch (error) {
+//   console.error(error);
+//   cont.innerHTML = "Error al cargar datos";
+// }
+
+// }
+let paginaActual = 1;
+const limite = 20;
+
+async function cargarTodo(page = 1) {
   const cont = document.getElementById("resultados");
+  const paginacion = document.getElementById("paginacion");
+
   cont.innerHTML = "Cargando...";
 
-  try {
-    const res = await fetch("https://buscador-refaccionesbackend.onrender.com/refacciones");
-    const data = await res.json();
+  const res = await fetch(
+    `https://buscador-refaccionesbackend.onrender.com/refacciones?page=${page}&limit=${limite}`
+  );
 
-    cont.innerHTML = "";
+  const result = await res.json();
 
-    data.forEach(r => {
-      cont.innerHTML += crearCard(r);
-    });
+  cont.innerHTML = "";
 
-  } catch (error) {
-  console.error(error);
-  cont.innerHTML = "Error al cargar datos";
-}
+  result.data.forEach(r => {
+    cont.innerHTML += crearCard(r);
+  });
 
+  renderPaginacion(result.totalPages, result.page);
 }
 
 function crearCard(r) {
@@ -393,4 +416,27 @@ function crearCard(r) {
       <p><strong>Palabras:</strong> ${r.palclave || ""}</p>
     </div>
   `;
+}
+
+function renderPaginacion(totalPages, currentPage) {
+  const pag = document.getElementById("paginacion");
+  pag.innerHTML = "";
+
+  if (currentPage > 1) {
+    pag.innerHTML += `
+      <button onclick="cargarTodo(${currentPage - 1})">
+        ⬅ Anterior
+      </button>
+    `;
+  }
+
+  pag.innerHTML += `<span> Página ${currentPage} de ${totalPages} </span>`;
+
+  if (currentPage < totalPages) {
+    pag.innerHTML += `
+      <button onclick="cargarTodo(${currentPage + 1})">
+        Siguiente ➡
+      </button>
+    `;
+  }
 }
