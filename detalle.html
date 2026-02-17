@@ -76,14 +76,14 @@ label {
 
 </form>
 
-<!-- IMPORTANTÍSIMO: defer -->
+ IMPORTANTÍSIMO: defer
 <script src="detalle.js" defer></script>
 
 </body>
 
 
 </html> -->
-<!DOCTYPE html>
+<!-- <!DOCTYPE html>
 <html lang="es">
 <head>
   <meta charset="UTF-8">
@@ -340,5 +340,265 @@ label {
 
 <script src="detalle.js" defer></script>
 
+</body>
+</html> -->
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Edición de Refacción | Sistema IEMCO</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
+
+<style>
+:root {
+  --iemco-green: #007a33;
+  --border-color: #e2e8f0;
+  --bg-light: #f8fafc;
+}
+
+body {
+  margin: 0;
+  background: #eef2f7;
+  font-family: 'Inter', sans-serif;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* CONTENEDOR PRINCIPAL */
+.form-container {
+  width: 95%;
+  height: 95vh;
+  background: #fff;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+}
+
+/* HEADER */
+.form-header {
+  padding: 12px 20px;
+  border-bottom: 1px solid var(--border-color);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.form-header h2 {
+  font-size: 1rem;
+  font-weight: 700;
+  margin: 0;
+}
+
+/* BODY */
+.form-body {
+  flex: 1;
+  padding: 15px 20px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 15px;
+  overflow: hidden;
+}
+
+/* BLOQUES */
+.section {
+  background: var(--bg-light);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.section-title {
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: var(--iemco-green);
+  margin-bottom: 5px;
+}
+
+/* INPUTS */
+label {
+  font-size: 0.7rem;
+  font-weight: 600;
+  margin-bottom: 2px;
+}
+
+input, select, textarea {
+  font-size: 0.8rem;
+  padding: 6px 8px;
+  border-radius: 4px;
+  border: 1px solid var(--border-color);
+  background: white;
+}
+
+textarea {
+  resize: none;
+  height: 60px;
+}
+
+/* IMAGEN */
+#preview-imagen {
+  max-width: 100%;
+  max-height: 100px;
+  margin-top: 5px;
+  border-radius: 6px;
+  display: none;
+}
+
+/* BOTONES */
+.form-footer {
+  padding: 10px 20px;
+  border-top: 1px solid var(--border-color);
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+.btn-save {
+  background: var(--iemco-green);
+  color: white;
+  border: none;
+  padding: 8px 18px;
+  font-size: 0.8rem;
+  border-radius: 5px;
+  font-weight: 600;
+}
+
+/* RESPONSIVE */
+@media (max-width: 1200px) {
+  .form-body {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  body {
+    align-items: flex-start;
+  }
+
+  .form-container {
+    height: auto;
+    min-height: 100vh;
+    border-radius: 0;
+  }
+
+  .form-body {
+    grid-template-columns: 1fr;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<div class="form-container">
+
+  <div class="form-header">
+    <h2><i class="bi bi-pencil-square me-2"></i>Editar Refacción</h2>
+    <span class="badge bg-light text-dark border">
+      ID: <span id="ref-id-display">---</span>
+    </span>
+  </div>
+
+  <form id="form" class="form-body">
+
+    <!-- INFORMACIÓN PRINCIPAL -->
+    <div class="section">
+      <div class="section-title">Información Principal</div>
+
+      <label>Nombre del Producto</label>
+      <input type="text" id="nombreprod" required>
+
+      <label>Referencia Interna</label>
+      <input type="text" id="refinterna" required>
+
+      <label>Categoría</label>
+      <select id="categoriaprin"></select>
+    </div>
+
+    <!-- MAQUINARIA -->
+    <div class="section">
+      <div class="section-title">Clasificación Maquinaria</div>
+
+      <label>Máquina (Modelo)</label>
+      <select id="maquinamod"></select>
+
+      <label>Unidad Específica</label>
+      <select id="maquinaesp"></select>
+
+      <label>Número Máquina</label>
+      <select id="nummaquina"></select>
+    </div>
+
+    <!-- ESPECIFICACIONES -->
+    <div class="section">
+      <div class="section-title">Especificaciones</div>
+
+      <label>Tipo Producto</label>
+      <input type="text" id="tipoprod">
+
+      <label>Modelo Técnico</label>
+      <input type="text" id="modelo">
+
+      <label>Palabras Clave</label>
+      <input type="text" id="palclave">
+
+      <label>Imagen</label>
+      <input type="file" id="imagen" accept="image/*">
+      <img id="preview-imagen">
+    </div>
+
+    <!-- INVENTARIO -->
+    <div class="section">
+      <div class="section-title">Inventario</div>
+
+      <label>Cantidad</label>
+      <input type="number" id="cantidad" min="0" required>
+
+      <label>Unidad</label>
+      <input type="text" id="unidad">
+
+      <label>Ubicación</label>
+      <input type="text" id="ubicacion">
+    </div>
+
+    <!-- OBSERVACIONES -->
+    <div class="section">
+      <div class="section-title">Observaciones</div>
+
+      <label>Notas adicionales</label>
+      <textarea id="observacion"></textarea>
+    </div>
+
+    <!-- COMPATIBLES -->
+    <div class="section">
+      <div class="section-title">Máquinas Compatibles</div>
+      <div id="lista-maquinas">
+        <p class="text-muted small m-0">No hay máquinas adicionales vinculadas.</p>
+      </div>
+    </div>
+
+  </form>
+
+  <div class="form-footer">
+    <button type="button" class="btn btn-light" onclick="window.history.back()">Cancelar</button>
+    <button type="submit" form="form" class="btn-save">
+      <i class="bi bi-floppy"></i> Guardar
+    </button>
+  </div>
+
+</div>
+
+<script src="detalle.js" defer></script>
 </body>
 </html>
