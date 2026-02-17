@@ -367,7 +367,7 @@ async function cargarTodo() {
   cont.innerHTML = "Cargando...";
 
   try {
-    const res = await fetch("https://tu-backend.com/refacciones");
+    const res = await fetch("https://buscador-refaccionesbackend.onrender.com/refacciones");
     const data = await res.json();
 
     cont.innerHTML = "";
