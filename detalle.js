@@ -109,6 +109,7 @@ fd.append(
   "compatibilidad",
   JSON.stringify(maquinasSeleccionadas)
 );
+console.log("Compatibilidad a guardar:", maquinasSeleccionadas);
 
   const res = await fetch(`${API}/refacciones/${id}`, {
     method: "PUT",
@@ -244,7 +245,8 @@ async function inicializarMaquinas() {
   const resp = await fetch(`${API}/refacciones/${id}/compatibles`)
     .then(r => r.json());
 
-  maquinasSeleccionadas = resp.maquinas || [];
+  maquinasSeleccionadas = (resp.maquinas || []).map(id => Number(id));
+
 
   renderModal(maquinasDisponibles);
   renderChips();
@@ -260,7 +262,8 @@ function renderModal(lista) {
   listaModal.innerHTML = "";
 
   lista.forEach(m => {
-    const checked = maquinasSeleccionadas.includes(m.id) ? "checked" : "";
+    const checked = maquinasSeleccionadas.includes(Number(m.id)) ? "checked" : "";
+
 
     listaModal.innerHTML += `
       <div class="col-md-6">
