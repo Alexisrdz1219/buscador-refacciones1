@@ -763,6 +763,22 @@ body{
 .btn-save:hover{
   background:#006329;
 }
+.machine-item {
+  border:1px solid #e2e8f0;
+  border-radius:8px;
+  padding:8px 10px;
+  background:#f8fafc;
+  font-size:13px;
+  display:flex;
+  align-items:center;
+  gap:8px;
+  cursor:pointer;
+}
+
+.machine-item:hover {
+  background:#e2f5ea;
+}
+
 </style>
 </head>
 
@@ -862,9 +878,15 @@ body{
         <!-- COMPATIBLES -->
         <div class="section-title">Máquinas compatibles</div>
         <div id="lista-maquinas" class="d-flex flex-wrap gap-2 mb-3"></div>
-        <button type="button" class="btn btn-outline-secondary btn-sm mb-4">
-          <i class="bi bi-plus"></i> Agregar máquina
-        </button>
+
+<button type="button"
+        class="btn btn-outline-secondary btn-sm mb-4"
+        data-bs-toggle="modal"
+        data-bs-target="#modalMaquinas">
+  <i class="bi bi-plus"></i> Agregar máquina
+</button>
+
+
 
         <div class="text-end">
           <button type="submit" class="btn btn-save text-white">
@@ -892,6 +914,42 @@ body{
   </div>
 
 </div>
+</div>
+
+<!-- MODAL MAQUINAS -->
+<div class="modal fade" id="modalMaquinas" tabindex="-1">
+  <div class="modal-dialog modal-lg modal-dialog-scrollable">
+    <div class="modal-content">
+
+      <div class="modal-header">
+        <h5 class="modal-title">
+          <i class="bi bi-hdd-stack"></i> Seleccionar Máquinas
+        </h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+
+      <div class="modal-body">
+
+        <!-- Buscador -->
+        <input type="text"
+               id="buscarMaquina"
+               class="form-control mb-3"
+               placeholder="Buscar máquina...">
+
+        <!-- Lista -->
+        <div id="lista-maquinas-modal" class="row g-2"></div>
+
+      </div>
+
+      <div class="modal-footer">
+        <button class="btn btn-light" data-bs-dismiss="modal">Cancelar</button>
+        <button class="btn btn-success" id="confirmarMaquinas">
+          Confirmar selección
+        </button>
+      </div>
+
+    </div>
+  </div>
 </div>
 
 <script src="detalle.js" defer></script>
