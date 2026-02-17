@@ -31,29 +31,57 @@ async function cargarTabla() {
 
 
     const card = document.createElement("div");
-    card.className = "card-ref";
+    card.className = "ref-card";
 
-    card.innerHTML = `
-      <img
-  src="${r.imagen || 'no-image.jpg'}"
-  style="width:100%; max-height:200px; object-fit:cover" onerror="this.onerror=null; this.src='no-image.jpg';"
-/>
+card.innerHTML = `
+  <div class="ref-img">
+    <img 
+      src="${r.imagen || 'no-image.jpg'}"
+      alt="${r.nombreprod || 'Sin nombre'}"
+      onerror="this.onerror=null; this.src='no-image.jpg';"
+    />
+  </div>
 
+  <div class="ref-body">
 
-      <div class="card-body">
-        <h4>${r.nombreprod || "Sin nombre"}</h4>
-        <div class="ref">Ref: ${r.refinterna}</div>
+    <!-- NOMBRE -->
+    <h3 class="ref-title ${obtenerClaseTitulo(r.maquina)}">
+      ${r.nombreprod || "Sin nombre"}
+    </h3>
 
-        <div class="stock ${stockClass}">
-          Stock: ${r.cantidad} ${r.unidad || ""}
-        </div>
+    <!-- REFERENCIA -->
+    <div class="ref-modelo">
+      Ref: <strong>${r.refinterna || "-"}</strong>
+    </div>
 
-        <div class="card-actions">
-          <button onclick="verDetalle(${r.id})">Editar</button>
-          <button onclick="eliminar(${r.id})">Eliminar</button>
-        </div>
-      </div>
-    `;
+    <!-- MODELO -->
+    <div class="ref-modelo">
+      Modelo: <strong>${r.modelo || "-"}</strong>
+    </div>
+
+    <!-- STOCK -->
+    <div class="ref-cantidad ${stockClass}">
+      Cantidad: <strong>${r.cantidad || 0} ${r.unidad || ""}</strong>
+    </div>
+
+    <!-- UBICACIÓN DESTACADA -->
+    <div class="ref-ubicacion">
+      📍 ${r.ubicacion || "Sin ubicación"}
+    </div>
+
+    <!-- BOTONES -->
+    <div class="ref-actions">
+      <button onclick="verDetalle(${r.id})" class="btn-ver">
+        Editar
+      </button>
+      <button onclick="eliminar(${r.id})" class="btn-ver" style="background:#dc2626;">
+        Eliminar
+      </button>
+    </div>
+
+  </div>
+`;
+
 
     contenedor.appendChild(card);
   });
