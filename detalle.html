@@ -354,7 +354,7 @@ label {
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
 
 <style>
-:root {
+  :root {
   --iemco-green: #007a33;
   --border-color: #e2e8f0;
   --bg-light: #f8fafc;
@@ -362,29 +362,25 @@ label {
 
 body {
   margin: 0;
-  background: #eef2f7;
+  background: #f1f5f9;
   font-family: 'Inter', sans-serif;
-  height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  padding: 30px 15px;
 }
 
-/* CONTENEDOR PRINCIPAL */
+/* CONTENEDOR */
 .form-container {
-  width: 95%;
-  height: 95vh;
-  background: #fff;
-  border-radius: 10px;
+  max-width: 1200px;
+  margin: auto;
+  background: #ffffff;
+  border-radius: 14px;
+  box-shadow: 0 20px 40px rgba(0,0,0,0.06);
   display: flex;
   flex-direction: column;
-  overflow: hidden;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.08);
 }
 
 /* HEADER */
 .form-header {
-  padding: 12px 20px;
+  padding: 20px 30px;
   border-bottom: 1px solid var(--border-color);
   display: flex;
   justify-content: space-between;
@@ -392,34 +388,37 @@ body {
 }
 
 .form-header h2 {
-  font-size: 1rem;
+  font-size: 1.2rem;
   font-weight: 700;
   margin: 0;
 }
 
-/* BODY */
+/* FORM GRID */
 .form-body {
-  flex: 1;
-  padding: 15px 20px;
+  padding: 30px;
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 15px;
-  overflow: hidden;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 25px;
 }
 
-/* BLOQUES */
+/* SECTIONS */
 .section {
   background: var(--bg-light);
   border: 1px solid var(--border-color);
-  border-radius: 8px;
-  padding: 12px;
+  border-radius: 12px;
+  padding: 20px;
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 12px;
+  transition: 0.2s ease;
+}
+
+.section:hover {
+  box-shadow: 0 10px 25px rgba(0,0,0,0.04);
 }
 
 .section-title {
-  font-size: 0.75rem;
+  font-size: 0.8rem;
   font-weight: 700;
   text-transform: uppercase;
   color: var(--iemco-green);
@@ -428,31 +427,39 @@ body {
 
 /* INPUTS */
 label {
-  font-size: 0.7rem;
+  font-size: 0.75rem;
   font-weight: 600;
-  margin-bottom: 2px;
+  color: #64748b;
 }
 
 input, select, textarea {
-  font-size: 0.8rem;
-  padding: 6px 8px;
-  border-radius: 4px;
+  font-size: 0.85rem;
+  padding: 10px 12px;
+  border-radius: 6px;
   border: 1px solid var(--border-color);
-  background: white;
+  background: #ffffff;
+  transition: 0.2s;
+}
+
+input:focus, select:focus, textarea:focus {
+  border-color: var(--iemco-green);
+  box-shadow: 0 0 0 3px rgba(0,122,51,0.1);
+  outline: none;
 }
 
 textarea {
-  resize: none;
-  height: 60px;
+  min-height: 80px;
+  resize: vertical;
 }
 
+/* IMAGE */
 .image-box {
   position: relative;
   width: 100%;
-  height: 180px;
-  border-radius: 10px;
+  height: 220px;
+  border-radius: 12px;
   overflow: hidden;
-  background: #f1f5f9;
+  background: #e2e8f0;
   border: 1px solid var(--border-color);
 }
 
@@ -464,59 +471,17 @@ textarea {
 
 .image-overlay {
   position: absolute;
-  bottom: 10px;
-  right: 10px;
-  background: rgba(0,0,0,0.6);
+  bottom: 12px;
+  right: 12px;
+  background: rgba(0,0,0,0.7);
   color: white;
-  padding: 6px 10px;
+  padding: 6px 12px;
   font-size: 12px;
-  border-radius: 6px;
+  border-radius: 8px;
   cursor: pointer;
 }
 
-
-/* BOTONES */
-.form-footer {
-  padding: 10px 20px;
-  border-top: 1px solid var(--border-color);
-  display: flex;
-  justify-content: flex-end;
-  gap: 10px;
-}
-
-.btn-save {
-  background: var(--iemco-green);
-  color: white;
-  border: none;
-  padding: 8px 18px;
-  font-size: 0.8rem;
-  border-radius: 5px;
-  font-weight: 600;
-}
-
-/* RESPONSIVE */
-@media (max-width: 1200px) {
-  .form-body {
-    grid-template-columns: repeat(2, 1fr);
-  }
-}
-
-@media (max-width: 768px) {
-  body {
-    align-items: flex-start;
-  }
-
-  .form-container {
-    height: auto;
-    min-height: 100vh;
-    border-radius: 0;
-  }
-
-  .form-body {
-    grid-template-columns: 1fr;
-  }
-}
-
+/* COMPATIBLES */
 .compat-container {
   display: flex;
   flex-direction: column;
@@ -526,37 +491,71 @@ textarea {
 .compat-grid {
   display: flex;
   flex-wrap: wrap;
-  gap: 8px;
+  gap: 10px;
 }
 
 .compat-chip {
-  background: #e0f2fe;
-  color: #075985;
-  padding: 6px 10px;
+  background: #dcfce7;
+  color: #065f46;
+  padding: 6px 12px;
   font-size: 12px;
   border-radius: 20px;
   display: flex;
   align-items: center;
   gap: 6px;
+  transition: 0.2s;
+}
+
+.compat-chip:hover {
+  background: #bbf7d0;
 }
 
 .compat-chip button {
   background: none;
   border: none;
-  color: #075985;
   cursor: pointer;
-  font-size: 12px;
 }
 
 .btn-add-machine {
-  background: #f1f5f9;
+  background: #ffffff;
   border: 1px dashed #94a3b8;
-  padding: 6px;
+  padding: 8px;
   font-size: 12px;
-  border-radius: 6px;
+  border-radius: 8px;
+  transition: 0.2s;
+}
+
+.btn-add-machine:hover {
+  background: #f1f5f9;
+}
+
+/* FOOTER */
+.form-footer {
+  padding: 20px 30px;
+  border-top: 1px solid var(--border-color);
+  display: flex;
+  justify-content: flex-end;
+  gap: 15px;
+}
+
+.btn-save {
+  background: var(--iemco-green);
+  color: white;
+  border: none;
+  padding: 10px 25px;
+  font-size: 0.85rem;
+  border-radius: 8px;
+  font-weight: 600;
+  transition: 0.2s;
+}
+
+.btn-save:hover {
+  background: #006329;
+  transform: translateY(-2px);
 }
 
 </style>
+
 </head>
 
 <body>
