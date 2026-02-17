@@ -382,3 +382,15 @@ async function cargarTodo() {
 }
 
 }
+
+function crearCard(r) {
+  return `
+    <div class="card">
+      <h3>${r.nombreprod}</h3>
+      <p><strong>Ref:</strong> ${r.refinterna}</p>
+      <p><strong>Cantidad:</strong> ${r.cantidad}</p>
+      <p><strong>Unidad:</strong> ${r.unidad}</p>
+      <p><strong>Palabras:</strong> ${r.palclave || ""}</p>
+    </div>
+  `;
+}
