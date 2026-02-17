@@ -91,8 +91,10 @@ document.getElementById("form").addEventListener("submit", async e => {
   document
     .querySelectorAll("input:not([type=checkbox]):not([type=file]), textarea, select")
     .forEach(el => {
-      fd.append(el.id, el.value);
-    });
+  if (el.id === "buscarMaquina") return; // 🔥 excluir
+  fd.append(el.id, el.value);
+});
+
 
   const fileInput = document.getElementById("imagen");
   if (fileInput && fileInput.files.length > 0) {
