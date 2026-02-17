@@ -143,3 +143,17 @@ function buscar() {
   cargarTabla();
 }
 
+function obtenerClaseTitulo(maquina) {
+  if (!maquina) return "titulo-default";
+
+  const nombre = maquina.toLowerCase().replace(/\s+/g, "-");
+
+  return "titulo-" + nombre;
+}
+let stockClass = "";
+
+if (r.cantidad <= 0) {
+  stockClass = "stock-bajo";
+} else if (r.cantidad <= 5) {
+  stockClass = "stock-medio";
+}
