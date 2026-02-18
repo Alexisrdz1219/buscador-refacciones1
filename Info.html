@@ -3,10 +3,10 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>IEMCO</title>
+        <title>IEMCO CONSOLE LOG</title>
         
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
 
         <style>
             body { min-height: 100vh; background-color: #f8f9fa; margin: 0; padding: 20px;}
@@ -278,7 +278,6 @@
                             <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
                                 <li><a href="actDatos/importar-odoo.html">Actualizar refacciones</a></li>
                                 <li><a href="refacciones.html">Editar refacciones</a></li>
-                                <li><a href="Info.html">Consola</a></li>
                             </ul>
                         </div>
                     </li>
@@ -472,7 +471,7 @@
             <section class="content-area">
         <div class="container-fluid">
             <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center mb-4 gap-3">
-        <h3 class="fw-bold mb-0" id="tituloRefacciones">Refacciones IEMCO</h3>
+        <h3 class="fw-bold mb-0" id="tituloRefacciones">Informacion</h3>
         
         <div class="d-flex gap-2 flex-wrap justify-content-start justify-content-md-end">
             
@@ -548,7 +547,17 @@
                 </div>
             </div>
 
-            <div class="ref-container" id="resultados">
+            <div class="ref-container" >
+                <!-- Estado del sistema -->
+                                        <div class="d-flex justify-content-between align-items-center mt-3">
+                                            <h6 class="fw-semibold mb-0">
+                                            Estado del sistema
+                                            </h6>
+
+                                            <div id="backend-status" class="px-3 py-2 rounded">
+                                            Verificando conexión...
+                                            </div>
+                                        </div>
             </div>
 
         </div>
@@ -581,6 +590,7 @@
         </script>
 
         <script src="script.js"></script>
-        <script src="navegador.js"></script>
+         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+       
     </body>
 </html>
