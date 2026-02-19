@@ -243,7 +243,14 @@ lista.forEach(r => {
 
 async function aplicarFiltros() {
 console.log("🔥 aplicarFiltros ejecutado");
-  if (!resultadosActuales.length && !modoGlobal) return;
+  if (!modoGlobal && (!resultadosActuales || resultadosActuales.length === 0)) {
+  console.log("⚠ resultadosActuales está vacío");
+  mostrarResultados([]); // limpia la vista
+  return;
+}
+console.log("modoGlobal:", modoGlobal);
+console.log("resultadosActuales:", resultadosActuales);
+
 
   const ref = document.getElementById("buscarRef")?.value.toLowerCase().trim() || "";
   const modelo = document.getElementById("buscarModelo")?.value.toLowerCase().trim() || "";
