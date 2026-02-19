@@ -305,6 +305,9 @@ async function aplicarFiltros() {
 
   const filtrados = resultadosActuales.filter(r => {
 
+    console.log("Palclave del registro:", r.palclave);
+console.log("Tags activos:", tagsActivos);
+
     const coincideRef =
       !ref || String(r.refinterna || "").toLowerCase().includes(ref);
 
