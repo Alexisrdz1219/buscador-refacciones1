@@ -272,9 +272,10 @@ console.log("🔥 aplicarFiltros ejecutado");
     const res = await fetch(`${API}/buscar-refacciones?${params}`);
     const data = await res.json();
 
-    mostrarResultados(data);
     console.log("Datos a mostrar:", data);
     console.log("Filtrados:", filtrados);
+    mostrarResultados(data);
+    
 
     return;
   }
