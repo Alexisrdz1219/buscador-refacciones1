@@ -24,9 +24,12 @@ document.getElementById("btnTodasRefacciones")?.addEventListener("click", async 
   resultadosActuales = [];
 
   actualizarTituloGeneral();
-  llenarSelectsGlobal();
+  await llenarSelectsGlobal();
 
+  // 🔥 Lanza búsqueda vacía para traer todo
+  await aplicarFiltros();
 });
+
 
 
 inputTag.addEventListener("keydown", function(e) {
