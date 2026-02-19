@@ -15,19 +15,6 @@ document.getElementById("buscarRef")?.addEventListener("input", aplicarFiltros);
 const inputTag = document.getElementById("inputTag");
 const contenedorTags = document.getElementById("contenedorTags");
 
-document.getElementById("btnTodasRefacciones")?.addEventListener("click", async () => {
-
-  modeloSeleccionado = ""; // quitamos modelo activo
-
-  const res = await fetch(`${API}/refacciones`);
-  const data = await res.json();
-
-  resultadosActuales = data;
-
-  llenarSelects(data);
-  actualizarTituloGeneral();
-  mostrarResultados(data);
-});
 
 
 inputTag.addEventListener("keydown", function(e) {
@@ -269,12 +256,3 @@ function crearTagVisual(texto) {
   contenedorTags.insertBefore(tag, inputTag);
 }
 
-function actualizarTituloGeneral() {
-  const titulo = document.getElementById("tituloRefacciones");
-  if (!titulo) return;
-
-  titulo.textContent = "Todas las Refacciones IEMCO";
-
-  titulo.className = ""; 
-  titulo.classList.add("titulo-default");
-}
