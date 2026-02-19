@@ -3,26 +3,6 @@ let modeloSeleccionado = "";
 let resultadosActuales = [];
 let tagsActivos = [];
 
-
-
-// document.addEventListener("DOMContentLoaded", () => {
-//   document.querySelectorAll(".maquina-link").forEach(link => {
-//     link.addEventListener("click", async e => {
-//       e.preventDefault();
-
-//       const maquinamod = link.dataset.maquinamod;
-
-//       console.log("BUSCANDO POR MODELO:", maquinamod);
-
-//       const res = await fetch(
-//         `${API}/refacciones-por-maquinamod?maquinamod=${encodeURIComponent(maquinamod)}`
-//       );
-
-//       const data = await res.json();
-//       mostrarResultados(data);
-//     });
-//   });
-// });
 document.addEventListener("DOMContentLoaded", () => {
 
 document.getElementById("buscarRef")?.addEventListener("input", aplicarFiltros);
@@ -34,6 +14,21 @@ document.getElementById("buscarRef")?.addEventListener("input", aplicarFiltros);
 
 const inputTag = document.getElementById("inputTag");
 const contenedorTags = document.getElementById("contenedorTags");
+
+document.getElementById("btnTodasRefacciones")?.addEventListener("click", async () => {
+
+  modeloSeleccionado = ""; // quitamos modelo activo
+
+  const res = await fetch(`${API}/refacciones`);
+  const data = await res.json();
+
+  resultadosActuales = data;
+
+  llenarSelects(data);
+  actualizarTituloGeneral();
+  mostrarResultados(data);
+});
+
 
 inputTag.addEventListener("keydown", function(e) {
   if (e.key === "Enter") {
@@ -78,20 +73,6 @@ llenarSelects(data);       // 🔥 llenamos tipos y unidades dinámicamente
     });
   });
 });
-
-
-
-// function actualizarTitulo() {
-//   const titulo = document.getElementById("tituloRefacciones");
-
-//   if (!titulo) return;
-
-//   if (modeloSeleccionado) {
-//     titulo.textContent = `Refacciones IEMCO - ${modeloSeleccionado}`;
-//   } else {
-//     titulo.textContent = "Refacciones IEMCO";
-//   }
-// }
 
 function actualizarTitulo() {
   const titulo = document.getElementById("tituloRefacciones");
@@ -154,33 +135,7 @@ function mostrarResultados(lista) {
   cont.innerHTML = ""; // limpia antes, por salud mental
 
 lista.forEach(r => {
-  // cont.innerHTML += `
-  //   <div class="ref-card">
-  //     <div class="ref-img">
-  //       <img src="${r.imagen || 'no-image.jpg'}" alt="${r.nombreprod}" onerror="this.onerror=null; this.src='no-image.jpg';">
-  //     </div>
-
-  //     <div class="ref-body">
-  //       <h3 class="ref-title">${r.nombreprod}</h3>
-
-  //       <p class="categoria">${r.categoriaprin || 'Sin categoría'}</p>
-
-  //       <div class="ref-grid">
-  //         <span><b>Modelo:</b> ${r.modelo || '-'}</span>
-  //         <span><b>Tipo:</b> ${r.tipoprod || '-'}</span>
-  //         <span><b>Ref:</b> ${r.refinterna}</span>
-  //         <span><b>Cantidad:</b> ${r.cantidad} ${r.unidad || ''}</span>
-  //         <span><b>Ubicación:</b> ${r.ubicacion || '-'}</span>
-  //       </div>
-
-        
-
-  //       <div class="ref-actions">
-  //         <a href="detalle.html?id=${r.id}" class="btn-ver">Ver / Editar</a>
-  //       </div>
-  //     </div>
-  //   </div>
-  // `;
+  
   cont.innerHTML += `
   <div class="ref-card">
     
@@ -223,55 +178,7 @@ lista.forEach(r => {
 
 }
 
-// function aplicarFiltros() {
 
-//   if (!resultadosActuales.length) return;
-
-//   const refInput = document.getElementById("buscarRef");
-//   const modeloInput = document.getElementById("buscarModelo");
-//   const tipoSelect = document.getElementById("filtroTipo");
-//   const unidadSelect = document.getElementById("filtroUnidad");
-
-//   const ref = refInput ? refInput.value.toLowerCase().trim() : "";
-//   const modelo = modeloInput ? modeloInput.value.toLowerCase().trim() : "";
-//   const tipo = tipoSelect ? tipoSelect.value : "";
-//   const unidad = unidadSelect ? unidadSelect.value : "";
-
-//   const palabrasInput = document.getElementById("buscarPalabras");
-// const palabrasTexto = palabrasInput ? palabrasInput.value.toLowerCase().trim() : "";
-
-// // separar por espacios y eliminar vacíos
-// const palabras = palabrasTexto
-//   ? palabrasTexto.split(" ").filter(p => p.length > 0)
-//   : [];
-
-
-//   const filtrados = resultadosActuales.filter(r => {
-
-//     const coincideRef =
-//       !ref || String(r.refinterna || "").toLowerCase().includes(ref);
-
-//     const coincideModelo =
-//       !modelo || String(r.modelo || "").toLowerCase().includes(modelo);
-
-//     const coincideTipo =
-//       !tipo || r.tipoprod === tipo;
-
-//     const coincideUnidad =
-//       !unidad || r.unidad === unidad;
-
-//       const coincidePalabras =
-//   palabras.length === 0 ||
-//   palabras.every(p =>
-//     String(r.palClave || "").toLowerCase().includes(p)
-//   );
-
-
-//     return coincideRef && coincideModelo && coincideTipo && coincideUnidad && coincidePalabras;
-//   });
-
-//   mostrarResultados(filtrados);
-// }
 function aplicarFiltros() {
 
   if (!resultadosActuales.length) return;
@@ -362,3 +269,12 @@ function crearTagVisual(texto) {
   contenedorTags.insertBefore(tag, inputTag);
 }
 
+function actualizarTituloGeneral() {
+  const titulo = document.getElementById("tituloRefacciones");
+  if (!titulo) return;
+
+  titulo.textContent = "Todas las Refacciones IEMCO";
+
+  titulo.className = ""; 
+  titulo.classList.add("titulo-default");
+}
