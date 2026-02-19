@@ -280,7 +280,10 @@ async function aplicarFiltros() {
       console.log("Total registros global:", data.length);
 
       resultadosActuales = data;
-      mostrarResultados(data);
+
+actualizarSelectsDesdeResultados(data);
+mostrarResultados(data);
+
 
     } catch (error) {
       console.error("Error en búsqueda global:", error);
@@ -334,7 +337,9 @@ async function aplicarFiltros() {
 
   console.log("Total registros local:", filtrados.length);
 
-  mostrarResultados(filtrados);
+  actualizarSelectsDesdeResultados(filtrados);
+mostrarResultados(filtrados);
+
 }
 
 
@@ -399,6 +404,38 @@ async function llenarSelectsGlobal() {
   data.unidades.forEach(u => {
     selectUnidad.innerHTML += `<option value="${u}">${u}</option>`;
   });
+}
+
+function actualizarSelectsDesdeResultados(data) {
+
+  const selectTipo = document.getElementById("filtroTipo");
+  const selectUnidad = document.getElementById("filtroUnidad");
+
+  const tipoSeleccionado = selectTipo.value;
+  const unidadSeleccionada = selectUnidad.value;
+
+  const tiposUnicos = [...new Set(data.map(r => r.tipoprod).filter(Boolean))];
+  const unidadesUnicas = [...new Set(data.map(r => r.unidad).filter(Boolean))];
+
+  selectTipo.innerHTML = `<option value="">Todos los tipos</option>`;
+  selectUnidad.innerHTML = `<option value="">Todas las unidades</option>`;
+
+  tiposUnicos.forEach(tipo => {
+    selectTipo.innerHTML += `<option value="${tipo}">${tipo}</option>`;
+  });
+
+  unidadesUnicas.forEach(unidad => {
+    selectUnidad.innerHTML += `<option value="${unidad}">${unidad}</option>`;
+  });
+
+  // Restaurar selección si todavía existe
+  if (tiposUnicos.includes(tipoSeleccionado)) {
+    selectTipo.value = tipoSeleccionado;
+  }
+
+  if (unidadesUnicas.includes(unidadSeleccionada)) {
+    selectUnidad.value = unidadSeleccionada;
+  }
 }
 
 
