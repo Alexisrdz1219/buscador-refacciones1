@@ -256,10 +256,8 @@ async function aplicarFiltros() {
   const tipo = document.getElementById("filtroTipo")?.value || "";
   const unidad = document.getElementById("filtroUnidad")?.value || "";
 
-  const palabrasTexto = document.getElementById("buscarPalabras")?.value.toLowerCase().trim() || "";
-  const palabras = palabrasTexto
-    ? palabrasTexto.split(" ").filter(p => p.length > 0)
-    : [];
+  // 🔥 SOLO usamos tagsActivos como fuente real
+  const palabrasActivas = tagsActivos.map(t => t.toLowerCase());
 
   // =========================
   // 🌎 MODO GLOBAL
@@ -273,16 +271,15 @@ async function aplicarFiltros() {
         modelo,
         tipo,
         unidad,
-        palabras: palabras.join(" ")
+        palabras: palabrasActivas.join(" ") // 🔥 ahora sí manda los tags reales
       });
 
       const res = await fetch(`${API}/buscar-refacciones?${params}`);
       const data = await res.json();
+
       console.log("Total registros global:", data.length);
 
-      console.log("Datos globales:", data);
-
-      resultadosActuales = data; // ahora sí tiene sentido guardarlo
+      resultadosActuales = data;
       mostrarResultados(data);
 
     } catch (error) {
@@ -290,23 +287,19 @@ async function aplicarFiltros() {
       mostrarResultados([]);
     }
 
-    return; // importante
+    return;
   }
 
   // =========================
-  // 🖥 MODO LOCAL
+  // 🖥 MODO LOCAL (MÁQUINA ESPECÍFICA)
   // =========================
 
-  // Si no hay datos cargados por máquina, no filtramos
   if (!resultadosActuales || resultadosActuales.length === 0) {
     console.log("⚠ No hay datos locales cargados");
     return;
   }
 
   const filtrados = resultadosActuales.filter(r => {
-
-    console.log("Palclave del registro:", r.palclave);
-console.log("Tags activos:", tagsActivos);
 
     const coincideRef =
       !ref || String(r.refinterna || "").toLowerCase().includes(ref);
@@ -320,10 +313,16 @@ console.log("Tags activos:", tagsActivos);
     const coincideUnidad =
       !unidad || r.unidad === unidad;
 
+    // 🔥 versión robusta para palclave tipo "valvula, aire, acero"
+    const palabrasRegistro = String(r.palclave || "")
+      .toLowerCase()
+      .split(",")
+      .map(p => p.trim());
+
     const coincidePalabras =
-      tagsActivos.length === 0 ||
-      tagsActivos.every(p =>
-        String(r.palclave || "").toLowerCase().includes(p)
+      palabrasActivas.length === 0 ||
+      palabrasActivas.every(tag =>
+        palabrasRegistro.includes(tag)
       );
 
     return coincideRef &&
@@ -333,10 +332,11 @@ console.log("Tags activos:", tagsActivos);
            coincidePalabras;
   });
 
-  console.log("Filtrados local:", filtrados);
+  console.log("Total registros local:", filtrados.length);
 
   mostrarResultados(filtrados);
 }
+
 
 
 
