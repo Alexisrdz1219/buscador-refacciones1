@@ -278,6 +278,7 @@ async function aplicarFiltros() {
 
       const res = await fetch(`${API}/buscar-refacciones?${params}`);
       const data = await res.json();
+      console.log("Total registros global:", data.length);
 
       console.log("Datos globales:", data);
 
