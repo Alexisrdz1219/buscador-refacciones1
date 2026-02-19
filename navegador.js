@@ -178,15 +178,87 @@ lista.forEach(r => {
 }
 
 
+// async function aplicarFiltros() {
+
+//   if (!resultadosActuales.length) return;
+
+//   const ref = document.getElementById("buscarRef")?.value.toLowerCase().trim() || "";
+//   const modelo = document.getElementById("buscarModelo")?.value.toLowerCase().trim() || "";
+//   const tipo = document.getElementById("filtroTipo")?.value || "";
+//   const unidad = document.getElementById("filtroUnidad")?.value || "";
+  
+//   if (modoGlobal) {
+
+//     const params = new URLSearchParams({
+//       ref,
+//       modelo,
+//       tipo,
+//       unidad,
+//       palabras
+//     });
+
+//     const res = await fetch(`${API}/buscar-refacciones?${params}`);
+//     const data = await res.json();
+
+//     mostrarResultados(data);
+//     return;
+//   }
+  
+//   const palabrasTexto = document.getElementById("buscarPalabras")?.value.toLowerCase().trim() || "";
+
+//   const palabras = palabrasTexto
+//     ? palabrasTexto.split(" ").filter(p => p.length > 0)
+//     : [];
+
+//   const filtrados = resultadosActuales.filter(r => {
+
+//     const coincideRef =
+//       !ref || String(r.refinterna || "").toLowerCase().includes(ref);
+
+//     const coincideModelo =
+//       !modelo || String(r.modelo || "").toLowerCase().includes(modelo);
+
+//     const coincideTipo =
+//       !tipo || r.tipoprod === tipo;
+
+//     const coincideUnidad =
+//       !unidad || r.unidad === unidad;
+
+//     const coincidePalabras =
+//   tagsActivos.length === 0 ||
+//   tagsActivos.every(p =>
+//     String(r.palclave || "").toLowerCase().includes(p)
+//   );
+
+
+//     return coincideRef &&
+//            coincideModelo &&
+//            coincideTipo &&
+//            coincideUnidad &&
+//            coincidePalabras;
+//   });
+
+//   mostrarResultados(filtrados);
+// }
+
 async function aplicarFiltros() {
 
-  if (!resultadosActuales.length) return;
+  if (!resultadosActuales.length && !modoGlobal) return;
 
   const ref = document.getElementById("buscarRef")?.value.toLowerCase().trim() || "";
   const modelo = document.getElementById("buscarModelo")?.value.toLowerCase().trim() || "";
   const tipo = document.getElementById("filtroTipo")?.value || "";
   const unidad = document.getElementById("filtroUnidad")?.value || "";
-  
+
+  const palabrasTexto = document.getElementById("buscarPalabras")?.value.toLowerCase().trim() || "";
+
+  const palabras = palabrasTexto
+    ? palabrasTexto.split(" ").filter(p => p.length > 0)
+    : [];
+
+  // =========================
+  // 🌎 MODO GLOBAL (API)
+  // =========================
   if (modoGlobal) {
 
     const params = new URLSearchParams({
@@ -194,7 +266,7 @@ async function aplicarFiltros() {
       modelo,
       tipo,
       unidad,
-      palabras
+      palabras: palabras.join(" ")
     });
 
     const res = await fetch(`${API}/buscar-refacciones?${params}`);
@@ -203,12 +275,10 @@ async function aplicarFiltros() {
     mostrarResultados(data);
     return;
   }
-  
-  const palabrasTexto = document.getElementById("buscarPalabras")?.value.toLowerCase().trim() || "";
 
-  const palabras = palabrasTexto
-    ? palabrasTexto.split(" ").filter(p => p.length > 0)
-    : [];
+  // =========================
+  // 🖥 MODO LOCAL (el tuyo que ya funciona)
+  // =========================
 
   const filtrados = resultadosActuales.filter(r => {
 
@@ -225,11 +295,10 @@ async function aplicarFiltros() {
       !unidad || r.unidad === unidad;
 
     const coincidePalabras =
-  tagsActivos.length === 0 ||
-  tagsActivos.every(p =>
-    String(r.palclave || "").toLowerCase().includes(p)
-  );
-
+      tagsActivos.length === 0 ||
+      tagsActivos.every(p =>
+        String(r.palclave || "").toLowerCase().includes(p)
+      );
 
     return coincideRef &&
            coincideModelo &&
@@ -240,7 +309,6 @@ async function aplicarFiltros() {
 
   mostrarResultados(filtrados);
 }
-
 
 
 function llenarSelects(data) {
@@ -303,3 +371,22 @@ async function llenarSelectsGlobal() {
     selectUnidad.innerHTML += `<option value="${u}">${u}</option>`;
   });
 }
+
+document.getElementById("btnTodasRefacciones")?.addEventListener("click", async () => {
+
+  modoGlobal = true;
+  modeloSeleccionado = "";
+  resultadosActuales = [];
+
+  actualizarTituloGeneral();
+  await llenarSelectsGlobal();
+
+  // Mensaje inicial
+  const cont = document.getElementById("resultados");
+  cont.innerHTML = `
+    <div class="text-center p-4">
+      <h5>🔎 Modo búsqueda global activado</h5>
+      <p>Escribe algo para buscar en todas las refacciones.</p>
+    </div>
+  `;
+});
