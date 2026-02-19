@@ -242,7 +242,7 @@ lista.forEach(r => {
 // }
 
 async function aplicarFiltros() {
-
+console.log("🔥 aplicarFiltros ejecutado");
   if (!resultadosActuales.length && !modoGlobal) return;
 
   const ref = document.getElementById("buscarRef")?.value.toLowerCase().trim() || "";
@@ -273,6 +273,9 @@ async function aplicarFiltros() {
     const data = await res.json();
 
     mostrarResultados(data);
+    console.log("Datos a mostrar:", data);
+    console.log("Filtrados:", filtrados);
+
     return;
   }
 
