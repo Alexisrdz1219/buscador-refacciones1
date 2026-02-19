@@ -19,16 +19,18 @@ const contenedorTags = document.getElementById("contenedorTags");
 
 document.getElementById("btnTodasRefacciones")?.addEventListener("click", async () => {
 
+  console.log("🌎 ACTIVANDO MODO GLOBAL");
+
   modoGlobal = true;
   modeloSeleccionado = "";
   resultadosActuales = [];
 
-  actualizarTituloGeneral();
   await llenarSelectsGlobal();
 
-  // 🔥 Lanza búsqueda vacía para traer todo
+  // Lanza búsqueda inicial automáticamente
   await aplicarFiltros();
 });
+
 
 
 
