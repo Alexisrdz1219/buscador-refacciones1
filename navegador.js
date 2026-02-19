@@ -242,15 +242,14 @@ lista.forEach(r => {
 // }
 
 async function aplicarFiltros() {
-console.log("🔥 aplicarFiltros ejecutado");
-  if (!modoGlobal && (!resultadosActuales || resultadosActuales.length === 0)) {
-  console.log("⚠ resultadosActuales está vacío");
-  mostrarResultados([]); // limpia la vista
-  return;
-}
-console.log("modoGlobal:", modoGlobal);
-console.log("resultadosActuales:", resultadosActuales);
 
+  console.log("🔥 aplicarFiltros ejecutado");
+
+  if (!modoGlobal && (!resultadosActuales || resultadosActuales.length === 0)) {
+    console.log("⚠ resultadosActuales está vacío");
+    mostrarResultados([]);
+    return;
+  }
 
   const ref = document.getElementById("buscarRef")?.value.toLowerCase().trim() || "";
   const modelo = document.getElementById("buscarModelo")?.value.toLowerCase().trim() || "";
@@ -258,37 +257,43 @@ console.log("resultadosActuales:", resultadosActuales);
   const unidad = document.getElementById("filtroUnidad")?.value || "";
 
   const palabrasTexto = document.getElementById("buscarPalabras")?.value.toLowerCase().trim() || "";
-
   const palabras = palabrasTexto
     ? palabrasTexto.split(" ").filter(p => p.length > 0)
     : [];
 
   // =========================
-  // 🌎 MODO GLOBAL (API)
+  // 🌎 MODO GLOBAL
   // =========================
   if (modoGlobal) {
 
-    const params = new URLSearchParams({
-      ref,
-      modelo,
-      tipo,
-      unidad,
-      palabras: palabras.join(" ")
-    });
+    try {
 
-    const res = await fetch(`${API}/buscar-refacciones?${params}`);
-    const data = await res.json();
+      const params = new URLSearchParams({
+        ref,
+        modelo,
+        tipo,
+        unidad,
+        palabras: palabras.join(" ")
+      });
 
-    console.log("Datos a mostrar:", data);
-    console.log("Filtrados:", filtrados);
-    mostrarResultados(data);
-    
+      const res = await fetch(`${API}/buscar-refacciones?${params}`);
+      const data = await res.json();
+
+      console.log("Datos globales:", data);
+
+      resultadosActuales = data; // 🔥 IMPORTANTE
+
+      mostrarResultados(data);
+
+    } catch (error) {
+      console.error("Error en búsqueda global:", error);
+    }
 
     return;
   }
 
   // =========================
-  // 🖥 MODO LOCAL (el tuyo que ya funciona)
+  // 🖥 MODO LOCAL (TU LÓGICA PERFECTA)
   // =========================
 
   const filtrados = resultadosActuales.filter(r => {
@@ -318,8 +323,11 @@ console.log("resultadosActuales:", resultadosActuales);
            coincidePalabras;
   });
 
+  console.log("Filtrados local:", filtrados);
+
   mostrarResultados(filtrados);
 }
+
 
 
 function llenarSelects(data) {
@@ -383,21 +391,4 @@ async function llenarSelectsGlobal() {
   });
 }
 
-document.getElementById("btnTodasRefacciones")?.addEventListener("click", async () => {
 
-  modoGlobal = true;
-  modeloSeleccionado = "";
-  resultadosActuales = [];
-
-  actualizarTituloGeneral();
-  await llenarSelectsGlobal();
-
-  // Mensaje inicial
-  const cont = document.getElementById("resultados");
-  cont.innerHTML = `
-    <div class="text-center p-4">
-      <h5>🔎 Modo búsqueda global activado</h5>
-      <p>Escribe algo para buscar en todas las refacciones.</p>
-    </div>
-  `;
-});
