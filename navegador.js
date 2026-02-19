@@ -247,12 +247,7 @@ lista.forEach(r => {
 async function aplicarFiltros() {
 
   console.log("🔥 aplicarFiltros ejecutado");
-
-  if (!modoGlobal && (!resultadosActuales || resultadosActuales.length === 0)) {
-    console.log("⚠ resultadosActuales está vacío");
-    mostrarResultados([]);
-    return;
-  }
+  console.log("modoGlobal:", modoGlobal);
 
   const ref = document.getElementById("buscarRef")?.value.toLowerCase().trim() || "";
   const modelo = document.getElementById("buscarModelo")?.value.toLowerCase().trim() || "";
@@ -284,20 +279,26 @@ async function aplicarFiltros() {
 
       console.log("Datos globales:", data);
 
-      resultadosActuales = data; // 🔥 IMPORTANTE
-
+      resultadosActuales = data; // ahora sí tiene sentido guardarlo
       mostrarResultados(data);
 
     } catch (error) {
       console.error("Error en búsqueda global:", error);
+      mostrarResultados([]);
     }
 
-    return;
+    return; // importante
   }
 
   // =========================
-  // 🖥 MODO LOCAL (TU LÓGICA PERFECTA)
+  // 🖥 MODO LOCAL
   // =========================
+
+  // Si no hay datos cargados por máquina, no filtramos
+  if (!resultadosActuales || resultadosActuales.length === 0) {
+    console.log("⚠ No hay datos locales cargados");
+    return;
+  }
 
   const filtrados = resultadosActuales.filter(r => {
 
