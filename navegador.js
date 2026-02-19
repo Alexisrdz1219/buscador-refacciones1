@@ -2,6 +2,8 @@ const API = "https://buscador-refaccionesbackend.onrender.com";
 let modeloSeleccionado = "";
 let resultadosActuales = [];
 let tagsActivos = [];
+let modoGlobal = false;
+
 
 document.addEventListener("DOMContentLoaded", () => {
 
@@ -15,6 +17,16 @@ document.getElementById("buscarRef")?.addEventListener("input", aplicarFiltros);
 const inputTag = document.getElementById("inputTag");
 const contenedorTags = document.getElementById("contenedorTags");
 
+document.getElementById("btnTodasRefacciones")?.addEventListener("click", async () => {
+
+  modoGlobal = true;
+  modeloSeleccionado = "";
+  resultadosActuales = [];
+
+  actualizarTituloGeneral();
+  llenarSelectsGlobal();
+
+});
 
 
 inputTag.addEventListener("keydown", function(e) {
@@ -166,7 +178,7 @@ lista.forEach(r => {
 }
 
 
-function aplicarFiltros() {
+async function aplicarFiltros() {
 
   if (!resultadosActuales.length) return;
 
@@ -174,7 +186,24 @@ function aplicarFiltros() {
   const modelo = document.getElementById("buscarModelo")?.value.toLowerCase().trim() || "";
   const tipo = document.getElementById("filtroTipo")?.value || "";
   const unidad = document.getElementById("filtroUnidad")?.value || "";
+  
+  if (modoGlobal) {
 
+    const params = new URLSearchParams({
+      ref,
+      modelo,
+      tipo,
+      unidad,
+      palabras
+    });
+
+    const res = await fetch(`${API}/buscar-refacciones?${params}`);
+    const data = await res.json();
+
+    mostrarResultados(data);
+    return;
+  }
+  
   const palabrasTexto = document.getElementById("buscarPalabras")?.value.toLowerCase().trim() || "";
 
   const palabras = palabrasTexto
@@ -256,3 +285,21 @@ function crearTagVisual(texto) {
   contenedorTags.insertBefore(tag, inputTag);
 }
 
+async function llenarSelectsGlobal() {
+  const res = await fetch(`${API}/refacciones-metadata`);
+  const data = await res.json();
+
+  const selectTipo = document.getElementById("filtroTipo");
+  const selectUnidad = document.getElementById("filtroUnidad");
+
+  selectTipo.innerHTML = `<option value="">Todos los tipos</option>`;
+  selectUnidad.innerHTML = `<option value="">Todas las unidades</option>`;
+
+  data.tipos.forEach(t => {
+    selectTipo.innerHTML += `<option value="${t}">${t}</option>`;
+  });
+
+  data.unidades.forEach(u => {
+    selectUnidad.innerHTML += `<option value="${u}">${u}</option>`;
+  });
+}
