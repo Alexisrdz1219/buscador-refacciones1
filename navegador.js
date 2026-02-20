@@ -245,6 +245,9 @@ function actualizarTitulo() {
 
 //   mostrarResultados(filtrados);
 // }
+// ⚡ Arreglo global para guardar los elementos del DOM
+let cardsDOM = [];
+
 function mostrarResultados(lista) {
   const cont = document.getElementById("resultados");
   if (!cont) {
@@ -252,42 +255,69 @@ function mostrarResultados(lista) {
     return;
   }
 
-  cont.innerHTML = ""; // limpia todo de una vez
+  // Si es la primera vez o la lista cambió completamente
+  if (cardsDOM.length === 0 || cardsDOM.length !== lista.length) {
+    cont.innerHTML = "";
+    cardsDOM = [];
 
-  if (lista.length === 0) {
-    cont.innerHTML = "<p>No hay refacciones</p>";
-    return;
-  }
+    const fragment = document.createDocumentFragment();
 
-  // Creamos un fragmento en memoria
-  const fragment = document.createDocumentFragment();
+    lista.forEach(r => {
+      const card = document.createElement("div");
+      card.className = "ref-card";
 
-  lista.forEach(r => {
-    const card = document.createElement("div");
-    card.className = "ref-card";
+      // Guardamos info de filtrado en atributos data
+      card.dataset.refinterna = (r.refinterna || "").toLowerCase();
+      card.dataset.modelo = (r.modelo || "").toLowerCase();
+      card.dataset.tipoprod = r.tipoprod || "";
+      card.dataset.unidad = r.unidad || "";
+      card.dataset.palclave = (r.palclave || "").toLowerCase();
 
-    card.innerHTML = `
-      <div class="ref-img">
-        <img src="${r.imagen || 'no-image.jpg'}" 
-             alt="${r.nombreprod}" 
-             onerror="this.onerror=null; this.src='no-image.jpg';">
-      </div>
-      <div class="ref-body">
-        <h3 class="ref-title">${r.nombreprod}</h3>
-        <div class="ref-modelo">Modelo: <strong>${r.modelo || '-'}</strong></div>
-        <div class="ref-cantidad">Cantidad: <strong>${r.cantidad} ${r.unidad || ''}</strong></div>
-        <div class="ref-ubicacion">📍 ${r.ubicacion || 'Sin ubicación'}</div>
-        <div class="ref-actions">
-          <a href="detalle.html?id=${r.id}" class="btn-ver">Ver / Editar</a>
+      card.innerHTML = `
+        <div class="ref-img">
+          <img src="${r.imagen || 'no-image.jpg'}" 
+               alt="${r.nombreprod}" 
+               onerror="this.onerror=null; this.src='no-image.jpg';">
         </div>
-      </div>
-    `;
+        <div class="ref-body">
+          <h3 class="ref-title">${r.nombreprod}</h3>
+          <div class="ref-modelo">Modelo: <strong>${r.modelo || '-'}</strong></div>
+          <div class="ref-cantidad">Cantidad: <strong>${r.cantidad} ${r.unidad || ''}</strong></div>
+          <div class="ref-ubicacion">📍 ${r.ubicacion || 'Sin ubicación'}</div>
+          <div class="ref-actions">
+            <a href="detalle.html?id=${r.id}" class="btn-ver">Ver / Editar</a>
+          </div>
+        </div>
+      `;
 
-    fragment.appendChild(card);
+      fragment.appendChild(card);
+      cardsDOM.push(card); // guardamos en memoria
+    });
+
+    cont.appendChild(fragment);
+  } else {
+    // Si ya estaban generados, solo filtramos
+    filtrarCards();
+  }
+}
+
+// ⚡ Función para filtrar sin reconstruir el DOM
+function filtrarCards() {
+  const ref = (document.getElementById("buscarRef")?.value || "").toLowerCase().trim();
+  const modelo = (document.getElementById("buscarModelo")?.value || "").toLowerCase().trim();
+  const tipo = document.getElementById("filtroTipo")?.value || "";
+  const unidad = document.getElementById("filtroUnidad")?.value || "";
+  const palabras = tagsActivos.map(t => t.toLowerCase());
+
+  cardsDOM.forEach(card => {
+    const coincideRef = !ref || card.dataset.refinterna.includes(ref);
+    const coincideModelo = !modelo || card.dataset.modelo.includes(modelo);
+    const coincideTipo = !tipo || card.dataset.tipoprod === tipo;
+    const coincideUnidad = !unidad || card.dataset.unidad === unidad;
+    const coincidePalabras = palabras.length === 0 || palabras.every(p => card.dataset.palclave.includes(p));
+
+    card.style.display = (coincideRef && coincideModelo && coincideTipo && coincideUnidad && coincidePalabras) ? "block" : "none";
   });
-
-  // Solo insertamos el fragmento al DOM una vez
-  cont.appendChild(fragment);
 }
 
 async function aplicarFiltros() {
