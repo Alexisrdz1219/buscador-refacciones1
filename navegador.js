@@ -55,6 +55,9 @@ inputTag.addEventListener("keydown", function(e) {
     link.addEventListener("click", async e => {
       e.preventDefault();
 
+      modoGlobal = false;
+      tagsActivos = [];
+contenedorTags.querySelectorAll(".badge").forEach(t => t.remove());
       const maquinamod = link.dataset.maquinamod;
       modeloSeleccionado = maquinamod; // 🔥 guardamos el modelo
 
