@@ -402,7 +402,7 @@ mostrarResultados(data);
     const coincidePalabras =
       palabrasActivas.length === 0 ||
       palabrasActivas.every(tag =>
-        palabrasRegistro.includes(tag)
+        palabrasRegistro.some(pal => pal.includes(tag))
       );
 
     return coincideRef &&
