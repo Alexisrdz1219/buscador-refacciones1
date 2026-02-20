@@ -25,6 +25,13 @@ document.getElementById("btnTodasRefacciones")?.addEventListener("click", async 
   modeloSeleccionado = "";
   resultadosActuales = [];
 
+  // 🔥 Poner título por defecto
+  const titulo = document.getElementById("tituloRefacciones");
+  if (titulo) {
+    titulo.textContent = "Refacciones IEMCO";
+    titulo.className = "titulo-default"; // limpia otras clases
+  }
+
   await llenarSelectsGlobal();
 
   // Lanza búsqueda inicial automáticamente
