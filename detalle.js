@@ -127,45 +127,12 @@ console.log("Compatibilidad a guardar:", maquinasSeleccionadas);
   window.location.href = "Nadd.html";
 });
 
-document.getElementById("filtroTipo")
-  .addEventListener("change", async function () {
-
-    const tipo = this.value;
-    const categoria = document.getElementById("filtroCategoria").value;
-
-    document.getElementById("filtroEspecifica").innerHTML =
-      `<option value="">-- Selecciona --</option>`;
-
-    if (!tipo || !categoria) return;
-
-    await cargarOpciones(
-      `/opciones/${categoria}/${tipo}`,
-      "filtroEspecifica"
-    );
-});
-
-document.getElementById("filtroCategoria")
-  .addEventListener("change", async function () {
-
-    const categoria = this.value;
-
-    // limpiar selects inferiores
-    document.getElementById("filtroTipo").innerHTML =
-      `<option value="">-- Selecciona --</option>`;
-
-    document.getElementById("filtroEspecifica").innerHTML =
-      `<option value="">-- Selecciona --</option>`;
-
-    if (!categoria) return;
-
-    await cargarOpciones(`/opciones/${categoria}`, "filtroTipo");
-});
 /* =========================
    EJECUCIÓN ORDENADA
 ========================= */
 (async () => {
   await cargarDetalle();
-  await cargarOpciones("/opciones/categorias", "filtroCategoria");
+  cargarOpciones("/opciones/categorias", "filtroCategoria");
   await cargarOpciones("/opciones/categorias", "categoriaprin");
   await cargarOpciones("/opciones/maquinamod", "maquinamod");
   await cargarOpciones("/opciones/maquinaesp", "maquinaesp");
