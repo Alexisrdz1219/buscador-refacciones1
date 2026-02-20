@@ -122,65 +122,65 @@ function actualizarTitulo() {
 }
 
 
-function mostrarResultados(lista) {
-  const cont = document.getElementById("resultados");
-  if (!cont) {
-    console.error("❌ No existe #resultados");
-    return;
-  }
+// function mostrarResultados(lista) {
+//   const cont = document.getElementById("resultados");
+//   if (!cont) {
+//     console.error("❌ No existe #resultados");
+//     return;
+//   }
 
-  cont.innerHTML = "";
+//   cont.innerHTML = "";
 
-  if (lista.length === 0) {
-    cont.innerHTML = "<p>No hay refacciones</p>";
-    return;
-  }
+//   if (lista.length === 0) {
+//     cont.innerHTML = "<p>No hay refacciones</p>";
+//     return;
+//   }
 
-  cont.innerHTML = ""; // limpia antes, por salud mental
+//   cont.innerHTML = ""; // limpia antes, por salud mental
 
-lista.forEach(r => {
+// lista.forEach(r => {
   
-  cont.innerHTML += `
-  <div class="ref-card">
+//   cont.innerHTML += `
+//   <div class="ref-card">
     
-    <div class="ref-img">
-      <img src="${r.imagen || 'no-image.jpg'}"
-           alt="${r.nombreprod}"
-           onerror="this.onerror=null; this.src='no-image.jpg';">
-    </div>
+//     <div class="ref-img">
+//       <img src="${r.imagen || 'no-image.jpg'}"
+//            alt="${r.nombreprod}"
+//            onerror="this.onerror=null; this.src='no-image.jpg';">
+//     </div>
 
-    <div class="ref-body">
+//     <div class="ref-body">
 
-      <!-- NOMBRE (principal) -->
-      <h3 class="ref-title">${r.nombreprod}</h3>
+//       <!-- NOMBRE (principal) -->
+//       <h3 class="ref-title">${r.nombreprod}</h3>
 
-      <!-- MODELO -->
-      <div class="ref-modelo">
-        Modelo: <strong>${r.modelo || '-'}</strong>
-      </div>
+//       <!-- MODELO -->
+//       <div class="ref-modelo">
+//         Modelo: <strong>${r.modelo || '-'}</strong>
+//       </div>
 
-      <!-- CANTIDAD -->
-      <div class="ref-cantidad">
-        Cantidad: <strong>${r.cantidad} ${r.unidad || ''}</strong>
-      </div>
+//       <!-- CANTIDAD -->
+//       <div class="ref-cantidad">
+//         Cantidad: <strong>${r.cantidad} ${r.unidad || ''}</strong>
+//       </div>
 
-      <!-- UBICACIÓN (DESTACADA) -->
-      <div class="ref-ubicacion">
-        📍 ${r.ubicacion || 'Sin ubicación'}
-      </div>
+//       <!-- UBICACIÓN (DESTACADA) -->
+//       <div class="ref-ubicacion">
+//         📍 ${r.ubicacion || 'Sin ubicación'}
+//       </div>
 
-      <div class="ref-actions">
-        <a href="detalle.html?id=${r.id}" class="btn-ver">Ver / Editar</a>
-      </div>
+//       <div class="ref-actions">
+//         <a href="detalle.html?id=${r.id}" class="btn-ver">Ver / Editar</a>
+//       </div>
 
-    </div>
-  </div>
-`;
+//     </div>
+//   </div>
+// `;
 
-});
+// });
 
 
-}
+// }
 
 
 // async function aplicarFiltros() {
@@ -245,6 +245,50 @@ lista.forEach(r => {
 
 //   mostrarResultados(filtrados);
 // }
+function mostrarResultados(lista) {
+  const cont = document.getElementById("resultados");
+  if (!cont) {
+    console.error("❌ No existe #resultados");
+    return;
+  }
+
+  cont.innerHTML = ""; // limpia todo de una vez
+
+  if (lista.length === 0) {
+    cont.innerHTML = "<p>No hay refacciones</p>";
+    return;
+  }
+
+  // Creamos un fragmento en memoria
+  const fragment = document.createDocumentFragment();
+
+  lista.forEach(r => {
+    const card = document.createElement("div");
+    card.className = "ref-card";
+
+    card.innerHTML = `
+      <div class="ref-img">
+        <img src="${r.imagen || 'no-image.jpg'}" 
+             alt="${r.nombreprod}" 
+             onerror="this.onerror=null; this.src='no-image.jpg';">
+      </div>
+      <div class="ref-body">
+        <h3 class="ref-title">${r.nombreprod}</h3>
+        <div class="ref-modelo">Modelo: <strong>${r.modelo || '-'}</strong></div>
+        <div class="ref-cantidad">Cantidad: <strong>${r.cantidad} ${r.unidad || ''}</strong></div>
+        <div class="ref-ubicacion">📍 ${r.ubicacion || 'Sin ubicación'}</div>
+        <div class="ref-actions">
+          <a href="detalle.html?id=${r.id}" class="btn-ver">Ver / Editar</a>
+        </div>
+      </div>
+    `;
+
+    fragment.appendChild(card);
+  });
+
+  // Solo insertamos el fragmento al DOM una vez
+  cont.appendChild(fragment);
+}
 
 async function aplicarFiltros() {
 
