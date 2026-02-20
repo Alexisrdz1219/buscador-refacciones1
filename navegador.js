@@ -81,10 +81,60 @@ llenarSelects(data);       // 🔥 llenamos tipos y unidades dinámicamente
   });
 });
 
+// function actualizarTitulo() {
+//   const titulo = document.getElementById("tituloRefacciones");
+//   if (!titulo) return;
+
+//   titulo.textContent = `Refacciones IEMCO - ${modeloSeleccionado}`;
+
+//   // Limpia clases anteriores
+//   titulo.classList.remove(
+//     "titulo-default",
+//     "titulo-aoki",
+//     "titulo-asb",
+//     "titulo-nissei",
+//     "titulo-sumitomo",
+//     "titulo-enlainadora",
+//     "titulo-xhs-50kgs",
+//     "titulo-pagani",
+//     "titulo-rapid"
+//   );
+
+//   // Detecta palabra y asigna color
+//   if (modeloSeleccionado.toLowerCase().includes("aoki")) {
+//     titulo.classList.add("titulo-aoki");
+//   } else if (modeloSeleccionado.toLowerCase().includes("asb")) {
+//     titulo.classList.add("titulo-asb");
+//     } else if (modeloSeleccionado.toLowerCase().includes("nissei")) {
+//       titulo.classList.add("titulo-nissei");
+//     } else if (modeloSeleccionado.toLowerCase().includes("sumitomo")) {
+//       titulo.classList.add("titulo-sumitomo");
+//     } else if (modeloSeleccionado.toLowerCase().includes("enlainadora")) {
+//       titulo.classList.add("titulo-enlainadora");
+//     } else if (modeloSeleccionado.toLowerCase().includes("XHS-50KGS")) {
+//       titulo.classList.add("titulo-xhs-50kgs");
+//     } else if (modeloSeleccionado.toLowerCase().includes("molino")) {
+//       titulo.classList.add("titulo-molino");
+//     } else if (modeloSeleccionado.toLowerCase().includes("pagani")) {
+//       titulo.classList.add("titulo-pagani");
+//     } else if (modeloSeleccionado.toLowerCase().includes("rapid")) {
+//       titulo.classList.add("titulo-rapid");
+//   } else {
+//     titulo.classList.add("titulo-default");
+//   }
+// }
 function actualizarTitulo() {
   const titulo = document.getElementById("tituloRefacciones");
   if (!titulo) return;
 
+  // 🔥 Si estamos en modo global, solo dejamos el título por defecto y salimos
+  if (modoGlobal) {
+    titulo.textContent = "Refacciones IEMCO";
+    titulo.className = "titulo-default";
+    return;
+  }
+
+  // Si no es global, mostramos el modelo seleccionado
   titulo.textContent = `Refacciones IEMCO - ${modeloSeleccionado}`;
 
   // Limpia clases anteriores
@@ -96,6 +146,7 @@ function actualizarTitulo() {
     "titulo-sumitomo",
     "titulo-enlainadora",
     "titulo-xhs-50kgs",
+    "titulo-molino",
     "titulo-pagani",
     "titulo-rapid"
   );
@@ -105,25 +156,24 @@ function actualizarTitulo() {
     titulo.classList.add("titulo-aoki");
   } else if (modeloSeleccionado.toLowerCase().includes("asb")) {
     titulo.classList.add("titulo-asb");
-    } else if (modeloSeleccionado.toLowerCase().includes("nissei")) {
-      titulo.classList.add("titulo-nissei");
-    } else if (modeloSeleccionado.toLowerCase().includes("sumitomo")) {
-      titulo.classList.add("titulo-sumitomo");
-    } else if (modeloSeleccionado.toLowerCase().includes("enlainadora")) {
-      titulo.classList.add("titulo-enlainadora");
-    } else if (modeloSeleccionado.toLowerCase().includes("XHS-50KGS")) {
-      titulo.classList.add("titulo-xhs-50kgs");
-    } else if (modeloSeleccionado.toLowerCase().includes("molino")) {
-      titulo.classList.add("titulo-molino");
-    } else if (modeloSeleccionado.toLowerCase().includes("pagani")) {
-      titulo.classList.add("titulo-pagani");
-    } else if (modeloSeleccionado.toLowerCase().includes("rapid")) {
-      titulo.classList.add("titulo-rapid");
+  } else if (modeloSeleccionado.toLowerCase().includes("nissei")) {
+    titulo.classList.add("titulo-nissei");
+  } else if (modeloSeleccionado.toLowerCase().includes("sumitomo")) {
+    titulo.classList.add("titulo-sumitomo");
+  } else if (modeloSeleccionado.toLowerCase().includes("enlainadora")) {
+    titulo.classList.add("titulo-enlainadora");
+  } else if (modeloSeleccionado.toLowerCase().includes("xhs-50kgs")) {
+    titulo.classList.add("titulo-xhs-50kgs");
+  } else if (modeloSeleccionado.toLowerCase().includes("molino")) {
+    titulo.classList.add("titulo-molino");
+  } else if (modeloSeleccionado.toLowerCase().includes("pagani")) {
+    titulo.classList.add("titulo-pagani");
+  } else if (modeloSeleccionado.toLowerCase().includes("rapid")) {
+    titulo.classList.add("titulo-rapid");
   } else {
     titulo.classList.add("titulo-default");
   }
 }
-
 
 // function mostrarResultados(lista) {
 //   const cont = document.getElementById("resultados");
