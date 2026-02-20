@@ -132,7 +132,7 @@ console.log("Compatibilidad a guardar:", maquinasSeleccionadas);
 ========================= */
 (async () => {
   await cargarDetalle();
-  cargarOpciones("/opciones/categorias", "filtroCategoria");
+
   await cargarOpciones("/opciones/categorias", "categoriaprin");
   await cargarOpciones("/opciones/maquinamod", "maquinamod");
   await cargarOpciones("/opciones/maquinaesp", "maquinaesp");
