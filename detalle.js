@@ -280,6 +280,7 @@ async function inicializarMaquinas() {
 //   });
 // }
 function renderModal(lista) {
+  console.log(lista);
   const listaModal = document.getElementById("lista-maquinas-modal");
   if (!listaModal) return;
 
