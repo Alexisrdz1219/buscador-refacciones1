@@ -279,18 +279,68 @@ async function inicializarMaquinas() {
 //     `;
 //   });
 // }
+// function renderModal(lista) {
+//   console.log(lista);
+//   const listaModal = document.getElementById("lista-maquinas-modal");
+//   if (!listaModal) return;
+
+//   listaModal.innerHTML = "";
+
+//   // Agrupar por categoriaprin
+//   const grupos = {};
+
+//   lista.forEach(m => {
+//     const categoria = m.categoriaprin || "otros";
+
+//     if (!grupos[categoria]) {
+//       grupos[categoria] = [];
+//     }
+
+//     grupos[categoria].push(m);
+//   });
+
+//   // Renderizar por categoría
+//   Object.keys(grupos).forEach(categoria => {
+
+//     // Título de la sección
+//     listaModal.innerHTML += `
+//       <div class="col-12 mt-3">
+//         <h5>${categoria.toUpperCase()}</h5>
+//         <hr>
+//       </div>
+//     `;
+
+//     grupos[categoria].forEach(m => {
+//       const checked = maquinasSeleccionadas.includes(Number(m.id)) ? "checked" : "";
+
+//       listaModal.innerHTML += `
+//         <div class="col-md-6">
+//           <div class="machine-item">
+//             <input type="checkbox"
+//                    value="${m.id}"
+//                    data-categoria="${m.categoriaprin}"
+//                    ${checked}>
+//             ${m.maquinamod || ""} ${m.maquinaesp || ""}
+//           </div>
+//         </div>
+//       `;
+//     });
+
+//   });
+// }
 function renderModal(lista) {
   console.log(lista);
+
   const listaModal = document.getElementById("lista-maquinas-modal");
   if (!listaModal) return;
 
   listaModal.innerHTML = "";
 
-  // Agrupar por categoriaprin
   const grupos = {};
 
+  // Agrupar por categoría
   lista.forEach(m => {
-    const categoria = m.categoriaprin || "otros";
+    const categoria = m.categoriaprin || "OTROS";
 
     if (!grupos[categoria]) {
       grupos[categoria] = [];
@@ -299,22 +349,22 @@ function renderModal(lista) {
     grupos[categoria].push(m);
   });
 
-  // Renderizar por categoría
+  // Crear accordion principal
+  const accordion = document.createElement("div");
+  accordion.className = "accordion";
+  accordion.id = "accordionMaquinas";
+
+  let index = 0;
+
   Object.keys(grupos).forEach(categoria => {
+    const collapseId = `collapse-${index}`;
+    const headingId = `heading-${index}`;
 
-    // Título de la sección
-    listaModal.innerHTML += `
-      <div class="col-12 mt-3">
-        <h5>${categoria.toUpperCase()}</h5>
-        <hr>
-      </div>
-    `;
-
-    grupos[categoria].forEach(m => {
+    const maquinasHTML = grupos[categoria].map(m => {
       const checked = maquinasSeleccionadas.includes(Number(m.id)) ? "checked" : "";
 
-      listaModal.innerHTML += `
-        <div class="col-md-6">
+      return `
+        <div class="col-md-6 mb-2">
           <div class="machine-item">
             <input type="checkbox"
                    value="${m.id}"
@@ -324,9 +374,36 @@ function renderModal(lista) {
           </div>
         </div>
       `;
-    });
+    }).join("");
 
+    const item = document.createElement("div");
+    item.className = "accordion-item";
+
+    item.innerHTML = `
+      <h2 class="accordion-header" id="${headingId}">
+        <button class="accordion-button collapsed"
+                type="button"
+                data-bs-toggle="collapse"
+                data-bs-target="#${collapseId}">
+          ${categoria.toUpperCase()} (${grupos[categoria].length})
+        </button>
+      </h2>
+      <div id="${collapseId}"
+           class="accordion-collapse collapse"
+           data-bs-parent="#accordionMaquinas">
+        <div class="accordion-body">
+          <div class="row">
+            ${maquinasHTML}
+          </div>
+        </div>
+      </div>
+    `;
+
+    accordion.appendChild(item);
+    index++;
   });
+
+  listaModal.appendChild(accordion);
 }
 /* =========================
    BUSCADOR MODAL
