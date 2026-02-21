@@ -257,29 +257,76 @@ async function inicializarMaquinas() {
 /* =========================
    RENDER MODAL
 ========================= */
+// function renderModal(lista) {
+//   const listaModal = document.getElementById("lista-maquinas-modal");
+//   if (!listaModal) return;
+
+//   listaModal.innerHTML = "";
+
+//   lista.forEach(m => {
+//     const checked = maquinasSeleccionadas.includes(Number(m.id)) ? "checked" : "";
+
+
+//     listaModal.innerHTML += `
+//       <div class="col-md-6">
+//         <div class="machine-item">
+//           <input type="checkbox"
+//                  value="${m.id}"
+//                  ${checked}>
+//           ${m.maquinamod} ${m.maquinaesp}
+//         </div>
+//       </div>
+//     `;
+//   });
+// }
 function renderModal(lista) {
   const listaModal = document.getElementById("lista-maquinas-modal");
   if (!listaModal) return;
 
   listaModal.innerHTML = "";
 
+  // Agrupar por categoriaprin
+  const grupos = {};
+
   lista.forEach(m => {
-    const checked = maquinasSeleccionadas.includes(Number(m.id)) ? "checked" : "";
+    const categoria = m.categoriaprin || "otros";
 
+    if (!grupos[categoria]) {
+      grupos[categoria] = [];
+    }
 
+    grupos[categoria].push(m);
+  });
+
+  // Renderizar por categoría
+  Object.keys(grupos).forEach(categoria => {
+
+    // Título de la sección
     listaModal.innerHTML += `
-      <div class="col-md-6">
-        <div class="machine-item">
-          <input type="checkbox"
-                 value="${m.id}"
-                 ${checked}>
-          ${m.maquinamod} ${m.maquinaesp}
-        </div>
+      <div class="col-12 mt-3">
+        <h5>${categoria.toUpperCase()}</h5>
+        <hr>
       </div>
     `;
+
+    grupos[categoria].forEach(m => {
+      const checked = maquinasSeleccionadas.includes(Number(m.id)) ? "checked" : "";
+
+      listaModal.innerHTML += `
+        <div class="col-md-6">
+          <div class="machine-item">
+            <input type="checkbox"
+                   value="${m.id}"
+                   data-categoria="${m.categoriaprin}"
+                   ${checked}>
+            ${m.maquinamod || ""} ${m.maquinaesp || ""}
+          </div>
+        </div>
+      `;
+    });
+
   });
 }
-
 /* =========================
    BUSCADOR MODAL
 ========================= */
