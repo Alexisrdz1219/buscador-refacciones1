@@ -387,6 +387,7 @@ async function aplicarFiltros() {
 
   console.log("🔥 aplicarFiltros ejecutado");
   console.log("modoGlobal:", modoGlobal);
+  console.log("Ejemplo registro global:", data[0]);
 
   const tit = document.getElementById("buscarTitulo")?.value.toLowerCase().trim() || "";
   const ref = document.getElementById("buscarRef")?.value.toLowerCase().trim() || "";
