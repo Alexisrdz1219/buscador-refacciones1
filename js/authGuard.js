@@ -30,7 +30,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     console.error("Sesión inválida");
 
     localStorage.clear();
-    window.location.href = "index.html";
+    window.location.replace = "index.html";
   }
 
 });
