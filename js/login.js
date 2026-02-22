@@ -1,38 +1,33 @@
-const form = document.getElementById("loginForm");
-localStorage.setItem("nombre", data.nombre);
-localStorage.setItem("rol", data.rol);
-localStorage.setItem("token", data.token);
-
-form.addEventListener("submit", async (e) => {
+document.getElementById("loginForm").addEventListener("submit", async (e) => {
   e.preventDefault();
 
-  const email = document.getElementById("email").value.trim();
-  const password = document.getElementById("password").value.trim();
+  const correo = document.getElementById("correo").value;
+  const password = document.getElementById("password").value;
 
   try {
-    const response = await fetch(
-      "https://buscador-refaccionesbackend.onrender.com/login",
-      {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email, password })
-      }
-    );
+    const response = await fetch("https://buscador-refaccionesbackend.onrender.com/login", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({ correo, password })
+    });
+
+    if (!response.ok) {
+      throw new Error("Credenciales incorrectas");
+    }
 
     const data = await response.json();
 
-    if (!response.ok) {
-      throw new Error(data.error || "Error en login");
-    }
-
+    // ✅ AQUÍ sí existe data
     localStorage.setItem("token", data.token);
-    localStorage.setItem("rol", data.rol);
     localStorage.setItem("nombre", data.nombre);
+    localStorage.setItem("rol", data.rol);
 
-    alert("Login exitoso 🚀");
     window.location.href = "Nadd.html";
 
-  } catch (err) {
-    alert(err.message);
+  } catch (error) {
+    alert("Error al iniciar sesión");
+    console.error(error);
   }
 });
