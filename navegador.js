@@ -328,6 +328,7 @@ function mostrarResultados(lista) {
       card.className = "ref-card";
 
       // Guardamos info de filtrado en atributos data
+      card.dataset.nombreprod = (r.nombreprod || "").toLowerCase();
       card.dataset.refinterna = (r.refinterna || "").toLowerCase();
       card.dataset.modelo = (r.modelo || "").toLowerCase();
       card.dataset.tipoprod = r.tipoprod || "";
@@ -387,7 +388,7 @@ async function aplicarFiltros() {
 
   console.log("🔥 aplicarFiltros ejecutado");
   console.log("modoGlobal:", modoGlobal);
-  console.log("Ejemplo registro global:", data[0]);
+  // console.log("Ejemplo registro global:", data[0]);
 
   const tit = document.getElementById("buscarTitulo")?.value.toLowerCase().trim() || "";
   const ref = document.getElementById("buscarRef")?.value.toLowerCase().trim() || "";
