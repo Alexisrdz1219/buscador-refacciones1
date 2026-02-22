@@ -8,7 +8,7 @@ let modoGlobal = false;
 document.addEventListener("DOMContentLoaded", () => {
 
   document.getElementById("buscarTitulo")?.addEventListener("input", aplicarFiltros);
-document.getElementById("buscarRef")?.addEventListener("input", aplicarFiltros);
+  document.getElementById("buscarRef")?.addEventListener("input", aplicarFiltros);
   document.getElementById("buscarModelo")?.addEventListener("input", aplicarFiltros);
   document.getElementById("filtroTipo")?.addEventListener("change", aplicarFiltros);
   document.getElementById("filtroUnidad")?.addEventListener("change", aplicarFiltros);
@@ -388,7 +388,7 @@ async function aplicarFiltros() {
   console.log("🔥 aplicarFiltros ejecutado");
   console.log("modoGlobal:", modoGlobal);
 
-  const tit = document.getElementsById("buscarTitulo")?.value.toLowerCase().trim() || "";
+  const tit = document.getElementById("buscarTitulo")?.value.toLowerCase().trim() || "";
   const ref = document.getElementById("buscarRef")?.value.toLowerCase().trim() || "";
   const modelo = document.getElementById("buscarModelo")?.value.toLowerCase().trim() || "";
   const tipo = document.getElementById("filtroTipo")?.value || "";
