@@ -5,8 +5,41 @@ let tagsActivos = [];
 let modoGlobal = false;
 
 
-document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener("DOMContentLoaded", async () => {
 
+
+  // 🔐 VALIDAR SESIÓN
+  const token = localStorage.getItem("token");
+
+  if (!token) {
+    window.location.replace("index.html");
+    return;
+  }
+
+  try {
+    const response = await fetch(`${API}/me`, {
+      headers: {
+        "Authorization": "Bearer " + token
+      }
+    });
+
+    if (!response.ok) {
+      throw new Error("Token inválido");
+    }
+
+    // 🔒 BLOQUEAR BOTÓN ATRÁS
+    window.history.pushState(null, "", window.location.href);
+    window.onpopstate = function () {
+      window.history.go(1);
+    };
+
+  } catch (error) {
+    localStorage.clear();
+    window.location.replace("index.html");
+    return;
+  }
+
+  
   const formFiltros = document.getElementById("formFiltros");
 if (formFiltros) {
   formFiltros.style.display = "none";
@@ -100,48 +133,7 @@ llenarSelects(data);       // 🔥 llenamos tipos y unidades dinámicamente
   });
 });
 
-// function actualizarTitulo() {
-//   const titulo = document.getElementById("tituloRefacciones");
-//   if (!titulo) return;
 
-//   titulo.textContent = `Refacciones IEMCO - ${modeloSeleccionado}`;
-
-//   // Limpia clases anteriores
-//   titulo.classList.remove(
-//     "titulo-default",
-//     "titulo-aoki",
-//     "titulo-asb",
-//     "titulo-nissei",
-//     "titulo-sumitomo",
-//     "titulo-enlainadora",
-//     "titulo-xhs-50kgs",
-//     "titulo-pagani",
-//     "titulo-rapid"
-//   );
-
-//   // Detecta palabra y asigna color
-//   if (modeloSeleccionado.toLowerCase().includes("aoki")) {
-//     titulo.classList.add("titulo-aoki");
-//   } else if (modeloSeleccionado.toLowerCase().includes("asb")) {
-//     titulo.classList.add("titulo-asb");
-//     } else if (modeloSeleccionado.toLowerCase().includes("nissei")) {
-//       titulo.classList.add("titulo-nissei");
-//     } else if (modeloSeleccionado.toLowerCase().includes("sumitomo")) {
-//       titulo.classList.add("titulo-sumitomo");
-//     } else if (modeloSeleccionado.toLowerCase().includes("enlainadora")) {
-//       titulo.classList.add("titulo-enlainadora");
-//     } else if (modeloSeleccionado.toLowerCase().includes("XHS-50KGS")) {
-//       titulo.classList.add("titulo-xhs-50kgs");
-//     } else if (modeloSeleccionado.toLowerCase().includes("molino")) {
-//       titulo.classList.add("titulo-molino");
-//     } else if (modeloSeleccionado.toLowerCase().includes("pagani")) {
-//       titulo.classList.add("titulo-pagani");
-//     } else if (modeloSeleccionado.toLowerCase().includes("rapid")) {
-//       titulo.classList.add("titulo-rapid");
-//   } else {
-//     titulo.classList.add("titulo-default");
-//   }
-// }
 function actualizarTitulo() {
   const titulo = document.getElementById("tituloRefacciones");
   if (!titulo) return;
@@ -194,7 +186,6 @@ function actualizarTitulo() {
   }
 }
 
-// function mostrarResultados(lista) {
 //   const cont = document.getElementById("resultados");
 //   if (!cont) {
 //     console.error("❌ No existe #resultados");
