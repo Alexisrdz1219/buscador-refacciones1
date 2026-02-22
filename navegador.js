@@ -14,33 +14,7 @@ window.addEventListener("pageshow", function (event) {
 
 document.addEventListener("DOMContentLoaded", async () => {
 
-  try {
-  const response = await fetch(`${API}/me`, {
-    headers: {
-      "Authorization": "Bearer " + token
-    }
-  });
-
-  if (!response.ok) {
-    throw new Error("Token inválido");
-  }
-
-  const data = await response.json();
-
-  // 🔥 AQUÍ sacamos el nombre directo del backend
-  const elementoUsuario = document.getElementById("usuarioActivo");
-  if (elementoUsuario) {
-    elementoUsuario.textContent = data.nombre;
-  }
-
-} catch (error) {
-  localStorage.clear();
-  window.location.replace("index.html");
-  return;
-}
-
-  // 🔐 VALIDAR SESIÓN
-  const token = localStorage.getItem("token");
+const token = localStorage.getItem("token");
 
   if (!token) {
     window.location.replace("index.html");
@@ -49,16 +23,24 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   try {
     const response = await fetch(`${API}/me`, {
-  headers: {
-    "Authorization": "Bearer " + token
-  }
-});
+      headers: {
+        "Authorization": "Bearer " + token
+      }
+    });
 
     if (!response.ok) {
       throw new Error("Token inválido");
     }
 
-    // 🔒 BLOQUEAR BOTÓN ATRÁS
+    const data = await response.json();
+
+    // 🔥 Mostrar nombre desde backend
+    const elementoUsuario = document.getElementById("usuarioActivo");
+    if (elementoUsuario) {
+      elementoUsuario.textContent = data.nombre;
+    }
+
+    // 🔒 Bloqueo estético del botón atrás
     window.history.pushState(null, "", window.location.href);
     window.onpopstate = function () {
       window.history.go(1);
@@ -69,7 +51,6 @@ document.addEventListener("DOMContentLoaded", async () => {
     window.location.replace("index.html");
     return;
   }
-
   
   const formFiltros = document.getElementById("formFiltros");
 if (formFiltros) {
