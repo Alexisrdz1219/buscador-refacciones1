@@ -22,6 +22,14 @@
                 transition: transform 0.3s ease-in-out;
                 z-index: 1100;
             }
+            /* Asegura que el modal cubra todo, incluso el sidebar */
+.modal-backdrop {
+  z-index: 1099; /* debajo del modal, pero arriba del resto */
+}
+
+.modal {
+  z-index: 1200; /* arriba de todo, incluido el sidebar */
+}
 
             /* --- ÁREA DE CONTENIDO --- */
             .content-area {
