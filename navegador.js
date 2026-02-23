@@ -523,8 +523,8 @@ if (!document.getElementById("modalDetalles")) {
 
             <!-- Máquinas compatibles -->
             <div class="mt-3">
-              <div class="fw-semibold text-secondary mb-1">Máquinas Compatibles</div>
-              <div id="modal-maquinas" class="d-flex flex-wrap gap-2" style="color: #007a33;"></div>
+              <div class="fw-semibold mb-1">Máquinas Compatibles</div>
+              <div id="modal-maquinas" class="d-flex flex-wrap gap-2" style="background-color: #007a33; color: white;"></div>
             </div>
 
             <!-- Ubicación destacada -->
