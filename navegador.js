@@ -483,7 +483,7 @@ function mostrarResultados(lista) {
 
     cont.appendChild(fragment);
 
-    // --- Modal Bootstrap Fullscreen (solo se agrega una vez) ---
+// --- Modal Bootstrap Fullscreen (solo se agrega una vez) ---
 if (!document.getElementById("modalDetalles")) {
   const modalHTML = `
   <div class="modal fade" id="modalDetalles" tabindex="-1" aria-hidden="true">
@@ -500,8 +500,8 @@ if (!document.getElementById("modalDetalles")) {
         <div class="modal-body p-4 d-flex flex-column flex-lg-row gap-4">
 
           <!-- Imagen destacada -->
-          <div class="modal-imagen flex-shrink-0 text-center" style="min-width:300px;">
-            <img id="modal-img" src="no-image.jpg" alt="Producto" class="img-fluid rounded shadow-sm border" style="max-height:450px; object-fit:contain;">
+          <div class="modal-imagen flex-shrink-0 text-center position-relative" style="min-width:300px; cursor:pointer;">
+            <img id="modal-img" src="no-image.jpg" alt="Producto" class="img-fluid rounded shadow-sm border zoom-img" style="max-height:450px; object-fit:contain;">
           </div>
 
           <!-- Datos -->
@@ -513,14 +513,18 @@ if (!document.getElementById("modalDetalles")) {
 
             <!-- Grid de detalles -->
             <div class="row row-cols-1 row-cols-md-2 g-3 mt-2">
-              <div class="col"><div class="fw-semibold text-secondary">Máquina Modelo</div><div id="modal-maquinamod">-</div></div>
-              <div class="col"><div class="fw-semibold text-secondary">Máquina Específica</div><div id="modal-maquinaesp">-</div></div>
               <div class="col"><div class="fw-semibold text-secondary">Tipo</div><div id="modal-tipoprod">-</div></div>
               <div class="col"><div class="fw-semibold text-secondary">Modelo</div><div id="modal-modelo">-</div></div>
               <div class="col"><div class="fw-semibold text-secondary">Ref. Interna</div><div id="modal-refinterna">-</div></div>
               <div class="col"><div class="fw-semibold text-secondary">Palabra Clave</div><div id="modal-palclave">-</div></div>
               <div class="col"><div class="fw-semibold text-secondary">Cantidad</div><div id="modal-cantidad">-</div></div>
               <div class="col"><div class="fw-semibold text-secondary">Unidad</div><div id="modal-unidad">-</div></div>
+            </div>
+
+            <!-- Máquinas compatibles -->
+            <div class="mt-3">
+              <div class="fw-semibold text-secondary mb-1">Máquinas Compatibles</div>
+              <div id="modal-maquinas" class="d-flex flex-wrap gap-2"></div>
             </div>
 
             <!-- Ubicación destacada -->
@@ -569,8 +573,6 @@ document.querySelectorAll(".btn-detalles").forEach(btn => {
     document.getElementById("modal-nombre").textContent = ref.nombreprod;
     document.getElementById("modal-nombreprod").textContent = ref.nombreprod;
     document.getElementById("modal-categoria").textContent = `Categoría: ${ref.categoriaprin}`;
-    document.getElementById("modal-maquinamod").textContent = ref.maquinamod || '-';
-    document.getElementById("modal-maquinaesp").textContent = ref.maquinaesp || '-';
     document.getElementById("modal-tipoprod").textContent = ref.tipoprod || '-';
     document.getElementById("modal-modelo").textContent = ref.modelo || '-';
     document.getElementById("modal-refinterna").textContent = ref.refinterna || '-';
@@ -581,8 +583,34 @@ document.querySelectorAll(".btn-detalles").forEach(btn => {
     document.getElementById("modal-observacion").textContent = ref.observacion || '-';
     document.getElementById("modal-img").src = ref.imagen || 'no-image.jpg';
 
+    // --- Máquinas compatibles ---
+    const contMaquinas = document.getElementById("modal-maquinas");
+    contMaquinas.innerHTML = ""; // limpiar previo
+    if(ref.maquinacompatibles && ref.maquinacompatibles.length > 0){
+      ref.maquinacompatibles.forEach(m => {
+        const span = document.createElement("span");
+        span.className = "badge bg-secondary";
+        span.textContent = m;
+        contMaquinas.appendChild(span);
+      });
+    } else {
+      contMaquinas.textContent = "No hay máquinas compatibles";
+    }
+
     modalDetalles.show();
   });
+});
+
+// --- Zoom en imagen al hacer click ---
+document.addEventListener("click", (e) => {
+  if(e.target.classList.contains("zoom-img")){
+    const src = e.target.src;
+    const overlay = document.createElement("div");
+    overlay.className = "img-zoom-overlay d-flex justify-content-center align-items-center";
+    overlay.innerHTML = `<img src="${src}" style="max-width:90%; max-height:90%; border-radius:0.5rem; box-shadow:0 0.5rem 1rem rgba(0,0,0,0.5);">`;
+    overlay.addEventListener("click", ()=>overlay.remove());
+    document.body.appendChild(overlay);
+  }
 });
 
   } else {
