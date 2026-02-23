@@ -442,7 +442,6 @@ function mostrarResultados(lista) {
     return;
   }
 
-  // Si es la primera vez o la lista cambió completamente
   if (cardsDOM.length === 0 || cardsDOM.length !== lista.length) {
     cont.innerHTML = "";
     cardsDOM = [];
@@ -453,7 +452,6 @@ function mostrarResultados(lista) {
       const card = document.createElement("div");
       card.className = "ref-card";
 
-      // Guardamos info de filtrado en atributos data
       card.dataset.nombreprod = (r.nombreprod || "").toLowerCase();
       card.dataset.refinterna = (r.refinterna || "").toLowerCase();
       card.dataset.modelo = (r.modelo || "").toLowerCase();
@@ -473,49 +471,39 @@ function mostrarResultados(lista) {
           <div class="ref-cantidad">Cantidad: <strong>${r.cantidad} ${r.unidad || ''}</strong></div>
           <div class="ref-ubicacion">📍 ${r.ubicacion || 'Sin ubicación'}</div>
           <div class="ref-actions">
-            <a href="detalle.html?id=${r.id}" class="btn-ver">Ver / Editar</a>
-            <button class="btn-detalles" data-id="${r.id}">Detalles</button>
+            <a href="detalle.html?id=${r.id}" class="btn-ver btn btn-primary btn-sm">Ver / Editar</a>
+            <button class="btn-detalles btn btn-secondary btn-sm" data-id="${r.id}" data-bs-toggle="modal" data-bs-target="#modalDetalles">Detalles</button>
           </div>
         </div>
       `;
 
       fragment.appendChild(card);
-      cardsDOM.push(card); // guardamos en memoria
+      cardsDOM.push(card);
     });
 
     cont.appendChild(fragment);
 
-    // --- Modal HTML (se agrega solo una vez) ---
+    // --- Modal Bootstrap Fullscreen (solo se agrega una vez) ---
     if (!document.getElementById("modalDetalles")) {
       const modalHTML = `
-      <div class="modal" id="modalDetalles">
-        <div class="modal-content">
-          <span class="modal-close">&times;</span>
-          <h3 id="modal-nombre"></h3>
-          <div id="modal-body"></div>
+      <div class="modal fade" id="modalDetalles" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-fullscreen">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="modal-nombre">Detalle Producto</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+            </div>
+            <div class="modal-body" id="modal-body" style="overflow-y:auto;"></div>
+          </div>
         </div>
       </div>
       `;
       document.body.insertAdjacentHTML("beforeend", modalHTML);
-
-      // --- CSS básico para modal ---
-      const style = document.createElement("style");
-      style.innerHTML = `
-      .modal { display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.5); justify-content:center; align-items:center; }
-      .modal-content { background:white; padding:20px; max-width:500px; width:90%; border-radius:5px; position:relative; max-height:80%; overflow-y:auto; }
-      .modal-close { position:absolute; top:10px; right:15px; cursor:pointer; font-size:20px; }
-      `;
-      document.head.appendChild(style);
-
-      // --- Script modal ---
-      const modal = document.getElementById("modalDetalles");
-      const modalClose = modal.querySelector(".modal-close");
-      const modalNombre = document.getElementById("modal-nombre");
-      const modalBody = document.getElementById("modal-body");
-
-      modalClose.addEventListener("click", () => modal.style.display = "none");
-      window.addEventListener("click", e => { if(e.target === modal) modal.style.display = "none"; });
     }
+
+    // --- Inicializar Bootstrap 5 Modal ---
+    const modalDetallesEl = document.getElementById('modalDetalles');
+    const modalDetalles = new bootstrap.Modal(modalDetallesEl);
 
     // --- Abrir modal con datos ---
     document.querySelectorAll(".btn-detalles").forEach(btn => {
@@ -524,12 +512,8 @@ function mostrarResultados(lista) {
         const ref = lista.find(r => r.id == id);
         if (!ref) return;
 
-        const modal = document.getElementById("modalDetalles");
-        const modalNombre = document.getElementById("modal-nombre");
-        const modalBody = document.getElementById("modal-body");
-
-        modalNombre.textContent = ref.nombreprod;
-        modalBody.innerHTML = `
+        document.getElementById("modal-nombre").textContent = ref.nombreprod;
+        document.getElementById("modal-body").innerHTML = `
           <p><strong>ID:</strong> ${ref.id}</p>
           <p><strong>Categoría:</strong> ${ref.categoriaprin}</p>
           <p><strong>Máquina Modelo:</strong> ${ref.maquinamod}</p>
@@ -544,12 +528,11 @@ function mostrarResultados(lista) {
           <p><strong>Imagen:</strong><br><img src="${ref.imagen || 'no-image.jpg'}" style="max-width:100%;"></p>
         `;
 
-        modal.style.display = "flex";
+        modalDetalles.show();
       });
     });
 
   } else {
-    // Si ya estaban generados, solo filtramos
     filtrarCards();
   }
 }
