@@ -80,6 +80,7 @@ const token = localStorage.getItem("token");
 
   try {
     const response = await fetch(`${API}/me`, {
+      
       headers: {
         "Authorization": "Bearer " + token
       }
