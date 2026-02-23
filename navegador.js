@@ -3,7 +3,7 @@ let modeloSeleccionado = "";
 let resultadosActuales = [];
 let tagsActivos = [];
 let modoGlobal = false;
-
+console.log("session cargado");
 window.addEventListener("pageshow", function (event) {
   const token = localStorage.getItem("token");
 
