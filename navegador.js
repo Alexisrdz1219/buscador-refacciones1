@@ -3,7 +3,22 @@ let modeloSeleccionado = "";
 let resultadosActuales = [];
 let tagsActivos = [];
 let modoGlobal = false;
-console.log("session cargado");
+
+// Obtener usuario actual
+const usuario = Sesion.obtenerUsuario();
+if (usuario) {
+  console.log("ID:", usuario.id);
+  console.log("Nombre:", usuario.nombre);
+  console.log("Rol:", usuario.rol);
+} else {
+  console.log("No hay usuario logueado");
+}
+
+// Forzar validación de sesión en cualquier momento
+Sesion.validar().then(u => {
+  if (u) console.log("Usuario validado:", u.nombre);
+});
+
 window.addEventListener("pageshow", function (event) {
   const token = localStorage.getItem("token");
 
