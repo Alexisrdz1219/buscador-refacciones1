@@ -587,25 +587,37 @@ document.querySelectorAll(".btn-detalles").forEach(btn => {
 
     // --- Máquinas compatibles (fetch separado) ---
     const contMaquinas = document.getElementById("modal-maquinas");
-    contMaquinas.innerHTML = "Cargando máquinas...";
-    try {
-      const resp = await fetch(`${API}/refacciones/${ref.id}/compatibles`);
-      const data = await resp.json();
-      contMaquinas.innerHTML = "";
-      if (data.maquinas && data.maquinas.length > 0) {
-        data.maquinas.forEach(m => {
-          const span = document.createElement("span");
-          span.className = "badge bg-secondary";
-          span.textContent = m;
-          contMaquinas.appendChild(span);
-        });
+contMaquinas.innerHTML = "Cargando máquinas...";
+
+try {
+  const resp = await fetch(`${API}/refacciones/${ref.id}/compatibles`);
+  const data = await resp.json();
+  contMaquinas.innerHTML = "";
+
+  if (data.maquinas && data.maquinas.length > 0) {
+    data.maquinas.forEach(m => {
+      const span = document.createElement("span");
+      span.className = "badge bg-secondary me-1 mb-1";
+
+      // Si es objeto, mostramos un string con sus propiedades
+      if (typeof m === "object") {
+        // Puedes personalizar qué campos quieres mostrar
+        span.textContent = `${m.nombre || "-"} | ID: ${m.id || "-"} | Tipo: ${m.tipo || "-"}`;
+        span.title = `ID: ${m.id || "-"} | Tipo: ${m.tipo || "-"}`; // tooltip
       } else {
-        contMaquinas.textContent = "No hay máquinas compatibles";
+        // Si solo es un número o string
+        span.textContent = m;
       }
-    } catch (err) {
-      contMaquinas.textContent = "Error al cargar máquinas";
-      console.error(err);
-    }
+
+      contMaquinas.appendChild(span);
+    });
+  } else {
+    contMaquinas.textContent = "No hay máquinas compatibles";
+  }
+} catch (err) {
+  contMaquinas.textContent = "Error al cargar máquinas";
+  console.error(err);
+}
 
     // --- Mostrar modal ---
     modalDetalles.show();
