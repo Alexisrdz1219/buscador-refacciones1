@@ -1,6 +1,6 @@
 (function () {
 
-const API = "https://buscador-refaccionesbackend.onrender.com/login";
+const API = "https://buscador-refaccionesbackend.onrender.com";
 
 async function validarSesion() {
 
@@ -28,7 +28,7 @@ async function validarSesion() {
     }
 
   } catch (error) {
-    console.log("Token inválido");
+    console.log("Token inválido o /me incorrecto");
     localStorage.removeItem("token");
     window.location.replace("index.html");
   }
