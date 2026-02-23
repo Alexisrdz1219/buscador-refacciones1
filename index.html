@@ -124,61 +124,7 @@
   </div>
 </div>
 <script src="js/login.js"></script>
-<script>
-  const API = "https://buscador-refaccionesbackend.onrender.com";
 
-// 1️⃣ Validar si ya hay token y redirigir
-const token = localStorage.getItem("token");
-
-if (token) {
-  fetch(`${API}/me`, {
-    headers: { "Authorization": "Bearer " + token }
-  })
-    .then(res => res.json())
-    .then(usuario => {
-      if (usuario && usuario.id) {
-        // Si el usuario tiene sesión activa, lo mandamos a la página principal
-        window.location.replace("principal.html"); // Cambia al path de tu página principal
-      }
-    })
-    .catch(err => {
-      console.log("Token inválido o sesión expirada", err);
-      localStorage.removeItem("token"); // Limpiar token inválido
-    });
-}
-
-// 2️⃣ Manejar envío del formulario de login
-const loginForm = document.getElementById("loginForm");
-loginForm.addEventListener("submit", async e => {
-  e.preventDefault();
-
-  const email = document.getElementById("email").value;
-  const password = document.getElementById("password").value;
-
-  try {
-    const res = await fetch(`${API}/login`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ email, password })
-    });
-
-    const data = await res.json();
-
-    if (data.token) {
-      localStorage.setItem("token", data.token);
-      localStorage.setItem("nombre", data.nombre || "");
-      localStorage.setItem("rol", data.rol || "");
-      window.location.replace("principal.html"); // Redirige al dashboard
-    } else {
-      alert(data.error || "Error al iniciar sesión");
-    }
-
-  } catch (err) {
-    console.error("Error login:", err);
-    alert("Error de conexión");
-  }
-});
-</script>
 </body>
 
 </html>
