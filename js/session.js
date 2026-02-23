@@ -1,6 +1,6 @@
 (function () {
 
-const API = "https://buscador-refaccionesbackend.onrender.com";
+const API = "https://buscador-refaccionesbackend.onrender.com/login";
 
 async function validarSesion() {
 
