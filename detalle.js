@@ -102,7 +102,7 @@ console.log("Compatibilidad a guardar:", maquinasSeleccionadas);
   }
 
   alert("✅ Refacción actualizada");
-  window.location.href = "Nadd.html";
+  window.location.href = "detalle.html";
 });
 
 /* =========================
