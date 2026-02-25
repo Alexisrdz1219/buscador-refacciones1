@@ -57,11 +57,17 @@ document.getElementById("btnUbicadas").addEventListener("click", async () => {
     const ubicadas = await respUbicadas.json();
     const todas = await respTodas.json();
 
-    if (!ubicadas.ok || !todas.ok) {
-      document.getElementById("resultadoUbi").innerHTML =
-        "<p class='text-danger'>Error al obtener datos</p>";
-      return;
-    }
+    if (!ubicadas || !ubicadas.data) {
+  document.getElementById("resultadoUbi").innerHTML =
+    "<p class='text-danger'>Error en endpoint con-ubicacion</p>";
+  return;
+}
+
+if (!todas || (!todas.data && !Array.isArray(todas))) {
+  document.getElementById("resultadoUbi").innerHTML =
+    "<p class='text-danger'>Error en endpoint general</p>";
+  return;
+}
 
     const totalGeneral = todas.data.length;
     const totalConUbicacion = ubicadas.data.length;
