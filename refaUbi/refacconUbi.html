@@ -34,7 +34,7 @@ document.getElementById("btnUbicadas").addEventListener("click", async () => {
     result.data.forEach(ref => {
       contenedor.innerHTML += `
         <div>
-          <strong>${ref.descripcion || "Sin descripción"}</strong>
+          <strong>${ref.nombreprod || "Sin nombre"}</strong>
           - ${ref.ubicacion}
         </div>
       `;
