@@ -256,184 +256,8 @@ function actualizarTitulo() {
   }
 }
 
-//   const cont = document.getElementById("resultados");
-//   if (!cont) {
-//     console.error("❌ No existe #resultados");
-//     return;
-//   }
-
-//   cont.innerHTML = "";
-
-//   if (lista.length === 0) {
-//     cont.innerHTML = "<p>No hay refacciones</p>";
-//     return;
-//   }
-
-//   cont.innerHTML = ""; // limpia antes, por salud mental
-
-// lista.forEach(r => {
-  
-//   cont.innerHTML += `
-//   <div class="ref-card">
-    
-//     <div class="ref-img">
-//       <img src="${r.imagen || 'no-image.jpg'}"
-//            alt="${r.nombreprod}"
-//            onerror="this.onerror=null; this.src='no-image.jpg';">
-//     </div>
-
-//     <div class="ref-body">
-
-//       <!-- NOMBRE (principal) -->
-//       <h3 class="ref-title">${r.nombreprod}</h3>
-
-//       <!-- MODELO -->
-//       <div class="ref-modelo">
-//         Modelo: <strong>${r.modelo || '-'}</strong>
-//       </div>
-
-//       <!-- CANTIDAD -->
-//       <div class="ref-cantidad">
-//         Cantidad: <strong>${r.cantidad} ${r.unidad || ''}</strong>
-//       </div>
-
-//       <!-- UBICACIÓN (DESTACADA) -->
-//       <div class="ref-ubicacion">
-//         📍 ${r.ubicacion || 'Sin ubicación'}
-//       </div>
-
-//       <div class="ref-actions">
-//         <a href="detalle.html?id=${r.id}" class="btn-ver">Ver / Editar</a>
-//       </div>
-
-//     </div>
-//   </div>
-// `;
-
-// });
-
-
-// }
-
-
-// async function aplicarFiltros() {
-
-//   if (!resultadosActuales.length) return;
-
-//   const ref = document.getElementById("buscarRef")?.value.toLowerCase().trim() || "";
-//   const modelo = document.getElementById("buscarModelo")?.value.toLowerCase().trim() || "";
-//   const tipo = document.getElementById("filtroTipo")?.value || "";
-//   const unidad = document.getElementById("filtroUnidad")?.value || "";
-  
-//   if (modoGlobal) {
-
-//     const params = new URLSearchParams({
-//       ref,
-//       modelo,
-//       tipo,
-//       unidad,
-//       palabras
-//     });
-
-//     const res = await fetch(`${API}/buscar-refacciones?${params}`);
-//     const data = await res.json();
-
-//     mostrarResultados(data);
-//     return;
-//   }
-  
-//   const palabrasTexto = document.getElementById("buscarPalabras")?.value.toLowerCase().trim() || "";
-
-//   const palabras = palabrasTexto
-//     ? palabrasTexto.split(" ").filter(p => p.length > 0)
-//     : [];
-
-//   const filtrados = resultadosActuales.filter(r => {
-
-//     const coincideRef =
-//       !ref || String(r.refinterna || "").toLowerCase().includes(ref);
-
-//     const coincideModelo =
-//       !modelo || String(r.modelo || "").toLowerCase().includes(modelo);
-
-//     const coincideTipo =
-//       !tipo || r.tipoprod === tipo;
-
-//     const coincideUnidad =
-//       !unidad || r.unidad === unidad;
-
-//     const coincidePalabras =
-//   tagsActivos.length === 0 ||
-//   tagsActivos.every(p =>
-//     String(r.palclave || "").toLowerCase().includes(p)
-//   );
-
-
-//     return coincideRef &&
-//            coincideModelo &&
-//            coincideTipo &&
-//            coincideUnidad &&
-//            coincidePalabras;
-//   });
-
-//   mostrarResultados(filtrados);
-// }
-// ⚡ Arreglo global para guardar los elementos del DOM
 let cardsDOM = [];
 
-// function mostrarResultados(lista) {
-//   const cont = document.getElementById("resultados");
-//   if (!cont) {
-//     console.error("❌ No existe #resultados");
-//     return;
-//   }
-
-//   // Si es la primera vez o la lista cambió completamente
-//   if (cardsDOM.length === 0 || cardsDOM.length !== lista.length) {
-//     cont.innerHTML = "";
-//     cardsDOM = [];
-
-//     const fragment = document.createDocumentFragment();
-
-//     lista.forEach(r => {
-//       const card = document.createElement("div");
-//       card.className = "ref-card";
-
-//       // Guardamos info de filtrado en atributos data
-//       card.dataset.nombreprod = (r.nombreprod || "").toLowerCase();
-//       card.dataset.refinterna = (r.refinterna || "").toLowerCase();
-//       card.dataset.modelo = (r.modelo || "").toLowerCase();
-//       card.dataset.tipoprod = r.tipoprod || "";
-//       card.dataset.unidad = r.unidad || "";
-//       card.dataset.palclave = (r.palclave || "").toLowerCase();
-
-//       card.innerHTML = `
-//         <div class="ref-img">
-//           <img src="${r.imagen || 'no-image.jpg'}" 
-//                alt="${r.nombreprod}" 
-//                onerror="this.onerror=null; this.src='no-image.jpg';">
-//         </div>
-//         <div class="ref-body">
-//           <h3 class="ref-title">${r.nombreprod}</h3>
-//           <div class="ref-modelo">Modelo: <strong>${r.modelo || '-'}</strong></div>
-//           <div class="ref-cantidad">Cantidad: <strong>${r.cantidad} ${r.unidad || ''}</strong></div>
-//           <div class="ref-ubicacion">📍 ${r.ubicacion || 'Sin ubicación'}</div>
-//           <div class="ref-actions">
-//             <a href="detalle.html?id=${r.id}" class="btn-ver">Ver / Editar</a>
-//           </div>
-//         </div>
-//       `;
-
-//       fragment.appendChild(card);
-//       cardsDOM.push(card); // guardamos en memoria
-//     });
-
-//     cont.appendChild(fragment);
-//   } else {
-//     // Si ya estaban generados, solo filtramos
-//     filtrarCards();
-//   }
-// }
 
 function mostrarResultados(lista) {
   const cont = document.getElementById("resultados");
@@ -470,6 +294,14 @@ function mostrarResultados(lista) {
           <div class="ref-modelo">Modelo: <strong>${r.modelo || '-'}</strong></div>
           <div class="ref-cantidad">Cantidad: <strong>${r.cantidad} ${r.unidad || ''}</strong></div>
           <div class="ref-ubicacion">📍 ${r.ubicacion || 'Sin ubicación'}</div>
+          <div class="ref-maquinas">
+  <strong>Máquinas compatibles:</strong>
+  ${
+    r.maquinas && r.maquinas.length > 0
+      ? r.maquinas.map(m => `<span class="badge bg-dark me-1">${m}</span>`).join('')
+      : '<span class="text-muted">No registradas</span>'
+  }
+</div>
           <div class="ref-actions">
             <a href="detalle.html?id=${r.id}" class="btn-ver btn btn-primary btn-sm">Ver / Editar</a>
             <button class="btn-detalles btn btn-secondary btn-sm" data-id="${r.id}" data-bs-toggle="modal" data-bs-target="#modalDetalles">Detalles</button>
