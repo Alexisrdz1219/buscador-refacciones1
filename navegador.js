@@ -297,8 +297,10 @@ function mostrarResultados(lista) {
           <div class="ref-maquinas">
   <strong>Máquinas compatibles:</strong>
   ${
-    r.maquinas && r.maquinas.length > 0
-      ? r.maquinas.map(m => `<span class="badge bg-dark me-1">${m}</span>`).join('')
+    r.maquinas
+      ? r.maquinas.split(',').map(m => 
+          `<span class="badge bg-dark me-1">${m.trim()}</span>`
+        ).join('')
       : '<span class="text-muted">No registradas</span>'
   }
 </div>
