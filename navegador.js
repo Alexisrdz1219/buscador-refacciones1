@@ -263,16 +263,12 @@ let cardsDOM = [];
 
 function mostrarResultados(lista) {
   const cont = document.getElementById("resultados");
-  if (!cont) {
-    console.error("❌ No existe #resultados");
-    return;
-  }
+  if (!cont) return;
+  
+  cont.innerHTML = ""; // Limpiar resultados anteriores
+  cardsDOM = []; // Limpiar referencia a cards anteriores
 
-  if (cardsDOM.length === 0 || cardsDOM.length !== lista.length) {
-    cont.innerHTML = "";
-    cardsDOM = [];
-
-    const fragment = document.createDocumentFragment();
+  const fragment = document.createDocumentFragment();
 
     lista.forEach(r => {
       const card = document.createElement("div");
@@ -308,7 +304,11 @@ function mostrarResultados(lista) {
     });
 
     cont.appendChild(fragment);
+    
+    attachModalListeners(lista);
+}
 
+function attachModalListeners(lista) {
 // --- Modal Bootstrap Fullscreen (solo se agrega una vez) ---
 if (!document.getElementById("modalDetalles")) {
   const modalHTML = `
@@ -389,65 +389,65 @@ if (!document.getElementById("modalDetalles")) {
 const modalDetallesEl = document.getElementById('modalDetalles');
 const modalDetalles = new bootstrap.Modal(modalDetallesEl);
 
-// --- Abrir modal con datos ---
-// --- Abrir modal con datos ---
-document.querySelectorAll(".btn-detalles").forEach(btn => {
-  btn.addEventListener("click", async () => {
-    const id = btn.dataset.id;
-    const ref = lista.find(r => r.id == id);
-    if (!ref) return;
+  // --- Abrir modal con datos ---
+  document.querySelectorAll(".btn-detalles").forEach(btn => {
+    btn.addEventListener("click", async () => {
+      const id = btn.dataset.id;
+      const ref = lista.find(r => r.id == id);
+      if (!ref) return;
 
-    // --- Datos básicos ---
-    document.getElementById("modal-nombre").textContent = ref.nombreprod;
-    document.getElementById("modal-nombreprod").textContent = ref.nombreprod;
-    document.getElementById("modal-categoria").textContent = `Categoría: ${ref.categoriaprin}`;
-    document.getElementById("modal-tipoprod").textContent = ref.tipoprod || '-';
-    document.getElementById("modal-modelo").textContent = ref.modelo || '-';
-    document.getElementById("modal-refinterna").textContent = ref.refinterna || '-';
-    document.getElementById("modal-palclave").textContent = ref.palclave || '-';
-    document.getElementById("modal-cantidad").textContent = ref.cantidad || '-';
-    document.getElementById("modal-unidad").textContent = ref.unidad || '-';
-    document.getElementById("modal-ubicacion").textContent = ref.ubicacion || 'Sin ubicación';
-    document.getElementById("modal-observacion").textContent = ref.observacion || '-';
-    document.getElementById("modal-img").src = ref.imagen || 'no-image.jpg';
+      // --- Datos básicos ---
+      document.getElementById("modal-nombre").textContent = ref.nombreprod;
+      document.getElementById("modal-nombreprod").textContent = ref.nombreprod;
+      document.getElementById("modal-categoria").textContent = `Categoría: ${ref.categoriaprin}`;
+      document.getElementById("modal-tipoprod").textContent = ref.tipoprod || '-';
+      document.getElementById("modal-modelo").textContent = ref.modelo || '-';
+      document.getElementById("modal-refinterna").textContent = ref.refinterna || '-';
+      document.getElementById("modal-palclave").textContent = ref.palclave || '-';
+      document.getElementById("modal-cantidad").textContent = ref.cantidad || '-';
+      document.getElementById("modal-unidad").textContent = ref.unidad || '-';
+      document.getElementById("modal-ubicacion").textContent = ref.ubicacion || 'Sin ubicación';
+      document.getElementById("modal-observacion").textContent = ref.observacion || '-';
+      document.getElementById("modal-img").src = ref.imagen || 'no-image.jpg';
 
-    // --- Contenedor de máquinas ---
-    const contMaquinas = document.getElementById("modal-maquinas");
-    contMaquinas.innerHTML = "Cargando máquinas...";
+      // --- Contenedor de máquinas ---
+      const contMaquinas = document.getElementById("modal-maquinas");
+      contMaquinas.innerHTML = "Cargando máquinas...";
 
-    try {
-      // --- Traer todas las máquinas disponibles ---
-      const maquinasDisponibles = await fetch(`${API}/maquinas`).then(r => r.json());
+      try {
+        // --- Traer todas las máquinas disponibles ---
+        const maquinasDisponibles = await fetch(`${API}/maquinas`).then(r => r.json());
 
-      // --- Traer compatibles actuales (solo IDs) ---
-      const resp = await fetch(`${API}/refacciones/${ref.id}/compatibles`);
-      const data = await resp.json();
+        // --- Traer compatibles actuales (solo IDs) ---
+        const resp = await fetch(`${API}/refacciones/${ref.id}/compatibles`);
+        const data = await resp.json();
 
-      contMaquinas.innerHTML = "";
-      if (data.maquinas && data.maquinas.length > 0) {
-        data.maquinas.forEach(idMaquina => {
-          const maquina = maquinasDisponibles.find(m => m.id == idMaquina);
-          if (!maquina) return;
+        contMaquinas.innerHTML = "";
+        if (data.maquinas && data.maquinas.length > 0) {
+          data.maquinas.forEach(idMaquina => {
+            const maquina = maquinasDisponibles.find(m => m.id == idMaquina);
+            if (!maquina) return;
 
-          const span = document.createElement("span");
-          span.className = "badge bg-success me-1 mb-1";
-          // Muestra nombre, tipo y modelo de la máquina
-          span.textContent = `${maquina.nombre || ""} ${maquina.tipo || ""} ${maquina.modelo || ""}`;
-          span.title = `ID: ${maquina.id || ""} Tipo: ${maquina.tipo || ""} Modelo: ${maquina.modelo || ""}`;
-          contMaquinas.appendChild(span);
-        });
-      } else {
-        contMaquinas.textContent = "No hay máquinas compatibles";
+            const span = document.createElement("span");
+            span.className = "badge bg-success me-1 mb-1";
+            // Muestra nombre, tipo y modelo de la máquina
+            span.textContent = `${maquina.nombre || ""} ${maquina.tipo || ""} ${maquina.modelo || ""}`;
+            span.title = `ID: ${maquina.id || ""} Tipo: ${maquina.tipo || ""} Modelo: ${maquina.modelo || ""}`;
+            contMaquinas.appendChild(span);
+          });
+        } else {
+          contMaquinas.textContent = "No hay máquinas compatibles";
+        }
+      } catch (err) {
+        contMaquinas.textContent = "Error al cargar máquinas";
+        console.error(err);
       }
-    } catch (err) {
-      contMaquinas.textContent = "Error al cargar máquinas";
-      console.error(err);
-    }
 
-    // --- Mostrar modal ---
-    modalDetalles.show();
+      // --- Mostrar modal ---
+      modalDetalles.show();
+    });
   });
-});
+}
 
 // --- Zoom en imagen al hacer click ---
 document.addEventListener("click", (e) => {
@@ -461,10 +461,6 @@ document.addEventListener("click", (e) => {
   }
 });
 
-  } else {
-    filtrarCards();
-  }
-}
 
 // ⚡ Función para filtrar sin reconstruir el DOM
 function filtrarCards() {
