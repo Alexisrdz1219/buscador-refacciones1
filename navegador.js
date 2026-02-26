@@ -180,7 +180,8 @@ if (formFiltros) {
 }
       tagsActivos = [];
 contenedorTags.querySelectorAll(".badge").forEach(t => t.remove());
-      const maquinamod = link.dataset.maquinamod;
+      // const maquinamod = link.dataset.maquinamod;
+      const maquinamod = e.target.closest(".maquina-link").dataset.maquinamod;
       modeloSeleccionado = maquinamod; // 🔥 guardamos el modelo
 
       console.log("BUSCANDO POR MODELO:", maquinamod);
