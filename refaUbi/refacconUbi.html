@@ -35,9 +35,11 @@
   display: none !important;
 }
 
+
 #visorImg {
-  max-width: none;
-  max-height: none;
+  max-width: 90vw;
+  max-height: 90vh;
+  object-fit: contain;
   cursor: grab;
   transition: transform 0.1s ease;
 }
@@ -239,7 +241,6 @@ function renderizarCards() {
 });
 }
 
-
 function renderizarPaginacion() {
 
   const paginacion = document.getElementById("paginacion");
@@ -248,8 +249,9 @@ function renderizarPaginacion() {
   const totalPaginas = Math.ceil(refaccionesFiltradas.length / porPagina);
   if (totalPaginas <= 1) return;
 
-  let html = `<nav><ul class="pagination pagination-lg shadow-sm">`;
+  let html = `<nav><ul class="pagination pagination-lg shadow-sm flex-wrap">`;
 
+  // Anterior
   html += `
     <li class="page-item ${paginaActual === 1 ? "disabled" : ""}">
       <button class="page-link" onclick="cambiarPagina(${paginaActual - 1})">
@@ -258,7 +260,22 @@ function renderizarPaginacion() {
     </li>
   `;
 
-  for (let i = 1; i <= totalPaginas; i++) {
+  const rango = 2;
+  let inicio = Math.max(1, paginaActual - rango);
+  let fin = Math.min(totalPaginas, paginaActual + rango);
+
+  if (inicio > 1) {
+    html += `
+      <li class="page-item">
+        <button class="page-link" onclick="cambiarPagina(1)">1</button>
+      </li>
+    `;
+    if (inicio > 2) {
+      html += `<li class="page-item disabled"><span class="page-link">...</span></li>`;
+    }
+  }
+
+  for (let i = inicio; i <= fin; i++) {
     html += `
       <li class="page-item ${paginaActual === i ? "active" : ""}">
         <button class="page-link" onclick="cambiarPagina(${i})">
@@ -268,6 +285,21 @@ function renderizarPaginacion() {
     `;
   }
 
+  if (fin < totalPaginas) {
+    if (fin < totalPaginas - 1) {
+      html += `<li class="page-item disabled"><span class="page-link">...</span></li>`;
+    }
+
+    html += `
+      <li class="page-item">
+        <button class="page-link" onclick="cambiarPagina(${totalPaginas})">
+          ${totalPaginas}
+        </button>
+      </li>
+    `;
+  }
+
+  // Siguiente
   html += `
     <li class="page-item ${paginaActual === totalPaginas ? "disabled" : ""}">
       <button class="page-link" onclick="cambiarPagina(${paginaActual + 1})">
