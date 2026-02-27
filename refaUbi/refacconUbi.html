@@ -201,13 +201,13 @@ function renderizarCards() {
           >
 
           <!-- CHECK -->
-          <button class="btn btn-light position-absolute top-0 end-0 m-2 btn-check-ref"
+          <button class="btn position-absolute top-0 end-0 m-2 btn-check-ref" style="background: transparent;"
                   data-id="${ref.id}">
             <i class="bi ${ref.completada ? 'bi-check-circle-fill text-success' : 'bi-circle'}"></i>
           </button>
 
           <!-- FULLSCREEN -->
-          <button class="btn btn-light position-absolute top-0 start-0 m-2 btn-fullscreen"
+          <button class="btn position-absolute top-0 start-0 m-2 btn-fullscreen" style="background: transparent;"
                   data-img="${ref.imagen || 'no-image.jpg'}">
             <i class="bi bi-fullscreen"></i>
           </button>
