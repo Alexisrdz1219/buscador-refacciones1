@@ -102,7 +102,7 @@ console.log("Compatibilidad a guardar:", maquinasSeleccionadas);
   }
 
   alert("✅ Refacción actualizada");
-  window.location.href = "detalle.html";
+  window.location.href = "refaUbi/refacconUbi.html";
 });
 
 /* =========================
