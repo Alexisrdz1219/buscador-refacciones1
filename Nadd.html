@@ -233,36 +233,6 @@
   text-align: center;
 }
 
-
-.btn-check-ref,
-.btn-fullscreen {
-  position: absolute;
-  top: 8px;
-  /* right: 8px; */
-  z-index: 2;
-
-  background: transparent;
-  border-radius: 50%;
-  border: none;
-  width: 32px;
-  height: 32px;
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
-  cursor: pointer;
-}
-
-.btn-check-ref i {
-  font-size: 1.2rem;
-}
-
-.btn-check-ref {
-  right: 8px;
-}
-
 .btn-fullscreen {
   left: 8px;
 }
@@ -387,24 +357,28 @@
   right: 8px;
   display: flex;
   gap: 6px;
+  z-index: 3;
 }
 
 .card-actions button {
-  background: rgba(255,255,255,0.85);
+  background: rgba(255,255,255,0.9);
   border: none;
-  border-radius: 6px;
+  border-radius: 8px;
   width: 32px;
   height: 32px;
+
   display: flex;
   align-items: center;
   justify-content: center;
+
   cursor: pointer;
   transition: 0.2s;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
 }
 
 .card-actions button:hover {
   background: white;
-  transform: scale(1.05);
+  transform: scale(1.08);
 }
         </style>
         
