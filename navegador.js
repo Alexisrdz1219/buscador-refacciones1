@@ -783,10 +783,19 @@ document.addEventListener("click", async (e) => {
 });
 
 async function cargarDestacadas() {
-  const res = await fetch(`/refacciones/destacadas`);
-  const data = await res.json();
+  try {
+    const res = await fetch(`${API}/refacciones/destacadas`);
 
-  renderDestacadas(data);
+    if (!res.ok) {
+      throw new Error(`Error ${res.status}`);
+    }
+
+    const data = await res.json();
+    renderDestacadas(data);
+
+  } catch (error) {
+    console.error("Error cargando destacadas:", error);
+  }
 }
 
 function renderDestacadas(lista) {
