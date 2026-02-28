@@ -150,7 +150,11 @@ document.getElementById("btnTodasRefacciones")?.addEventListener("click", async 
 });
 
 
-
+const getDestacadas = async () => {
+  const res = await fetch("https://buscador-refaccionesbackend.onrender.com/refacciones/destacadas");
+  const data = await res.json();
+  console.log(data); // Aquí tienes un array de refacciones destacadas
+};
 
 inputTag.addEventListener("keydown", function(e) {
   if (e.key === "Enter") {
