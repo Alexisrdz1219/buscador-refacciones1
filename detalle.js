@@ -1,9 +1,17 @@
-
 const API = "https://buscador-refaccionesbackend.onrender.com";
 const params = new URLSearchParams(window.location.search);
 const id = params.get("id");
+const form = document.getElementById("form");
 
+const inputImagen = document.getElementById("imagen");
+const inputImagenUrl = document.getElementById("imagenUrl");
+const preview = document.getElementById("previewImagen");
+const btnQuitar = document.getElementById("btnQuitarImagen");
+const btnEliminarImagen = document.getElementById("btnEliminarImagen");
+
+let imagenEliminada = false;
 let valoresActuales = {};
+
 
 /* =========================
    CARGAR DETALLE REFACCIÓN
@@ -104,6 +112,17 @@ console.log("Compatibilidad a guardar:", maquinasSeleccionadas);
 
   alert("✅ Refacción actualizada");
   window.location.href = "refaUbi/refacconUbi.html";
+
+  if (imagenEliminada) {
+    formData.append("eliminarImagen", "true");
+  }
+
+  await fetch(`${API}/refacciones/${id}`, {
+    method: "PUT",
+    body: formData
+  });
+
+  alert("Guardado correctamente");
 });
 
 /* =========================
@@ -308,15 +327,45 @@ function quitarMaquina(id) {
   renderChips();
 }
 
-btnEliminarImagen.addEventListener("click", async () => {
-  if (!confirm("¿Eliminar imagen?")) return;
-  console.log("CLICK FUNCIONANDO");
-  await fetch(
-  `https://buscador-refaccionesbackend.onrender.com/refacciones/${id}/imagen`,
-  {
-    method: "DELETE"
-  }
-);
+// btnEliminarImagen.addEventListener("click", async () => {
+//   if (!confirm("¿Eliminar imagen?")) return;
+//   console.log("CLICK FUNCIONANDO");
+//   await fetch(
+//   `https://buscador-refaccionesbackend.onrender.com/refacciones/${id}/imagen`,
+//   {
+//     method: "DELETE"
+//   }
+// );
 
-  location.reload();
+//   location.reload();
+// });
+
+btnEliminarImagen.addEventListener("click", async () => {
+  if (!confirm("¿Eliminar imagen guardada?")) return;
+
+  await fetch(`${API}/refacciones/${id}/imagen`, {
+    method: "DELETE"
+  });
+
+  preview.src = "";
+  preview.style.display = "none";
+});
+
+inputImagen.addEventListener("change", () => {
+  const file = inputImagen.files[0];
+
+  if (file) {
+    preview.src = URL.createObjectURL(file);
+    preview.style.display = "block";
+    btnQuitar.style.display = "block";
+    imagenEliminada = false;
+  }
+});
+
+btnQuitar.addEventListener("click", () => {
+  preview.src = "";
+  preview.style.display = "none";
+  btnQuitar.style.display = "none";
+
+  inputImagen.value = "";
 });
