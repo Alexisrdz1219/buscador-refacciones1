@@ -781,3 +781,57 @@ document.addEventListener("click", async (e) => {
 
   icon.classList.toggle("text-primary");
 });
+
+async function cargarDestacadas() {
+  const res = await fetch(`${API}/refacciones/destacadas`);
+  const data = await res.json();
+
+  renderDestacadas(data);
+}
+
+function renderDestacadas(lista) {
+  const contenedor = document.getElementById("contenedorResultadosDsah");
+
+  if (!lista.length) {
+    contenedor.innerHTML = "";
+    return;
+  }
+
+  contenedor.innerHTML = `
+    <div class="card w-100 shadow-sm">
+      <div class="card-header fw-bold">
+        <i class="bi bi-broadcast text-primary"></i>
+        Refacciones destacadas
+      </div>
+      <ul class="list-group list-group-flush">
+        ${lista.map(r => `
+          <li class="list-group-item d-flex justify-content-between align-items-center">
+            <div>
+              <strong>${r.nombreprod}</strong><br>
+              <small>${r.modelo || '-'} | ${r.ubicacion || 'Sin ubicación'}</small>
+            </div>
+
+            <button class="btn btn-sm btn-outline-danger btn-desactivar"
+                    data-id="${r.id}">
+              <i class="bi bi-x-circle"></i>
+            </button>
+          </li>
+        `).join("")}
+      </ul>
+    </div>
+  `;
+}
+
+document.addEventListener("click", async (e) => {
+  const btn = e.target.closest(".btn-desactivar");
+  if (!btn) return;
+
+  const id = btn.dataset.id;
+
+  await fetch(`${API}/refacciones/${id}/broadcast`, {
+    method: "PUT"
+  });
+
+  // recargar destacadas
+  cargarDestacadas();
+});
