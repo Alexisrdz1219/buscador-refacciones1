@@ -284,10 +284,14 @@ function mostrarResultados(lista) {
       card.innerHTML = `
         <div class="ref-img">
         <button class="btn-check-ref" data-id="${r.id}">
-  <i class="bi ${r.completada ? 'bi-check-circle-fill text-success' : 'bi-circle'}"></i>
+          <i class="bi ${r.completada ? 'bi-check-circle-fill text-success' : 'bi-circle'}"></i>
+        </button>
+
+        <button class="btn-broadcast" data-id="${r.id}">
+  <i class="bi ${r.destacada ? 'bi-broadcast text-primary' : 'bi-broadcast'}"></i>
 </button>
 
-<button class="btn-fullscreen" data-img="${r.imagen || 'no-image.jpg'}">
+    <button class="btn-fullscreen" data-img="${r.imagen || 'no-image.jpg'}">
       <i class="bi bi-fullscreen"></i>
     </button>
           <img src="${r.imagen || 'no-image.jpg'}" 
@@ -708,4 +712,26 @@ document.addEventListener("click", async (e) => {
   } else {
     icon.className = "bi bi-circle";
   }
+});
+
+document.addEventListener("click", async (e) => {
+
+  const btn = e.target.closest(".btn-broadcast");
+  if (!btn) return;
+
+  const id = btn.dataset.id;
+
+  const res = await fetch(`${API}/refacciones/${id}/broadcast`, {
+    method: "PUT"
+  });
+
+  if (!res.ok) {
+    alert("Error al actualizar estado");
+    return;
+  }
+
+  // Toggle visual inmediato (sin recargar)
+  const icon = btn.querySelector("i");
+
+  icon.classList.toggle("text-primary");
 });
