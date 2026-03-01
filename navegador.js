@@ -764,27 +764,33 @@ document.addEventListener("click", async (e) => {
   }
 });
 
+// Un solo listener para manejar ambos botones (el de la lista general y el del dashboard)
 document.addEventListener("click", async (e) => {
-
-  const btn = e.target.closest(".btn-broadcast");
+  const btn = e.target.closest(".btn-broadcast, .btn-desactivar");
   if (!btn) return;
 
   const id = btn.dataset.id;
 
-  const res = await fetch(`${API}/refacciones/${id}/broadcast`, {
-    method: "PUT"
-  });
-
-  if (!res.ok) {
-    alert("Error al actualizar estado");
-    return;
+  try {
+    const res = await fetch(`${API}/refacciones/${id}/broadcast`, { method: "PUT" });
+    
+    if (res.ok) {
+      // 1. Si es el botón de la lista principal, cambiamos su color
+      if (btn.classList.contains("btn-broadcast")) {
+        const icon = btn.querySelector("i");
+        icon.classList.toggle("text-primary");
+      }
+      
+      // 2. IMPORTANTE: Siempre recargamos el dashboard para que se vea el cambio
+      await cargarDestacadas(); 
+    }
+  } catch (error) {
+    console.error("Error al actualizar:", error);
   }
-
-  // Toggle visual inmediato (sin recargar)
-  const icon = btn.querySelector("i");
-
-  icon.classList.toggle("text-primary");
 });
+
+// Al cargar la página por primera vez
+document.addEventListener("DOMContentLoaded", cargarDestacadas);
 
 async function cargarDestacadas() {
   try {
@@ -833,18 +839,18 @@ function renderDestacadas(lista) {
       </ul>
     </div>
   `;
-}
+} 
 
-document.addEventListener("click", async (e) => {
-  const btn = e.target.closest(".btn-desactivar");
-  if (!btn) return;
+// document.addEventListener("click", async (e) => {
+//   const btn = e.target.closest(".btn-desactivar");
+//   if (!btn) return;
 
-  const id = btn.dataset.id;
+//   const id = btn.dataset.id;
 
-  await fetch(`/refacciones/${id}/broadcast`, {
-  method: "PUT"
-});
+//   await fetch(`/refacciones/${id}/broadcast`, {
+//   method: "PUT"
+// });
 
-  // recargar destacadas
-  cargarDestacadas();
-});
+//   // recargar destacadas
+//   cargarDestacadas();
+// });
