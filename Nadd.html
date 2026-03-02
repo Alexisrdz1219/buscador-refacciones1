@@ -12,67 +12,24 @@
         <style>
             body { min-height: 100vh; background-color: #f8f9fa; margin: 0;}
             main { display: flex; height: 100vh; }
-
             /* --- SIDEBAR --- */
-            .sidebar-container {
-                width: 280px;
-                height: 100vh;
-                background: white;
-                border-right: 1px solid #dee2e6;
-                transition: transform 0.3s ease-in-out;
-                z-index: 1100;
-            }
-            /* Asegura que el modal cubra todo, incluso el sidebar */
-.modal-backdrop {
-  z-index: 1099; /* debajo del modal, pero arriba del resto */
-}
-
-.modal {
-  z-index: 1200; /* arriba de todo, incluido el sidebar */
-}
-
-/* Fullscreen modal completo, incluye scrollbar */
-.modal-fullscreen .modal-content {
-  height: 100%;
-  border-radius: 0;
-  overflow-y: auto;
-}
-
-/* Imagen destacada */
-.modal-imagen img {
-  box-shadow: 0 0.5rem 1.5rem rgba(0,0,0,0.2);
-}
-
-/* Ubicación resaltada */
-#modal-ubicacion {
-  font-size: 1.2rem;
-}
-
-/* Scroll suave */
-.modal-body {
-  scroll-behavior: smooth;
-}
-
-/* Responsive real: columna móvil, fila PC */
-@media (max-width: 991px) {
-  .modal-body {
-    flex-direction: column;
-  }
-}
-
-@media (min-width: 992px) {
-  .modal-body {
-    flex-direction: row;
-  }
-}
-
+            .sidebar-container { width: 280px; height: 100vh; background: white; border-right: 1px solid #dee2e6; transition: transform 0.3s ease-in-out; z-index: 1100;}
+            /* Aseguramiento de que el modal cubra todo, incluso el sidebar */
+            .modal-backdrop { z-index: 1099; /* debajo del modal, pero arriba del resto */ }
+            .modal { z-index: 1200; /* arriba de todo, incluido el sidebar */}
+            /* Fullscreen modal completo, incluye scrollbar */
+            .modal-fullscreen .modal-content { height: 100%; border-radius: 0; overflow-y: auto;}
+            /* Imagen destacada */
+            .modal-imagen img { box-shadow: 0 0.5rem 1.5rem rgba(0,0,0,0.2); }
+            /* Ubicación resaltada */
+            #modal-ubicacion { font-size: 1.2rem; }
+            /* Scroll suave */
+            .modal-body { scroll-behavior: smooth; }
+            /* Responsive real: columna móvil, fila PC */
+            @media (max-width: 991px) { .modal-body { flex-direction: column; } }
+            @media (min-width: 992px) { .modal-body { flex-direction: row; }}
             /* --- ÁREA DE CONTENIDO --- */
-            .content-area {
-                flex-grow: 1;
-                overflow-y: auto;
-                padding: 20px;
-            }
-
+            .content-area { flex-grow: 1; overflow-y: auto; padding: 20px; }
             /* --- BOTÓN FLOTANTE (HAMBURGUESA) --- */
             .mobile-toggle-btn {
                 display: none;
