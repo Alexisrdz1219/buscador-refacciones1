@@ -263,7 +263,36 @@ function actualizarTitulo() {
 }
 
 let cardsDOM = [];
+let vistaActual = "cards"; // por defecto cards
 
+document.getElementById("btnVistaCards").addEventListener("click", () => {
+  vistaActual = "cards";
+  actualizarVista();
+  activarBoton("cards");
+});
+
+document.getElementById("btnVistaLista").addEventListener("click", () => {
+  vistaActual = "lista";
+  actualizarVista();
+  activarBoton("lista");
+});
+
+function activarBoton(tipo) {
+  const btnCards = document.getElementById("btnVistaCards");
+  const btnLista = document.getElementById("btnVistaLista");
+
+  if (tipo === "cards") {
+    btnCards.classList.add("active", "btn-primary");
+    btnCards.classList.remove("btn-outline-primary");
+    btnLista.classList.remove("active", "btn-primary");
+    btnLista.classList.add("btn-outline-primary");
+  } else {
+    btnLista.classList.add("active", "btn-primary");
+    btnLista.classList.remove("btn-outline-primary");
+    btnCards.classList.remove("active", "btn-primary");
+    btnCards.classList.add("btn-outline-primary");
+  }
+}
 
 function mostrarResultados(lista) {
   const cont = document.getElementById("resultados");
@@ -276,7 +305,10 @@ function mostrarResultados(lista) {
 
     lista.forEach(r => {
       const card = document.createElement("div");
-      card.className = "ref-card";
+      card.className = vistaActual === "cards" 
+  ? "ref-card"
+  : "ref-card ref-lista";
+     
 
       card.dataset.nombreprod = (r.nombreprod || "").toLowerCase();
       card.dataset.refinterna = (r.refinterna || "").toLowerCase();
@@ -367,6 +399,16 @@ card.innerHTML = `
     cont.appendChild(fragment);
     
     attachModalListeners(lista);
+}
+
+function actualizarVista() {
+  cardsDOM.forEach(card => {
+    if (vistaActual === "cards") {
+      card.classList.remove("ref-lista");
+    } else {
+      card.classList.add("ref-lista");
+    }
+  });
 }
 
 function attachModalListeners(lista) {
