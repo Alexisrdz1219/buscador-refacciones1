@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="es" data-bs-theme="light">
     <head>
@@ -31,375 +30,81 @@
             /* --- ÁREA DE CONTENIDO --- */
             .content-area { flex-grow: 1; overflow-y: auto; padding: 20px; }
             /* --- BOTÓN FLOTANTE (HAMBURGUESA) --- */
-            .mobile-toggle-btn {
-                display: none;
-                position: fixed;
-                top: 15px;
-                left: 15px;
-                z-index: 1000;
-                background: #fff;
-                border: 1px solid #dee2e6;
-                border-radius: 8px;
-                padding: 8px 12px;
-                box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-                transition: opacity 0.2s ease;
-            }
-
+            .mobile-toggle-btn { display: none; position: fixed; top: 15px; left: 15px; z-index: 1000; background: #fff; border: 1px solid #dee2e6; border-radius: 8px; padding: 8px 12px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); transition: opacity 0.2s ease; }
             /* Ocultar el botón hamburguesa cuando el sidebar está abierto */
-            body.sidebar-open .mobile-toggle-btn {
-                opacity: 0;
-                pointer-events: none;
-            }
-
+            body.sidebar-open .mobile-toggle-btn { opacity: 0; pointer-events: none; }
             /* --- AJUSTES MÓVILES --- */
-            @media (max-width: 991.98px) {
-                .mobile-toggle-btn { display: block; }
-                
-                .sidebar-container {
-                    position: fixed;
-                    left: 0;
-                    transform: translateX(-100%);
-                }
-
-                .sidebar-container.show {
-                    transform: translateX(0);
-                }
-
-                .content-area { padding-top: 70px; }
-            }
-
+            @media (max-width: 991.98px) { .mobile-toggle-btn { display: block; } .sidebar-container { position: fixed; left: 0; transform: translateX(-100%);} .sidebar-container.show { transform: translateX(0);} .content-area { padding-top: 70px; }}
             /* Estilos de botones internos */
-            .btn-toggle {
-                display: flex;
-                align-items: center;
-                width: 100%;
-                padding: .6rem .75rem;
-                background: transparent;
-                border: 0;
-                border-radius: 6px;
-                color: #444;
-                text-align: left;
-            }
+            .btn-toggle { display: flex; align-items: center; width: 100%; padding: .6rem .75rem; background: transparent; border: 0; border-radius: 6px; color: #444; text-align: left; }
             .btn-toggle:hover { background-color: #f0f0f0; }
-            .btn-toggle::after {
-                content: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='rgba%280,0,0,.5%29' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M5 14l6-6-6-6'/%3e%3c/svg%3e");
-                margin-left: auto;
-                transition: transform .35s ease;
-            }
+            .btn-toggle::after { content: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='rgba%280,0,0,.5%29' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M5 14l6-6-6-6'/%3e%3c/svg%3e"); margin-left: auto; transition: transform .35s ease;}
             .btn-toggle[aria-expanded="true"]::after { transform: rotate(90deg); }
-            
-            .btn-toggle-nav a {
-                display: block;
-                padding: .4rem 2.8rem;
-                color: #666;
-                text-decoration: none;
-                font-size: 0.875rem;
-                border-radius: 4px;
-            }
+            .btn-toggle-nav a { display: block; padding: .4rem 2.8rem; color: #666; text-decoration: none; font-size: 0.875rem; border-radius: 4px;}
             .btn-toggle-nav a:hover { background-color: #e9ecef; color: #000; }
-
             /* Overlay */
-            .sidebar-overlay {
-                display: none;
-                position: fixed;
-                inset: 0;
-                background: rgba(0,0,0,0.3);
-                backdrop-filter: blur(2px);
-                z-index: 1050;
-            }
-            .sidebar-overlay.show { display: block; }
-
-            
-/* CONTENEDOR GENERAL */
-.ref-container {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-  gap: 20px;
-}
-
-/* TARJETA */
-.ref-card {
-  background: #fff;
-  border-radius: 12px;
-  overflow: hidden;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
-  display: flex;
-  flex-direction: column;
-  transition: 0.2s ease;
-}
-
-/* .ref-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 8px 20px rgba(0,0,0,0.12);
-} */
-
-/* IMAGEN */
-.ref-img {
-  width: 100%;
-  height: 200px;
-  overflow: hidden;
-  position: relative;
-}
-
-.ref-img img {
-  width: 100%;
-  height: 200px;
-  object-fit: cover;
-}
-
-/* BODY */
-.ref-body {
-  padding: 15px;
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
-
-.ref-title {
-  margin: 0;
-  font-size: 18px;
-}
-
-/* CATEGORÍA */
-.categoria {
-  font-size: 13px;
-  color: #777;
-}
-
-/* GRID DE DATOS */
-.ref-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 6px 10px;
-  font-size: 13px;
-}
-
-/* BOTÓN */
-.ref-actions {
-  margin-top: auto;
-}
-
-.btn-ver {
-  display: inline-block;
-  text-decoration: none;
-  background: #007a33;
-  color: white;
-  padding: 8px 12px;
-  border-radius: 6px;
-  font-size: 14px;
-  text-align: center;
-}
-
-.btn-fullscreen {
-  left: 8px;
-}
-
-.btn-fullscreen i {
-  font-size: 1.1rem;
-}
-/* TITULOS POR COLORES */
-
-.titulo-default {
-  color: #6c757d; /* gris bootstrap */
-}
-
-.titulo-aoki {
-  color: #50e9a7;
-}
-
-.titulo-asb {
-  color: #0e7ded;
-}
-
-.titulo-nissei {
-  color: #dd3c37;
-}
- .titulo-sumitomo {
-  color: #027ffd;
-}
-
-.titulo-enlainadora {
-  color: #808080;
-}
-
-.titulo-xhs-50kgs {
-  color: #efa028;
-}
-
-.titulo-pagani {
-  color: #8a2be2;
-}
-
-.titulo-rapid {
-  color: #8a2be2;
-}
-
-.ref-modelo,
-.ref-cantidad {
-  font-size: 13px;
-  color: #6b7280;
-  margin-top: 4px;
-}
-
-.ref-ubicacion {
-  margin-top: 12px;
-  padding: 8px;
-  background: #dbdee0;
-  color: #007a33;
-  font-weight: 600;
-  border-radius: 6px;
-  font-size: 14px;
-}
-
-/* Overlay zoom */
-.img-zoom-overlay {
-  position: fixed;
-  top:0;
-  left:0;
-  width:100%;
-  height:100%;
-  background: rgba(0,0,0,0.8);
-  z-index: 1300; /* encima de modal */
-  cursor: zoom-out;
-}
-
-#visorImagen {
-  position: fixed;
-  inset: 0;
-  background: rgba(0,0,0,0.9);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 99999; /* más alto que tu aside */
-}
-
-.visor-hidden {
-  display: none !important;
-}
-
-#visorImagen img {
-  max-width: 90%;
-  max-height: 90%;
-  transition: transform 0.2s ease;
-  cursor: grab;
-  cursor: grab;
-  user-select: none;
-  touch-action: none;
-}
-
-.visor-controls {
-  position: absolute;
-  top: 20px;
-  right: 20px;
-  display: flex;
-  gap: 10px;
-}
-
-.visor-controls button {
-  background: white;
-  border: none;
-  padding: 8px 12px;
-  border-radius: 6px;
-  cursor: pointer;
-  font-weight: bold;
-}
-
-.card-img-wrapper {
-  position: relative;
-}
-
-.card-actions {
-  position: absolute;
-  top: 8px;
-  right: 8px;
-  display: flex;
-  gap: 6px;
-  z-index: 3;
-}
-
-.card-actions button {
-  background: white;
-  border: none;
-  border-radius: 8px;
-  width: 32px;
-  height: 32px;
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  cursor: pointer;
-  transition: 0.2s;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
-}
-
-.card-actions button:hover {
-  background: white;
-  color: #007a33;
-  transform: scale(1.08);
-}
-
-.card-img-top {
-  width: 100%;
-  height: 200px;      /* el alto que estés usando */
-  object-fit: cover;
-  object-position: center;  /* 🔥 esto la centra */
-}
-
-/* Vista lista */
-.ref-lista {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  gap: 20px;
-  padding: 15px;
-}
-
-.ref-lista .ref-img {
-  width: 120px;
-  flex-shrink: 0;
-}
-
-.ref-lista .ref-img img {
-  height: 100px;
-  object-fit: contain;
-}
-
-.ref-lista .ref-body {
-  flex: 1;
-}
-
-.ref-lista .ref-actions {
-  margin-top: 10px;
-}
-
-/* Contenedor lista */
-#resultados.lista-modo {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-}
-
-/* Item individual */
-.ref-lista-item {
-  display: grid;
-  grid-template-columns: 2fr 1fr 1fr auto;
-  align-items: center;
-  padding: 12px 16px;
-  border: 1px solid #e5e7eb;
-  border-radius: 8px;
-  background: white;
-  transition: 0.2s ease;
-}
-
-.ref-lista-item:hover {
-  background: #f9fafb;
-}
+            .sidebar-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.3); backdrop-filter: blur(2px); z-index: 1050;}
+            .sidebar-overlay.show { display: block; }         
+            /* CONTENEDOR GENERAL */
+            .ref-container { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 20px;}
+            /* TARJETA */
+            .ref-card { background: #fff; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 12px rgba(0,0,0,0.08); display: flex; flex-direction: column; transition: 0.2s ease;}
+            /* IMAGEN */
+            .ref-img { width: 100%; height: 200px; overflow: hidden; position: relative;}
+            .ref-img img { width: 100%; height: 200px; object-fit: cover; }
+            /* BODY */
+            .ref-body { padding: 15px; display: flex; flex-direction: column; gap: 10px;}
+            .ref-title { margin: 0; font-size: 18px; }
+            /* CATEGORÍA */
+            .categoria { font-size: 13px; color: #777; }
+            /* GRID DE DATOS */
+            .ref-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 6px 10px; font-size: 13px; }
+            /* BOTÓN */
+            .ref-actions { margin-top: auto; }
+            .btn-ver { display: inline-block; text-decoration: none; background: #007a33; color: white; padding: 8px 12px; border-radius: 6px; font-size: 14px; text-align: center; }
+            .btn-fullscreen { left: 8px; }
+            .btn-fullscreen i { font-size: 1.1rem; }
+            /* TITULOS POR COLORES */
+            .titulo-default { color: #6c757d; /* gris bootstrap */}
+            .titulo-aoki { color: #50e9a7; }
+            .titulo-asb { color: #0e7ded; }
+            .titulo-nissei { color: #dd3c37; }
+            .titulo-sumitomo { color: #027ffd; }
+            .titulo-enlainadora { color: #808080; }
+            .titulo-xhs-50kgs { color: #efa028; }
+            .titulo-pagani { color: #8a2be2; }
+            .titulo-rapid { color: #8a2be2; }
+            /* OTRAS COSAS */
+            .ref-modelo, .ref-cantidad {font-size: 13px; color: #6b7280; margin-top: 4px; }
+            .ref-ubicacion { margin-top: 12px; padding: 8px; background: #dbdee0; color: #007a33; font-weight: 600; border-radius: 6px; font-size: 14px; }
+            /* Overlay zoom */
+            .img-zoom-overlay { position: fixed; top:0; left:0; width:100%; height:100%; background: rgba(0,0,0,0.8); z-index: 1300; /* encima de modal */ cursor: zoom-out; }
+            #visorImagen { position: fixed; inset: 0; background: rgba(0,0,0,0.9); display: flex; justify-content: center; align-items: center; z-index: 99999; /* más alto que tu aside */ }
+            .visor-hidden { display: none !important; }
+            #visorImagen img { max-width: 90%; max-height: 90%; transition: transform 0.2s ease; cursor: grab; cursor: grab; user-select: none; touch-action: none; }
+            .visor-controls { position: absolute; top: 20px; right: 20px; display: flex; gap: 10px; }
+            .visor-controls button { background: white; border: none; padding: 8px 12px; border-radius: 6px; cursor: pointer; font-weight: bold; }
+            .card-img-wrapper { position: relative; }
+            .card-actions { position: absolute; top: 8px; right: 8px; display: flex; gap: 6px; z-index: 3; }
+            .card-actions button { background: white; border: none; border-radius: 8px; width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: 0.2s; box-shadow: 0 2px 6px rgba(0,0,0,0.2); }
+            .card-actions button:hover { background: white; color: #007a33; transform: scale(1.08); }
+            .card-img-top { width: 100%; height: 200px;      /* el alto que estés usando */ object-fit: cover; object-position: center;  /* 🔥 esto la centra */ }
+            /* Vista lista */
+            .ref-lista { display: flex; flex-direction: row; align-items: center; gap: 20px; padding: 15px; }
+            .ref-lista .ref-img { width: 120px; flex-shrink: 0; }
+            .ref-lista .ref-img img { height: 100px; object-fit: contain; }
+            .ref-lista .ref-body { flex: 1; }
+            .ref-lista .ref-actions { margin-top: 10px; }
+            /* Contenedor lista */
+            #resultados.lista-modo { display: flex; flex-direction: column; gap: 8px; }
+            /* Item individual */
+            .ref-lista-item { display: grid; grid-template-columns: 2fr 1fr 1fr auto; align-items: center; padding: 12px 16px; border: 1px solid #e5e7eb; border-radius: 8px; background: white; transition: 0.2s ease; }
+            .ref-lista-item:hover { background: #f9fafb; }
         </style>
-        
     </head>
 
     <body id="bodyTag">
+        <!-- BOTON DE MOVIL -->
         <button class="btn mobile-toggle-btn d-lg-none" id="btnToggle"><i class="bi bi-list fs-3"></i></button>
         <div class="sidebar-overlay" id="overlay"></div>
         <main>
@@ -411,9 +116,7 @@
                     </a>
                     <button class="btn-close d-lg-none ms-2" id="btnClose" aria-label="Close"></button>
                 </div>
-                
                 <hr>
-                
                 <ul class="nav nav-pills flex-column mb-auto">
                     <li class="nav-item">
                         <a href="" style="background-color: #007a33;" class="nav-link active"><i class="bi bi-house-door me-2"></i> Inicio</a>
@@ -750,7 +453,6 @@
                         </div>
                     </li>
                 </ul>
-                
                 <hr>
                 <div class="dropdown">
                     <a href="#" class="d-flex align-items-center link-dark text-decoration-none dropdown-toggle" data-bs-toggle="dropdown">
@@ -811,7 +513,7 @@
   </button>
 </div>
                     <form class="row g-3" id="formFiltros">
-                        <div class="col-12 col-lg-4">
+                        <div class="col-12 col-lg-4"> 
                             <div id="contenedorTags" class="form-control d-flex flex-wrap gap-2 align-items-center">
                                 <input type="text" id="inputTag" 
                                 style="border:none; outline:none; flex:1; min-width:120px;"
@@ -862,7 +564,7 @@
             </div>
  
         </div>
-    </section>
+            </section>
         </main>
 
         <div class="modal fade" id="modalImagen" tabindex="-1">
@@ -871,18 +573,17 @@
       <img id="imgFullscreen" class="w-100 rounded">
     </div>
   </div>
-</div>
+        </div>
 
-<div id="visorImagen" class="visor-hidden">
-  <div class="visor-controls">
-    <button id="zoomIn">+</button>
-    <button id="zoomOut">−</button>
-    <button id="cerrarVisor">✕</button>
-  </div>
-  <img id="visorImg">
-</div>
-
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+        <div id="visorImagen" class="visor-hidden">
+        <div class="visor-controls">
+            <button id="zoomIn">+</button>
+            <button id="zoomOut">−</button>
+            <button id="cerrarVisor">✕</button>
+        </div>
+        <img id="visorImg">
+        </div>
+        
         <script>
 document.addEventListener("DOMContentLoaded", async () => {
     
@@ -1058,10 +759,11 @@ img.addEventListener("touchend", () => {
 });
 
 
-</script>
+        </script>
         
         <script src="script.js"></script>
         <script src="navegador.js"></script>
         <script src="js/session.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
     </body>
 </html>
