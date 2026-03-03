@@ -199,9 +199,13 @@ inputTag.addEventListener("keydown", function(e) {
 
       modoGlobal = false;
 
-if (formFiltros) {
-  formFiltros.style.display = "flex";
-}
+// if (formFiltros) {
+//   formFiltros.style.display = "flex";
+// }
+
+dash?.classList.add("d-none");
+    formFiltros?.classList.remove("d-none");
+
       tagsActivos = [];
 contenedorTags.querySelectorAll(".badge").forEach(t => t.remove());
       // const maquinamod = link.dataset.maquinamod;
