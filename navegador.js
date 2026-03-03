@@ -111,6 +111,7 @@ const token = localStorage.getItem("token");
     return;
   }
   
+  const quitardash = document.getElementById("quitardash");
   const formFiltros = document.getElementById("formFiltros");
 if (formFiltros) {
   formFiltros.style.display = "none";
@@ -136,6 +137,11 @@ document.getElementById("btnTodasRefacciones")?.addEventListener("click", async 
   if (formFiltros) {
   formFiltros.style.display = "flex";
 }
+
+if (quitardash) {
+  quitardash.style.display = "none";
+}
+
   modeloSeleccionado = "";
   resultadosActuales = [];
 
