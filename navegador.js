@@ -156,6 +156,13 @@ dash?.classList.add("d-none");
     titulo.className = "titulo-default"; // limpia otras clases
   }
 
+  const Stitulo = document.getElementById("subtitulo");
+  if (Stitulo) {
+    Stitulo.textContent = "Panel general de control";
+    Stitulo.className = "titulo-default"; // limpia otras clases
+  }
+
+
   await llenarSelectsGlobal();
 
   // Lanza búsqueda inicial automáticamente
@@ -225,17 +232,22 @@ llenarSelects(data);       // 🔥 llenamos tipos y unidades dinámicamente
 
 function actualizarTitulo() {
   const titulo = document.getElementById("tituloRefacciones");
-  if (!titulo) return;
+  const Stitulo = document.getElementById("subtitulo");
+
+  if (!titulo && !Stitulo) return;
 
   // 🔥 Si estamos en modo global, solo dejamos el título por defecto y salimos
   if (modoGlobal) {
     titulo.textContent = "Refacciones IEMCO";
     titulo.className = "titulo-default";
+    Stitulo.textContent = "Panel general de control";
+    Stitulo.className = "titulo-default";
     return;
   }
 
   // Si no es global, mostramos el modelo seleccionado
   titulo.textContent = `Refacciones IEMCO - ${modeloSeleccionado}`;
+  Stitulo.textContent = ``;
 
   // Limpia clases anteriores
   titulo.classList.remove(
