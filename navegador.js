@@ -111,12 +111,14 @@ const token = localStorage.getItem("token");
     return;
   }
   
-  const quitardash = document.getElementById("quitardash");
+  const dash = document.getElementById("dash");
   const formFiltros = document.getElementById("formFiltros");
-if (formFiltros) {
-  formFiltros.style.display = "none";
-}
 
+// if (formFiltros) {
+//   formFiltros.style.display = "none";
+// }
+ dash?.classList.remove("d-none");
+  formFiltros?.classList.add("d-none");
 
   document.getElementById("buscarTitulo")?.addEventListener("input", aplicarFiltros);
   document.getElementById("buscarRef")?.addEventListener("input", aplicarFiltros);
@@ -134,13 +136,15 @@ document.getElementById("btnTodasRefacciones")?.addEventListener("click", async 
   console.log("🌎 ACTIVANDO MODO GLOBAL");
 
   modoGlobal = true;
-  if (formFiltros) {
-  formFiltros.style.display = "flex";
-}
+//   if (formFiltros) {
+//   formFiltros.style.display = "flex";
+// }
 
-if (quitardash) {
-  quitardash.style.display = "none";
-}
+// if (quitardash) {
+//   quitardash.style.display = "none";
+// }
+dash?.classList.add("d-none");
+    formFiltros?.classList.remove("d-none");
 
   modeloSeleccionado = "";
   resultadosActuales = [];
