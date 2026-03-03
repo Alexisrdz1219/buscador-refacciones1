@@ -115,6 +115,8 @@ const token = localStorage.getItem("token");
 if (formFiltros) {
   formFiltros.style.display = "none";
 }
+
+
   document.getElementById("buscarTitulo")?.addEventListener("input", aplicarFiltros);
   document.getElementById("buscarRef")?.addEventListener("input", aplicarFiltros);
   document.getElementById("buscarModelo")?.addEventListener("input", aplicarFiltros);
