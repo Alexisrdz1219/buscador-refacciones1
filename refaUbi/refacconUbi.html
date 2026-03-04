@@ -163,9 +163,8 @@ async function cargarRefacciones() {
 }
 
 document.getElementById("filtroPendientes").addEventListener("change", (e) => {
-
-    mostrarSoloPendientes = e.target.checked;
-    aplicarFiltros();
+  mostrarSoloPendientes = e.target.checked;
+  aplicarFiltros(true);
 });
 
 function renderizarTodo() {
@@ -173,7 +172,7 @@ function renderizarTodo() {
   renderizarPaginacion();
 }
 
-function aplicarFiltros() {
+function aplicarFiltros(reiniciarPagina = false) {
 
   const texto = document
     .getElementById("buscador")
@@ -188,12 +187,15 @@ function aplicarFiltros() {
       (ref.ubicacion || "").toLowerCase().includes(texto);
 
     const coincidePendiente =
-      !mostrarSoloPendientes || ref.completada === false;
+      !mostrarSoloPendientes || !ref.completada;
 
     return coincideBusqueda && coincidePendiente;
   });
 
-  paginaActual = 1;
+  if (reiniciarPagina) {
+    paginaActual = 1;
+  }
+
   renderizarTodo();
 }
 
@@ -367,7 +369,7 @@ function cambiarPagina(numero) {
 
 // 🔎 BUSCADOR CORREGIDO
 document.getElementById("buscador").addEventListener("input", () => {
-  aplicarFiltros();
+  aplicarFiltros(true);
 });
 
 function mostrarProgreso(totalGeneral, totalConUbicacion) {
