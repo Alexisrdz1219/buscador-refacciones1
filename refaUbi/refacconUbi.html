@@ -72,6 +72,12 @@
     </button>
   </div>
 
+  <div class="form-check form-switch mb-3 d-none" id="filtroPendientesContainer">
+  <input class="form-check-input" type="checkbox" id="filtroPendientes">
+  <label class="form-check-label" for="filtroPendientes">
+    Pendientes
+  </label>
+</div>
   <!-- Buscador -->
   <div class="mb-4 d-none" id="buscadorContainer">
     <input 
@@ -104,6 +110,7 @@
 
 let refaccionesOriginal = [];
 let refaccionesFiltradas = [];
+let mostrarSoloPendientes = false;
 
 let paginaActual = 1;
 const porPagina = 12;
@@ -144,6 +151,7 @@ const totalConUbicacion = ubicadas.data.length;
     paginaActual = 1;
 
     document.getElementById("buscadorContainer").classList.remove("d-none");
+    document.getElementById("filtroPendientesContainer").classList.remove("d-none");
 
     renderizarTodo();
 
@@ -152,11 +160,40 @@ const totalConUbicacion = ubicadas.data.length;
   }
 });
 
+document.getElementById("filtroPendientes").addEventListener("change", (e) => {
+
+    mostrarSoloPendientes = e.target.checked;
+    aplicarFiltros();
+});
+
 function renderizarTodo() {
   renderizarCards();
   renderizarPaginacion();
 }
 
+function aplicarFiltros() {
+
+  const texto = document
+    .getElementById("buscador")
+    .value
+    .toLowerCase();
+
+  refaccionesFiltradas = refaccionesOriginal.filter(ref => {
+
+    const coincideBusqueda =
+      (ref.nombreprod || "").toLowerCase().includes(texto) ||
+      (ref.refinterna || "").toLowerCase().includes(texto) ||
+      (ref.ubicacion || "").toLowerCase().includes(texto);
+
+    const coincidePendiente =
+      !mostrarSoloPendientes || ref.completada === false;
+
+    return coincideBusqueda && coincidePendiente;
+  });
+
+  paginaActual = 1;
+  renderizarTodo();
+}
 
 function renderizarCards() {
 
@@ -327,19 +364,8 @@ function cambiarPagina(numero) {
 
 
 // 🔎 BUSCADOR CORREGIDO
-document.getElementById("buscador").addEventListener("input", (e) => {
-
-  const texto = e.target.value.toLowerCase();
-
-  refaccionesFiltradas = refaccionesOriginal.filter(ref =>
-    (ref.nombreprod || "").toLowerCase().includes(texto) ||
-    (ref.refinterna || "").toLowerCase().includes(texto) ||
-    (ref.ubicacion || "").toLowerCase().includes(texto)
-  );
-
-  paginaActual = 1;
-
-  renderizarTodo();
+document.getElementById("buscador").addEventListener("input", () => {
+  aplicarFiltros();
 });
 
 function mostrarProgreso(totalGeneral, totalConUbicacion) {
@@ -406,6 +432,8 @@ document.addEventListener("click", async (e) => {
 
     actualizarEstado(refaccionesOriginal);
     actualizarEstado(refaccionesFiltradas);
+
+    aplicarFiltros();
 
   } catch (error) {
     console.error(error);
