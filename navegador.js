@@ -395,80 +395,6 @@ function mostrarResultados(lista) {
       card.dataset.unidad = r.unidad || "";
       card.dataset.palclave = (r.palclave || "").toLowerCase();
 
-//       card.innerHTML = `
-//         <div class="ref-img">
-//         <div class="card-img-wrapper position-relative">
-
-//   <img src="${r.imagen || 'no-image.jpg'}" class="card-img-top">
-
-//   <div class="card-actions">
-//     <button class="btn-check-ref" data-id="${r.id}">
-//       <i class="bi ${r.completada ? 'bi-check-circle-fill text-success' : 'bi-circle'}"></i>
-//     </button>
-
-//     <button class="btn-broadcast" data-id="${r.id}">
-//       <i class="bi ${r.destacada ? 'bi-broadcast text-primary' : 'bi-broadcast'}"></i>
-//     </button>
-
-//     <button class="btn-fullscreen" data-img="${r.imagen || 'no-image.jpg'}">
-//       <i class="bi bi-fullscreen"></i>
-//     </button>
-//   </div>
-
-// </div>
-//           <img src="${r.imagen || 'no-image.jpg'}" 
-//                alt="${r.nombreprod}" 
-//                onerror="this.onerror=null; this.src='no-image.jpg';">
-//         </div>
-//         <div class="ref-body">
-//           <h3 class="ref-title">${r.nombreprod}</h3>
-//           <div class="ref-modelo">Modelo: <strong>${r.modelo || '-'}</strong></div>
-//           <div class="ref-cantidad">Cantidad: <strong>${r.cantidad} ${r.unidad || ''}</strong></div>
-//           <div class="ref-ubicacion">📍 ${r.ubicacion || 'Sin ubicación'}</div>
-//           <div class="ref-actions">
-//             <a href="detalle.html?id=${r.id}" class="btn-ver btn btn-primary btn-sm">Ver / Editar</a>
-//             <button class="btn-detalles btn btn-secondary btn-sm" data-id="${r.id}" data-bs-toggle="modal" data-bs-target="#modalDetalles">Detalles</button>
-//           </div>
-//         </div>
-//       `;
-
-// card.innerHTML = `
-//   <div class="ref-img">
-//     <div class="card-img-wrapper">
-
-//       <img src="${r.imagen || 'no-image.jpg'}"
-//            alt="${r.nombreprod}"
-//            class="card-img-top"
-//            onerror="this.onerror=null; this.src='no-image.jpg';">
-
-//       <div class="card-actions">
-//         <button class="btn-check-ref" data-id="${r.id}">
-//           <i class="bi ${r.completada ? 'bi-check-circle-fill text-success' : 'bi-circle'}"></i>
-//         </button>
-
-//         <button class="btn-broadcast" data-id="${r.id}">
-//           <i class="bi ${r.destacada ? 'bi-broadcast text-primary' : 'bi-broadcast'}"></i>
-//         </button>
-
-//         <button class="btn-fullscreen" data-img="${r.imagen || 'no-image.jpg'}">
-//           <i class="bi bi-fullscreen"></i>
-//         </button>
-//       </div>
-
-//     </div>
-//   </div>
-
-//   <div class="ref-body">
-//     <h3 class="ref-title">${r.nombreprod}</h3>
-//           <div class="ref-modelo">Modelo: <strong>${r.modelo || '-'}</strong></div>
-//           <div class="ref-cantidad">Cantidad: <strong>${r.cantidad} ${r.unidad || ''}</strong></div>
-//          <div class="ref-ubicacion">📍 ${r.ubicacion || 'Sin ubicación'}</div>
-//           <div class="ref-actions">
-//             <a href="detalle.html?id=${r.id}" class="btn-ver btn btn-primary btn-sm">Ver / Editar</a>
-//             <button class="btn-detalles btn btn-secondary btn-sm" data-id="${r.id}" data-bs-toggle="modal" data-bs-target="#modalDetalles">Detalles</button>
-//            </div>
-//   </div>
-// `;
 
       fragment.appendChild(card);
       cardsDOM.push(card);
@@ -972,17 +898,4 @@ document.addEventListener("click", async (e) => {
   }
 });
 
-// 4. Ejecutar al cargar la página
 document.addEventListener("DOMContentLoaded", cargarDestacadas);
-//   const btn = e.target.closest(".btn-desactivar");
-//   if (!btn) return;
-
-//   const id = btn.dataset.id;
-
-//   await fetch(`/refacciones/${id}/broadcast`, {
-//   method: "PUT"
-// });
-
-//   // recargar destacadas
-//   cargarDestacadas();
-// });
