@@ -134,3 +134,31 @@ async function mostrarUltimosProductos() {
 
 // Llamar al cargar la página
 mostrarUltimosProductos();
+
+async function cargarLogs() {
+
+  const res = await fetch(`${API}/logs-db`);
+  const logs = await res.json();
+
+  const tabla = document.getElementById("tablaLogs");
+  tabla.innerHTML = "";
+
+  logs.forEach(log => {
+
+    const fila = document.createElement("tr");
+
+    fila.innerHTML = `
+      <td>${new Date(log.created_at).toLocaleString()}</td>
+      <td>${log.level}</td>
+      <td>${log.message}</td>
+      <td>${log.route || ""}</td>
+      <td>${log.data ? JSON.stringify(log.data) : ""}</td>
+    `;
+
+    tabla.appendChild(fila);
+
+  });
+
+}
+
+cargarLogs();

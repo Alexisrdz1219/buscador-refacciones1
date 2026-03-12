@@ -70,8 +70,38 @@ window.addEventListener("DOMContentLoaded", async () => {
 });
 window.addEventListener("pageshow", () => validarSesion());
 
+async function despertarBackend() {
+
+  const url = "https://buscador-refaccionesbackend.onrender.com/ping";
+
+  for (let i = 0; i < 3; i++) {
+
+    try {
+
+      const controller = new AbortController();
+      const timeout = setTimeout(() => controller.abort(), 4000);
+
+      await fetch(url, { signal: controller.signal });
+
+      clearTimeout(timeout);
+
+      console.log("Backend despierto 🔥");
+      return;
+
+    } catch (e) {
+
+      console.log("Intentando despertar backend...");
+      await new Promise(r => setTimeout(r, 3000));
+
+    }
+
+  }
+
+}
+
 document.addEventListener("DOMContentLoaded", async () => {
 
+  despertarBackend();
 const token = localStorage.getItem("token");
 
   if (!token) {
