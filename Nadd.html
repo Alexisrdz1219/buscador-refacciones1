@@ -683,8 +683,19 @@
             <button onclick="cerrarMapa()" style="border:none; background:none; font-size:28px; cursor:pointer; color:#999;">&times;</button>
         </div>
         <div style="padding:25px; text-align:center; background:#f8f9fa;">
-            <div id="contenedorMapaDinamico" style="display:flex; flex-wrap:wrap; gap:12px; justify-content:center; min-height:200px;">
-                </div>
+            <div id="contenedorMapaDinamico" style="
+    display: grid; 
+    grid-template-columns: repeat(10, 1fr); /* 10 columnas iguales */
+    gap: 10px; 
+    justify-items: center; 
+    background: #f8f9fa; 
+    padding: 20px; 
+    border-radius: 8px;
+    width: 100%;
+    max-width: 800px; /* Ajusta según el ancho de tu modal */
+    margin: 0 auto;
+">
+    </div>
         </div>
         <button onclick="cerrarMapa()" style="width:100%; padding:15px; border:none; background:#007a33; color:white; font-weight:bold; cursor:pointer;">CERRAR</button>
     </div>
