@@ -394,7 +394,10 @@ function mostrarResultados(lista) {
       <h3 class="ref-title">${r.nombreprod}</h3>
       <div class="ref-modelo">Modelo: <strong>${r.modelo || '-'}</strong></div>
       <div class="ref-cantidad">Cantidad: <strong>${r.cantidad} ${r.unidad || ''}</strong></div>
-      <div class="ref-ubicacion">📍 ${r.ubicacion || 'Sin ubicación'}</div>
+      // <div class="ref-ubicacion">📍 ${r.ubicacion || 'Sin ubicación'}</div>
+      <div class="ref-ubicacion btn-mapa" data-ubicacion="${r.ubicacion || ''}" style="cursor:pointer hover:opacity-80">
+  📍 ${r.ubicacion || 'Sin ubicación'}
+</div>
       <div class="ref-actions">
         <a href="detalle.html?id=${r.id}" class="btn btn-primary btn-sm">Ver / Editar</a>
       </div>
@@ -408,7 +411,9 @@ function mostrarResultados(lista) {
   card.innerHTML = `
     <div class="lista-nombre">${r.nombreprod}</div>
     <div class="lista-ref">${r.refinterna || '-'}</div>
-    <div class="lista-ubicacion">${r.ubicacion || 'Sin ubicación'}</div>
+    <div class="lista-ubicacion btn-mapa" data-ubicacion="${r.ubicacion || ''}" style="cursor:pointer">
+  ${r.ubicacion || 'Sin ubicación'}
+</div>
     <div>
       <a href="detalle.html?id=${r.id}" class="btn btn-sm btn-outline-primary">
         Editar
