@@ -450,53 +450,50 @@ function abrirMapa(ubicacionStr) {
     if (!ubicacionStr || ubicacionStr.includes('Sin ubicación')) return;
 
     const modal = document.getElementById("modalMapa");
+    // Cambiamos el ID para que coincida con tu <span id="ubicacionTexto">
+    const display = document.getElementById("ubicacionTexto"); 
     const container = document.getElementById("contenedorMapaDinamico");
-    const display = document.getElementById("ubicacionTextoDisplay");
+
+    // VALIDACIÓN DE SEGURIDAD: Si no existe el elemento, detenemos el error
+    if (!display) {
+        console.error("ERROR: No encontré el ID 'ubicacionTexto' en el HTML. Revisa tu <span>");
+        return; 
+    }
+
+    display.innerText = ubicacionStr;
 
     // 1. Identificar Almacén y Anaquel (Ej: "A1 B2-N9")
     const partes = ubicacionStr.trim().split(" ");
     const almacenId = partes[0]; // "A1"
     const anaquelTarget = partes[1] ? partes[1].split("-")[0] : null; // "B2"
 
-    display.innerText = ubicacionStr;
-    container.innerHTML = ""; // Limpiar mapa anterior
+    if (container) {
+        container.innerHTML = ""; // Limpiar
+        const anaqueles = CONFIG_ALMACENES[almacenId] || [];
 
-    // 2. Obtener lista de anaqueles según el almacén
-    const anaqueles = CONFIG_ALMACENES[almacenId] || [];
-
-    if (anaqueles.length === 0) {
-        container.innerHTML = `<p class="text-muted">Diseño de almacén ${almacenId} pendiente de definir.</p>`;
-    } else {
-        // 3. Generar los anaqueles visualmente (Efecto 3D simple con CSS)
-        anaqueles.forEach(id => {
-            const esActivo = (id === anaquelTarget);
-            const anaquelDiv = document.createElement("div");
-            
-            anaquelDiv.innerHTML = `
-                <div style="
-                    width: 60px; 
-                    height: 80px; 
+        if (anaqueles.length === 0) {
+            container.innerHTML = `<p style="color:#7e8990">Mapa del almacén ${almacenId} no definido.</p>`;
+        } else {
+            anaqueles.forEach(id => {
+                const esActivo = (id === anaquelTarget);
+                const anaquelDiv = document.createElement("div");
+                
+                // Representación 2D/3D visual
+                anaquelDiv.style.cssText = `
+                    width: 55px; height: 70px; 
                     background: ${esActivo ? '#007a33' : '#fff'}; 
                     color: ${esActivo ? '#fff' : '#444'};
                     border: 2px solid ${esActivo ? '#007a33' : '#dee2e6'};
-                    box-shadow: ${esActivo ? '0 5px 15px rgba(0,122,51,0.4)' : '2px 2px 5px rgba(0,0,0,0.05)'};
-                    display: flex; 
-                    flex-direction: column;
-                    align-items: center; 
-                    justify-content: center; 
-                    border-radius: 4px;
-                    transition: all 0.3s ease;
-                    transform: ${esActivo ? 'scale(1.1) translateY(-5px)' : 'none'};
+                    display: flex; align-items: center; justify-content: center;
+                    border-radius: 4px; font-weight: bold; font-size: 0.8rem;
+                    box-shadow: ${esActivo ? '0 4px 10px rgba(0,122,51,0.3)' : 'none'};
+                    transform: ${esActivo ? 'scale(1.1)' : 'none'};
                     position: relative;
-                ">
-                    <span style="font-weight: 800; font-size: 0.9rem;">${id}</span>
-                    <div style="width: 80%; height: 4px; background: rgba(0,0,0,0.1); margin-top: 10px; border-radius: 10px;"></div>
-                    <div style="width: 80%; height: 4px; background: rgba(0,0,0,0.1); margin-top: 4px; border-radius: 10px;"></div>
-                    ${esActivo ? '<div style="position:absolute; top:-15px; font-size:1.2rem;">📍</div>' : ''}
-                </div>
-            `;
-            container.appendChild(anaquelDiv);
-        });
+                `;
+                anaquelDiv.innerHTML = `${id} ${esActivo ? '<span style="position:absolute; top:-10px">📍</span>' : ''}`;
+                container.appendChild(anaquelDiv);
+            });
+        }
     }
 
     modal.style.display = "flex";
