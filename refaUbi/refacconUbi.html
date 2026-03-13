@@ -73,6 +73,15 @@
     Pendientes
   </label>
 </div>
+
+<div class="form-check form-switch mb-3 d-none" id="filtroStockContainer">
+  <input class="form-check-input" type="checkbox" id="filtroStockCero">
+  <label class="form-check-label" for="filtroStockCero">
+    Solo sin stock
+  </label>
+</div>
+
+
   <!-- Buscador -->
   <div class="mb-4 d-none" id="buscadorContainer">
     <input 
@@ -106,6 +115,7 @@
 let refaccionesOriginal = [];
 let refaccionesFiltradas = [];
 let mostrarSoloPendientes = false;
+let mostrarSoloSinStock = false;
 
 let paginaActual = 1;
 const porPagina = 12;
@@ -154,6 +164,7 @@ async function cargarRefacciones() {
 
     document.getElementById("buscadorContainer").classList.remove("d-none");
     document.getElementById("filtroPendientesContainer").classList.remove("d-none");
+    document.getElementById("filtroStockContainer").classList.remove("d-none");
 
     renderizarTodo();
 
@@ -164,6 +175,11 @@ async function cargarRefacciones() {
 
 document.getElementById("filtroPendientes").addEventListener("change", (e) => {
   mostrarSoloPendientes = e.target.checked;
+  aplicarFiltros(true);
+});
+
+document.getElementById("filtroStockCero").addEventListener("change", (e) => {
+  mostrarSoloSinStock = e.target.checked;
   aplicarFiltros(true);
 });
 
@@ -179,6 +195,7 @@ function aplicarFiltros(reiniciarPagina = false) {
     .value
     .toLowerCase();
 
+    
   refaccionesFiltradas = refaccionesOriginal.filter(ref => {
 
     const coincideBusqueda =
@@ -188,8 +205,10 @@ function aplicarFiltros(reiniciarPagina = false) {
 
     const coincidePendiente =
       !mostrarSoloPendientes || !ref.completada;
+    const coincideStock =
+  !mostrarSoloSinStock || (ref.cantidad || 0) === 0;
 
-    return coincideBusqueda && coincidePendiente;
+    return coincideBusqueda && coincidePendiente && coincideStock;
   });
 
   if (reiniciarPagina) {
