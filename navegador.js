@@ -469,47 +469,48 @@ function abrirMapa(ubicacionStr) {
 
     if (!modal || !container) return;
 
-    // 1. Mostrar el modal primero
-    modal.style.display = "flex";
+    // 1. Limpieza inmediata para evitar duplicados
+    container.replaceChildren(); 
     display.innerText = ubicacionStr;
-    container.innerHTML = ""; // Limpiar antes de empezar
+    modal.style.display = "flex";
 
-    // 2. Extraer datos (A1, A2, etc.)
-    const partes = ubicacionStr.trim().split(/\s+/); // Divide por espacios
+    // 2. Procesar ubicación
+    const partes = ubicacionStr.trim().split(/\s+/);
     const almacenId = partes[0]; 
     const anaquelTarget = partes[1] ? partes[1].split("-")[0] : null;
 
-    // 3. El truco: Pequeño delay para que el navegador "vea" el modal abierto
-    setTimeout(() => {
-        const racks = CONFIG_ALMACENES[almacenId] || [];
+    // 3. Dibujar racks
+    const racks = CONFIG_ALMACENES[almacenId] || [];
 
-        if (racks.length === 0) {
-            container.innerHTML = `<p style="color:#7e8990">Mapa no definido para ${almacenId}</p>`;
-            return;
-        }
-
+    if (racks.length === 0) {
+        container.innerHTML = `<p style="color:#7e8990; padding:20px;">Esquema de ${almacenId} no definido.</p>`;
+    } else {
+        // Usamos un fragmento para insertar todo de un solo golpe (más eficiente)
+        const fragmento = document.createDocumentFragment();
+        
         racks.forEach(id => {
             const esActivo = (id === anaquelTarget);
             const rackDiv = document.createElement("div");
             
-            // Estilo 2D/3D corporativo IEMCO
             rackDiv.style.cssText = `
                 width: 60px; height: 80px;
                 background: ${esActivo ? '#007a33' : '#ffffff'};
                 color: ${esActivo ? '#ffffff' : '#7e8990'};
                 border: 2px solid ${esActivo ? '#007a33' : '#dee2e6'};
                 border-bottom: 5px solid ${esActivo ? '#004d21' : '#cbd5e1'};
-                display: flex; align-items: center; justify-content: center;
-                border-radius: 6px; font-weight: bold; font-size: 0.9rem;
+                display: flex; flex-direction: column; align-items: center; justify-content: center;
+                border-radius: 6px; font-weight: bold; font-size: 0.8rem;
                 transform: ${esActivo ? 'scale(1.1) translateY(-5px)' : 'none'};
                 box-shadow: ${esActivo ? '0 8px 15px rgba(0,122,51,0.3)' : 'none'};
                 transition: 0.2s;
             `;
 
-            rackDiv.innerHTML = `${id}${esActivo ? '<br>📍' : ''}`;
-            container.appendChild(rackDiv);
+            rackDiv.innerHTML = `<span>${id}</span>${esActivo ? '<span style="margin-top:2px">📍</span>' : ''}`;
+            fragmento.appendChild(rackDiv);
         });
-    }, 100); // 100ms es suficiente para que el DOM se actualice
+        
+        container.appendChild(fragmento);
+    }
 }
 
 function cerrarMapa() {
