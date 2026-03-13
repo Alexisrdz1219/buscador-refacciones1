@@ -11,47 +11,74 @@
 
 <style>
   body{
-  background:#f7f7f8;
+  background:#eef2f6;
   font-family:'Inter',sans-serif;
+  margin:0;
 }
 
-.container-edit{
-  max-width:720px;
-  margin:40px auto;
+.container-panel{
+  max-width:1200px;
+  margin:20px auto;
 }
 
-.card-clean{
+.panel-card{
   background:#fff;
-  border-radius:16px;
-  box-shadow:0 4px 20px rgba(0,0,0,0.05);
+  border-radius:14px;
+  box-shadow:0 8px 25px rgba(0,0,0,.06);
+  padding:16px;
 }
 
-.form-clean label{
-  font-size:.75rem;
-  font-weight:600;
-  color:#444;
-  margin-bottom:4px;
+.panel-header{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-bottom:12px;
 }
 
-.form-control, .form-select{
+.panel-id{
+  margin-left:10px;
+  color:#666;
+  font-size:.85rem;
+}
+
+.panel-grid{
+  display:grid;
+  grid-template-columns: 280px 1fr;
+  gap:12px;
+}
+
+.box{
+  background:#f8fafc;
   border-radius:10px;
-  font-size:.9rem;
-  padding:10px 12px;
+  padding:12px;
 }
 
-.form-control:focus, .form-select:focus{
-  border-color:#10a37f;
-  box-shadow:0 0 0 2px rgba(16,163,127,.15);
+.box.full{
+  margin-top:12px;
+}
+
+.box-title{
+  font-size:.75rem;
+  font-weight:700;
+  color:#007a33;
+  margin-bottom:6px;
+  text-transform:uppercase;
+}
+
+.form-control,
+.form-select{
+  font-size:.85rem;
+  border-radius:8px;
 }
 
 .image-preview{
-  height:220px;
-  border-radius:12px;
-  overflow:hidden;
-  background:#f1f5f9;
+  height:160px;
+  background:#e5e7eb;
+  border-radius:8px;
   display:flex;
   align-items:center;
   justify-content:center;
+  overflow:hidden;
 }
 
 .image-preview img{
@@ -61,129 +88,276 @@
 }
 
 .btn-save{
-  background:#10a37f;
+  background:#007a33;
   border:0;
-  padding:10px 22px;
-  border-radius:10px;
+  color:#fff;
+  padding:8px 18px;
+  border-radius:8px;
   font-weight:600;
 }
 
 .btn-save:hover{
-  background:#0d8c6c;
+  background:#006329;
 }
 </style>
 </head>
 
 <body>
 
-<div class="container-edit">
+<!-- <div class="container container-edit">
 
-  <div class="card-clean p-4">
+<div class="row g-4">
 
-    <div class="d-flex justify-content-between align-items-center mb-4">
-      <h5 class="fw-bold m-0">
-        <i class="bi bi-pencil-square me-2"></i>Editar Refacción
-      </h5>
-      <span class="badge bg-light text-dark border">
-        ID: <span id="ref-id-display">---</span>
-      </span>
+  
+  <div class="col-lg-8">
+    <div class="card card-clean p-4">
+
+      <div class="d-flex justify-content-between align-items-center mb-3">
+        <h5 class="fw-bold m-0">
+          <i class="bi bi-pencil-square me-2"></i>Editar Refacción
+        </h5>
+        <span class="badge bg-light text-dark border">
+          ID: <span id="ref-id-display">---</span>
+        </span>
+      </div>
+
+      <form id="form">
+
+        
+        <div class="section-title">Información principal</div>
+        <div class="row g-3 mb-4">
+          <div class="col-12">
+            <label class="form-label">Nombre del Producto</label>
+            <input type="text" id="nombreprod" class="form-control" required>
+          </div>
+          <div class="col-md-6">
+            <label class="form-label">Referencia Interna</label>
+            <input type="text" id="refinterna" class="form-control" required disabled>
+          </div>
+          <div class="col-md-6">
+            <label class="form-label">Categoría</label>
+            <select id="categoriaprin" class="form-select"></select>
+          </div>
+        </div>
+
+    
+        <div class="section-title">Clasificación maquinaria</div>
+        <div class="row g-3 mb-4">
+          <div class="col-md-4">
+            <label class="form-label">Máquina</label>
+            <select id="maquinamod" class="form-select"></select>
+          </div>
+          <div class="col-md-4">
+            <label class="form-label">Unidad</label>
+            <select id="maquinaesp" class="form-select"></select>
+          </div>
+          <div class="col-md-4">
+            <label class="form-label">Número</label>
+            <select id="nummaquina" class="form-select"></select>
+          </div>
+        </div>
+
+   
+        <div class="section-title">Especificaciones</div>
+        <div class="row g-3 mb-4">
+          <div class="col-md-4">
+            <label class="form-label">Tipo</label>
+            <input type="text" id="tipoprod" class="form-control">
+          </div>
+          <div class="col-md-4">
+            <label class="form-label">Modelo</label>
+            <input type="text" id="modelo" class="form-control">
+          </div>
+          <div class="col-md-4">
+            <label class="form-label">Palabras Clave</label>
+            <input type="text" id="palclave" class="form-control">
+          </div>
+        </div>
+
+      
+        <div class="section-title">Inventario</div>
+        <div class="row g-3 mb-4">
+          <div class="col-md-4">
+            <label class="form-label">Cantidad</label>
+            <input type="number" id="cantidad" class="form-control" min="0">
+          </div>
+          <div class="col-md-4">
+            <label class="form-label">Unidad</label>
+            <input type="text" id="unidad" class="form-control">
+          </div>
+          <div class="col-md-4">
+            <label class="form-label">Ubicación</label>
+            <input type="text" id="ubicacion" class="form-control">
+          </div>
+          <div class="col-12">
+            <label class="form-label">Observación</label>
+            <textarea id="observacion" class="form-control"></textarea>
+          </div>
+        </div>
+
+        
+        <div class="section-title">Máquinas compatibles</div>
+        <div id="lista-maquinas" class="d-flex flex-wrap gap-2 mb-3"></div>
+
+<button type="button"
+        class="btn btn-outline-secondary btn-sm mb-4"
+        data-bs-toggle="modal"
+        data-bs-target="#modalMaquinas">
+  <i class="bi bi-plus"></i> Agregar máquina
+</button>
+
+
+
+        <div class="text-end">
+          <button type="submit" class="btn btn-save text-white">
+            <i class="bi bi-floppy"></i> Guardar Cambios
+          </button>
+        </div>
+
+      </form>
+    </div>
+  </div>
+
+  
+  <div class="col-lg-4">
+    <div class="card card-clean p-4">
+
+  <div class="image-wrapper image-preview position-relative">
+    <img id="previewImagen" style="display:none;" />
+
+    <button type="button"
+            id="btnQuitarImagen"
+            class="btn btn-danger btn-sm position-absolute top-0 end-0 m-2"
+            style="display:none;">
+      <i class="bi bi-x"></i>
+    </button>
+  </div>
+
+  <input type="file" id="imagen" class="form-control mt-3" accept="image/*">
+  <input type="text" id="imagenUrl" class="form-control mt-2" placeholder="O pega URL externa">
+
+  <button type="button"
+          id="btnEliminarImagen"
+          class="btn btn-outline-danger btn-sm mt-3">
+    <i class="bi bi-trash"></i> Eliminar imagen guardada
+  </button>
+
+    </div>
+  </div>
+
+</div>
+</div> -->
+
+
+<div class="container-panel">
+
+  <div class="panel-card">
+
+    <!-- HEADER -->
+    <div class="panel-header">
+      <div>
+        <strong>Editar Refacción</strong>
+        <span class="panel-id">ID: <span id="ref-id-display">---</span></span>
+      </div>
+
+      <button type="submit" form="form" class="btn-save">
+        Guardar
+      </button>
     </div>
 
-    <form id="form" class="form-clean">
+    <form id="form">
 
-      <!-- Nombre -->
-      <label>Nombre del producto</label>
-      <input type="text" id="nombreprod" class="form-control mb-3" required>
+      <div class="panel-grid">
 
-      <!-- Referencia + Categoria -->
-      <div class="row g-3 mb-3">
-        <div class="col-md-6">
-          <label>Referencia interna</label>
-          <input type="text" id="refinterna" class="form-control" disabled>
+        <!-- IMAGEN -->
+        <div class="box image-box">
+          <div class="box-title">Imagen</div>
+
+          <div class="image-preview">
+            <img id="previewImagen" style="display:none;">
+          </div>
+
+          <input type="file" id="imagen" class="form-control mt-2">
+          <input type="text" id="imagenUrl" class="form-control mt-2" placeholder="URL externa">
+
+          <button type="button"
+                  id="btnEliminarImagen"
+                  class="btn btn-outline-danger btn-sm mt-2">
+            Eliminar
+          </button>
         </div>
 
-        <div class="col-md-6">
-          <label>Categoría</label>
-          <select id="categoriaprin" class="form-select"></select>
+        <!-- DATOS PRINCIPALES -->
+        <div class="box">
+          <div class="box-title">Datos</div>
+
+          <input id="nombreprod" class="form-control mb-2" placeholder="Nombre">
+
+          <div class="row g-2 mb-2">
+            <div class="col-6">
+              <input id="refinterna" class="form-control" placeholder="Referencia" disabled>
+            </div>
+            <div class="col-6">
+              <select id="categoriaprin" class="form-select"></select>
+            </div>
+          </div>
+
+          <div class="row g-2 mb-2">
+            <div class="col-6">
+              <input id="tipoprod" class="form-control" placeholder="Tipo">
+            </div>
+            <div class="col-6">
+              <input id="modelo" class="form-control" placeholder="Modelo">
+            </div>
+          </div>
+
+          <input id="palclave" class="form-control" placeholder="Palabras clave">
         </div>
+
+        <!-- INVENTARIO -->
+        <div class="box">
+          <div class="box-title">Inventario</div>
+
+          <div class="row g-2">
+            <div class="col-6">
+              <input id="cantidad" type="number" class="form-control" placeholder="Cantidad">
+            </div>
+            <div class="col-6">
+              <input id="unidad" class="form-control" placeholder="Unidad">
+            </div>
+          </div>
+        </div>
+
+        <!-- UBICACION -->
+        <div class="box">
+          <div class="box-title">Ubicación / Observación</div>
+
+          <input id="ubicacion" class="form-control mb-2" placeholder="Ubicación">
+
+          <textarea id="observacion"
+                    class="form-control"
+                    rows="3"
+                    placeholder="Observación"></textarea>
+        </div>
+
       </div>
 
-      <!-- Tipo Modelo Palabras -->
-      <div class="row g-3 mb-3">
-        <div class="col-md-4">
-          <label>Tipo</label>
-          <input type="text" id="tipoprod" class="form-control">
-        </div>
+      <!-- COMPATIBLES -->
+      <div class="box full">
+        <div class="box-title">Máquinas compatibles</div>
 
-        <div class="col-md-4">
-          <label>Modelo</label>
-          <input type="text" id="modelo" class="form-control">
-        </div>
+        <div id="lista-maquinas" class="d-flex flex-wrap gap-2 mb-2"></div>
 
-        <div class="col-md-4">
-          <label>Palabras clave</label>
-          <input type="text" id="palclave" class="form-control">
-        </div>
-      </div>
-
-      <!-- Inventario -->
-      <div class="row g-3 mb-3">
-        <div class="col-md-4">
-          <label>Cantidad</label>
-          <input type="number" id="cantidad" class="form-control">
-        </div>
-
-        <div class="col-md-4">
-          <label>Unidad</label>
-          <input type="text" id="unidad" class="form-control">
-        </div>
-
-        <div class="col-md-4">
-          <label>Ubicación</label>
-          <input type="text" id="ubicacion" class="form-control">
-        </div>
-      </div>
-
-      <!-- Observación -->
-      <label>Observación</label>
-      <textarea id="observacion" class="form-control mb-4" rows="3"></textarea>
-
-      <!-- Compatibles -->
-      <label class="fw-semibold">Máquinas compatibles</label>
-
-      <div id="lista-maquinas" class="d-flex flex-wrap gap-2 mb-2"></div>
-
-      <button type="button"
-              class="btn btn-outline-secondary btn-sm mb-4"
-              data-bs-toggle="modal"
-              data-bs-target="#modalMaquinas">
-        <i class="bi bi-plus"></i> Agregar máquina
-      </button>
-
-      <!-- Imagen -->
-      <label class="fw-semibold">Imagen</label>
-
-      <div class="image-preview mb-2">
-        <img id="previewImagen" style="display:none;" />
-      </div>
-
-      <input type="file" id="imagen" class="form-control mb-2" accept="image/*">
-      <input type="text" id="imagenUrl" class="form-control mb-3" placeholder="O pega URL externa">
-
-      <button type="button"
-              id="btnEliminarImagen"
-              class="btn btn-outline-danger btn-sm mb-4">
-        <i class="bi bi-trash"></i> Eliminar imagen
-      </button>
-
-      <!-- Guardar -->
-      <div class="text-end">
-        <button type="submit" class="btn btn-save text-white">
-          <i class="bi bi-floppy"></i> Guardar cambios
+        <button type="button"
+                class="btn btn-outline-secondary btn-sm"
+                data-bs-toggle="modal"
+                data-bs-target="#modalMaquinas">
+          Agregar máquina
         </button>
       </div>
 
     </form>
+
   </div>
 </div>
 
