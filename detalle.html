@@ -10,47 +10,45 @@
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
 
 <style>
-body{
-  background:#f4f6f9;
+  body{
+  background:#f7f7f8;
   font-family:'Inter',sans-serif;
 }
 
 .container-edit{
-  max-width:1200px;
+  max-width:720px;
   margin:40px auto;
 }
 
 .card-clean{
-  border:0;
-  border-radius:14px;
-  box-shadow:0 10px 30px rgba(0,0,0,0.05);
+  background:#fff;
+  border-radius:16px;
+  box-shadow:0 4px 20px rgba(0,0,0,0.05);
 }
 
-.section-title{
-  font-size:.75rem;
-  font-weight:700;
-  text-transform:uppercase;
-  color:#007a33;
-  margin-bottom:10px;
-}
-
-.form-label{
+.form-clean label{
   font-size:.75rem;
   font-weight:600;
+  color:#444;
   margin-bottom:4px;
 }
 
 .form-control, .form-select{
-  font-size:.85rem;
-  border-radius:8px;
+  border-radius:10px;
+  font-size:.9rem;
+  padding:10px 12px;
+}
+
+.form-control:focus, .form-select:focus{
+  border-color:#10a37f;
+  box-shadow:0 0 0 2px rgba(16,163,127,.15);
 }
 
 .image-preview{
-  height:240px;
+  height:220px;
   border-radius:12px;
   overflow:hidden;
-  border:1px solid #e2e8f0;
-  background:#e2e8f0;
+  background:#f1f5f9;
   display:flex;
   align-items:center;
   justify-content:center;
@@ -62,198 +60,131 @@ body{
   object-fit:cover;
 }
 
-.compat-chip{
-  background:#e8f5e9;
-  color:#065f46;
-  padding:6px 12px;
-  border-radius:20px;
-  font-size:12px;
-  display:inline-flex;
-  align-items:center;
-  gap:6px;
-}
-
-.compat-chip button{
-  border:0;
-  background:none;
-  cursor:pointer;
-  font-size:12px;
-}
-
 .btn-save{
-  background:#007a33;
+  background:#10a37f;
   border:0;
-  font-size:.85rem;
   padding:10px 22px;
-  border-radius:8px;
+  border-radius:10px;
+  font-weight:600;
 }
 
 .btn-save:hover{
-  background:#006329;
+  background:#0d8c6c;
 }
-.machine-item {
-  border:1px solid #e2e8f0;
-  border-radius:8px;
-  padding:8px 10px;
-  background:#f8fafc;
-  font-size:13px;
-  display:flex;
-  align-items:center;
-  gap:8px;
-  cursor:pointer;
-}
-
-.machine-item:hover {
-  background:#e2f5ea;
-}
-
 </style>
 </head>
 
 <body>
 
-<div class="container container-edit">
+<div class="container-edit">
 
-<div class="row g-4">
+  <div class="card-clean p-4">
 
-  <!-- FORM PRINCIPAL -->
-  <div class="col-lg-8">
-    <div class="card card-clean p-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+      <h5 class="fw-bold m-0">
+        <i class="bi bi-pencil-square me-2"></i>Editar Refacción
+      </h5>
+      <span class="badge bg-light text-dark border">
+        ID: <span id="ref-id-display">---</span>
+      </span>
+    </div>
 
-      <div class="d-flex justify-content-between align-items-center mb-3">
-        <h5 class="fw-bold m-0">
-          <i class="bi bi-pencil-square me-2"></i>Editar Refacción
-        </h5>
-        <span class="badge bg-light text-dark border">
-          ID: <span id="ref-id-display">---</span>
-        </span>
+    <form id="form" class="form-clean">
+
+      <!-- Nombre -->
+      <label>Nombre del producto</label>
+      <input type="text" id="nombreprod" class="form-control mb-3" required>
+
+      <!-- Referencia + Categoria -->
+      <div class="row g-3 mb-3">
+        <div class="col-md-6">
+          <label>Referencia interna</label>
+          <input type="text" id="refinterna" class="form-control" disabled>
+        </div>
+
+        <div class="col-md-6">
+          <label>Categoría</label>
+          <select id="categoriaprin" class="form-select"></select>
+        </div>
       </div>
 
-      <form id="form">
-
-        <!-- INFORMACIÓN -->
-        <div class="section-title">Información principal</div>
-        <div class="row g-3 mb-4">
-          <div class="col-12">
-            <label class="form-label">Nombre del Producto</label>
-            <input type="text" id="nombreprod" class="form-control" required>
-          </div>
-          <div class="col-md-6">
-            <label class="form-label">Referencia Interna</label>
-            <input type="text" id="refinterna" class="form-control" required disabled>
-          </div>
-          <div class="col-md-6">
-            <label class="form-label">Categoría</label>
-            <select id="categoriaprin" class="form-select"></select>
-          </div>
+      <!-- Tipo Modelo Palabras -->
+      <div class="row g-3 mb-3">
+        <div class="col-md-4">
+          <label>Tipo</label>
+          <input type="text" id="tipoprod" class="form-control">
         </div>
 
-        <!-- MAQUINARIA -->
-        <div class="section-title">Clasificación maquinaria</div>
-        <div class="row g-3 mb-4">
-          <div class="col-md-4">
-            <label class="form-label">Máquina</label>
-            <select id="maquinamod" class="form-select"></select>
-          </div>
-          <div class="col-md-4">
-            <label class="form-label">Unidad</label>
-            <select id="maquinaesp" class="form-select"></select>
-          </div>
-          <div class="col-md-4">
-            <label class="form-label">Número</label>
-            <select id="nummaquina" class="form-select"></select>
-          </div>
+        <div class="col-md-4">
+          <label>Modelo</label>
+          <input type="text" id="modelo" class="form-control">
         </div>
 
-        <!-- ESPECIFICACIONES -->
-        <div class="section-title">Especificaciones</div>
-        <div class="row g-3 mb-4">
-          <div class="col-md-4">
-            <label class="form-label">Tipo</label>
-            <input type="text" id="tipoprod" class="form-control">
-          </div>
-          <div class="col-md-4">
-            <label class="form-label">Modelo</label>
-            <input type="text" id="modelo" class="form-control">
-          </div>
-          <div class="col-md-4">
-            <label class="form-label">Palabras Clave</label>
-            <input type="text" id="palclave" class="form-control">
-          </div>
+        <div class="col-md-4">
+          <label>Palabras clave</label>
+          <input type="text" id="palclave" class="form-control">
+        </div>
+      </div>
+
+      <!-- Inventario -->
+      <div class="row g-3 mb-3">
+        <div class="col-md-4">
+          <label>Cantidad</label>
+          <input type="number" id="cantidad" class="form-control">
         </div>
 
-        <!-- INVENTARIO -->
-        <div class="section-title">Inventario</div>
-        <div class="row g-3 mb-4">
-          <div class="col-md-4">
-            <label class="form-label">Cantidad</label>
-            <input type="number" id="cantidad" class="form-control" min="0">
-          </div>
-          <div class="col-md-4">
-            <label class="form-label">Unidad</label>
-            <input type="text" id="unidad" class="form-control">
-          </div>
-          <div class="col-md-4">
-            <label class="form-label">Ubicación</label>
-            <input type="text" id="ubicacion" class="form-control">
-          </div>
-          <div class="col-12">
-            <label class="form-label">Observación</label>
-            <textarea id="observacion" class="form-control"></textarea>
-          </div>
+        <div class="col-md-4">
+          <label>Unidad</label>
+          <input type="text" id="unidad" class="form-control">
         </div>
 
-        <!-- COMPATIBLES -->
-        <div class="section-title">Máquinas compatibles</div>
-        <div id="lista-maquinas" class="d-flex flex-wrap gap-2 mb-3"></div>
-
-<button type="button"
-        class="btn btn-outline-secondary btn-sm mb-4"
-        data-bs-toggle="modal"
-        data-bs-target="#modalMaquinas">
-  <i class="bi bi-plus"></i> Agregar máquina
-</button>
-
-
-
-        <div class="text-end">
-          <button type="submit" class="btn btn-save text-white">
-            <i class="bi bi-floppy"></i> Guardar Cambios
-          </button>
+        <div class="col-md-4">
+          <label>Ubicación</label>
+          <input type="text" id="ubicacion" class="form-control">
         </div>
+      </div>
 
-      </form>
-    </div>
+      <!-- Observación -->
+      <label>Observación</label>
+      <textarea id="observacion" class="form-control mb-4" rows="3"></textarea>
+
+      <!-- Compatibles -->
+      <label class="fw-semibold">Máquinas compatibles</label>
+
+      <div id="lista-maquinas" class="d-flex flex-wrap gap-2 mb-2"></div>
+
+      <button type="button"
+              class="btn btn-outline-secondary btn-sm mb-4"
+              data-bs-toggle="modal"
+              data-bs-target="#modalMaquinas">
+        <i class="bi bi-plus"></i> Agregar máquina
+      </button>
+
+      <!-- Imagen -->
+      <label class="fw-semibold">Imagen</label>
+
+      <div class="image-preview mb-2">
+        <img id="previewImagen" style="display:none;" />
+      </div>
+
+      <input type="file" id="imagen" class="form-control mb-2" accept="image/*">
+      <input type="text" id="imagenUrl" class="form-control mb-3" placeholder="O pega URL externa">
+
+      <button type="button"
+              id="btnEliminarImagen"
+              class="btn btn-outline-danger btn-sm mb-4">
+        <i class="bi bi-trash"></i> Eliminar imagen
+      </button>
+
+      <!-- Guardar -->
+      <div class="text-end">
+        <button type="submit" class="btn btn-save text-white">
+          <i class="bi bi-floppy"></i> Guardar cambios
+        </button>
+      </div>
+
+    </form>
   </div>
-
-  <!-- PANEL LATERAL IMAGEN -->
-  <div class="col-lg-4">
-    <div class="card card-clean p-4">
-
-  <div class="image-wrapper image-preview position-relative">
-    <img id="previewImagen" style="display:none;" />
-
-    <button type="button"
-            id="btnQuitarImagen"
-            class="btn btn-danger btn-sm position-absolute top-0 end-0 m-2"
-            style="display:none;">
-      <i class="bi bi-x"></i>
-    </button>
-  </div>
-
-  <input type="file" id="imagen" class="form-control mt-3" accept="image/*">
-  <input type="text" id="imagenUrl" class="form-control mt-2" placeholder="O pega URL externa">
-
-  <button type="button"
-          id="btnEliminarImagen"
-          class="btn btn-outline-danger btn-sm mt-3">
-    <i class="bi bi-trash"></i> Eliminar imagen guardada
-  </button>
-
-    </div>
-  </div>
-
-</div>
 </div>
 
 <!-- MODAL MAQUINAS -->
@@ -284,7 +215,7 @@ body{
       <div class="modal-footer">
         <button class="btn btn-light" data-bs-dismiss="modal">Cancelar</button>
         <button class="btn btn-success" id="confirmarMaquinas">
-          Confirmar selecciónnn
+          Confirmar seleccion
         </button>
       </div>
 
@@ -294,34 +225,6 @@ body{
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 
 <script src="detalle.js" defer></script>
-<!-- <script>
-  const inputImagen = document.getElementById("imagen");
-const preview = document.getElementById("previewImagen");
-const btnQuitar = document.getElementById("btnQuitarImagen");
 
-let imagenEliminada = false;
-
-// Cuando selecciona archivo
-inputImagen.addEventListener("change", () => {
-  const file = inputImagen.files[0];
-
-  if (file) {
-    preview.src = URL.createObjectURL(file);
-    preview.style.display = "block";
-    btnQuitar.style.display = "block";
-    imagenEliminada = false;
-  }
-});
-
-// Botón quitar
-btnQuitar.addEventListener("click", () => {
-  preview.src = "";
-  preview.style.display = "none";
-  btnQuitar.style.display = "none";
-
-  inputImagen.value = ""; // 🔥 limpia el file input
-  imagenEliminada = true;
-});
-</script> -->
 </body>
 </html>
