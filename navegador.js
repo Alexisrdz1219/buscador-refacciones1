@@ -441,6 +441,7 @@ function mostrarResultados(lista) {
 }
 
 // --- FUNCIONES DEL MAPA (FUERA de mostrarResultados) ---
+
 const CONFIG_ALMACENES = {
     "A1": ["A1", "A2", "A3", "A4", "B1", "B2", "C1", "C2", "D1", "E1", "F1", "F2", "G1", "H1", "I1", "J1"],
     "A2": ["K1", "L1", "M1", "N1", "O1", "P1", "Q1", "R1", "S1"]
@@ -449,74 +450,66 @@ const CONFIG_ALMACENES = {
 function abrirMapa(ubicacionStr) {
     if (!ubicacionStr || ubicacionStr.includes('Sin ubicación')) return;
 
+    // 1. Obtener elementos (con IDs exactos del HTML de arriba)
     const modal = document.getElementById("modalMapa");
-    if (!modal) return; // Si no hay modal, no hacemos nada
+    const display = document.getElementById("ubicacionTextoDisplay");
+    const container = document.getElementById("contenedorMapaDinamico");
 
-    // Intentamos buscar el span por varios IDs posibles para evitar el error de null
-    const display = document.getElementById("ubicacionTexto") || 
-                    document.getElementById("ubicacionTextoDisplay") || 
-                    document.querySelector("#mapaTitulo span");
-
-    const container = document.getElementById("contenedorMapaDinamico") || 
-                      document.getElementById("svgAlmacen")?.parentElement;
-
-    // Si encontramos el display, ponemos el texto
-    if (display) {
-        display.innerText = ubicacionStr;
+    if (!modal || !container) {
+        console.error("Faltan elementos en el HTML (modalMapa o contenedorMapaDinamico)");
+        return;
     }
 
-    // Lógica de Almacén y Anaquel
+    // 2. Mostrar la ubicación en el título
+    if (display) display.innerText = ubicacionStr;
+
+    // 3. Procesar texto (Ej: "A1 B2-N3")
     const partes = ubicacionStr.trim().split(" ");
-    const almacenId = partes[0]; // A1, A2...
-    const anaquelTarget = partes[1] ? partes[1].split("-")[0] : null;
+    const almacenId = partes[0]; // A1
+    const anaquelTarget = partes[1] ? partes[1].split("-")[0] : null; // B2
 
-    if (container) {
-        container.innerHTML = ""; // Limpiamos el SVG viejo o anaqueles previos
-        
-        // Estilo de rejilla para los anaqueles
-        container.style.display = "flex";
-        container.style.flexWrap = "wrap";
-        container.style.gap = "10px";
-        container.style.justifyContent = "center";
+    // 4. Dibujar Almacén
+    container.innerHTML = ""; 
+    const anaqueles = CONFIG_ALMACENES[almacenId] || [];
 
-        const anaqueles = CONFIG_ALMACENES[almacenId] || [];
+    if (anaqueles.length === 0) {
+        container.innerHTML = `<div style="color:#999; padding:40px;">Esquema de almacén ${almacenId} no disponible.</div>`;
+    } else {
+        anaqueles.forEach(id => {
+            const esActivo = (id === anaquelTarget);
+            const rack = document.createElement("div");
+            
+            // Diseño 2D/3D del Rack
+            rack.style.cssText = `
+                width: 65px; height: 85px; 
+                background: ${esActivo ? '#007a33' : '#fff'}; 
+                color: ${esActivo ? '#fff' : '#7e8990'};
+                border: 2px solid ${esActivo ? '#007a33' : '#dee2e6'};
+                border-bottom: 6px solid ${esActivo ? '#004d21' : '#cbd5e1'}; 
+                display: flex; flex-direction: column; align-items: center; justify-content: center;
+                border-radius: 6px; font-weight: bold; font-size: 0.9rem;
+                box-shadow: ${esActivo ? '0 10px 20px rgba(0,122,51,0.3)' : '0 3px 6px rgba(0,0,0,0.05)'};
+                transform: ${esActivo ? 'scale(1.15) translateY(-5px)' : 'none'};
+                transition: 0.3s; position: relative;
+            `;
 
-        if (anaqueles.length === 0) {
-            container.innerHTML = `<div style="color:#7e8990; padding:20px;">Diseño de almacén ${almacenId} pendiente.</div>`;
-        } else {
-            anaqueles.forEach(id => {
-                const esActivo = (id === anaquelTarget);
-                const anaquelDiv = document.createElement("div");
-                
-                // Estilo "3D" minimalista para IEMCO
-                anaquelDiv.style.cssText = `
-                    width: 60px; height: 80px; 
-                    background: ${esActivo ? '#007a33' : '#ffffff'}; 
-                    color: ${esActivo ? '#ffffff' : '#7e8990'};
-                    border: 2px solid ${esActivo ? '#007a33' : '#dee2e6'};
-                    border-bottom-width: 5px; /* Efecto profundidad */
-                    display: flex; flex-direction: column; align-items: center; justify-content: center;
-                    border-radius: 6px; font-weight: 800; font-size: 0.85rem;
-                    box-shadow: ${esActivo ? '0 8px 15px rgba(0,122,51,0.4)' : '0 2px 4px rgba(0,0,0,0.05)'};
-                    transform: ${esActivo ? 'scale(1.1) translateY(-5px)' : 'none'};
-                    transition: all 0.3s ease;
-                    position: relative;
-                `;
-
-                // Añadimos "estantes" visuales dentro del anaquel
-                anaquelDiv.innerHTML = `
-                    <div style="width:70%; height:2px; background:rgba(0,0,0,0.1); margin-bottom:5px;"></div>
-                    ${id}
-                    <div style="width:70%; height:2px; background:rgba(0,0,0,0.1); margin-top:5px;"></div>
-                    ${esActivo ? '<span style="position:absolute; top:-20px; font-size:1.5rem;">📍</span>' : ''}
-                `;
-                
-                container.appendChild(anaquelDiv);
-            });
-        }
+            rack.innerHTML = `
+                <div style="width:75%; height:2px; background:rgba(0,0,0,0.1); margin:4px 0;"></div>
+                ${id}
+                <div style="width:75%; height:2px; background:rgba(0,0,0,0.1); margin:4px 0;"></div>
+                ${esActivo ? '<span style="position:absolute; top:-25px; font-size:1.5rem;">📍</span>' : ''}
+            `;
+            container.appendChild(rack);
+        });
     }
 
+    // 5. Mostrar el modal
     modal.style.display = "flex";
+}
+
+function cerrarMapa() {
+    const modal = document.getElementById("modalMapa");
+    if (modal) modal.style.display = "none";
 }
 
 function cerrarMapa() {
