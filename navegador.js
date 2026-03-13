@@ -464,46 +464,57 @@ function abrirMapa(ubicacionStr) {
     if (!ubicacionStr || ubicacionStr.includes('Sin ubicación')) return;
 
     const modal = document.getElementById("modalMapa");
-    const display = document.getElementById("ubicacionTextoDisplay");
     const container = document.getElementById("contenedorMapaDinamico");
+    const display = document.getElementById("ubicacionTextoDisplay");
 
     if (!modal || !container) return;
 
-    // Actualizar título
+    // 1. Mostrar el modal primero (importante para que el contenedor tenga tamaño)
+    modal.style.display = "flex";
     display.innerText = ubicacionStr;
+    container.innerHTML = "<p style='color:#ccc'>Cargando mapa...</p>";
 
-    // Limpiar contenedor
-    container.innerHTML = "";
-
-    // Extraer Almacén y Rack (ej: "A1 B2-N3")
+    // 2. Procesar la ubicación
     const partes = ubicacionStr.trim().split(" ");
     const almacenId = partes[0]; 
     const anaquelTarget = partes[1] ? partes[1].split("-")[0] : null;
 
-    const racks = CONFIG_ALMACENES[almacenId] || [];
+    // 3. Dibujar con un pequeño delay para asegurar visibilidad
+    setTimeout(() => {
+        container.innerHTML = "";
+        const racks = CONFIG_ALMACENES[almacenId] || [];
 
-    if (racks.length === 0) {
-        container.innerHTML = `<p style="color:#999">Esquema de ${almacenId} no definido.</p>`;
-    } else {
+        if (racks.length === 0) {
+            container.innerHTML = `<div style="color:#7e8990">Esquema de ${almacenId} no definido.</div>`;
+            return;
+        }
+
         racks.forEach(id => {
             const esActivo = (id === anaquelTarget);
-            const div = document.createElement("div");
-            div.style.cssText = `
-                width: 60px; height: 80px; 
-                background: ${esActivo ? '#007a33' : '#fff'}; 
-                color: ${esActivo ? '#fff' : '#7e8990'};
+            const rackDiv = document.createElement("div");
+            
+            // Estilo que combina con tus cards de IEMCO
+            rackDiv.style.cssText = `
+                width: 60px; height: 80px;
+                background: ${esActivo ? '#007a33' : '#ffffff'};
+                color: ${esActivo ? '#ffffff' : '#7e8990'};
                 border: 2px solid ${esActivo ? '#007a33' : '#dee2e6'};
                 border-bottom: 5px solid ${esActivo ? '#004d21' : '#cbd5e1'};
-                display:flex; flex-direction:column; align-items:center; justify-content:center;
-                border-radius:6px; font-weight:bold; transition: 0.3s;
+                display: flex; flex-direction: column; align-items: center; justify-content: center;
+                border-radius: 6px; font-weight: bold; font-size: 0.8rem;
+                transition: 0.3s;
                 transform: ${esActivo ? 'scale(1.1) translateY(-5px)' : 'none'};
+                box-shadow: ${esActivo ? '0 8px 15px rgba(0,122,51,0.3)' : 'none'};
             `;
-            div.innerHTML = `${id} ${esActivo ? '<br>📍' : ''}`;
-            container.appendChild(div);
-        });
-    }
 
-    modal.style.display = "flex";
+            rackDiv.innerHTML = `
+                <div style="width:70%; height:2px; background:rgba(0,0,0,0.1); margin-bottom:5px;"></div>
+                ${id}
+                ${esActivo ? '<div style="margin-top:5px">📍</div>' : ''}
+            `;
+            container.appendChild(rackDiv);
+        });
+    }, 50); 
 }
 
 function cerrarMapa() {
