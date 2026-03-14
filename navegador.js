@@ -456,8 +456,24 @@ document.addEventListener("click", (e) => {
 });
 
 const CONFIG_ALMACENES = {
-    "A1": ["A1", "A2", "A3", "A4", "B1", "B2", "C1", "C2", "D1", "E1", "F1", "F2", "G1", "H1", "I1", "J1"],
-    "A2": ["K1", "L1", "M1", "N1", "O1", "P1", "Q1", "R1", "S1"]
+  "A1": [
+    ["A1", "A2", "A3", "A4"],
+    ["B1", "B2", null, null],
+    ["C1", "C2", null, null],
+    ["D1", null, null, null],
+    ["E1", null, null, null],
+    ["F1", "F2", null, null],
+    ["G1", null, null, null],
+    ["H1", null, null, null],
+    ["I1", null, null, null],
+    ["J1", null, null, null]
+  ],
+
+  "A2": [
+    ["K1", "L1", "M1"],
+    ["N1", "O1", "P1"],
+    ["Q1", "R1", "S1"]
+  ]
 };
 
 function abrirMapa(ubicacionStr) {
