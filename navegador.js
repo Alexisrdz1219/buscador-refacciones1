@@ -455,6 +455,9 @@ document.addEventListener("click", (e) => {
     }
 });
 
+
+// POR CORREGIR
+
 const CONFIG_ALMACENES = {
   "A1": [
     ["A1", "A2", "A3", "A4"],
