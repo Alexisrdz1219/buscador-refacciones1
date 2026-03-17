@@ -17,7 +17,44 @@
                 main { display: flex; height: 100vh; }
                 /* --- SIDEBAR --- */
                 * {font-family: 'Nunito', sans-serif;}
-                .sidebar-container { width: 280px; height: 100vh; background: white; border-right: 1px solid #dee2e6; transition: transform 0.3s ease-in-out; z-index: 1100;}
+                .sidebar-container {
+  width: 280px;
+  transition: width .3s ease;
+  overflow-x: hidden;
+}
+
+/* 🔥 MODO COMPACTO */
+.sidebar-container.collapsed {
+  width: 80px;
+}
+
+/* Ocultar textos */
+.sidebar-container.collapsed .nav-link span,
+.sidebar-container.collapsed .btn-toggle span,
+.sidebar-container.collapsed .btn-toggle-nav,
+.sidebar-container.collapsed strong,
+.sidebar-container.collapsed hr {
+  display: none;
+}
+
+/* Centrar iconos */
+.sidebar-container.collapsed .nav-link,
+.sidebar-container.collapsed .btn-toggle {
+  justify-content: center;
+  text-align: center;
+  padding-left: 0;
+  padding-right: 0;
+}
+
+/* Iconos más grandes */
+.sidebar-container.collapsed i {
+  font-size: 20px;
+}
+
+/* Logo pequeño */
+.sidebar-container.collapsed img {
+  max-width: 40px !important;
+}
                 /* Aseguramiento de que el modal cubra todo, incluso el sidebar */
                 .modal-backdrop { z-index: 1099; /* debajo del modal, pero arriba del resto */ }
                 .modal { z-index: 1200; /* arriba de todo, incluido el sidebar */}
@@ -134,6 +171,9 @@
             <!-- INICIA MAIN -->
             <main>
 
+                <button id="toggleSidebar" class="btn btn-light">
+  <i class="bi bi-list"></i>
+</button>
                 <!-- INICIA ASIDE -->
                 <aside class="sidebar-container d-flex flex-column p-3" id="sidebar">
 
@@ -151,14 +191,14 @@
 
                         <!-- BOTON INICIO -->
                         <li class="nav-item">
-                            <a href="" style="background-color: #007a33;" class="nav-link active"><i class="bi bi-house-door me-2"></i> Inicio</a>
+                            <a href="" style="background-color: #007a33;" class="nav-link active"><i class="bi bi-house-door me-2"></i> <span>Inicio</span></a>
                         </li>
                         <!-- TERMINA BOTON INICIO -->
 
                         <!-- BOTON DE REFACCIONES -->
                         <li class="mb-1">
                             <button class="btn-toggle" id="btnTodasRefacciones">
-                                <i class="bi bi-hammer me-2" style="color: #007a33;"></i>Refacciones
+                                <i class="bi bi-hammer me-2" style="color: #007a33;"></i><span>Refacciones</span>
                             </button>
                         </li>
                         <!-- BOTON DE REFACCIONES -->
@@ -166,7 +206,7 @@
                         <!-- BOTON DE ACCIONES -->
                         <li class="mb-1" id="sidebar">
                             <button class="btn-toggle collapsed" data-bs-toggle="collapse" data-bs-target="#dash-collapse">
-                                <i class="bi bi-pencil-square me-2" style="color: #007a33;"></i> Acciones
+                                <i class="bi bi-pencil-square me-2" style="color: #007a33;"></i> <span>Acciones</span>
                             </button>
                             <div class="collapse" id="dash-collapse" data-bs-parent="#sidebar">
                                 <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
@@ -183,7 +223,7 @@
                         <!-- MAQUINAS -->
                         <li class="mb-1" id="sidebar">
                             <button class="btn-toggle collapsed" data-bs-toggle="collapse" data-bs-target="#MAQU-collapse">
-                                <i class="bi bi-tools me-2" style="color: #675e5e;"></i> Maquinas
+                                <i class="bi bi-tools me-2" style="color: #675e5e;"></i> <span>Maquinas</span>
                             </button>
                             <div class="collapse" id="MAQU-collapse" data-bs-parent="#sidebar">
                                 <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small" id="collapseMAquinas">
@@ -318,7 +358,7 @@
                         <!-- MOLDES -->
                         <li class="mb-1" id="sidebar">
                             <button class="btn-toggle collapsed" data-bs-toggle="collapse" data-bs-target="#MOLDES-collapse">
-                                <i class="bi bi-box-seam-fill me-2" style="color: #ab1091;"></i> Moldes
+                                <i class="bi bi-box-seam-fill me-2" style="color: #ab1091;"></i> <span>Moldes</span>
                             </button>
                             <div class="collapse" id="MOLDES-collapse" data-bs-parent="#sidebar">
                                 <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
@@ -345,7 +385,7 @@
                         <!-- COMPRESORES -->
                         <li class="mb-1" id="sidebar">
                             <button class="btn-toggle collapsed" data-bs-toggle="collapse" data-bs-target="#PER-collapse">
-                                <i class="bi bi-gear-wide-connected me-2" style="color: #1091ab;"></i> Compresores
+                                <i class="bi bi-gear-wide-connected me-2" style="color: #1091ab;"></i> <span>Compresores</span>
                             </button>
                             <div class="collapse" id="PER-collapse" data-bs-parent="#sidebar">
                                 <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
@@ -411,7 +451,7 @@
                         <!-- RED DE AGUA -->
                         <li class="mb-1" id="sidebar">
                             <button class="btn-toggle collapsed" data-bs-toggle="collapse" data-bs-target="#RedAg-collapse">
-                                <i class="bi bi-droplet-fill me-2" style="color: #3ab5f7;"></i> Red de Agua
+                                <i class="bi bi-droplet-fill me-2" style="color: #3ab5f7;"></i><span>Red de agua</span>a
                             </button>
                             <div class="collapse" id="RedAg-collapse" data-bs-parent="#sidebar">
                                 <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
@@ -427,7 +467,7 @@
                         <!-- ELECTRICIDAD -->
                         <li class="mb-1" id="sidebar">
                             <button class="btn-toggle collapsed" data-bs-toggle="collapse" data-bs-target="#ELECTRICIDAD-collapse">
-                                <i class="bi bi-lightning-charge-fill me-2" style="color: #f0c000;"></i> ELECTRICIDAD
+                                <i class="bi bi-lightning-charge-fill me-2" style="color: #f0c000;"></i> <span>ELECTRICIDAD</span>
                             </button>
                             <div class="collapse" id="ELECTRICIDAD-collapse" data-bs-parent="#sidebar">
                                 <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
@@ -442,7 +482,7 @@
                         <!-- TRANSPORTES -->
                         <li class="mb-1" id="sidebar">
                             <button class="btn-toggle collapsed" data-bs-toggle="collapse" data-bs-target="#TRransportes-collapse">
-                                <i class="bi bi-truck me-2" style="color: #d50c3b;"></i> Transportes
+                                <i class="bi bi-truck me-2" style="color: #d50c3b;"></i> <span>Transportes</span>
                             </button>
                             <div class="collapse" id="TRransportes-collapse" data-bs-parent="#sidebar">
                                 <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
@@ -458,7 +498,7 @@
                         <!-- EQUIPOS AUXILIARES -->
                         <li class="mb-1" id="sidebar">
                             <button class="btn-toggle collapsed" data-bs-toggle="collapse" data-bs-target="#EquiposAuxiliares-collapse">
-                                <i class="bi bi-wrench-adjustable me-2" style="color: #62604f;"></i> Equipos Auxiliares
+                                <i class="bi bi-wrench-adjustable me-2" style="color: #62604f;"></i> <span>Equipos Auxiliares</span>
                             </button>
                             <div class="collapse" id="EquiposAuxiliares-collapse" data-bs-parent="#sidebar">
                                 <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
@@ -480,7 +520,7 @@
                         <!-- MATERIALES -->
                         <li class="mb-1" id="sidebar">
                             <button class="btn-toggle collapsed" data-bs-toggle="collapse" data-bs-target="#MAT-collapse">
-                                <i class="bi bi-box-seam me-2" style="color: #01ecfd;"></i> Materiales
+                                <i class="bi bi-box-seam me-2" style="color: #01ecfd;"></i> <span>Materiales</span>
                             </button>
                             <div class="collapse" id="MAT-collapse" data-bs-parent="#sidebar">
                                 <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
@@ -729,6 +769,7 @@
             <script>
     document.addEventListener("DOMContentLoaded", async () => {
         
+        
     cargarDestacadas();
     const token = localStorage.getItem("token");
 
@@ -764,6 +805,7 @@
     const bodyTag = document.getElementById('bodyTag');
     const btnToggle = document.getElementById('btnToggle');
     const btnClose = document.getElementById('btnClose');
+    
 
     function openMenu() {
         sidebar?.classList.add('show');
@@ -780,6 +822,11 @@
     btnToggle?.addEventListener('click', openMenu);
     btnClose?.addEventListener('click', closeMenu);
     overlay?.addEventListener('click', closeMenu);
+   
+
+btnToggle.addEventListener("click", () => {
+  sidebar.classList.toggle("collapsed");
+});
 
     });
 
