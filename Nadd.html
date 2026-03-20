@@ -561,7 +561,6 @@
 
                         <!-- Aquí se inyecta TODO lo que tu JS genera -->
                         <div id="contenedorResultadosDsah"></div>
-
                         </div>
                     </div>
                     </div>
@@ -569,7 +568,9 @@
                         <!-- Cards futuras -->
                         <div class="col-12 col-lg-3">
                             <div class="card border-0 shadow-sm h-100 text-center">
-                                
+                                <div class="p-3">
+  <canvas id="graficaUbicacion"></canvas>
+</div>
                             </div>
                         </div>
 
@@ -882,13 +883,60 @@
     arrastrando = false;
     });
 
+async function cargarDashboard() {
+  const res = await fetch("http://localhost:5000/refacciones");
+  const data = await res.json();
+const porcentaje = ((conUbicacion / total) * 100).toFixed(1);
+  const resUb = await fetch("http://localhost:5000/refacciones/con-ubicacion");
+  const dataUb = await resUb.json();
 
+  const total = data.length;
+  const conUbicacion = dataUb.data.length;
+  const sinUbicacion = total - conUbicacion;
+
+  // 🔥 INYECTAR HTML
+  document.getElementById("contenedorResultadosDsah").innerHTML = `
+    <div class="p-3">
+      <h6 class="mb-3">Estado de Ubicación</h6>
+      <h6>${porcentaje}% con ubicación</h6>
+      <canvas id="graficaUbicacion"></canvas>
+    </div>
+  `;
+
+  // 🔥 CREAR GRÁFICA
+  const ctx = document.getElementById("graficaUbicacion");
+
+  new Chart(ctx, {
+    type: "pie",
+    data: {
+      labels: ["Con ubicación", "Sin ubicación"],
+      datasets: [{
+        data: [conUbicacion, sinUbicacion],
+        backgroundColor: [
+          "#198754", // verde
+          "#dc3545"  // rojo
+        ]
+      }]
+    },
+    options: {
+      responsive: true,
+      plugins: {
+        legend: {
+          position: "bottom"
+        }
+      }
+    }
+  });
+}
+
+cargarDashboard();
 
             </script>
             
             <script src="script.js"></script>
             <script src="navegador.js"></script>
             <script src="js/session.js"></script>
+            <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
             <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
         </body>
     </html>
