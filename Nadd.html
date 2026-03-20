@@ -569,8 +569,8 @@
                         <div class="col-12 col-lg-3">
                             <div class="">
                                 <div id="graficaUbicacionTitulo">
-  <canvas id="graficaUbicacion"></canvas>
-</div>
+                                    <canvas id="graficaUbicacion"></canvas>
+                                </div>
                             </div>
                         </div>
 
@@ -578,7 +578,7 @@
                             <div class="card border-0 shadow-sm h-100 text-center">
                             <div class="card-body">
                                 <h6 class="fw-bold">Ultimas refacciones</h6>
-                                <p class="text-muted small">
+                                <p id="ultimasRefacciones" class="text-muted small"></p>
                                 
                                 </p>
                             </div>
@@ -805,7 +805,7 @@
     let arrastrando = false;
     let inicioX = 0;
     let inicioY = 0;
-
+    
     const visor = document.getElementById("visorImagen");
     const img = document.getElementById("visorImg");
 
@@ -884,6 +884,7 @@
     });
 
 async function cargarDashboard() {
+    
   const res = await fetch("https://buscador-refaccionesbackend.onrender.com/refacciones");
   const data = await res.json();
 
@@ -896,6 +897,8 @@ async function cargarDashboard() {
 
   // ✅ AHORA SÍ EXISTEN
   const porcentaje = ((conUbicacion / total) * 100).toFixed(1);
+
+  const ultimas = data.slice(-3).reverse();
 
   document.getElementById("graficaUbicacionTitulo").innerHTML = `
     <div class="p-3">
@@ -925,7 +928,23 @@ async function cargarDashboard() {
       }
     }
   });
+
+  const htmlUltimas = ultimas.map(r => {
+  let color = "text-success";
+
+  if (r.cantidad === 0) color = "text-danger";
+  else if (r.cantidad < 5) color = "text-warning";
+
+  return `
+    <div class="mb-2 text-start">
+      <strong>${r.nombreprod}</strong><br>
+      <small class="${color}">${r.refinterna} (${r.cantidad})</small>
+    </div>
+  `;
+}).join("");
 }
+
+document.getElementById("ultimasRefacciones").innerHTML = htmlUltimas;
 
 cargarDashboard();
 
