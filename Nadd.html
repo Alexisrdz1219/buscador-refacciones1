@@ -18,6 +18,9 @@
                 /* --- SIDEBAR --- */
                 * {font-family: 'Nunito', sans-serif;}
                 .sidebar-container { width: 280px; height: 100vh; background: white; border-right: 1px solid #dee2e6; transition: transform 0.3s ease-in-out; z-index: 1100;}
+                .sidebar-container {
+  transition: width 0.3s ease;
+}
                 /* Aseguramiento de que el modal cubra todo, incluso el sidebar */
                 .modal-backdrop { z-index: 1099; /* debajo del modal, pero arriba del resto */ }
                 .modal { z-index: 1200; /* arriba de todo, incluido el sidebar */}
@@ -134,6 +137,47 @@ body.sidebar-collapsed .sidebar-container {
 body.sidebar-collapsed .content-area {
   margin-left: 0;
 }
+/* 🔥 MODO COLAPSADO */
+body.sidebar-mini .sidebar-container {
+  width: 80px;
+}
+
+body.sidebar-mini .sidebar-container:hover {
+  width: 280px;
+}
+
+/* ocultar textos */
+body.sidebar-mini .sidebar-container .nav-link,
+body.sidebar-mini .sidebar-container .btn-toggle {
+  justify-content: center;
+}
+
+body.sidebar-mini .sidebar-container .nav-link span,
+body.sidebar-mini .sidebar-container .btn-toggle span {
+  display: none;
+}
+
+/* ocultar textos de submenus */
+body.sidebar-mini .btn-toggle-nav {
+  display: none !important;
+}
+
+/* centrar iconos */
+body.sidebar-mini .btn-toggle i,
+body.sidebar-mini .nav-link i {
+  margin: 0;
+  font-size: 1.3rem;
+}
+
+/* ocultar nombre usuario */
+body.sidebar-mini #nombreUsuario {
+  display: none;
+}
+
+/* centrar perfil */
+body.sidebar-mini .dropdown {
+  text-align: center;
+}
             </style>
         </head>
 
@@ -177,7 +221,7 @@ body.sidebar-collapsed .content-area {
                         <!-- BOTON DE REFACCIONES -->
 
                         <!-- BOTON DE ACCIONES -->
-                        <li class="mb-1" id="sidebar">
+                        <li class="mb-1">
                             <button class="btn-toggle collapsed" data-bs-toggle="collapse" data-bs-target="#dash-collapse">
                                 <i class="bi bi-pencil-square me-2" style="color: #007a33;"></i> Acciones
                             </button>
@@ -194,7 +238,7 @@ body.sidebar-collapsed .content-area {
                         <!-- TERMINA BOTON DE ACCIONES -->
 
                         <!-- MAQUINAS -->
-                        <li class="mb-1" id="sidebar">
+                        <li class="mb-1">
                             <button class="btn-toggle collapsed" data-bs-toggle="collapse" data-bs-target="#MAQU-collapse">
                                 <i class="bi bi-tools me-2" style="color: #675e5e;"></i> Maquinas
                             </button>
@@ -329,7 +373,7 @@ body.sidebar-collapsed .content-area {
                         <!-- TERMINA MAQUINAS -->
 
                         <!-- MOLDES -->
-                        <li class="mb-1" id="sidebar">
+                        <li class="mb-1" >
                             <button class="btn-toggle collapsed" data-bs-toggle="collapse" data-bs-target="#MOLDES-collapse">
                                 <i class="bi bi-box-seam-fill me-2" style="color: #ab1091;"></i> Moldes
                             </button>
@@ -356,7 +400,7 @@ body.sidebar-collapsed .content-area {
                         <!-- TERMINA MOLDES -->
 
                         <!-- COMPRESORES -->
-                        <li class="mb-1" id="sidebar">
+                        <li class="mb-1">
                             <button class="btn-toggle collapsed" data-bs-toggle="collapse" data-bs-target="#PER-collapse">
                                 <i class="bi bi-gear-wide-connected me-2" style="color: #1091ab;"></i> Compresores
                             </button>
@@ -422,7 +466,7 @@ body.sidebar-collapsed .content-area {
                         <!-- COMPRESORES -->
 
                         <!-- RED DE AGUA -->
-                        <li class="mb-1" id="sidebar">
+                        <li class="mb-1" >
                             <button class="btn-toggle collapsed" data-bs-toggle="collapse" data-bs-target="#RedAg-collapse">
                                 <i class="bi bi-droplet-fill me-2" style="color: #3ab5f7;"></i> Red de Agua
                             </button>
@@ -438,7 +482,7 @@ body.sidebar-collapsed .content-area {
                         <!-- TERMINA RED DE AGUA -->
 
                         <!-- ELECTRICIDAD -->
-                        <li class="mb-1" id="sidebar">
+                        <li class="mb-1" >
                             <button class="btn-toggle collapsed" data-bs-toggle="collapse" data-bs-target="#ELECTRICIDAD-collapse">
                                 <i class="bi bi-lightning-charge-fill me-2" style="color: #f0c000;"></i> ELECTRICIDAD
                             </button>
@@ -453,7 +497,7 @@ body.sidebar-collapsed .content-area {
                         <!-- TERMINA ELECTRICIDAD -->
 
                         <!-- TRANSPORTES -->
-                        <li class="mb-1" id="sidebar">
+                        <li class="mb-1">
                             <button class="btn-toggle collapsed" data-bs-toggle="collapse" data-bs-target="#TRransportes-collapse">
                                 <i class="bi bi-truck me-2" style="color: #d50c3b;"></i> Transportes
                             </button>
@@ -469,7 +513,7 @@ body.sidebar-collapsed .content-area {
                         <!-- TERMINA TRANSPORTES -->
 
                         <!-- EQUIPOS AUXILIARES -->
-                        <li class="mb-1" id="sidebar">
+                        <li class="mb-1">
                             <button class="btn-toggle collapsed" data-bs-toggle="collapse" data-bs-target="#EquiposAuxiliares-collapse">
                                 <i class="bi bi-wrench-adjustable me-2" style="color: #62604f;"></i> Equipos Auxiliares
                             </button>
@@ -491,7 +535,7 @@ body.sidebar-collapsed .content-area {
                         <!-- TERMINAN EQUIPOS AUXILIARES -->
 
                         <!-- MATERIALES -->
-                        <li class="mb-1" id="sidebar">
+                        <li class="mb-1" >
                             <button class="btn-toggle collapsed" data-bs-toggle="collapse" data-bs-target="#MAT-collapse">
                                 <i class="bi bi-box-seam me-2" style="color: #01ecfd;"></i> Materiales
                             </button>
@@ -793,6 +837,13 @@ body.sidebar-collapsed .content-area {
             <script>
     document.addEventListener("DOMContentLoaded", async () => {
         
+        btnToggleDesktop.addEventListener("click", () => {
+  document.body.classList.toggle("sidebar-mini");
+});
+
+const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]');
+tooltipTriggerList.forEach(el => new bootstrap.Tooltip(el));
+
     cargarDestacadas();
     const token = localStorage.getItem("token");
 
