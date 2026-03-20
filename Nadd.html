@@ -884,10 +884,10 @@
     });
 
 async function cargarDashboard() {
-  const res = await fetch("http://localhost:5000/refacciones");
+  const res = await fetch("https://buscador-refaccionesbackend.onrender.com/refacciones");
   const data = await res.json();
 const porcentaje = ((conUbicacion / total) * 100).toFixed(1);
-  const resUb = await fetch("http://localhost:5000/refacciones/con-ubicacion");
+  const resUb = await fetch("https://buscador-refaccionesbackend.onrender.com/refacciones/con-ubicacion");
   const dataUb = await resUb.json();
 
   const total = data.length;
