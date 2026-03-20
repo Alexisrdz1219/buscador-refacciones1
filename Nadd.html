@@ -33,7 +33,7 @@
                 @media (max-width: 991px) { .modal-body { flex-direction: column; } }
                 @media (min-width: 992px) { .modal-body { flex-direction: row; }}
                 /* --- ÁREA DE CONTENIDO --- */
-                .content-area { flex-grow: 1; overflow-y: auto; padding: 20px;  transition: margin-left 0.3s ease; }
+                .content-area { flex-grow: 1; overflow-y: auto; padding: 20px; }
                 /* --- BOTÓN FLOTANTE (HAMBURGUESA) --- */
                 .mobile-toggle-btn { display: none; position: fixed; top: 15px; left: 15px; z-index: 1000; background: #fff; border: 1px solid #dee2e6; border-radius: 8px; padding: 8px 12px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); transition: opacity 0.2s ease; }
                 /* Ocultar el botón hamburguesa cuando el sidebar está abierto */
@@ -141,9 +141,6 @@ body.sidebar-collapsed .content-area {
             <!-- BOTON DE MOVIL -->
                 <button class="btn mobile-toggle-btn d-lg-none" id="btnToggle"><i class="bi bi-list fs-3"></i></button>
                 <div class="sidebar-overlay" id="overlay"></div>
-                 <button class="btn btn-outline-secondary" id="btnToggleDesktop">
-  <i class="bi bi-layout-sidebar"></i>
-</button>
             <!-- TERMINA BOTON DE MOVIL -->
 
             <!-- INICIA MAIN -->
@@ -156,7 +153,9 @@ body.sidebar-collapsed .content-area {
                     <div class="d-flex align-items-center mb-3">
                         <a href="/" class="text-decoration-none flex-grow-1 text-center"><img src="https://iemcousa.com/application/files/9615/2838/9508/logo.png" alt="IEMCO" style="max-width: 160px; height: auto;" onerror="this.onerror=null; this.src='no-image.jpg';"></a>
                         <button class="btn-close d-lg-none ms-2" id="btnClose" aria-label="Close"></button>
-                       
+                        <button class="btn btn-outline-secondary" id="btnToggleDesktop">
+  <i class="bi bi-layout-sidebar"></i>
+</button>
                     </div>
                     <!-- TERMINA LOGOTIPO  -->
 
@@ -796,19 +795,7 @@ body.sidebar-collapsed .content-area {
             <script>
     document.addEventListener("DOMContentLoaded", async () => {
         
-    const btnToggleDesktop = document.getElementById("btnToggleDesktop");
-
-// cargar estado
-if (localStorage.getItem("sidebar") === "hidden") {
-  document.body.classList.add("sidebar-collapsed");
-}
-
-btnToggleDesktop.addEventListener("click", () => {
-  document.body.classList.toggle("sidebar-collapsed");
-
-  const isHidden = document.body.classList.contains("sidebar-collapsed");
-  localStorage.setItem("sidebar", isHidden ? "hidden" : "visible");
-});
+    
     cargarDestacadas();
     const token = localStorage.getItem("token");
 
