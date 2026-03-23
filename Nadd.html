@@ -134,6 +134,20 @@ body.sidebar-collapsed .sidebar-container {
 body.sidebar-collapsed .content-area {
   margin-left: 0;
 }
+
+.modal-content {
+  border-radius: 14px;
+}
+
+.modal-body {
+  text-align: center;
+  padding: 20px;
+}
+
+.modal-body img {
+  max-height: 70vh;
+  object-fit: contain;
+}
             </style>
         </head>
 
@@ -773,14 +787,14 @@ body.sidebar-collapsed .content-area {
 </div>
 
 <div class="modal fade" id="modalAyuda" tabindex="-1">
-  <div class="modal-dialog modal-dialog-centered">
+  <div class="modal-dialog modal-dialog-centered modal-lg modal-dialog-scrollable">
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title">Ayuda</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
       </div>
       <div class="modal-body">
-        <img src="assets/img/MODAL.JPG" alt="">
+        <img src="assets/img/MODAL.JPG" alt="" class="img-fluid rounded">
       </div>
     </div>
   </div>
