@@ -296,7 +296,7 @@ body{
 
 <input id="usuario" placeholder="Quién usó">
 <input id="zona" placeholder="Zona">
-<input id="cantidad" type="number" placeholder="Cantidad">
+<input id="cantidadUso" type="number" placeholder="Cantidad de Uso">
 
 <button onclick="guardarUso()">Guardar</button>
 
@@ -308,7 +308,7 @@ async function guardarUso() {
     refinterna: valoresActuales.refinterna,
     usuario: document.getElementById("usuario").value,
     zona: document.getElementById("zona").value,
-    cantidad: Number(document.getElementById("cantidad").value)
+    cantidadUso: Number(document.getElementById("cantidadUso").value)
   };
 
   const res = await fetch(`${API}/historial-uso`, {
