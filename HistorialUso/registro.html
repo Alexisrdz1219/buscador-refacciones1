@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h3>Registrar uso</h3>
+
+<input id="usuario" placeholder="Quién usó">
+<input id="zona" placeholder="Zona">
+<input id="cantidad" type="number" placeholder="Cantidad">
+
+<button onclick="guardarUso()">Guardar</button>
+
+
+    <script>
+async function guardarUso() {
+  const data = {
+    refaccion_id: id,
+    nombre: valoresActuales.nombreprod,
+    refinterna: valoresActuales.refinterna,
+    usuario: document.getElementById("usuario").value,
+    zona: document.getElementById("zona").value,
+    cantidad: Number(document.getElementById("cantidad").value)
+  };
+
+  const res = await fetch(`${API}/historial-uso`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify(data)
+  });
+
+  if (res.ok) {
+    alert("✅ Uso registrado");
+  } else {
+    alert("❌ Error");
+  }
+}
+</script>
+</body>
+</html>

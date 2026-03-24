@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h2>Historial de Uso</h2>
+
+<table style="border: 1px;">
+  <thead>
+    <tr>
+      <th>Nombre</th>
+      <th>Ref Interna</th>
+      <th>Usuario</th>
+      <th>Zona</th>
+      <th>Cantidad</th>
+      <th>Fecha</th>
+    </tr>
+  </thead>
+  <tbody id="tabla"></tbody>
+</table>
+
+<script>
+const API = "https://buscador-refaccionesbackend.onrender.com";
+
+async function cargarHistorial() {
+  const res = await fetch(`${API}/historial-uso`);
+  const data = await res.json();
+
+  const tabla = document.getElementById("tabla");
+  tabla.innerHTML = "";
+
+  data.forEach(item => {
+    tabla.innerHTML += `
+      <tr>
+        <td>${item.nombre}</td>
+        <td>${item.refinterna}</td>
+        <td>${item.usuario}</td>
+        <td>${item.zona}</td>
+        <td>${item.cantidad}</td>
+        <td>${new Date(item.fecha).toLocaleString()}</td>
+      </tr>
+    `;
+  });
+}
+
+cargarHistorial();
+</script>
+</body>
+</html>
