@@ -15,6 +15,9 @@ fetch("https://buscador-refaccionesbackend.onrender.com/health")
 fetch("https://buscador-refaccionesbackend.onrender.com/health")
   .then(res => res.json())
   .then(data => {
+
+    if (!statusDiv) return; // 👈 ESTA ES LA CLAVE
+
     if (data.ok) {
       statusDiv.innerHTML = `
         <p style="color:green;">Backend Conectado</p>
@@ -26,11 +29,11 @@ fetch("https://buscador-refaccionesbackend.onrender.com/health")
     }
   })
   .catch(err => {
-  if (statusDiv) {
-    statusDiv.innerHTML = "No se pudo conectar al backend";
-  }
-  console.error(err);
-});
+    if (statusDiv) {
+      statusDiv.innerHTML = "No se pudo conectar al backend";
+    }
+    console.error(err);
+  });
 
   async function mostrarUltimaActualizacion() {
   const elemento = document.getElementById("ultimaActualizacion");
@@ -98,6 +101,9 @@ async function mostrarUltimosProductos() {
   const nombreElem = document.getElementById("ultimoProducto");
   const etiquetasElem = document.getElementById("ultimasEtiquetas");
 
+  // 🔥 VALIDACIÓN CLAVE
+  if (!nombreElem || !etiquetasElem) return;
+
   try {
     const res = await fetch("https://buscador-refaccionesbackend.onrender.com/refacciones");
     const data = await res.json();
@@ -107,19 +113,15 @@ async function mostrarUltimosProductos() {
       return;
     }
 
-    // Ordenar por id descendente (últimos agregados)
-    const ultimos = data.sort((a, b) => b.id - a.id).slice(0, 1); // mostrar solo el último
+    const ultimos = data.sort((a, b) => b.id - a.id).slice(0, 1);
     const ultimo = ultimos[0];
 
-    // Nombre del último producto
     nombreElem.textContent = ultimo.nombreprod || "Sin nombre";
 
-    // Limpiar badges
     etiquetasElem.innerHTML = "";
 
-    // Si tiene etiquetas, generar badges
     if (ultimo.palclave) {
-      const etiquetas = ultimo.palclave.split(","); // separar por coma si hay varias
+      const etiquetas = ultimo.palclave.split(",");
       etiquetas.forEach(et => {
         const span = document.createElement("span");
         span.className = "badge bg-light text-dark border rounded-pill px-3";
@@ -129,7 +131,9 @@ async function mostrarUltimosProductos() {
     }
 
   } catch (err) {
-    nombreElem.textContent = "Error al cargar";
+    if (nombreElem) {
+      nombreElem.textContent = "Error al cargar";
+    }
     console.error(err);
   }
 }
@@ -144,26 +148,23 @@ async function cargarLogs() {
 
   const tabla = document.getElementById("tablaLogs");
 
-if (tabla) {
-  tabla.innerHTML = "";
-}
-  tabla.innerHTML = "";
+if (!tabla) return; // 🔥 corta ejecución si no existe
 
-  logs.forEach(log => {
+tabla.innerHTML = "";
 
-    const fila = document.createElement("tr");
+logs.forEach(log => {
+  const fila = document.createElement("tr");
 
-    fila.innerHTML = `
-      <td>${new Date(log.created_at).toLocaleString()}</td>
-      <td>${log.level}</td>
-      <td>${log.message}</td>
-      <td>${log.route || ""}</td>
-      <td>${log.data ? JSON.stringify(log.data) : ""}</td>
-    `;
+  fila.innerHTML = `
+    <td>${new Date(log.created_at).toLocaleString()}</td>
+    <td>${log.level}</td>
+    <td>${log.message}</td>
+    <td>${log.route || ""}</td>
+    <td>${log.data ? JSON.stringify(log.data) : ""}</td>
+  `;
 
-    tabla.appendChild(fila);
-
-  });
+  tabla.appendChild(fila);
+});
 
 }
 
