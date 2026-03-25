@@ -1,10 +1,10 @@
-console.log("Script.js cargado correctamente");
+// console.log("Script.js cargado correctamente");
 const API_URL = "https://buscador-refaccionesbackend.onrender.com";
 
 fetch("https://buscador-refaccionesbackend.onrender.com/health")
   .then(res => res.json())
   .then(data => {
-    console.log("RESPUESTA BACKEND:", data);
+    // console.log("RESPUESTA BACKEND:", data);
   })
   .catch(err => {
     console.error("ERROR:", err);

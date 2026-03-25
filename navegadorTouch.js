@@ -30,7 +30,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
       const maquinaId = link.dataset.maquinaid;
 
-      console.log("BUSCANDO POR MAQUINA ID:", maquinaId);
+      // console.log("BUSCANDO POR MAQUINA ID:", maquinaId);
 
       const res = await fetch(`${API}/refacciones-por-maquina/${maquinaId}`);
       const data = await res.json();

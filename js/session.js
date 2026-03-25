@@ -32,7 +32,7 @@
 
       return data;
     } catch (error) {
-      console.log("Token inválido o /me incorrecto", error);
+      // console.log("Token inválido o /me incorrecto", error);
       // Limpiar todo y redirigir al login
       localStorage.removeItem("token");
       localStorage.removeItem("usuario");

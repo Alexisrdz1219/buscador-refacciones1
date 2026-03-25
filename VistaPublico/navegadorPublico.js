@@ -28,9 +28,9 @@ async function validarSesion() {
     const usuario = await response.json();
 
     // Mostramos info en consola
-    console.log("ID:", usuario.id);
-    console.log("Nombre:", usuario.nombre);
-    console.log("Rol:", usuario.rol);
+    // console.log("ID:", usuario.id);
+    // console.log("Nombre:", usuario.nombre);
+    // console.log("Rol:", usuario.rol);
 
     // 🔥 Actualizar nombre en la UI si existe
     const elementoUsuario = document.getElementById("usuarioActivo");
@@ -127,7 +127,7 @@ const contenedorTags = document.getElementById("contenedorTags");
 
 document.getElementById("btnTodasRefacciones")?.addEventListener("click", async () => {
 
-  console.log("🌎 ACTIVANDO MODO GLOBAL");
+  // console.log("🌎 ACTIVANDO MODO GLOBAL");
 
   modoGlobal = true;
   if (formFiltros) {
@@ -183,14 +183,14 @@ contenedorTags.querySelectorAll(".badge").forEach(t => t.remove());
       const maquinamod = link.dataset.maquinamod;
       modeloSeleccionado = maquinamod; // 🔥 guardamos el modelo
 
-      console.log("BUSCANDO POR MODELO:", maquinamod);
+      // console.log("BUSCANDO POR MODELO:", maquinamod);
 
       const res = await fetch(
         `${API}/refacciones-por-maquinamod?maquinamod=${encodeURIComponent(maquinamod)}`
       );
 
       const data = await res.json();
-      console.log(data[0]);
+      // console.log(data[0]);
 
       resultadosActuales = data; // 🔥 guardamos lo que vino del backend
  // 🔥 guardamos los datos
@@ -487,8 +487,8 @@ function filtrarCards() {
 
 async function aplicarFiltros() {
 
-  console.log("🔥 aplicarFiltros ejecutado");
-  console.log("modoGlobal:", modoGlobal);
+  // console.log("🔥 aplicarFiltros ejecutado");
+  // console.log("modoGlobal:", modoGlobal);
   // console.log("Ejemplo registro global:", data[0]);
 
   const tit = document.getElementById("buscarTitulo")?.value.toLowerCase().trim() || "";
@@ -519,7 +519,7 @@ async function aplicarFiltros() {
       const res = await fetch(`${API}/buscar-refacciones?${params}`);
       const data = await res.json();
 
-      console.log("Total registros global:", data.length);
+      // console.log("Total registros global:", data.length);
 
       resultadosActuales = data;
 
@@ -540,7 +540,7 @@ mostrarResultados(data);
   // =========================
 
   if (!resultadosActuales || resultadosActuales.length === 0) {
-    console.log("⚠ No hay datos locales cargados");
+    // console.log("⚠ No hay datos locales cargados");
     return;
   }
 
@@ -581,7 +581,7 @@ mostrarResultados(data);
            coincidePalabras;
   });
 
-  console.log("Total registros local:", filtrados.length);
+  // console.log("Total registros local:", filtrados.length);
 
   actualizarSelectsDesdeResultados(filtrados);
 mostrarResultados(filtrados);

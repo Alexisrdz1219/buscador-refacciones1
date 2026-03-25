@@ -99,7 +99,7 @@ fd.append(
   "compatibilidad",
   JSON.stringify(maquinasSeleccionadas)
 );
-console.log("Compatibilidad a guardar:", maquinasSeleccionadas);
+// console.log("Compatibilidad a guardar:", maquinasSeleccionadas);
 
   const res = await fetch(`${API}/refacciones/${id}`, {
     method: "PUT",
@@ -183,7 +183,7 @@ async function inicializarMaquinas() {
 
 
 function renderModal(lista) {
-  console.log(lista);
+  // console.log(lista);
 
   const listaModal = document.getElementById("lista-maquinas-modal");
   if (!listaModal) return;

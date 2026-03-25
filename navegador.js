@@ -29,9 +29,9 @@ async function validarSesion() {
     const usuario = await response.json();
 
     // Mostramos info en consola
-    console.log("ID:", usuario.id);
-    console.log("Nombre:", usuario.nombre);
-    console.log("Rol:", usuario.rol);
+    // console.log("ID:", usuario.id);
+    // console.log("Nombre:", usuario.nombre);
+    // console.log("Rol:", usuario.rol);
 
     // 🔥 Actualizar nombre en la UI si existe
     const elementoUsuario = document.getElementById("usuarioActivo");
@@ -85,12 +85,12 @@ async function despertarBackend() {
 
       clearTimeout(timeout);
 
-      console.log("Backend despierto 🔥");
+      // console.log("Backend ✅");
       return;
 
     } catch (e) {
 
-      console.log("Intentando despertar backend...");
+      // console.log("Intentando despertar backend...");
       await new Promise(r => setTimeout(r, 3000));
 
     }
@@ -163,7 +163,7 @@ const contenedorTags = document.getElementById("contenedorTags");
 
 document.getElementById("btnTodasRefacciones")?.addEventListener("click", async () => {
 
-  console.log("🌎 ACTIVANDO MODO GLOBAL");
+  // console.log("🌎 ACTIVANDO MODO GLOBAL");
 
   modoGlobal = true;
 //   if (formFiltros) {
@@ -203,7 +203,7 @@ dash?.classList.add("d-none");
 const getDestacadas = async () => {
   const res = await fetch("https://buscador-refaccionesbackend.onrender.com/refacciones/destacadas");
   const data = await res.json();
-  console.log(data); // Aquí tienes un array de refacciones destacadas
+ // console.log(data);  Aquí tienes un array de refacciones destacadas
 };
 
 inputTag.addEventListener("keydown", function(e) {
@@ -242,7 +242,7 @@ contenedorTags.querySelectorAll(".badge").forEach(t => t.remove());
       const maquinamod = e.target.closest(".maquina-link").dataset.maquinamod;
       modeloSeleccionado = maquinamod; // 🔥 guardamos el modelo
 
-      console.log("BUSCANDO POR MODELO:", maquinamod);
+      // console.log("BUSCANDO POR MODELO:", maquinamod);
       
 
       const res = await fetch(
@@ -250,7 +250,7 @@ contenedorTags.querySelectorAll(".badge").forEach(t => t.remove());
       );
 
       const data = await res.json();
-      console.log(data[0]);
+      // console.log(data[0]);
 
       resultadosActuales = data; // 🔥 guardamos lo que vino del backend
  // 🔥 guardamos los datos
@@ -450,7 +450,7 @@ document.addEventListener("click", (e) => {
     if (btnUbicacion) {
         e.preventDefault();
         const ubi = btnUbicacion.getAttribute("data-ubicacion");
-        console.log("Abriendo mapa para:", ubi); // Para depuración
+        // console.log("Abriendo mapa para:", ubi);  Para depuración
         abrirMapa(ubi);
     }
 });
@@ -739,8 +739,8 @@ function filtrarCards() {
 
 async function aplicarFiltros() {
 
-  console.log("🔥 aplicarFiltros ejecutado");
-  console.log("modoGlobal:", modoGlobal);
+  // console.log("🔥 aplicarFiltros ejecutado");
+  // console.log("modoGlobal:", modoGlobal);
   // console.log("Ejemplo registro global:", data[0]);
 
   const tit = document.getElementById("buscarTitulo")?.value.toLowerCase().trim() || "";
@@ -771,7 +771,7 @@ async function aplicarFiltros() {
       const res = await fetch(`${API}/buscar-refacciones?${params}`);
       const data = await res.json();
 
-      console.log("Total registros global:", data.length);
+      // console.log("Total registros global:", data.length);
 
       resultadosActuales = data;
 
@@ -792,7 +792,7 @@ mostrarResultados(data);
   // =========================
 
   if (!resultadosActuales || resultadosActuales.length === 0) {
-    console.log("⚠ No hay datos locales cargados");
+    // console.log("⚠ No hay datos locales cargados");
     return;
   }
 
@@ -833,7 +833,7 @@ mostrarResultados(data);
            coincidePalabras;
   });
 
-  console.log("Total registros local:", filtrados.length);
+  // console.log("Total registros local:", filtrados.length);
 
   actualizarSelectsDesdeResultados(filtrados);
 mostrarResultados(filtrados);
