@@ -26,9 +26,11 @@ fetch("https://buscador-refaccionesbackend.onrender.com/health")
     }
   })
   .catch(err => {
+  if (statusDiv) {
     statusDiv.innerHTML = "No se pudo conectar al backend";
-    console.error(err);
-  });
+  }
+  console.error(err);
+});
 
   async function mostrarUltimaActualizacion() {
   const elemento = document.getElementById("ultimaActualizacion");
@@ -141,6 +143,10 @@ async function cargarLogs() {
   const logs = await res.json();
 
   const tabla = document.getElementById("tablaLogs");
+
+if (tabla) {
+  tabla.innerHTML = "";
+}
   tabla.innerHTML = "";
 
   logs.forEach(log => {
