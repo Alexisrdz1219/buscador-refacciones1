@@ -460,17 +460,12 @@ document.addEventListener("click", (e) => {
 
 const CONFIG_ALMACENES = {
   "A1": [
-    ["A1", "A2", "A3", "A4"],
-    ["B1", "B2", null, null],
-    ["C1", "C2", null, null],
-    ["D1", null, null, null],
-    ["E1", null, null, null],
-    ["F1", "F2", null, null],
-    ["G1", null, null, null],
-    ["H1", null, null, null],
-    ["I1", null, null, null],
-    ["J1", null, null, null]
-  ],
+  [null, "G1", "G1", "H1", "H1", "I1", "I1", "J1", "J1", null],
+  ["A4", null, "B2", "C2", null, "D1", "E1", null, "F2", null],
+  ["A3", null, "B1", "C1", null, null, null, "F1", null, null],
+  ["A2", null, null, null, null, null, null, null, null, null],
+  ["A1", null, null, null, null, null, null, null, null, null]
+],
 
   "A2": [
     ["K1", "L1", "M1"],
