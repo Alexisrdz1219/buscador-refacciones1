@@ -483,7 +483,7 @@ function abrirMapa(ubicacionStr) {
 
     if (!modal || !container) return;
 
-    // LIMPIEZA TOTAL: Evita duplicados vaciando el contenedor antes de dibujar
+    // limpiar
     container.replaceChildren(); 
     display.innerText = ubicacionStr;
     modal.style.display = "flex";
@@ -495,48 +495,63 @@ function abrirMapa(ubicacionStr) {
     const racks = CONFIG_ALMACENES[almacenId] || [];
 
     if (racks.length === 0) {
-        container.innerHTML = `<p style="grid-column: span 10; color:#7e8990;">Esquema de ${almacenId} no definido.</p>`;
-    } else {
-          const fragmento = document.createDocumentFragment();
-          
-          // racks.forEach(id => {
-            racks.forEach(fila => {
-              fila.forEach(id => {
-              const celda = document.createElement("div");
+        container.innerHTML = `<p style="grid-column: span 10; color:#7e8990;">
+            Esquema de ${almacenId} no definido.
+        </p>`;
+        return;
+    }
 
-if (id === null) {
-    celda.style.visibility = "hidden"; // espacio vacío
-} else {
-    const esActivo = (id === anaquelTarget);
+    const fragmento = document.createDocumentFragment();
 
-    celda.style.cssText = `
-        width: 60px;
-        height: 70px;
-        background: ${esActivo ? '#007a33' : '#ffffff'};
-        color: ${esActivo ? '#ffffff' : '#7e8990'};
-        border: 2px solid ${esActivo ? '#007a33' : '#dee2e6'};
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-weight: bold;
-        font-size: 0.75rem;
-        border-radius: 4px;
-        ${esActivo ? 'transform: scale(1.1); box-shadow: 0 5px 15px rgba(0,122,51,0.3);' : ''}
-    `;
+    racks.forEach(fila => {
+        let i = 0;
 
-    celda.innerHTML = `
-        <span>${id}</span>
-        ${esActivo ? '<span>📍</span>' : ''}
-    `;
+        while (i < fila.length) {
+            const id = fila[i];
+
+            // 🔥 detectar repetidos (merge)
+            let span = 1;
+            while (fila[i + span] === id) {
+                span++;
+            }
+
+            const celda = document.createElement("div");
+
+            if (id === null) {
+                celda.style.visibility = "hidden";
+                celda.style.gridColumn = `span ${span}`;
+            } else {
+                const esActivo = (id === anaquelTarget);
+
+                celda.style.cssText = `
+                    height: 70px;
+                    background: ${esActivo ? '#007a33' : '#ffffff'};
+                    color: ${esActivo ? '#ffffff' : '#7e8990'};
+                    border: 2px solid ${esActivo ? '#007a33' : '#dee2e6'};
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    font-weight: bold;
+                    font-size: 0.75rem;
+                    border-radius: 4px;
+                    grid-column: span ${span};
+                    ${esActivo ? 'transform: scale(1.1); box-shadow: 0 5px 15px rgba(0,122,51,0.3);' : ''}
+                `;
+
+                celda.innerHTML = `
+                    <span>${id}</span>
+                    ${esActivo ? '📍' : ''}
+                `;
+            }
+
+            fragmento.appendChild(celda);
+
+            i += span; // 🔥 saltar los repetidos
+        }
+    });
+
+    container.appendChild(fragmento);
 }
-
-fragmento.appendChild(celda);
-              });
-            });
-          
-          container.appendChild(fragmento);
-      }
-  }
 
 function cerrarMapa() {
     document.getElementById("modalMapa").style.display = "none";
