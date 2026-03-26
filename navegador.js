@@ -502,34 +502,46 @@ function abrirMapa(ubicacionStr) {
     if (racks.length === 0) {
         container.innerHTML = `<p style="grid-column: span 10; color:#7e8990;">Esquema de ${almacenId} no definido.</p>`;
     } else {
-        const fragmento = document.createDocumentFragment();
-        
-        racks.forEach(id => {
-            const esActivo = (id === anaquelTarget);
-            const rackDiv = document.createElement("div");
-            
-            // Estilo con colores IEMCO (#007a33 y #7e8990)
-            rackDiv.style.cssText = `
-                width: 100%; /* Se adapta al tamaño de la celda del Grid */
-                max-width: 60px;
-                height: 70px;
-                background: ${esActivo ? '#007a33' : '#ffffff'};
-                color: ${esActivo ? '#ffffff' : '#7e8990'};
-                border: 2px solid ${esActivo ? '#007a33' : '#dee2e6'};
-                border-bottom: 4px solid ${esActivo ? '#004d21' : '#cbd5e1'};
-                display: flex; flex-direction: column; align-items: center; justify-content: center;
-                border-radius: 4px; font-weight: bold; font-size: 0.75rem;
-                transition: transform 0.2s ease;
-                ${esActivo ? 'transform: scale(1.1) translateY(-3px); z-index: 10; box-shadow: 0 5px 15px rgba(0,122,51,0.3);' : ''}
-            `;
+          const fragmento = document.createDocumentFragment();
+          
+          // racks.forEach(id => {
+            racks.forEach(fila => {
+              fila.forEach(id => {
+              const celda = document.createElement("div");
 
-            rackDiv.innerHTML = `<span>${id}</span>${esActivo ? '<span style="font-size:12px">📍</span>' : ''}`;
-            fragmento.appendChild(rackDiv);
-        });
-        
-        container.appendChild(fragmento);
-    }
+if (id === null) {
+    celda.style.visibility = "hidden"; // espacio vacío
+} else {
+    const esActivo = (id === anaquelTarget);
+
+    celda.style.cssText = `
+        width: 60px;
+        height: 70px;
+        background: ${esActivo ? '#007a33' : '#ffffff'};
+        color: ${esActivo ? '#ffffff' : '#7e8990'};
+        border: 2px solid ${esActivo ? '#007a33' : '#dee2e6'};
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: bold;
+        font-size: 0.75rem;
+        border-radius: 4px;
+        ${esActivo ? 'transform: scale(1.1); box-shadow: 0 5px 15px rgba(0,122,51,0.3);' : ''}
+    `;
+
+    celda.innerHTML = `
+        <span>${id}</span>
+        ${esActivo ? '<span>📍</span>' : ''}
+    `;
 }
+
+fragmento.appendChild(celda);
+              });
+            });
+          
+          container.appendChild(fragmento);
+      }
+  }
 
 function cerrarMapa() {
     document.getElementById("modalMapa").style.display = "none";
