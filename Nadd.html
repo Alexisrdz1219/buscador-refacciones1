@@ -114,10 +114,15 @@
                 .modal-content { border-radius: 14px; }
                 .modal-body { text-align: center; padding: 20px; }
                 .modal-body img { max-height: 70vh; object-fit: contain; }
-                #contenedorMapaDinamico {
+              #contenedorMapaDinamico {
     display: grid;
-    grid-template-columns: repeat(10, 80px);
-justify-content: center;
+    grid-template-columns: repeat(10, 90px); /* 🔥 ancho real */
+    gap: 12px;
+    justify-content: center;
+}
+#contenedorMapaDinamico div:hover {
+    transform: scale(1.08);
+    box-shadow: 0 10px 25px rgba(0,0,0,0.15);
 }
             </style>
         </head>

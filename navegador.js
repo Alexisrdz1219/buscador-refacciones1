@@ -524,25 +524,36 @@ function abrirMapa(ubicacionStr) {
                 const esActivo = (id === anaquelTarget);
 
                 celda.style.cssText = `
-                widht: 100px;
-                    height: 70px;
-                    background: ${esActivo ? '#007a33' : '#ffffff'};
-                    color: ${esActivo ? '#ffffff' : '#7e8990'};
-                    border: 2px solid ${esActivo ? '#007a33' : '#dee2e6'};
-                    display: flex;
-                    align-items: center;
-                    justify-content: center;
-                    font-weight: bold;
-                    font-size: 0.75rem;
-                    border-radius: 4px;
-                    grid-column: span ${span};
-                    ${esActivo ? 'transform: scale(1.1); box-shadow: 0 5px 15px rgba(0,122,51,0.3);' : ''}
-                `;
+    height: 80px;
+    min-width: 90px; /* 🔥 asegura ancho mínimo */
+    background: ${esActivo ? 'linear-gradient(135deg, #007a33, #00a84f)' : '#ffffff'};
+    color: ${esActivo ? '#ffffff' : '#374151'};
+    border: 2px solid ${esActivo ? '#007a33' : '#e5e7eb'};
+    border-bottom: 4px solid ${esActivo ? '#004d21' : '#cbd5e1'};
+    
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    font-weight: 700;
+    font-size: 0.8rem;
+    border-radius: 10px;
+
+    grid-column: span ${span};
+
+    box-shadow: ${esActivo 
+        ? '0 8px 20px rgba(0,122,51,0.35)' 
+        : '0 3px 8px rgba(0,0,0,0.08)'};
+
+    transition: all 0.25s ease;
+    cursor: pointer;
+`;
 
                 celda.innerHTML = `
-                    <span>${id}</span>
-                    ${esActivo ? '📍' : ''}
-                `;
+    <div style="font-size: 0.9rem;">${id}</div>
+    ${esActivo ? '<div style="font-size: 14px;">📍</div>' : ''}
+`;
             }
 
             fragmento.appendChild(celda);
