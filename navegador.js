@@ -524,6 +524,7 @@ function abrirMapa(ubicacionStr) {
                 const esActivo = (id === anaquelTarget);
 
                 celda.style.cssText = `
+                widht: 100px;
                     height: 70px;
                     background: ${esActivo ? '#007a33' : '#ffffff'};
                     color: ${esActivo ? '#ffffff' : '#7e8990'};
