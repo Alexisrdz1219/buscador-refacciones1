@@ -523,11 +523,13 @@ function abrirMapa(ubicacionStr) {
             } else {
                 const esActivo = (id === anaquelTarget);
 
-                celda.style.cssText = `
+               celda.style.cssText = `
     height: 80px;
-    min-width: 90px; /* 🔥 asegura ancho mínimo */
+    min-width: 90px;
+
     background: ${esActivo ? 'linear-gradient(135deg, #007a33, #00a84f)' : '#ffffff'};
     color: ${esActivo ? '#ffffff' : '#374151'};
+    
     border: 2px solid ${esActivo ? '#007a33' : '#e5e7eb'};
     border-bottom: 4px solid ${esActivo ? '#004d21' : '#cbd5e1'};
     
@@ -536,22 +538,33 @@ function abrirMapa(ubicacionStr) {
     align-items: center;
     justify-content: center;
 
-    font-weight: 700;
-    font-size: 0.8rem;
     border-radius: 10px;
 
     grid-column: span ${span};
 
+    /* 🔥 IMPORTANTE: esto hace que se note el tamaño */
+    width: 100%;
+    
     box-shadow: ${esActivo 
         ? '0 8px 20px rgba(0,122,51,0.35)' 
         : '0 3px 8px rgba(0,0,0,0.08)'};
 
     transition: all 0.25s ease;
-    cursor: pointer;
 `;
 
                 celda.innerHTML = `
-    <div style="font-size: 0.9rem;">${id}</div>
+    <div style="
+        font-size: ${span > 1 ? '1.1rem' : '0.8rem'};
+        font-weight: bold;
+    ">
+        ${id}
+    </div>
+
+    ${span > 1 
+        ? `<div style="font-size: 0.7rem; opacity: 0.7;">x${span}</div>` 
+        : ''
+    }
+
     ${esActivo ? '<div style="font-size: 14px;">📍</div>' : ''}
 `;
             }
