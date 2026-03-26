@@ -462,7 +462,7 @@ const CONFIG_ALMACENES = {
   "A1": [
   [null, "G1", "G1", "H1", "H1", "I1", "I1", "J1", "J1", null],
   ["A4", null, "B2", "C2", null, "D1", "E1", null, "F2", null],
-  ["A3", null, "B1", "C1", null, null, null, "F1", null, null],
+  ["A3", null, "B2", "C1", null, null, null, null, "F1", null],
   ["A2", null, null, null, null, null, null, null, null, null],
   ["A1", null, null, null, null, null, null, null, null, null]
 ],
