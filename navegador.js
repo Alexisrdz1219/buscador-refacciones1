@@ -173,7 +173,7 @@ document.getElementById("btnTodasRefacciones")?.addEventListener("click", async 
 // if (quitardash) {
 //   quitardash.style.display = "none";
 // }
-dash?.classList.add("d-none");
+    dash?.classList.add("d-none");
     formFiltros?.classList.remove("d-none");
 
   modeloSeleccionado = "";
