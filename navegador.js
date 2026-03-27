@@ -483,6 +483,14 @@ const CONFIG_ALMACENES = {
   [null, null, null, null, null, null, null, null, null, null],
   [null, null, null, null, null, null, null, null, null, null],
   [null, null, null, null, null, null, null, null, null, null]
+ ],
+ "Herramienta": [
+  [null, null, null, null, null, null, null, null, null, null],
+  [null, null, "PE", "LLI", "LLI", null, null, null, null, null],
+  [null, null, "LL", "LL", "LL2", "LL2", null, null, null, null],
+  [null, null, "AR", "AR", "GH", "GH", null, null, null, null],
+  [null, null, "GR", "GR", "GR", "GR", null, null, null, null],
+  [null, null, null, null, null, null, null, null, null, null]
  ]
 };
 
