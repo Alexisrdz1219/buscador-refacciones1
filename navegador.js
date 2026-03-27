@@ -604,8 +604,7 @@ function abrirMapa(ubicacionStr) {
 
 
   container.style.display = "grid";
-  container.style.gridTemplateColumns = `repeat(10, 90px)`; // 🔥 cuadrados reales
-  container.style.gridAutoRows = `90px`;
+  
   container.style.gap = "6px";
 
   container.appendChild(fragment);
