@@ -464,8 +464,8 @@ const CONFIG_ALMACENES = {
   ["A4", null, "B2", "C2", null, "D1", "E1", null, "F2", null],
   ["A3", null, "B1", "C1", null, null, null, null, "F1", null],
   ["A2", null, null, null, null, null, null, null, null, null],
-  ["A1", null, null, null, null, null, null, null, "", null],
-  [ null, null, null, null, null, "Solicitar", "Solicitar", "Solicitar", "", null]
+  ["A1", null, null, null, null, null, null, null, "Solicitar", null],
+  [ null, null, null, null, null, null, "Solicitar", "Solicitar", "Solicitar", null]
 ],
 
 "A2": [
@@ -487,104 +487,110 @@ const CONFIG_ALMACENES = {
  ]
 };
 
+const visitado = new Set();
+
+function key(r, c) {
+  return `${r}-${c}`;
+}
+
 function abrirMapa(ubicacionStr) {
-    if (!ubicacionStr || ubicacionStr.includes('Sin ubicación')) return;
+  if (!ubicacionStr || ubicacionStr.includes('Sin ubicación')) return;
 
-    const modal = document.getElementById("modalMapa");
-    const container = document.getElementById("contenedorMapaDinamico");
-    const display = document.getElementById("ubicacionTextoDisplay");
+  const modal = document.getElementById("modalMapa");
+  const container = document.getElementById("contenedorMapaDinamico");
+  const display = document.getElementById("ubicacionTextoDisplay");
 
-    if (!modal || !container) return;
+  container.replaceChildren(); 
+  modal.style.display = "flex";
+  display.innerText = ubicacionStr;
 
-    // limpiar
-    container.replaceChildren(); 
-    display.innerText = ubicacionStr;
-    modal.style.display = "flex";
+  const partes = ubicacionStr.trim().split(/\s+/);
+  const almacenId = partes[0];
+  const anaquelTarget = partes[1]?.split("-")[0];
 
-    const partes = ubicacionStr.trim().split(/\s+/);
-    const almacenId = partes[0]; 
-    const anaquelTarget = partes[1] ? partes[1].split("-")[0] : null;
+  const grid = CONFIG_ALMACENES[almacenId] || [];
 
-    const racks = CONFIG_ALMACENES[almacenId] || [];
+  const fragment = document.createDocumentFragment();
+  visitado.clear();
 
-    if (racks.length === 0) {
-        container.innerHTML = `<p style="grid-column: span 10; color:#7e8990;">
-            Esquema de ${almacenId} no definido.
-        </p>`;
-        return;
-    }
+  for (let r = 0; r < grid.length; r++) {
+    for (let c = 0; c < grid[r].length; c++) {
 
-    const fragmento = document.createDocumentFragment();
+      const id = grid[r][c];
+      if (!id || visitado.has(key(r, c))) continue;
 
-    racks.forEach(fila => {
-        let i = 0;
+      let width = 1;
+      let height = 1;
 
-        while (i < fila.length) {
-            const id = fila[i];
+      // 👉 EXPANSIÓN HORIZONTAL
+      while (grid[r][c + width] === id) {
+        width++;
+      }
 
-            // 🔥 detectar repetidos (merge)
-            let span = 1;
-            while (fila[i + span] === id) {
-                span++;
-            }
-
-            const celda = document.createElement("div");
-
-            if (id === null) {
-                celda.style.visibility = "hidden";
-                celda.style.gridColumn = `span ${span}`;
-            } else {
-                const esActivo = (id === anaquelTarget);
-
-               celda.style.cssText = `
-    height: 80px;
-    min-width: 90px;
-
-    background: ${esActivo ? 'linear-gradient(135deg, #007a33, #00a84f)' : '#ffffff'};
-    color: ${esActivo ? '#ffffff' : '#374151'};
-    
-    border: 2px solid ${esActivo ? '#007a33' : '#e5e7eb'};
-    border-bottom: 4px solid ${esActivo ? '#004d21' : '#cbd5e1'};
-    
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-
-    border-radius: 10px;
-
-    grid-column: span ${span};
-
-    /* 🔥 IMPORTANTE: esto hace que se note el tamaño */
-    width: 100%;
-    
-    box-shadow: ${esActivo 
-        ? '0 8px 20px rgba(0,122,51,0.35)' 
-        : '0 3px 8px rgba(0,0,0,0.08)'};
-
-    transition: all 0.25s ease;
-`;
-
-                celda.innerHTML = `
-    <div style="
-        font-size: ${span > 1 ? '1.1rem' : '0.8rem'};
-        font-weight: bold;
-    ">
-        ${id}
-    </div>
-
-
-    ${esActivo ? '<div style="font-size: 14px;">📍</div>' : ''}
-`;
-            }
-
-            fragmento.appendChild(celda);
-
-            i += span; // 🔥 saltar los repetidos
+      // 👉 EXPANSIÓN VERTICAL
+      let expand = true;
+      while (expand) {
+        for (let i = 0; i < width; i++) {
+          if (grid[r + height]?.[c + i] !== id) {
+            expand = false;
+            break;
+          }
         }
-    });
+        if (expand) height++;
+      }
 
-    container.appendChild(fragmento);
+      // 👉 marcar como visitado
+      for (let i = 0; i < height; i++) {
+        for (let j = 0; j < width; j++) {
+          visitado.add(key(r + i, c + j));
+        }
+      }
+
+      const celda = document.createElement("div");
+      const esActivo = id === anaquelTarget;
+
+      celda.style.cssText = `
+        grid-column: ${c + 1} / span ${width};
+        grid-row: ${r + 1} / span ${height};
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+
+        border-radius: 12px;
+        font-weight: bold;
+
+        background: ${esActivo 
+          ? 'linear-gradient(135deg, #007a33, #00a84f)' 
+          : '#ffffff'};
+
+        color: ${esActivo ? '#fff' : '#374151'};
+
+        border: 2px solid ${esActivo ? '#007a33' : '#e5e7eb'};
+        box-shadow: ${esActivo 
+          ? '0 10px 25px rgba(0,122,51,0.4)' 
+          : '0 3px 8px rgba(0,0,0,0.08)'};
+
+        transition: 0.25s;
+      `;
+
+      celda.innerHTML = `
+        <div style="font-size:${width > 1 || height > 1 ? '1.2rem' : '0.85rem'}">
+          ${id}
+        </div>
+        ${esActivo ? '<div>📍</div>' : ''}
+      `;
+
+      fragment.appendChild(celda);
+    }
+  }
+
+  container.style.display = "grid";
+  container.style.gridTemplateColumns = `repeat(10, 1fr)`;
+  container.style.gap = "10px";
+
+  container.appendChild(fragment);
 }
 
 function cerrarMapa() {
