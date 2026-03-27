@@ -474,12 +474,16 @@ const CONFIG_ALMACENES = {
   [null, "K1", null, null, null, null, null, null, "Q1", null],
   [null, null, null, null, null, null, null, null, "R1", null],
   [null, null, "Z1", "Z1", null, null, null, null, "S1", null]
-]
-  // "A2": [
-  //   ["K1", "L1", "M1"],
-  //   ["N1", "O1", "P1"],
-  //   ["Q1", "R1", "S1"]
-  // ]
+],
+
+"A3": [
+  ["T1", "U1", "V1", "W1", "X1", "Y1", "Z1", null, null, null],
+  [null, null, null, null, null, null, null, null, null, null],
+  [null, null, null, null, null, null, null, null, null, null],
+  [null, null, null, null, null, null, null, null, null, null],
+  [null, null, null, null, null, null, null, null, null, null],
+  [null, null, null, null, null, null, null, null, null, null]
+ ]
 };
 
 function abrirMapa(ubicacionStr) {
