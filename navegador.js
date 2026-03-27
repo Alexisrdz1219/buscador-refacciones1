@@ -541,7 +541,7 @@ function abrirMapa(ubicacionStr) {
       let expand = true;
       while (expand) {
         for (let i = 0; i < width; i++) {
-          if (grid[r + height]?.[c + i] !== id) {
+          if (grid[r]?.[c + i] !== id) {
             expand = false;
             break;
           }
