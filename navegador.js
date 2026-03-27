@@ -513,23 +513,34 @@ function abrirMapa(ubicacionStr) {
   const fragment = document.createDocumentFragment();
   visitado.clear();
 
+  let grupoSolicitar = [];
+
+  // 🔹 RECORRER GRID
   for (let r = 0; r < grid.length; r++) {
     for (let c = 0; c < grid[r].length; c++) {
 
       const id = grid[r][c];
+
+      // 🔥 GUARDAR TODOS LOS "Solicitar"
+      if (id === "Solicitar") {
+        grupoSolicitar.push({ r, c });
+        visitado.add(key(r, c));
+        continue;
+      }
+
       if (!id || visitado.has(key(r, c))) continue;
 
       let width = 1;
       let height = 1;
 
       // 👉 EXPANSIÓN HORIZONTAL
-      while (id !== "Solicitar" && grid[r][c + width] === id) {
-  width++;
-}
+      while (grid[r][c + width] === id) {
+        width++;
+      }
 
       // 👉 EXPANSIÓN VERTICAL
       let expand = true;
-      while (expand && id !== "Solicitar") {
+      while (expand) {
         for (let i = 0; i < width; i++) {
           if (grid[r + height]?.[c + i] !== id) {
             expand = false;
@@ -539,7 +550,7 @@ function abrirMapa(ubicacionStr) {
         if (expand) height++;
       }
 
-      // 👉 marcar como visitado
+      // 👉 marcar visitados
       for (let i = 0; i < height; i++) {
         for (let j = 0; j < width; j++) {
           visitado.add(key(r + i, c + j));
@@ -549,49 +560,34 @@ function abrirMapa(ubicacionStr) {
       const celda = document.createElement("div");
       const esActivo = id === anaquelTarget;
 
-     celda.style.cssText = `
-  grid-column: ${c + 1} / span ${width};
-  grid-row: ${r + 1} / span ${height};
+      celda.style.cssText = `
+        grid-column: ${c + 1} / span ${width};
+        grid-row: ${r + 1} / span ${height};
 
-  width: 100%;
-  height: 100%;
+        width: 100%;
+        height: 100%;
 
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
 
-  border-radius: 12px;
-  font-weight: bold;
+        border-radius: 12px;
+        font-weight: bold;
 
-  background: ${esActivo 
-    ? 'linear-gradient(135deg, #007a33, #00a84f)' 
-    : '#ffffff'};
+        background: ${esActivo 
+          ? 'linear-gradient(135deg, #007a33, #00a84f)' 
+          : '#ffffff'};
 
-  color: ${esActivo ? '#fff' : '#374151'};
+        color: ${esActivo ? '#fff' : '#374151'};
 
-  border: 2px solid ${esActivo ? '#007a33' : '#e5e7eb'};
-  box-shadow: ${esActivo 
-    ? '0 10px 25px rgba(0,122,51,0.4)' 
-    : '0 3px 8px rgba(0,0,0,0.08)'};
+        border: 2px solid ${esActivo ? '#007a33' : '#e5e7eb'};
+        box-shadow: ${esActivo 
+          ? '0 10px 25px rgba(0,122,51,0.4)' 
+          : '0 3px 8px rgba(0,0,0,0.08)'};
 
-  transition: 0.25s;
-
-`;
-
-if (id === "Solicitar") {
-  celda.style.background = "#868686";
-  celda.style.color = "#fff";
-  celda.style.border = "none";
-
-  celda.innerHTML = ""; // limpiar
-
-  // solo mostrar texto en la primera
-  if (!visitadoTextoSolicitar) {
-    celda.innerHTML = "Solicitar";
-    visitadoTextoSolicitar = true;
-  }
-}
+        transition: 0.25s;
+      `;
 
       celda.innerHTML = `
         <div style="font-size:${width > 1 || height > 1 ? '1.2rem' : '0.85rem'}">
@@ -604,15 +600,52 @@ if (id === "Solicitar") {
     }
   }
 
+  // 🔥 CREAR UNA SOLA CELDA PARA "Solicitar"
+  if (grupoSolicitar.length > 0) {
+
+    const filas = grupoSolicitar.map(x => x.r);
+    const cols = grupoSolicitar.map(x => x.c);
+
+    const minR = Math.min(...filas);
+    const maxR = Math.max(...filas);
+    const minC = Math.min(...cols);
+    const maxC = Math.max(...cols);
+
+    const celda = document.createElement("div");
+
+    celda.style.cssText = `
+      grid-column: ${minC + 1} / span ${maxC - minC + 1};
+      grid-row: ${minR + 1} / span ${maxR - minR + 1};
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      border-radius: 12px;
+      font-weight: bold;
+
+      background: #868686;
+      color: white;
+
+      border: none;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+    `;
+
+    celda.innerHTML = "Solicitar";
+
+    fragment.appendChild(celda);
+  }
+
   container.style.display = "grid";
-  container.style.gridTemplateColumns = `repeat(10, 1fr)`;
-  container.style.gap = "10px";
+  container.style.gridTemplateColumns = `repeat(10, 90px)`; // 🔥 cuadrados reales
+  container.style.gridAutoRows = `90px`;
+  container.style.gap = "6px";
 
   container.appendChild(fragment);
 }
 
 function cerrarMapa() {
-    document.getElementById("modalMapa").style.display = "none";
+  document.getElementById("modalMapa").style.display = "none";
 }
 
 // --- LISTENER DE CLICS (FUERA de mostrarResultados) ---
