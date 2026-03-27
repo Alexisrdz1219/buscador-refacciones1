@@ -549,31 +549,34 @@ function abrirMapa(ubicacionStr) {
       const celda = document.createElement("div");
       const esActivo = id === anaquelTarget;
 
-      celda.style.cssText = `
-        grid-column: ${c + 1} / span ${width};
-        grid-row: ${r + 1} / span ${height};
+     celda.style.cssText = `
+  grid-column: ${c + 1} / span ${width};
+  grid-row: ${r + 1} / span ${height};
 
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        flex-direction: column;
+  width: 100%;
+  height: 100%;
 
-        border-radius: 12px;
-        font-weight: bold;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
 
-        background: ${esActivo 
-          ? 'linear-gradient(135deg, #007a33, #00a84f)' 
-          : '#ffffff'};
+  border-radius: 12px;
+  font-weight: bold;
 
-        color: ${esActivo ? '#fff' : '#374151'};
+  background: ${esActivo 
+    ? 'linear-gradient(135deg, #007a33, #00a84f)' 
+    : '#ffffff'};
 
-        border: 2px solid ${esActivo ? '#007a33' : '#e5e7eb'};
-        box-shadow: ${esActivo 
-          ? '0 10px 25px rgba(0,122,51,0.4)' 
-          : '0 3px 8px rgba(0,0,0,0.08)'};
+  color: ${esActivo ? '#fff' : '#374151'};
 
-        transition: 0.25s;
-      `;
+  border: 2px solid ${esActivo ? '#007a33' : '#e5e7eb'};
+  box-shadow: ${esActivo 
+    ? '0 10px 25px rgba(0,122,51,0.4)' 
+    : '0 3px 8px rgba(0,0,0,0.08)'};
+
+  transition: 0.25s;
+`;
 
       celda.innerHTML = `
         <div style="font-size:${width > 1 || height > 1 ? '1.2rem' : '0.85rem'}">
