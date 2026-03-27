@@ -512,32 +512,24 @@ function abrirMapa(ubicacionStr) {
   const fragment = document.createDocumentFragment();
   visitado.clear();
 
-  let grupoSolicitar = [];
-
   // 🔹 RECORRER GRID
   for (let r = 0; r < grid.length; r++) {
-    for (let c = 0; c < grid[r].length; c++) {
+  for (let c = 0; c < grid[r].length; c++) {
 
-      const id = grid[r][c];
+    const id = grid[r][c];
 
-      // 🔥 GUARDAR TODOS LOS "Solicitar"
-      if (id === "Solicitar") {
-        grupoSolicitar.push({ r, c });
-        visitado.add(key(r, c));
-        continue;
-      }
+    if (!id || visitado.has(key(r, c))) continue;
 
-      if (!id || visitado.has(key(r, c))) continue;
+    let width = 1;
+    let height = 1;
 
-      let width = 1;
-      let height = 1;
+    // 🔥 UNIR SOLO HORIZONTAL (incluye "Solicitar")
+    while (grid[r][c + width] === id) {
+      width++;
+    }
 
-      // 👉 EXPANSIÓN HORIZONTAL
-      while (grid[r][c + width] === id) {
-        width++;
-      }
-
-      // 👉 EXPANSIÓN VERTICAL
+    // 🔥 SOLO vertical si NO es "Solicitar"
+    if (id !== "Solicitar") {
       let expand = true;
       while (expand) {
         for (let i = 0; i < width; i++) {
@@ -548,92 +540,68 @@ function abrirMapa(ubicacionStr) {
         }
         if (expand) height++;
       }
-
-      // 👉 marcar visitados
-      for (let i = 0; i < height; i++) {
-        for (let j = 0; j < width; j++) {
-          visitado.add(key(r + i, c + j));
-        }
-      }
-
-      const celda = document.createElement("div");
-      const esActivo = id === anaquelTarget;
-
-      celda.style.cssText = `
-        grid-column: ${c + 1} / span ${width};
-        grid-row: ${r + 1} / span ${height};
-
-        width: 100%;
-        height: 100%;
-
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        flex-direction: column;
-
-        border-radius: 12px;
-        font-weight: bold;
-
-        background: ${esActivo 
-          ? 'linear-gradient(135deg, #007a33, #00a84f)' 
-          : '#ffffff'};
-
-        color: ${esActivo ? '#fff' : '#374151'};
-
-        border: 2px solid ${esActivo ? '#007a33' : '#e5e7eb'};
-        box-shadow: ${esActivo 
-          ? '0 10px 25px rgba(0,122,51,0.4)' 
-          : '0 3px 8px rgba(0,0,0,0.08)'};
-
-        transition: 0.25s;
-      `;
-
-      celda.innerHTML = `
-        <div style="font-size:${width > 1 || height > 1 ? '1.2rem' : '0.85rem'}">
-          ${id}
-        </div>
-        ${esActivo ? '<div>📍</div>' : ''}
-      `;
-
-      fragment.appendChild(celda);
     }
-  }
 
-  // 🔥 CREAR UNA SOLA CELDA PARA "Solicitar"
-  if (grupoSolicitar.length > 0) {
-
-    const filas = grupoSolicitar.map(x => x.r);
-    const cols = grupoSolicitar.map(x => x.c);
-
-    const minR = Math.min(...filas);
-    const maxR = Math.max(...filas);
-    const minC = Math.min(...cols);
-    const maxC = Math.max(...cols);
+    // marcar visitados
+    for (let i = 0; i < height; i++) {
+      for (let j = 0; j < width; j++) {
+        visitado.add(key(r + i, c + j));
+      }
+    }
 
     const celda = document.createElement("div");
+    const esActivo = id === anaquelTarget;
+
+    // 🎨 estilo especial para "Solicitar"
+    const esSolicitar = id === "Solicitar";
 
     celda.style.cssText = `
-      grid-column: ${minC + 1} / span ${maxC - minC + 1};
-      grid-row: ${minR + 1} / span ${maxR - minR + 1};
+      grid-column: ${c + 1} / span ${width};
+      grid-row: ${r + 1} / span ${height};
+
+      width: 100%;
+      height: 100%;
 
       display: flex;
       align-items: center;
       justify-content: center;
+      flex-direction: column;
 
       border-radius: 12px;
       font-weight: bold;
 
-      background: #868686;
-      color: white;
+      background: ${
+        esSolicitar
+          ? '#868686'
+          : esActivo
+          ? 'linear-gradient(135deg, #007a33, #00a84f)'
+          : '#ffffff'
+      };
 
-      border: none;
-      box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+      color: ${esSolicitar || esActivo ? '#fff' : '#374151'};
+
+      border: ${esSolicitar ? 'none' : `2px solid ${esActivo ? '#007a33' : '#e5e7eb'}`};
+
+      box-shadow: ${
+        esActivo
+          ? '0 10px 25px rgba(0,122,51,0.4)'
+          : '0 3px 8px rgba(0,0,0,0.08)'
+      };
+
+      transition: 0.25s;
     `;
 
-    celda.innerHTML = "Solicitar";
+    celda.innerHTML = `
+      <div style="font-size:${width > 1 ? '1.2rem' : '0.85rem'}">
+        ${id}
+      </div>
+      ${esActivo ? '<div>📍</div>' : ''}
+    `;
 
     fragment.appendChild(celda);
   }
+}
+
 
   container.style.display = "grid";
   container.style.gridTemplateColumns = `repeat(10, 90px)`; // 🔥 cuadrados reales
