@@ -564,7 +564,7 @@ function abrirMapa(ubicacionStr) {
     const esSolicitar = id === "Solicitar";
 
     celda.style.cssText = `
-       grid-column: ${c + .5} / span ${width};
+       grid-column: ${c + 1} / span ${width};
        grid-row: ${r + 1} / span ${height};
 
       width: 100%;
