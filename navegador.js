@@ -560,10 +560,6 @@ function abrirMapa(ubicacionStr) {
         ${id}
     </div>
 
-    ${span > 1 
-        ? `<div style="font-size: 0.7rem; opacity: 0.7;">x${span}</div>` 
-        : ''
-    }
 
     ${esActivo ? '<div style="font-size: 14px;">📍</div>' : ''}
 `;
