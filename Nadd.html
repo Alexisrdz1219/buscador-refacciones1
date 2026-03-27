@@ -197,9 +197,16 @@
 }
 
 /* 📱 CELULAR */
-@media (max-width: 600px) {
+@media (max-width: 768px) {
   #contenedorMapaDinamico {
-    grid-template-columns: repeat(5, 1fr); /* 🔥 menos columnas */
+    grid-template-columns: repeat(5, 1fr);
+  }
+}
+
+/* 📱 MÁS CHIQUITO */
+@media (max-width: 480px) {
+  #contenedorMapaDinamico {
+    grid-template-columns: repeat(4, 1fr);
   }
 }
             </style>
