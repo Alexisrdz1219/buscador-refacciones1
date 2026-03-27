@@ -565,7 +565,7 @@ function abrirMapa(ubicacionStr) {
 
     celda.style.cssText = `
       // grid-column: ${c + 1} / span ${width};
-      // grid-row: ${r + 1} / span ${height};
+       grid-row: ${r + 1} / span ${height};
 
       width: 100%;
       height: 100%;
