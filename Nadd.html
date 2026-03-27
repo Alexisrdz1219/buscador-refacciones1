@@ -175,20 +175,19 @@
 
 /* GRID */
 #contenedorMapaDinamico {
-  display: grid;
-  grid-template-columns: repeat(10, 1fr); /* escritorio */
+   display: grid;
+  grid-template-columns: repeat(10, 1fr);
   gap: 6px;
-  width: 100%;
+
+  max-width: 800px; /* 🔥 CLAVE */
+  margin: 0 auto;   /* centrar */
 }
 
 /* CELDAS */
 #contenedorMapaDinamico div {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 10px;
-  font-weight: bold;
-  aspect-ratio: 1 / 1; /* 🔥 siempre cuadrados */
+  aspect-ratio: 1 / 1;
+  width: 100%;
+  max-width: 70px; /* 🔥 limita tamaño */
 }
 
 /* HOVER */
