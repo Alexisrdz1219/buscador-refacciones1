@@ -465,7 +465,7 @@ const CONFIG_ALMACENES = {
   ["A3", null, "B1", "C1", null, null, null, null, "F1", null],
   ["A2", null, null, null, null, null, null, null, null, null],
   ["A1", null, null, null, null, null, null, null, "", null],
-  [ null, null, null, null, null, "Solicitar", "Solicitar", "", "", null]
+  [ null, null, null, null, null, "Solicitar", "Solicitar", "Solicitar", "", null]
 ],
 
 "A2": [
