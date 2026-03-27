@@ -464,7 +464,7 @@ const CONFIG_ALMACENES = {
   ["A4", null, "B2", "C2", null, "D1", "E1", null, "F2", null],
   ["A3", null, "B1", "C1", null, null, null, null, "F1", null],
   ["A2", null, null, null, null, null, null, null, null, null],
-  ["A1", null, null, null, null, null, null, null, "", null],
+  ["A1", null, null, null, null, null, null, null, "Solicitar", null],
   [ null, null, null, null, null, null, "Solicitar", "Solicitar", "Solicitar", null]
 ],
 
@@ -576,7 +576,16 @@ function abrirMapa(ubicacionStr) {
     : '0 3px 8px rgba(0,0,0,0.08)'};
 
   transition: 0.25s;
+
 `;
+
+if (id === "A1") {
+  celda.style.cssText += `
+    background: #facc15;
+    border: 3px solid #000;
+    transform: scale(1.1);
+  `;
+}
 
       celda.innerHTML = `
         <div style="font-size:${width > 1 || height > 1 ? '1.2rem' : '0.85rem'}">
