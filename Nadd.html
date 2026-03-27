@@ -161,29 +161,6 @@
   padding: 10px;
 }
 
-/* GRID */
-#contenedorMapaDinamico {
-  display: grid;
-  
-  grid-auto-rows: minmax(60px, 1fr);
-  gap: 6px;
-  justify-content: center;
-}
-
-/* CELDAS */
-#contenedorMapaDinamico div {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 10px;
-  font-weight: bold;
-  aspect-ratio: 1 / 1; /* 🔥 CUADRADOS PERFECTOS */
-}
-
-/* HOVER */
-#contenedorMapaDinamico div:hover {
-  transform: scale(1.05);
-}
 
 /* BOTÓN */
 .btn-cerrar {
@@ -196,14 +173,37 @@
   cursor: pointer;
 }
 
-/* 📱 CELULAR */
+/* GRID */
+#contenedorMapaDinamico {
+  display: grid;
+  grid-template-columns: repeat(10, 1fr); /* escritorio */
+  gap: 6px;
+  width: 100%;
+}
+
+/* CELDAS */
+#contenedorMapaDinamico div {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 10px;
+  font-weight: bold;
+  aspect-ratio: 1 / 1; /* 🔥 siempre cuadrados */
+}
+
+/* HOVER */
+#contenedorMapaDinamico div:hover {
+  transform: scale(1.05);
+}
+
+/* 📱 TABLET */
 @media (max-width: 768px) {
   #contenedorMapaDinamico {
-    grid-template-columns: repeat(5, 1fr);
+    grid-template-columns: repeat(6, 1fr);
   }
 }
 
-/* 📱 MÁS CHIQUITO */
+/* 📱 CELULAR */
 @media (max-width: 480px) {
   #contenedorMapaDinamico {
     grid-template-columns: repeat(4, 1fr);
