@@ -186,28 +186,23 @@
 /* GRID */
 #contenedorMapaDinamico {
   display: grid;
-  grid-template-columns: repeat(10, 1fr);
+  grid-template-columns: repeat(auto-fit, minmax(60px, 1fr));
   gap: 6px;
-
-  max-width: 700px;   /* 🔥 controla tamaño total */
-  margin: 0 auto;     /* 🔥 centra */
-  justify-content: center;
+  width: 100%;
+  justify-items: center;
 }
 
 /* CELDAS */
 #contenedorMapaDinamico div {
+  width: 100%;
+  aspect-ratio: 1 / 1; /* 🔥 CUADRADOS */
   display: flex;
   align-items: center;
   justify-content: center;
-
-  aspect-ratio: 1 / 1; /* 🔥 cuadrados perfectos */
-  max-width: 65px;     /* 🔥 tamaño uniforme */
-
   border-radius: 10px;
   font-weight: bold;
-
   text-align: center;
-
+  padding: 4px;
 }
 
 /* HOVER */
