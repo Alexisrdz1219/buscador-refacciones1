@@ -523,13 +523,13 @@ function abrirMapa(ubicacionStr) {
       let height = 1;
 
       // 👉 EXPANSIÓN HORIZONTAL
-      while (grid[r][c + width] === id) {
-        width++;
-      }
+      while (id !== "Solicitar" && grid[r][c + width] === id) {
+  width++;
+}
 
       // 👉 EXPANSIÓN VERTICAL
       let expand = true;
-      while (expand) {
+      while (expand && id !== "Solicitar") {
         for (let i = 0; i < width; i++) {
           if (grid[r + height]?.[c + i] !== id) {
             expand = false;
@@ -579,10 +579,18 @@ function abrirMapa(ubicacionStr) {
 
 `;
 
-if (id === "Solicitar1") {
-  celda.style.cssText += `
-    color:white;
-  `;
+if (id === "Solicitar") {
+  celda.style.background = "#868686";
+  celda.style.color = "#fff";
+  celda.style.border = "none";
+
+  celda.innerHTML = ""; // limpiar
+
+  // solo mostrar texto en la primera
+  if (!visitadoTextoSolicitar) {
+    celda.innerHTML = "Solicitar";
+    visitadoTextoSolicitar = true;
+  }
 }
 
       celda.innerHTML = `
