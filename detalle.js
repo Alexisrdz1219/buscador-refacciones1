@@ -65,8 +65,6 @@ async function cargarOpciones(endpoint, selectId) {
   }
 }
 
-
-
 /* =========================
    GUARDAR CAMBIOS
 ========================= */
@@ -221,9 +219,9 @@ function renderModal(lista) {
         <div class="col-md-6 mb-2">
           <div class="machine-item">
             <input type="checkbox"
-                   value="${m.id}"
-                   data-categoria="${m.categoriaprin}"
-                   ${checked}>
+                  value="${m.id}"
+                  data-categoria="${m.categoriaprin}"
+                  ${checked}>
             ${m.maquinamod || ""} ${m.maquinaesp || ""}
           </div>
         </div>

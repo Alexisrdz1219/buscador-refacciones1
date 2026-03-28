@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!-- <!DOCTYPE html>
 <html lang="es" data-bs-theme="light">
     <head>
         <meta charset="UTF-8">
@@ -8,559 +8,31 @@
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
 
-        <style>
-            body { min-height: 100vh; background-color: #f8f9fa; margin: 0; padding: 20px;}
-            main { display: flex; height: 100vh; }
-
-            /* --- SIDEBAR --- */
-            .sidebar-container {
-                width: 280px;
-                height: 100vh;
-                background: white;
-                border-right: 1px solid #dee2e6;
-                transition: transform 0.3s ease-in-out;
-                z-index: 1100;
-            }
-
-            /* --- ÁREA DE CONTENIDO --- */
-            .content-area {
-                flex-grow: 1;
-                overflow-y: auto;
-                padding: 20px;
-            }
-
-            /* --- BOTÓN FLOTANTE (HAMBURGUESA) --- */
-            .mobile-toggle-btn {
-                display: none;
-                position: fixed;
-                top: 15px;
-                left: 15px;
-                z-index: 1000;
-                background: #fff;
-                border: 1px solid #dee2e6;
-                border-radius: 8px;
-                padding: 8px 12px;
-                box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-                transition: opacity 0.2s ease;
-            }
-
-            /* Ocultar el botón hamburguesa cuando el sidebar está abierto */
-            body.sidebar-open .mobile-toggle-btn {
-                opacity: 0;
-                pointer-events: none;
-            }
-
-            /* --- AJUSTES MÓVILES --- */
-            @media (max-width: 991.98px) {
-                .mobile-toggle-btn { display: block; }
-                
-                .sidebar-container {
-                    position: fixed;
-                    left: 0;
-                    transform: translateX(-100%);
-                }
-
-                .sidebar-container.show {
-                    transform: translateX(0);
-                }
-
-                .content-area { padding-top: 70px; }
-            }
-
-            /* Estilos de botones internos */
-            .btn-toggle {
-                display: flex;
-                align-items: center;
-                width: 100%;
-                padding: .6rem .75rem;
-                background: transparent;
-                border: 0;
-                border-radius: 6px;
-                color: #444;
-                text-align: left;
-            }
-            .btn-toggle:hover { background-color: #f0f0f0; }
-            .btn-toggle::after {
-                content: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='rgba%280,0,0,.5%29' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M5 14l6-6-6-6'/%3e%3c/svg%3e");
-                margin-left: auto;
-                transition: transform .35s ease;
-            }
-            .btn-toggle[aria-expanded="true"]::after { transform: rotate(90deg); }
-            
-            .btn-toggle-nav a {
-                display: block;
-                padding: .4rem 2.8rem;
-                color: #666;
-                text-decoration: none;
-                font-size: 0.875rem;
-                border-radius: 4px;
-            }
-            .btn-toggle-nav a:hover { background-color: #e9ecef; color: #000; }
-
-            /* Overlay */
-            .sidebar-overlay {
-                display: none;
-                position: fixed;
-                inset: 0;
-                background: rgba(0,0,0,0.3);
-                backdrop-filter: blur(2px);
-                z-index: 1050;
-            }
-            .sidebar-overlay.show { display: block; }
-
-            
-/* CONTENEDOR GENERAL */
-.ref-container {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-  gap: 20px;
-}
-
-/* TARJETA */
-.ref-card {
-  background: #fff;
-  border-radius: 12px;
-  overflow: hidden;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
-  display: flex;
-  flex-direction: column;
-  transition: 0.2s ease;
-}
-
-.ref-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 8px 20px rgba(0,0,0,0.12);
-}
-
-/* IMAGEN */
-.ref-img {
-  width: 100%;
-  height: 200px;
-  overflow: hidden;
-}
-
-.ref-img img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
-/* BODY */
-.ref-body {
-  padding: 15px;
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
-
-.ref-title {
-  margin: 0;
-  font-size: 18px;
-}
-
-/* CATEGORÍA */
-.categoria {
-  font-size: 13px;
-  color: #777;
-}
-
-/* GRID DE DATOS */
-.ref-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 6px 10px;
-  font-size: 13px;
-}
-
-/* BOTÓN */
-.ref-actions {
-  margin-top: auto;
-}
-
-.btn-ver {
-  display: inline-block;
-  text-decoration: none;
-  background: #007a33;
-  color: white;
-  padding: 8px 12px;
-  border-radius: 6px;
-  font-size: 14px;
-  text-align: center;
-}
-
-.btn-ver:hover {
-  background: #162d6b;
-}
-
-/* TITULOS POR COLORES */
-
-.titulo-default {
-  color: #6c757d; /* gris bootstrap */
-}
-
-.titulo-aoki {
-  color: #50e9a7;
-}
-
-.titulo-asb {
-  color: #0e7ded;
-}
-
-.titulo-nissei {
-  color: #dd3c37;
-}
- .titulo-sumitomo {
-  color: #027ffd;
-}
-
-.titulo-enlainadora {
-  color: #808080;
-}
-
-.titulo-xhs-50kgs {
-  color: #efa028;
-}
-
-.titulo-pagani {
-  color: #8a2be2;
-}
-
-.titulo-rapid {
-  color: #8a2be2;
-}
-
-.ref-modelo,
-.ref-cantidad {
-  font-size: 13px;
-  color: #6b7280;
-  margin-top: 4px;
-}
-
-.ref-ubicacion {
-  margin-top: 12px;
-  padding: 8px;
-  background: #dbdee0;
-  color: #007a33;
-  font-weight: 600;
-  border-radius: 6px;
-  font-size: 14px;
-}
-
-
-        </style>
+        
         
     </head>
 
-    <body id="bodyTag">
-        <button class="btn mobile-toggle-btn d-lg-none" id="btnToggle"><i class="bi bi-list fs-3"></i></button>
-        <div class="sidebar-overlay" id="overlay"></div>
-        <main>
-            <aside class="sidebar-container d-flex flex-column p-3" id="sidebar">
-                <div class="d-flex align-items-center mb-3">
-                    <a href="/" class="text-decoration-none flex-grow-1 text-center">
-                        <img src="https://iemcousa.com/application/files/9615/2838/9508/logo.png" 
-                            alt="IEMCO" style="max-width: 160px; height: auto;" onerror="this.onerror=null; this.src='no-image.jpg';">
-                    </a>
-                    <button class="btn-close d-lg-none ms-2" id="btnClose" aria-label="Close"></button>
-                </div>
-                
-                <hr>
-                
-                <ul class="nav nav-pills flex-column mb-auto">
-                    <li class="nav-item">
-                        <a href="" style="background-color: #007a33;" class="nav-link active"><i class="bi bi-house-door me-2"></i> Inicio</a>
-                    </li>
-                    <li class="mb-1">
-                        <button class="btn-toggle collapsed" data-bs-toggle="collapse" data-bs-target="#dash-collapse">
-                            <i class="bi bi-pencil-square me-2" style="color: #007a33;"></i> Acciones
-                        </button>
-                        <div class="collapse" id="dash-collapse">
-                            <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
-                                <li><a href="actDatos/importar-odoo.html">Actualizar refacciones</a></li>
-                                <li><a href="refacciones.html">Editar refacciones</a></li>
-                            </ul>
-                        </div>
-                    </li>
-
-                    <li class="mb-1">
-                        <button class="btn-toggle collapsed" data-bs-toggle="collapse" data-bs-target="#MAQU-collapse">
-                            <i class="bi bi-tools me-2" style="color: #675e5e;"></i> Maquinas
-                        </button>
-                        <div class="collapse" id="MAQU-collapse">
-                            <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
-                                <li><a href="javascript:void(0)" class="link-body-emphasis maquina-link d-block fw-bold" data-categoriaprin="Maquinas" data-maquinamod="AOKI SBIII-500-150">AOKI</a></li>
-                                <li class="mb-2"><a href="#collapseASB" class="link-body-emphasis  d-block fw-bold" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="collapseASB">ASB</a>
-                                    <div class="collapse mt-2 ps-3" id="collapseASB">
-                                        <div class="card card-body pt-1 pb-1 border-start border-0 rounded-0">
-                                            <a href="javascript:void(0)" class="link-body-emphasis maquina-link d-block" data-categoriaprin="Maquinas" data-maquinamod="ASB 150DP"><small class="text-muted">ASB 150DP</small></a>
-                                        </div>
-                                        <div class="card card-body pt-1 pb-1 border-start border-0 rounded-0">
-                                            <a href="javascript:void(0)" class="link-body-emphasis maquina-link d-block" data-categoriaprin="Maquinas" data-maquinamod="ASB 150 DP STD"><small class="text-muted">ASB 150DP STD</small></a>
-                                        </div>
-                                        <div class="card card-body pt-1 pb-1 border-start border-0 rounded-0">
-                                            <a href="javascript:void(0)" class="link-body-emphasis maquina-link d-block" data-categoriaprin="Maquinas" data-maquinamod="ASB 12M"><small class="text-muted">ASB 12M</small></a>
-                                        </div>
-                                    </div>
-                                </li>
-                                <li class="mb-2"><a href="#collapseNISSEI" class="link-body-emphasis  d-block fw-bold" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="collapseNISSEI">NISSEI</a>
-                                    <div class="collapse mt-2 ps-3" id="collapseNISSEI">
-                                        <div class="card card-body pt-1 pb-1 border-start border-0 rounded-0">
-                                            <a href="javascript:void(0)" class="link-body-emphasis maquina-link d-block" data-categoriaprin="Maquinas" data-maquinamod="NISSEI FS 160"><small class="text-muted">NISSEI FS 160</small></a>
-                                        </div>
-                                        <div class="card card-body pt-1 pb-1 border-start border-0 rounded-0">
-                                            <a href="javascript:void(0)" class="link-body-emphasis maquina-link d-block" data-categoriaprin="Maquinas" data-maquinamod="NISSEI FN3000"><small class="text-muted">NISSEI FN3000</small></a>
-                                        </div>
-                                        <div class="card card-body pt-1 pb-1 border-start border-0 rounded-0">
-                                            <a href="javascript:void(0)" class="link-body-emphasis maquina-link d-block" data-categoriaprin="Maquinas" data-maquinamod="NISSEI FNX280"><small class="text-muted">NISSEI FNX280</small></a>
-                                        </div>
-                                        <div class="card card-body pt-1 pb-1 border-start border-0 rounded-0">
-                                            <a href="javascript:void(0)" class="link-body-emphasis maquina-link d-block" data-categoriaprin="Maquinas" data-maquinamod="NISSEI FNX220"><small class="text-muted">NISSEI FNX220</small></a>
-                                        </div>
-                                    </div>
-                                </li>
-                                <li class="mb-2"><a href="#collapseSuMITOMO" class="link-body-emphasis  d-block fw-bold" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="collapseSuMITOMO">SUMITOMO</a>
-                                    <div class="collapse mt-2 ps-3" id="collapseSuMITOMO">
-                                        <div class="card card-body pt-1 pb-1 border-start border-0 rounded-0">
-                                            <a href="javascript:void(0)" class="link-body-emphasis maquina-link d-block" data-categoriaprin="Maquinas" data-maquinamod="SUMITOMO SYSTEC 280"><small class="text-muted">SUMITOMO SYSTEC 280</small></a>
-                                        </div>
-                                        <div class="card card-body pt-1 pb-1 border-start border-0 rounded-0">
-                                            <a href="javascript:void(0)" class="link-body-emphasis maquina-link d-block" data-categoriaprin="Maquinas" data-maquinamod="SUMITOMO SYSTEC 580"><small class="text-muted">SUMITOMO SYSTEC 580</small></a>
-                                        </div>
-                                        <div class="card card-body pt-1 pb-1 border-start border-0 rounded-0">
-                                            <a href="javascript:void(0)" class="link-body-emphasis maquina-link d-block" data-categoriaprin="Maquinas" data-maquinamod="SUMITOMO INTELECT2 S 220"><small class="text-muted">SUMITOMO INTELECT2 S 220</small></a>
-                                        </div>
-                                    </div>
-                                </li>
-                                <li class="mb-2"><a href="#collapseENLAINADORA" class="link-body-emphasis  d-block fw-bold" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="collapseENLAINADORA">ENLAINADORAS</a>
-                                    <div class="collapse mt-2 ps-3" id="collapseENLAINADORA">
-                                        <div class="card card-body pt-1 pb-1 border-start border-0 rounded-0">
-                                            <a href="javascript:void(0)" class="link-body-emphasis maquina-link d-block" data-categoriaprin="Maquinas" data-maquinamod="AUTING SMN-03"><small class="text-muted">ENLAINADORA 1</small></a>
-                                        </div>
-                                        <div class="card card-body pt-1 pb-1 border-start border-0 rounded-0">
-                                            <a href="javascript:void(0)" class="link-body-emphasis maquina-link d-block" data-categoriaprin="Maquinas" data-maquinamod="AUTING LSM-025"><small class="text-muted">ENLAINADORA 2</small></a>
-                                        </div>
-                                    </div>
-                                </li>
-                                <li class="mb-2"><a href="#collapseREVOLV" class="link-body-emphasis  d-block fw-bold" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="collapseREVOLV">REVOLVEDORAS</a>
-                                    <div class="collapse mt-2 ps-3" id="collapseREVOLV">
-                                        <div class="card card-body pt-1 pb-1 border-start border-0 rounded-0">
-                                            <a href="javascript:void(0)" class="link-body-emphasis maquina-link d-block" data-categoriaprin="Maquinas" data-maquinamod="XHS-50KGS"><small class="text-muted">REVOLVEDORA 1</small></a>
-                                        </div>
-                                        <div class="card card-body pt-1 pb-1 border-start border-0 rounded-0">
-                                            <a href="javascript:void(0)" class="link-body-emphasis maquina-link d-block" data-categoriaprin="Maquinas" data-maquinamod="XHS-50KGS"><small class="text-muted">REVOLVEDORA 2</small></a>
-                                        </div>
-                                    </div>
-                                </li>
-                                <li class="mb-2"><a href="#collapseMOLINO" class="link-body-emphasis  d-block fw-bold" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="collapseMOLINO">MOLINOS</a>
-                                    <div class="collapse mt-2 ps-3" id="collapseMOLINO">
-                                        <div class="card card-body pt-1 pb-1 border-start border-0 rounded-0">
-                                            <a href="javascript:void(0)" class="link-body-emphasis maquina-link d-block" data-categoriaprin="Maquinas" data-maquinamod="PAGANI"><small class="text-muted">MOLINO PAGANI</small></a>
-                                        </div>
-                                        <div class="card card-body pt-1 pb-1 border-start border-0 rounded-0">
-                                            <a href="javascript:void(0)" class="link-body-emphasis maquina-link d-block" data-categoriaprin="Maquinas" data-maquinamod="RAPID"><small class="text-muted">MOLINO RAPID</small></a>
-                                        </div>
-                                    </div>
-                                </li>
-                            </ul>
-                        </div>
-                    </li>
-
-                    <li class="mb-1">
-                        <button class="btn-toggle collapsed" data-bs-toggle="collapse" data-bs-target="#COMP-collapse">
-                            <i class="bi bi-gear-wide-connected me-2" style="color: #1091ab;"></i> Compresores
-                        </button>
-                        <div class="collapse" id="COMP-collapse">
-                            <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
-                                <li><a href="#">AOKI</a></li>
-                                <li><a href="#">ASB</a></li>
-                                <li><a href="#">NISSEI</a></li>
-                            </ul>
-                        </div>
-                    </li>
-
-                    <li class="mb-1">
-                        <button class="btn-toggle collapsed" data-bs-toggle="collapse" data-bs-target="#RedAg-collapse">
-                            <i class="bi bi-droplet-fill me-2" style="color: #3ab5f7;"></i> Red de Agua
-                        </button>
-                        <div class="collapse" id="RedAg-collapse">
-                            <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
-                                <li><a href="#">AOKI</a></li>
-                                <li><a href="#">ASB</a></li>
-                                <li><a href="#">NISSEI</a></li>
-                                <li><a href="#">SUMITOMO</a></li>
-                                <li><a href="#">ENLAINADORAS</a></li>
-                                <li><a href="#">REVOLVEDORAS</a></li>
-                                <li><a href="#">MOLINO</a></li>
-                            </ul>
-                        </div>
-                    </li>
-
-                    <li class="mb-1">
-                        <button class="btn-toggle collapsed" data-bs-toggle="collapse" data-bs-target="#Subestacion-collapse">
-                            <i class="bi bi-lightning-charge-fill me-2" style="color: #f0c000;"></i> Subestacion
-                        </button>
-                        <div class="collapse" id="Subestacion-collapse">
-                            <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
-                                <li><a href="#">AOKI</a></li>
-                                <li><a href="#">ASB</a></li>
-                                <li><a href="#">NISSEI</a></li>
-                                <li><a href="#">SUMITOMO</a></li>
-                                <li><a href="#">ENLAINADORAS</a></li>
-                                <li><a href="#">REVOLVEDORAS</a></li>
-                                <li><a href="#">MOLINO</a></li>
-                            </ul>
-                        </div>
-                    </li>
-
-                    <li class="mb-1">
-                        <button class="btn-toggle collapsed" data-bs-toggle="collapse" data-bs-target="#TRransportes-collapse">
-                            <i class="bi bi-truck me-2" style="color: #d50c3b;"></i> Transportes
-                        </button>
-                        <div class="collapse" id="TRransportes-collapse">
-                            <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
-                                <li><a href="#">AOKI</a></li>
-                                <li><a href="#">ASB</a></li>
-                                <li><a href="#">NISSEI</a></li>
-                                <li><a href="#">SUMITOMO</a></li>
-                                <li><a href="#">ENLAINADORAS</a></li>
-                                <li><a href="#">REVOLVEDORAS</a></li>
-                                <li><a href="#">MOLINO</a></li>
-                            </ul>
-                        </div>
-                    </li>
-
-                    <li class="mb-1">
-                        <button class="btn-toggle collapsed" data-bs-toggle="collapse" data-bs-target="#EquiposAuxiliares-collapse">
-                            <i class="bi bi-wrench-adjustable me-2" style="color: #62604f;"></i> Equipos Auxiliares
-                        </button>
-                        <div class="collapse" id="EquiposAuxiliares-collapse">
-                            <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
-                                <li><a href="#">AOKI</a></li>
-                                <li><a href="#">ASB</a></li>
-                            </ul>
-                        </div>
-                    </li>
-
-                    <li class="mb-1">
-                        <button class="btn-toggle collapsed" data-bs-toggle="collapse" data-bs-target="#SERV-collapse">
-                            <i class="bi bi-person-gear me-2" style="color: #fd7601;"></i> Servicios
-                        </button>
-                        <div class="collapse" id="SERV-collapse">
-                            <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
-                                <li><a href="#">AOKI</a></li>
-                                <li><a href="#">ASB</a></li>
-                            </ul>
-                        </div>
-                    </li>
-                </ul>
-                
-                <hr>
-                <div class="dropdown">
-                    <a href="#" class="d-flex align-items-center link-dark text-decoration-none dropdown-toggle" data-bs-toggle="dropdown">
-                        <img src="https://static.vecteezy.com/system/resources/thumbnails/019/896/008/small_2x/male-user-avatar-icon-in-flat-design-style-person-signs-illustration-png.png" width="32" height="32" class="rounded-circle me-2" onerror="this.onerror=null; this.src='no-image.jpg';">
-                        <strong id="nombreUsuario"></strong>
-                    </a>
-                    <ul class="dropdown-menu shadow">
-                        <li><a class="dropdown-item" href="#">Perfil</a></li>
-                        <li><hr class="dropdown-divider"></li>
-                        <li><a class="dropdown-item" href="#">Salir</a></li>
-                    </ul>
-                </div>
-            </aside>
-
-            <section class="content-area">
-        <div class="container-fluid">
-            <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center mb-4 gap-3">
-        <h3 class="fw-bold mb-0" id="tituloRefacciones">Informacion</h3>
+    <body>
         
-        <div class="d-flex gap-2 flex-wrap justify-content-start justify-content-md-end">
-            
-            <div class="d-flex align-items-center bg-white border rounded-3 px-3 py-1 shadow-sm">
-                <i class="bi bi-box-seam text-primary me-2"></i>
-                <div>
-                    <small class="text-muted d-block" style="font-size: 0.7rem;">Total</small>
-                    <span class="fw-bold" style="font-size: 0.9rem;" id="totalRefacciones">Cargando...</span>
-                </div>
-            </div>
+        <main>
 
-            <div class="d-flex align-items-center bg-white border rounded-3 px-3 py-1 shadow-sm">
-                <i class="bi bi-plus-circle text-success me-2"></i>
-                <div>
-                    <small class="text-muted d-block" style="font-size: 0.7rem;">Último</small>
-                    <span class="fw-bold" style="font-size: 0.9rem;" id="ultimoProducto">Cargando...</span>
-                    <div id="ultimasEtiquetas"></div>
-                </div>
-            </div>
+        <h3 id="tituloRefacciones">Informacion</h3>
+        
 
-            <div class="d-flex align-items-center bg-white border rounded-3 px-3 py-1 shadow-sm">
-                <i class="bi bi-clock-history text-warning me-2"></i>
-                <div>
-                    <small class="text-muted d-block" style="font-size: 0.7rem;">Actualizado</small>
-                    <span class="fw-bold" style="font-size: 0.9rem;" id="ultimaActualizacion">Cargando...</span>
-                </div>
-            </div>
-
-        </div>
-    </div>
-
-            <div class="card border-0 shadow-sm mb-4">
-                <div class="card-body p-3">
-                    <form class="row g-3">
-                        <div class="col-12 col-lg-4">
-  <div id="contenedorTags" class="form-control d-flex flex-wrap gap-2 align-items-center">
-    <input type="text" id="inputTag" 
-      style="border:none; outline:none; flex:1; min-width:120px;"
-      placeholder="Buscar por palabras clave">
-  </div>
-</div>
-
-
-
-  <!-- Buscar por referencia interna -->
-  <div class="col-12 col-lg-3">
-    <input type="text" id="buscarRef" class="form-control"
-      placeholder="Buscar por Ref. Interna">
-  </div>
-
-  <!-- Buscar por modelo -->
-  <div class="col-12 col-lg-3">
-    <input type="text" id="buscarModelo" class="form-control"
-      placeholder="Buscar por Modelo">
-  </div>
-
-  <!-- Filtrar por Tipo -->
-  <div class="col-6 col-lg-3">
-    <select id="filtroTipo" class="form-select">
-      <option value="">Todos los tipos</option>
-    </select>
-  </div>
-
-  <!-- Filtrar por Unidad -->
-  <div class="col-6 col-lg-3">
-    <select id="filtroUnidad" class="form-select">
-      <option value="">Todas las unidades</option>
-    </select>
-  </div>
-
-</form>
-
-                </div>
-            </div>
-
-            <div class="ref-container" >
-                <!-- Estado del sistema -->
-                                        <div class="d-flex justify-content-between align-items-center mt-3">
-                                            <h6 class="fw-semibold mb-0">
+            <div>
+                
+                                        <div>
+                                            <h6>
                                             Estado del sistema
                                             </h6>
 
-                                            <div id="backend-status" class="px-3 py-2 rounded">
+                                            <div id="backend-status"">
                                             Verificando conexión...
                                             </div>
                                         </div>
             </div>
 
-            <div class="container mt-4">
+            <div>
 
   <h2>Logs del sistema</h2>
 
@@ -617,4 +89,180 @@
 <script src="js/session.js"></script>
 
     </body>
+</html> -->
+
+<!DOCTYPE html>
+<html lang="es" data-bs-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>IEMCO Console Log</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
+  <style>
+    body {
+      background: #f4f7fb;
+    }
+    .hero-card,
+    .metric-card,
+    .table-card {
+      border: 0;
+      border-radius: 20px;
+      box-shadow: 0 10px 30px rgba(15, 23, 42, 0.08);
+    }
+    .metric-icon {
+      width: 48px;
+      height: 48px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 14px;
+      background: #e8fff1;
+      font-size: 1.2rem;
+    }
+    .status-pill {
+      border-radius: 999px;
+      padding: .4rem .8rem;
+      font-size: .85rem;
+      font-weight: 600;
+    }
+    .table thead th {
+      position: sticky;
+      top: 0;
+      background: white;
+      z-index: 1;
+    }
+    .log-badge-info { background:#e7f1ff; color:#0d6efd; }
+    .log-badge-warn { background:#fff3cd; color:#997404; }
+    .log-badge-error { background:#f8d7da; color:#b02a37; }
+    .table-wrap {
+      max-height: 520px;
+      overflow: auto;
+      border-radius: 16px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container-fluid py-4 px-3 px-lg-4">
+    <div class="card hero-card mb-4">
+      <div class="card-body p-4">
+        <div class="d-flex flex-column flex-lg-row justify-content-between align-items-lg-center gap-3">
+          <div>
+            <p class="text-success fw-semibold mb-2 text-uppercase small">Monitoreo empresarial</p>
+            <h2 class="fw-bold mb-1">IEMCO Console Log</h2>
+            <p class="text-secondary mb-0">Seguimiento centralizado de eventos, errores, rutas críticas y trazabilidad operativa en tiempo real.</p>
+          </div>
+          <div class="d-flex gap-2 flex-wrap">
+            <span class="status-pill text-success" id="backend-status">Verificando conexión...</span>
+            <button class="btn btn-dark rounded-4"><i class="bi bi-arrow-clockwise me-2"></i>Actualizar logs</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row g-4 mb-4">
+      <div class="col-md-4">
+        <div class="card metric-card h-100">
+          <div class="card-body d-flex align-items-center gap-3">
+            <div class="metric-icon text-success"><i class="bi bi-journal-text"></i></div>
+            <div>
+              <div class="text-secondary small">Eventos hoy</div>
+              <div class="fs-4 fw-bold" id="metricTotalLogs">0</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="card metric-card h-100">
+          <div class="card-body d-flex align-items-center gap-3">
+            <div class="metric-icon text-warning"><i class="bi bi-exclamation-triangle"></i></div>
+            <div>
+              <div class="text-secondary small">Advertencias</div>
+              <div class="fs-4 fw-bold" id="metricWarnings">0</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="card metric-card h-100">
+          <div class="card-body d-flex align-items-center gap-3">
+            <div class="metric-icon text-danger"><i class="bi bi-bug"></i></div>
+            <div>
+              <div class="text-secondary small">Errores críticos</div>
+              <div class="fs-4 fw-bold" id="metricErrors">0</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row g-4">
+      <div class="col-lg-9">
+        <div class="card table-card">
+          <div class="card-header bg-white border-0 p-4 d-flex justify-content-between align-items-center flex-wrap gap-3">
+            <div>
+              <h5 class="fw-bold mb-1">Logs del sistema</h5>
+              <p class="text-secondary mb-0 small">Auditoría de rutas, mensajes, payloads y severidad para soporte y mejora continua.</p>
+            </div>
+            <div class="d-flex gap-2">
+              <input type="text" class="form-control rounded-4" placeholder="Buscar por ruta o mensaje..." style="min-width:260px">
+              <select class="form-select rounded-4">
+                <option>Todos los niveles</option>
+                <option>INFO</option>
+                <option>WARN</option>
+                <option>ERROR</option>
+              </select>
+            </div>
+          </div>
+          <div class="card-body p-3">
+            <div class="table-wrap">
+              <table class="table table-hover align-middle mb-0">
+                <thead>
+                  <tr>
+                    <th>Fecha</th>
+                    <th>Nivel</th>
+                    <th>Mensaje</th>
+                    <th>Ruta</th>
+                    <th>Datos</th>
+                  </tr>
+                </thead>
+                <tbody id="tablaLogs"></tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-3">
+        <div class="card table-card h-100">
+          <div class="card-body p-4">
+            <h5 class="fw-bold mb-3">Seguimiento inteligente</h5>
+            <div class="d-grid gap-3">
+              <div class="p-3 rounded-4 bg-light">
+                <div class="small text-secondary">Último error</div>
+                <div class="fw-semibold">Sin errores recientes</div>
+              </div>
+              <div class="p-3 rounded-4 bg-light">
+                <div class="small text-secondary">Ruta más activa</div>
+                <div class="fw-semibold">/refacciones</div>
+              </div>
+              <div class="p-3 rounded-4 bg-light">
+                <div class="small text-secondary">Tiempo de respuesta</div>
+                <div class="fw-semibold">~120 ms promedio</div>
+              </div>
+              <!-- <div class="p-3 rounded-4 bg-light">
+                <div class="small text-secondary">Recomendación</div>
+                <div class="fw-semibold">Monitorea picos de WARN por inventario y errores 500 del backend.</div>
+              </div> -->
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="script.js"></script>
+  <script src="js/session.js"></script>
+</body>
 </html>

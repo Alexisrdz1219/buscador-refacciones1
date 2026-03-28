@@ -20,8 +20,8 @@ fetch("https://buscador-refaccionesbackend.onrender.com/health")
 
     if (data.ok) {
       statusDiv.innerHTML = `
-        <p style="color:green;">Backend Conectado</p>
-        <p style="color:green;">Base de datos Conectada</p>
+        <p>Backend  y BD Conectados</p>
+       
         <p>Hora servidor: ${data.time}</p>
       `;
     } else {

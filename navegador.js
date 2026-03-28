@@ -398,7 +398,10 @@ function mostrarResultados(lista) {
   📍 ${r.ubicacion || 'Sin ubicación'}
 </div>
       <div class="ref-actions">
-        <a href="detalle.html?id=${r.id}" class="btn btn-primary btn-sm">Ver / Editar</a>
+        <a href="detalle.html?id=${r.id}" class="btn btn-primary btn-sm">Editar</a>
+      </div>
+      <div class="ref-actions">
+        <a href="uso.html?id=${r.id}" class="btn btn-primary btn-sm">Ver Uso</a>
       </div>
     </div>
   `;
