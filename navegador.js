@@ -438,7 +438,6 @@ function mostrarResultados(lista) {
     </div>
   `;
 }
-     
 
       card.dataset.nombreprod = (r.nombreprod || "").toLowerCase();
       card.dataset.refinterna = (r.refinterna || "").toLowerCase();
