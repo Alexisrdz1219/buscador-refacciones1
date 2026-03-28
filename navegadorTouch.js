@@ -1,100 +1,77 @@
-const API = "https://buscador-refaccionesbackend.onrender.com";
+// const API = "https://buscador-refaccionesbackend.onrender.com";
 
 // document.addEventListener("DOMContentLoaded", () => {
 //   document.querySelectorAll(".maquina-link").forEach(link => {
 //     link.addEventListener("click", async e => {
 //       e.preventDefault();
 
-//       const categoriaprin = link.dataset.categoriaprin;
-//       const maquinamod = link.dataset.maquinamod;
-//       const maquinaesp = link.dataset.maquinaesp;
+//       const maquinaId = link.dataset.maquinaid;
 
-//       console.log("BUSCANDO:", categoriaprin, maquinamod, maquinaesp);
+//       // console.log("BUSCANDO POR MAQUINA ID:", maquinaId);
 
-//       const res = await fetch(
-//         `${API}/refacciones-filtradas?` +
-//         `categoriaprin=${encodeURIComponent(categoriaprin)}` +
-//         `&maquinamod=${encodeURIComponent(maquinamod)}` +
-//         `&maquinaesp=${encodeURIComponent(maquinaesp)}`
-//       );
-
+//       const res = await fetch(`${API}/refacciones-por-maquina/${maquinaId}`);
 //       const data = await res.json();
+
 //       mostrarResultados(data);
 //     });
 //   });
 // });
-document.addEventListener("DOMContentLoaded", () => {
-  document.querySelectorAll(".maquina-link").forEach(link => {
-    link.addEventListener("click", async e => {
-      e.preventDefault();
 
-      const maquinaId = link.dataset.maquinaid;
+// function mostrarseleccionada() {
+//     const titulo = document.getElementById("tituloMaquina");
+//     if (!titulo) {
+//     console.error("❌ No existe #tituloMaquina");
+//     return;
+//   }
+//   titulo.innerHTML = "";
+// if (lista.length === 0) {
+//     titulo.innerHTML = "<p>No hay refacciones</p>";
+//     return;
+//   }
+//  titulo.innerHTML = "";
+// lista.forEach(r => {
+//  titulo.innerHTML += `
+//   <h1 class="h5 mb-0 fw-bold">${r.maquinaesp || 'Máquina sin nombre'}</h1>
+// `;
+// });
+// }
 
-      // console.log("BUSCANDO POR MAQUINA ID:", maquinaId);
+// function mostrarResultados(lista) {
+//   const cont = document.getElementById("resultados");
+//   if (!cont) {
+//     console.error("❌ No existe #resultados");
+//     return;
+//   }
 
-      const res = await fetch(`${API}/refacciones-por-maquina/${maquinaId}`);
-      const data = await res.json();
+//   cont.innerHTML = "";
 
-      mostrarResultados(data);
-    });
-  });
-});
+//   if (lista.length === 0) {
+//     cont.innerHTML = "<p>No hay refacciones</p>";
+//     return;
+//   }
 
-function mostrarseleccionada() {
-    const titulo = document.getElementById("tituloMaquina");
-    if (!titulo) {
-    console.error("❌ No existe #tituloMaquina");
-    return;
-  }
-  titulo.innerHTML = "";
-if (lista.length === 0) {
-    titulo.innerHTML = "<p>No hay refacciones</p>";
-    return;
-  }
- titulo.innerHTML = "";
-lista.forEach(r => {
- titulo.innerHTML += `
-  <h1 class="h5 mb-0 fw-bold">${r.maquinaesp || 'Máquina sin nombre'}</h1>
-`;
-});
-}
+//   cont.innerHTML = ""; // limpia antes, por salud mental
 
-function mostrarResultados(lista) {
-  const cont = document.getElementById("resultados");
-  if (!cont) {
-    console.error("❌ No existe #resultados");
-    return;
-  }
-
-  cont.innerHTML = "";
-
-  if (lista.length === 0) {
-    cont.innerHTML = "<p>No hay refacciones</p>";
-    return;
-  }
-
-  cont.innerHTML = ""; // limpia antes, por salud mental
-
-  lista.forEach(r => {
-    cont.innerHTML += `
-      <div class="card-refa">
+//   lista.forEach(r => {
+//     cont.innerHTML += `
+//       <div class="card-refa">
         
-        <div class="img-wrap">
-          <img src="${r.imagen || 'no-image.png'}" alt="${r.nombreprod}">
-          <span class="badge-ubi">${r.ubicacion || 'Sin ubicación'}</span>
-        </div>
+//         <div class="img-wrap">
+//           <img src="${r.imagen || 'no-image.png'}" alt="${r.nombreprod}">
+//           <span class="badge-ubi">${r.ubicacion || 'Sin ubicación'}</span>
+//         </div>
 
-        <div class="info-refa">
-          <h3>${r.nombreprod}</h3>
+//         <div class="info-refa">
+//           <h3>${r.nombreprod}</h3>
 
-          <div class="datos">
-            <span>Ref: ${r.refinterna}</span>
-            <span>${r.cantidad} ${r.unidad || ''}</span>
-          </div>
+//           <div class="datos">
+//             <span>Ref: ${r.refinterna}</span>
+//             <span>${r.cantidad} ${r.unidad || ''}</span>
+//           </div>
 
-        </div>
+//         </div>
 
-      </div>
-    `;
-  });
-}
+//       </div>
+//     `;
+//   });
+// }

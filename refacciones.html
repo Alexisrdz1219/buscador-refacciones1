@@ -1,217 +1,4 @@
-<!-- <!DOCTYPE html>
-<html lang="es">
-<head>
-  <meta charset="UTF-8">
-  <title>Inventario de Refacciones</title>
-
-  <style>
-  :root {
-    --primary: #2563eb;
-    --primary-hover: #1d4ed8;
-    --bg: #f8fafc;
-    --text-main: #1e293b;
-    --text-muted: #64748b;
-    --card-bg: #ffffff;
-    --border: #e2e8f0;
-    --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-  }
-
-  body {
-    font-family: 'Inter', -apple-system, sans-serif;
-    padding: 40px 20px;
-    background-color: var(--bg);
-    color: var(--text-main);
-    max-width: 1200px;
-    margin: 0 auto;
-  }
-
-  h2 {
-    font-weight: 700;
-    font-size: 1.8rem;
-    color: #0f172a;
-    margin-bottom: 25px;
-  }
-
-  /* Contenedor de Filtros */
-  .search-container {
-    background: white;
-    padding: 15px;
-    border-radius: 12px;
-    box-shadow: var(--shadow);
-    display: flex;
-    gap: 12px;
-    margin-bottom: 30px;
-    align-items: center;
-  }
-
-  input[type="text"], select {
-    border: 1px solid var(--border);
-    border-radius: 8px;
-    padding: 10px 15px;
-    font-size: 14px;
-    outline: none;
-    transition: border-color 0.2s;
-  }
-
-  input[type="text"]:focus, select:focus {
-    border-color: var(--primary);
-    ring: 2px solid #dbeafe;
-  }
-
-  /* Grid de Tarjetas */
-  .cards-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-    gap: 24px;
-  }
-
-  .card-ref {
-    background: var(--card-bg);
-    border-radius: 16px;
-    border: none;
-    box-shadow: var(--shadow);
-    overflow: hidden;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    display: flex;
-    flex-direction: column;
-  }
-
-  .card-ref:hover {
-    transform: translateY(-8px);
-    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
-  }
-
-  .card-ref img {
-    width: 100%;
-    height: 180px;
-    object-fit: cover;
-    background: #f1f5f9;
-    border-bottom: 1px solid var(--border);
-  }
-
-  .card-body {
-    padding: 20px;
-    flex-grow: 1;
-  }
-
-  .card-body h4 {
-    margin: 0 0 8px 0;
-    font-size: 16px;
-    font-weight: 600;
-    color: #1e293b;
-  }
-
-  .ref {
-    font-size: 13px;
-    color: var(--text-muted);
-    font-family: monospace;
-    background: #f1f5f9;
-    padding: 2px 6px;
-    border-radius: 4px;
-  }
-
-  .stock {
-    margin-top: 15px;
-    font-size: 14px;
-    display: flex;
-    align-items: center;
-    gap: 6px;
-  }
-
-  /* Indicadores de Stock modernos */
-  .stock::before {
-    content: '';
-    width: 8px;
-    height: 8px;
-    border-radius: 50%;
-  }
-
-  .stock.ok { color: #10b981; }
-  .stock.ok::before { background: #10b981; }
-
-  .stock.low { color: #f59e0b; }
-  .stock.low::before { background: #f59e0b; }
-
-  .stock.zero { color: #ef4444; }
-  .stock.zero::before { background: #ef4444; }
-
-  /* Botones */
-  .card-actions {
-    padding: 0 20px 20px 20px;
-    display: flex;
-    gap: 10px;
-  }
-
-  .card-actions button, button[onclick] {
-    background: white;
-    border: 1px solid var(--border);
-    padding: 8px 16px;
-    border-radius: 8px;
-    font-size: 14px;
-    font-weight: 500;
-    cursor: pointer;
-    transition: all 0.2s;
-    color: var(--text-main);
-  }
-
-  .card-actions button:hover {
-    background: #f8fafc;
-    border-color: var(--text-muted);
-  }
-
-  /* Paginación */
-  #pagina {
-    font-weight: 600;
-    margin: 0 15px;
-    color: var(--text-muted);
-  }
-
-  .pagination-container {
-    margin-top: 40px;
-    padding: 20px;
-    background: white;
-    border-radius: 12px;
-    box-shadow: var(--shadow);
-  }
-
-</style>
-</head>
-
-<body>
-
-<h2>Inventario de Refacciones</h2>
-
-
-
-  <div class="search-container">
-  <input type="text" id="busqueda" placeholder="🔍 Buscar por nombre..." oninput="buscar()" />
-  <select id="filtroStock" onchange="buscar()">
-     <option value="">Todos los niveles de stock</option>
-     <option value="ok">🟢 Stock OK</option>
-     <option value="low">🟡 Stock Bajo</option>
-     <option value="zero">🔴 Sin Stock</option>
-  </select>
-</div>
-
-
-
-<div id="cardsContainer" class="cards-grid">
-  <p class="empty">Cargando refacciones...</p>
-</div>
-
-<div style="margin-top:20px; text-align:center;">
-  <button onclick="prev()">⬅️ Anterior</button>
-  <span id="pagina"></span>
-  <button onclick="next()">Siguiente ➡️</button>
-</div>
-
-
-
-
-<script src="refacciones.js"></script>
-
-</body>
-</html> -->
+<!-- 
 <!DOCTYPE html>
 <html lang="es" data-bs-theme="light">
 <head>
@@ -690,13 +477,13 @@
                     </ul>
                 </div>
             </aside>
-  <!-- 🔵 AQUÍ VA TU SIDEBAR (puedes pegar el mismo aside que ya tienes en tu sistema principal) -->
+ 🔵 AQUÍ VA TU SIDEBAR (puedes pegar el mismo aside que ya tienes en tu sistema principal)
 
   <section class="content-area">
 
     <div class="container-fluid">
 
-      <!-- TÍTULO + MÉTRICAS -->
+ 
       <div class="d-flex justify-content-between align-items-center mb-4">
         <h3 class="fw-bold mb-0">Inventario de Refacciones</h3>
 
@@ -715,7 +502,7 @@
         </div>
       </div>
 
-      <!-- FILTROS -->
+     
       <div class="card border-0 shadow-sm mb-4">
         <div class="card-body">
           <div class="row g-3">
@@ -742,12 +529,11 @@
         </div>
       </div>
 
-      <!-- RESULTADOS -->
       <div id="cardsContainer" class="ref-container">
         <p class="text-muted">Cargando refacciones...</p>
       </div>
 
-      <!-- PAGINACIÓN -->
+      
       <div class="text-center mt-4">
         <button class="btn btn-outline-secondary me-2" onclick="prev()">Anterior</button>
         <button class="btn btn-outline-secondary" onclick="next()">Siguiente</button>
@@ -787,4 +573,4 @@
 <script src="js/session.js"></script>
 
 </body>
-</html>
+</html> -->
