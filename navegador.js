@@ -4,11 +4,17 @@ let resultadosActuales = [];
 let tagsActivos = [];
 let modoGlobal = false;
 let datosActuales = [];
+let rol = "usuario";
 
 // =========================
 // 🔒 Validación de sesión
 // =========================
 async function validarSesion() {
+
+  if (usuario) {
+    rol = usuario.rol; // 🔥 AQUÍ GUARDAS EL ROL
+  }
+
   try {
     const token = localStorage.getItem("token");
     if (!token) {
@@ -397,12 +403,21 @@ function mostrarResultados(lista) {
       <div class="ref-ubicacion btn-mapa" data-ubicacion="${r.ubicacion || ''}" style="cursor:pointer hover:opacity-80">
   📍 ${r.ubicacion || 'Sin ubicación'}
 </div>
-      <div class="ref-actions">
-        <a href="detalle.html?id=${r.id}" class="btn btn-primary btn-sm">Editar</a>
-      </div>
-      <div class="ref-actions">
-        <a href="uso.html?id=${r.id}" class="btn btn-primary btn-sm">Ver Uso</a>
-      </div>
+
+
+
+      ${rol !== "usuario" ? `
+  <div class="ref-actions">
+    <a href="detalle.html?id=${r.id}" class="btn btn-primary btn-sm">Editar</a>
+  </div>` : ""}
+  <div class="ref-actions">
+    <a href="uso.html?id=${r.id}" class="btn btn-primary btn-sm">Ver Uso</a>
+  </div>
+
+
+
+
+
     </div>
   `;
 

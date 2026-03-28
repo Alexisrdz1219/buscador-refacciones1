@@ -865,6 +865,7 @@
             <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
             <script>
+
     document.addEventListener("DOMContentLoaded", async () => {
         
     cargarDestacadas();
@@ -936,8 +937,6 @@
     if (rol === "usuario") {
         const editar = document.querySelector('a[href="refacciones.html"]');
         if (editar) editar.style.display = "none";
-        const btneditar = document.querySelector('a [href="detalle.html?id=${r.id}"]');
-        if (btneditar) btneditar.style.display = "none";
     }
     }
 
