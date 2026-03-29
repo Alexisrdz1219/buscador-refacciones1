@@ -11,10 +11,6 @@ let rol = "usuario";
 // =========================
 async function validarSesion() {
 
-  if (usuario) {
-    rol = usuario.rol; // 🔥 AQUÍ GUARDAS EL ROL
-  }
-
   try {
     const token = localStorage.getItem("token");
     if (!token) {
@@ -34,6 +30,7 @@ async function validarSesion() {
 
     const usuario = await response.json();
 
+     rol = usuario.rol; // 🔥 AQUÍ GUARDAS EL ROL
     // Mostramos info en consola
     // console.log("ID:", usuario.id);
     // console.log("Nombre:", usuario.nombre);
