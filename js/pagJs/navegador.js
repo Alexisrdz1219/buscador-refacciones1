@@ -70,6 +70,7 @@ window.addEventListener("DOMContentLoaded", async () => {
   if (!usuario) return;
 
   bloquearBotonAtras();
+  cargarDestacadas();
 });
 window.addEventListener("pageshow", () => validarSesion());
 
