@@ -404,7 +404,7 @@ function mostrarResultados(lista) {
 
 
 
-      ${rol !== "admin" ? `
+      ${rol !== "personal" ? `
   <div class="ref-actions">
     <a href="paginas/Editar/detalle.html?id=${r.id}" class="btn btn-primary btn-sm">Editar</a>
   </div>` : ""}
