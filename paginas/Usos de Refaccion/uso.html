@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Uso</title>
+</head>
+<body>
+    <div>
+  <h3>Registrar Uso</h3>
+
+  <input type="text" id="area" placeholder="Área - máquina - pieza">
+
+  <label>
+    <input type="checkbox" id="oring">
+    Lleva Oring
+  </label>
+
+  <div id="listaOrings" style="display:none;">
+  <input type="text" id="buscarOring" placeholder="Buscar O-Ring...">
+  <div id="oringsContainer"></div>
+</div>
+
+  <button onclick="guardarUso()">Guardar</button>
+</div>
+
+
+
+
+<script>
+const API = "https://buscador-refaccionesbackend.onrender.com";
+
+// ✅ obtener id desde URL
+const params = new URLSearchParams(window.location.search);
+let refaccionActual = params.get("id");
+let oringsDisponibles = [];
+let oringsSeleccionados = [];
+
+console.log("ID desde URL:", refaccionActual);
+
+async function guardarUso() {
+  const area = document.getElementById("area").value;
+  const oring = document.getElementById("oring").checked;
+  const seleccionados = oringsSeleccionados;
+
+  if (oring && seleccionados.length === 0) {
+  alert("Selecciona al menos un O-Ring");
+  return;
+}
+
+document.querySelectorAll("#oringsContainer input:checked")
+
+
+  .forEach(cb => seleccionados.push(Number.value));
+
+  if (!area) {
+    alert("Escribe el área o máquina");
+    return;
+  }
+
+  console.log({
+    refaccion_id: refaccionActual,
+    area_maquina: area,
+    lleva_oring: oring
+  });
+
+  const res = await fetch(`${API}/usos`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({
+  refaccion_id: refaccionActual,
+  area_maquina: area,
+  lleva_oring: oring,
+  orings: seleccionados
+})
+  });
+
+  const data = await res.json();
+
+  alert("Uso guardado correctamente ✅");
+}
+
+document.getElementById("oring").addEventListener("change", async (e) => {
+  const cont = document.getElementById("listaOrings");
+
+  if (e.target.checked) {
+    cont.style.display = "block";
+    cargarOrings();
+  } else {
+    cont.style.display = "none";
+  }
+});
+
+async function cargarOrings() {
+  const res = await fetch(`${API}/orings`);
+  const data = await res.json();
+
+  oringsDisponibles = data;
+  renderOrings(data);
+}
+
+function renderOrings(lista) {
+  const cont = document.getElementById("oringsContainer");
+  cont.innerHTML = "";
+
+  lista.forEach(o => {
+    const checked = oringsSeleccionados.includes(o.id) ? "checked" : "";
+
+    const div = document.createElement("div");
+
+    div.innerHTML = `
+      <label>
+        <input type="checkbox" value="${o.id}" ${checked}>
+        ${o.nombreprod}
+      </label>
+    `;
+
+    const checkbox = div.querySelector("input");
+
+    checkbox.addEventListener("change", (e) => {
+      const id = Number(e.target.value);
+
+      if (e.target.checked) {
+        if (!oringsSeleccionados.includes(id)) {
+          oringsSeleccionados.push(id);
+        }
+      } else {
+        oringsSeleccionados = oringsSeleccionados.filter(x => x !== id);
+      }
+
+      console.log("Seleccionados:", oringsSeleccionados);
+    });
+
+    cont.appendChild(div);
+  });
+}
+
+document.getElementById("buscarOring").addEventListener("input", (e) => {
+  const texto = e.target.value.toLowerCase();
+
+  const filtrados = oringsDisponibles.filter(o =>
+    o.nombreprod.toLowerCase().includes(texto)
+  );
+
+  renderOrings(filtrados);
+});
+
+async function cargarOrings() {
+  console.log("Cargando orings...");
+
+  const res = await fetch(`${API}/orings`);
+
+  console.log("STATUS:", res.status);
+
+  const data = await res.json();
+
+  console.log("DATA:", data);
+
+  oringsDisponibles = data;
+  renderOrings(data);
+}
+</script>
+</body>
+</html>

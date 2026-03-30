@@ -170,13 +170,7 @@ document.getElementById("btnTodasRefacciones")?.addEventListener("click", async 
   // console.log("🌎 ACTIVANDO MODO GLOBAL");
 
   modoGlobal = true;
-//   if (formFiltros) {
-//   formFiltros.style.display = "flex";
-// }
 
-// if (quitardash) {
-//   quitardash.style.display = "none";
-// }
     dash?.classList.add("d-none");
     formFiltros?.classList.remove("d-none");
 
@@ -227,44 +221,71 @@ inputTag.addEventListener("keydown", function(e) {
   }
 });
 
-  document.querySelectorAll(".maquina-link").forEach(link => {
-    link.addEventListener("click", async e => {
-      e.preventDefault();
+//   document.querySelectorAll(".maquina-link").forEach(link => {
+//     link.addEventListener("click", async e => {
+//       e.preventDefault();
 
-      modoGlobal = false;
+//       modoGlobal = false;
 
-// if (formFiltros) {
-//   formFiltros.style.display = "flex";
-// }
 
-dash?.classList.add("d-none");
-    formFiltros?.classList.remove("d-none");
+// dash?.classList.add("d-none");
+//     formFiltros?.classList.remove("d-none");
 
-      tagsActivos = [];
-contenedorTags.querySelectorAll(".badge").forEach(t => t.remove());
-      // const maquinamod = link.dataset.maquinamod;
-      const maquinamod = e.target.closest(".maquina-link").dataset.maquinamod;
-      modeloSeleccionado = maquinamod; // 🔥 guardamos el modelo
+//       tagsActivos = [];
+// contenedorTags.querySelectorAll(".badge").forEach(t => t.remove());
+//       // const maquinamod = link.dataset.maquinamod;
+//       const maquinamod = e.target.closest(".maquina-link").dataset.maquinamod;
+//       modeloSeleccionado = maquinamod; // 🔥 guardamos el modelo
 
-      // console.log("BUSCANDO POR MODELO:", maquinamod);
+//       // console.log("BUSCANDO POR MODELO:", maquinamod);
       
 
-      const res = await fetch(
-        `${API}/refacciones-por-maquinamod?maquinamod=${encodeURIComponent(maquinamod)}`
-      );
+//       const res = await fetch(
+//         `${API}/refacciones-por-maquinamod?maquinamod=${encodeURIComponent(maquinamod)}`
+//       );
 
-      const data = await res.json();
-      // console.log(data[0]);
+//       const data = await res.json();
+//       // console.log(data[0]);
 
-      resultadosActuales = data; // 🔥 guardamos lo que vino del backend
- // 🔥 guardamos los datos
-llenarSelects(data);       // 🔥 llenamos tipos y unidades dinámicamente
+//       resultadosActuales = data; // 🔥 guardamos lo que vino del backend
+//  // 🔥 guardamos los datos
+// llenarSelects(data);       // 🔥 llenamos tipos y unidades dinámicamente
 
 
-      actualizarTitulo(); // 🔥 actualizamos título
-      mostrarResultados(data); // 🔥 mostramos resultados
-    });
-  });
+//       actualizarTitulo(); // 🔥 actualizamos título
+//       mostrarResultados(data); // 🔥 mostramos resultados
+//     });
+//   });
+
+document.addEventListener("click", async (e) => {
+  const link = e.target.closest(".maquina-link");
+  if (!link) return;
+
+  e.preventDefault();
+
+  modoGlobal = false;
+
+  dash?.classList.add("d-none");
+  formFiltros?.classList.remove("d-none");
+
+  tagsActivos = [];
+  contenedorTags.innerHTML = ""; // 🔥 más rápido
+
+  const maquinamod = link.dataset.maquinamod;
+  modeloSeleccionado = maquinamod;
+
+  const res = await fetch(
+    `${API}/refacciones-por-maquinamod?maquinamod=${encodeURIComponent(maquinamod)}`
+  );
+
+  const data = await res.json();
+
+  resultadosActuales = data;
+
+  llenarSelects(data);
+  actualizarTitulo();
+  mostrarResultados(data);
+});
 });
 
 
@@ -374,10 +395,13 @@ function mostrarResultados(lista) {
 
   card.innerHTML = `
     <div class="ref-img">
-      <img src="${r.imagen || 'assets/img/no-image.jpg'}"
-           alt="${r.nombreprod}"
-           class="card-img-top"
-           onerror="this.onerror=null; this.src='assets/img/no-image.jpg';">
+     
+      <img 
+  src="${r.imagen || 'assets/img/no-image.jpg'}"
+  loading="lazy"
+  alt="${r.nombreprod}"
+  class="card-img-top"
+  onerror="this.onerror=null; this.src='assets/img/no-image.jpg';">
 
            <div class="card-actions">
          <button class="btn-check-ref" data-id="${r.id}">
@@ -408,16 +432,36 @@ function mostrarResultados(lista) {
   <div class="ref-actions">
     <a href="paginas/Editar/detalle.html?id=${r.id}" class="btn btn-primary btn-sm">Editar</a>
   </div>` : ""}
-  <div class="ref-actions">
-    <a href="paginas/Refacciones Usos/refaUso.html?id=${r.id}" class="btn btn-primary btn-sm">Ver Uso</a>
-  </div>
-
-
-
 
 
     </div>
+
+    
   `;
+
+
+  // va arriba
+//   <div class="ref-actions">
+//     <a href="paginas/Usos de Refaccion/uso.html?id=${r.id}" class="btn btn-primary btn-sm">Registrar Uso</a>
+//   </div>
+
+// <button class="btn btn-primary btn-sm btn-ver-usos" data-id="${r.id}" title="Ver usos">
+//   <i class="bi bi-eye"></i>
+// </button>
+
+
+  const btnUsos = card.querySelector(".btn-ver-usos");
+
+if (btnUsos) {
+  btnUsos.addEventListener("click", (e) => {
+    e.stopPropagation();
+
+    console.log("ID REAL:", r.id); // 👈 DEBUG
+
+    refaccionActual = r.id; // ✅ AQUÍ SE GUARDA BIEN
+    obtenerUsos(r.id);
+  });
+}
 
 } else {
 
@@ -455,6 +499,103 @@ function mostrarResultados(lista) {
 
 }
 
+async function obtenerUsos(refaccionId) {
+  document.getElementById("modalUsos").style.display = "flex";
+document.body.style.overflow = "hidden"; // 🚫 bloquea scroll/interacción
+  const res = await fetch(`${API}/usos/${refaccionId}`);
+  const data = await res.json();
+
+  const lista = document.getElementById("listaUsos");
+  lista.innerHTML = "";
+
+  if (!data || data.length === 0) {
+    lista.innerHTML = "<li>Sin usos registrados</li>";
+
+    // 🔥 IMPORTANTE: abrir modal aquí también
+    document.getElementById("modalUsos").style.display = "block";
+    return;
+  }
+  // 🔥 agrupar por uso
+  const usosMap = {};
+
+  data.forEach(row => {
+    if (!usosMap[row.id]) {
+      usosMap[row.id] = {
+  id: row.id,
+  area: row.area_maquina,
+  lleva_oring: row.lleva_oring,
+  orings: []
+};
+    }
+
+    if (row.oring_id) {
+      usosMap[row.id].orings.push(row.oring_nombre);
+    }
+  });
+
+  // 🔥 render
+ Object.values(usosMap).forEach(u => {
+  const li = document.createElement("li");
+
+  let texto = `${u.area}`;
+
+  if (u.lleva_oring) {
+    texto += " 🔵 Con Oring";
+
+    if (u.orings.length > 0) {
+      texto += ` → [${u.orings.join(", ")}]`;
+    }
+  }
+
+  li.innerHTML = `
+    <div style="display:flex; justify-content:space-between;">
+      <span>${texto}</span>
+      <button onclick="eliminarUso(${u.id})">❌</button>
+    </div>
+  `;
+
+  lista.appendChild(li);
+});
+
+  document.getElementById("modalUsos").style.display = "block";
+}
+
+function abrirModalUsos() {
+  document.getElementById("modalUsos").style.display = "flex";
+  document.body.style.overflow = "hidden";  // bloquea scroll de fondo
+}
+
+
+function cerrarModal() {
+  document.getElementById("modalUsos").style.display = "none";
+  document.body.style.overflow = "auto";    // desbloquea scroll
+}
+
+// click fuera del contenido para cerrar
+document.getElementById("modalUsos").addEventListener("click", (e) => {
+  if (e.target.id === "modalUsos") cerrarModal();
+});
+
+async function eliminarUso(id) {
+  const confirmar = confirm("¿Eliminar este uso?");
+
+  if (!confirmar) return;
+
+  try {
+    await fetch(`${API}/usos/${id}`, {
+      method: "DELETE"
+    });
+
+    alert("Uso eliminado ✅");
+
+    // 🔄 recargar lista
+    obtenerUsos(refaccionActual);
+
+  } catch (error) {
+    console.error(error);
+    alert("Error al eliminar");
+  }
+}
 // --- FUNCIONES DEL MAPA (FUERA de mostrarResultados) ---
 
 // Delegación de eventos para capturar clics en elementos creados dinámicamente
