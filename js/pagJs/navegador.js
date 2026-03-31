@@ -237,7 +237,8 @@ document.addEventListener("click", async (e) => {
   formFiltros?.classList.remove("d-none");
 
   tagsActivos = [];
-  contenedorTags.innerHTML = ""; // 🔥 más rápido
+  contenedorTags.querySelectorAll(".badge").forEach(t => t.remove());
+  console.log(contenedorTags.innerHTML);
 
   const maquinamod = link.dataset.maquinamod;
   modeloSeleccionado = maquinamod;
@@ -545,7 +546,18 @@ function renderPagina() {
       `;
     } else {
       card.className = "ref-lista-item";
-      card.innerHTML = `<div>${r.nombreprod}</div>`;
+      card.innerHTML = `
+      <div class="lista-nombre">${r.nombreprod}</div>
+     <div class="lista-ref">${r.refinterna || '-'}</div>
+     <div class="lista-ubicacion btn-mapa" data-ubicacion="${r.ubicacion || ''}" style="cursor:pointer">
+   ${r.ubicacion || 'Sin ubicación'}
+ </div>
+     <div>
+       <a href="paginas/Editar/detalle.html?id=${r.id}" class="btn btn-sm btn-outline-primary">
+         Editar
+       </a>
+     </div>
+      `;
     }
 
     fragment.appendChild(card);
