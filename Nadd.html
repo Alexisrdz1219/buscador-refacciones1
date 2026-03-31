@@ -486,18 +486,22 @@
                             </div>
                         </div>
 
-                        <div class="col-12 col-lg-3">
-                            <div class="card border-0 shadow-sm h-100 text-center">
-                            <div class="card-body">
-                                <h6 class="fw-bold">Ultimas refacciones</h6>
-                                <p id="ultimasRefacciones" class="text-muted small"></p>
-                                
-                                </p>
-                            </div>
-                            </div>
-                        </div>
+                       
 
+
+                        <!-- Card envíos -->
+<div class="col-12 col-lg-6">
+  <div class="card border-0 shadow-sm h-100">
+    <div class="card-body p-0">
+
+      <!-- ESTE ES NUEVO -->
+      <div id="contenedorResultadosEnvio"></div>
+
+    </div>
+  </div>
+</div>
                         </div>
+                        
                         </div>
                         <!-- 🔹 FORM FILTROS (ya lo ocultas con JS) -->
                         <div class="card border-0 shadow-sm mb-4" id="formFiltros">
@@ -562,7 +566,7 @@
                             <div id="contenedorResultados"></div>
                             <div id="contenedorResultadosDsah"></div>
                         </div>
-
+                        <div id="paginacion" class="mt-3 text-center"></div>
                     </div>
                 </section>
                 <!-- TERMINA SECTION -->
@@ -676,7 +680,7 @@
             <script>
 
     document.addEventListener("DOMContentLoaded", async () => {
-        
+        cargarEnvios(); 
     cargarDestacadas();
     const token = localStorage.getItem("token");
 
@@ -894,21 +898,6 @@ async function cargarDashboard() {
     }
   });
 
-  const htmlUltimas = ultimas.map(r => {
-  let color = "text-success";
-
-  if (r.cantidad === 0) color = "text-danger";
-  else if (r.cantidad < 5) color = "text-warning";
-
-  return `
-    <div class="mb-2 text-start">
-      <strong>${r.nombreprod}</strong><br>
-      <small class="${color}">${r.refinterna} (${r.cantidad})</small>
-    </div>
-  `;
-}).join("");
-
-document.getElementById("ultimasRefacciones").innerHTML = htmlUltimas;
 }
 
 

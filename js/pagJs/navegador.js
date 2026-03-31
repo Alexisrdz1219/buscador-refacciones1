@@ -5,6 +5,9 @@ let tagsActivos = [];
 let modoGlobal = false;
 let datosActuales = [];
 let rol = "usuario";
+let paginaActual = 1;
+const LIMITE = 20;
+let totalPaginas = 1;
 
 // =========================
 // 🔒 Validación de sesión
@@ -201,6 +204,7 @@ document.getElementById("btnTodasRefacciones")?.addEventListener("click", async 
 const getDestacadas = async () => {
   const res = await fetch("https://buscador-refaccionesbackend.onrender.com/refacciones/destacadas");
   const data = await res.json();
+  console.log("RESPUESTA BACK:", data);
  // console.log(data);  Aquí tienes un array de refacciones destacadas
 };
 
@@ -220,42 +224,6 @@ inputTag.addEventListener("keydown", function(e) {
     inputTag.value = "";
   }
 });
-
-//   document.querySelectorAll(".maquina-link").forEach(link => {
-//     link.addEventListener("click", async e => {
-//       e.preventDefault();
-
-//       modoGlobal = false;
-
-
-// dash?.classList.add("d-none");
-//     formFiltros?.classList.remove("d-none");
-
-//       tagsActivos = [];
-// contenedorTags.querySelectorAll(".badge").forEach(t => t.remove());
-//       // const maquinamod = link.dataset.maquinamod;
-//       const maquinamod = e.target.closest(".maquina-link").dataset.maquinamod;
-//       modeloSeleccionado = maquinamod; // 🔥 guardamos el modelo
-
-//       // console.log("BUSCANDO POR MODELO:", maquinamod);
-      
-
-//       const res = await fetch(
-//         `${API}/refacciones-por-maquinamod?maquinamod=${encodeURIComponent(maquinamod)}`
-//       );
-
-//       const data = await res.json();
-//       // console.log(data[0]);
-
-//       resultadosActuales = data; // 🔥 guardamos lo que vino del backend
-//  // 🔥 guardamos los datos
-// llenarSelects(data);       // 🔥 llenamos tipos y unidades dinámicamente
-
-
-//       actualizarTitulo(); // 🔥 actualizamos título
-//       mostrarResultados(data); // 🔥 mostramos resultados
-//     });
-//   });
 
 document.addEventListener("click", async (e) => {
   const link = e.target.closest(".maquina-link");
@@ -279,12 +247,15 @@ document.addEventListener("click", async (e) => {
   );
 
   const data = await res.json();
+  console.log("RESPUESTA BACK:", data);
 
   resultadosActuales = data;
 
   llenarSelects(data);
   actualizarTitulo();
   mostrarResultados(data);
+  cargarDestacadas();
+  cargarEnvios();
 });
 });
 
@@ -378,132 +349,279 @@ function activarBoton(tipo) {
   }
 }
 
+// function mostrarResultados(lista) {
+//   datosActuales = lista;
+//   const cont = document.getElementById("resultados");
+//   if (!cont) return;
+  
+//   cont.innerHTML = ""; // Limpiar resultados anteriores
+//   cardsDOM = []; // Limpiar referencia a cards anteriores
+
+//   cargarMas();
+
+//   const fragment = document.createDocumentFragment();
+
+//     lista.forEach(r => {
+//       const card = document.createElement("div");
+//       if (vistaActual === "cards") {
+//   card.className = "ref-card";
+
+//   card.innerHTML = `
+//     <div class="ref-img">
+     
+//       <img 
+//   src="${r.imagen || 'assets/img/no-image.jpg'}"
+//   loading="lazy"
+//   alt="${r.nombreprod}"
+//   class="card-img-top"
+//   onerror="this.onerror=null; this.src='assets/img/no-image.jpg';">
+
+//            <div class="card-actions">
+//            ${rol !== "personal" ? `
+//          <button class="btn-check-ref" data-id="${r.id}">
+//            <i class="bi ${r.completada ? 'bi-check-circle-fill text-success' : 'bi-circle'}"></i>
+//          </button>
+// ` : ""}
+//         <button class="btn-broadcast" data-id="${r.id}">
+//            <i class="bi ${r.destacada ? 'bi-broadcast text-primary' : 'bi-broadcast'}"></i>
+//          </button>
+          
+//          <button class="btn-envio" data-id="${r.id}">
+//   <i class="bi ${r.en_envio ? 'bi-truck text-success' : 'bi-truck text-muted'}"></i>
+// </button>
+
+//          <button class="btn-fullscreen" data-img="${r.imagen || 'assets/img/no-image.jpg'}">
+//            <i class="bi bi-fullscreen"></i>
+//          </button>
+//        </div>
+//     </div>
+
+//     <div class="ref-body">
+//       <h3 class="ref-title">${r.nombreprod}</h3>
+//       <div class="ref-modelo">Modelo: <strong>${r.modelo || '-'}</strong></div>
+//       <div class="ref-cantidad">Cantidad: <strong>${r.cantidad} ${r.unidad || ''}</strong></div>
+//       <div class="ref-ubicacion btn-mapa" data-ubicacion="${r.ubicacion || ''}" style="cursor:pointer hover:opacity-80">
+//   📍 ${r.ubicacion || 'Sin ubicación'}
+// </div>
+
+//       ${rol !== "personal" ? `
+//   <div class="ref-actions">
+//     <a href="paginas/Editar/detalle.html?id=${r.id}" class="btn btn-primary btn-sm">Editar</a>
+//   </div>` : ""}
+
+
+//     </div>
+
+    
+//   `;
+
+//   // va arriba
+// //   <div class="ref-actions">
+// //     <a href="paginas/Usos de Refaccion/uso.html?id=${r.id}" class="btn btn-primary btn-sm">Registrar Uso</a>
+// //   </div>
+
+// // <button class="btn btn-primary btn-sm btn-ver-usos" data-id="${r.id}" title="Ver usos">
+// //   <i class="bi bi-eye"></i>
+// // </button>
+
+//   const btnUsos = card.querySelector(".btn-ver-usos");
+
+// if (btnUsos) {
+//   btnUsos.addEventListener("click", (e) => {
+//     e.stopPropagation();
+
+//     console.log("ID REAL:", r.id); // 👈 DEBUG
+
+//     refaccionActual = r.id; // ✅ AQUÍ SE GUARDA BIEN
+//     obtenerUsos(r.id);
+//   });
+// }
+
+// } else {
+
+//   card.className = "ref-lista-item";
+
+//   card.innerHTML = `
+//     <div class="lista-nombre">${r.nombreprod}</div>
+//     <div class="lista-ref">${r.refinterna || '-'}</div>
+//     <div class="lista-ubicacion btn-mapa" data-ubicacion="${r.ubicacion || ''}" style="cursor:pointer">
+//   ${r.ubicacion || 'Sin ubicación'}
+// </div>
+//     <div>
+//       <a href="paginas/Editar/detalle.html?id=${r.id}" class="btn btn-sm btn-outline-primary">
+//         Editar
+//       </a>
+//     </div>
+//   `;
+// }
+
+//       card.dataset.nombreprod = (r.nombreprod || "").toLowerCase();
+//       card.dataset.refinterna = (r.refinterna || "").toLowerCase();
+//       card.dataset.modelo = (r.modelo || "").toLowerCase();
+//       card.dataset.tipoprod = r.tipoprod || "";
+//       card.dataset.unidad = r.unidad || "";
+//       card.dataset.palclave = (r.palclave || "").toLowerCase();
+
+
+//       fragment.appendChild(card);
+//       cardsDOM.push(card);
+//     });
+
+//     cont.appendChild(fragment);
+    
+//     attachModalListeners(lista);
+
+// }
+
 function mostrarResultados(lista) {
   datosActuales = lista;
+  paginaActual = 1;
+
+  totalPaginas = Math.ceil(lista.length / LIMITE);
+
+  renderPagina();
+  renderPaginacion();
+}
+
+function renderPagina() {
   const cont = document.getElementById("resultados");
   if (!cont) return;
-  
-  cont.innerHTML = ""; // Limpiar resultados anteriores
-  cardsDOM = []; // Limpiar referencia a cards anteriores
+
+  cont.innerHTML = "";
+  cardsDOM = [];
+
+  const inicio = (paginaActual - 1) * LIMITE;
+  const fin = inicio + LIMITE;
 
   const fragment = document.createDocumentFragment();
 
-    lista.forEach(r => {
-      const card = document.createElement("div");
-      if (vistaActual === "cards") {
-  card.className = "ref-card";
+  datosActuales.slice(inicio, fin).forEach(r => {
+    const card = document.createElement("div");
 
-  card.innerHTML = `
-    <div class="ref-img">
-     
-      <img 
-  src="${r.imagen || 'assets/img/no-image.jpg'}"
-  loading="lazy"
-  alt="${r.nombreprod}"
-  class="card-img-top"
-  onerror="this.onerror=null; this.src='assets/img/no-image.jpg';">
+    if (vistaActual === "cards") {
+      card.className = "ref-card";
+
+      card.innerHTML = `
+        <div class="ref-img">
+        <img 
+   src="${r.imagen || 'assets/img/no-image.jpg'}"
+   loading="lazy"
+   alt="${r.nombreprod}"
+   class="card-img-top"
+   onerror="this.onerror=null; this.src='assets/img/no-image.jpg';">
 
            <div class="card-actions">
-         <button class="btn-check-ref" data-id="${r.id}">
-           <i class="bi ${r.completada ? 'bi-check-circle-fill text-success' : 'bi-circle'}"></i>
-         </button>
-
+           ${rol !== "personal" ? `
+          <button class="btn-check-ref" data-id="${r.id}">
+            <i class="bi ${r.completada ? 'bi-check-circle-fill text-success' : 'bi-circle'}"></i>
+          </button>
+ ` : ""}
         <button class="btn-broadcast" data-id="${r.id}">
-           <i class="bi ${r.destacada ? 'bi-broadcast text-primary' : 'bi-broadcast'}"></i>
-         </button>
+            <i class="bi ${r.destacada ? 'bi-broadcast text-primary' : 'bi-broadcast'}"></i>
+          </button>
+          
+          <button class="btn-envio" data-id="${r.id}">
+   <i class="bi ${r.en_envio ? 'bi-truck text-success' : 'bi-truck text-muted'}"></i>
+ </button>
 
          <button class="btn-fullscreen" data-img="${r.imagen || 'assets/img/no-image.jpg'}">
-           <i class="bi bi-fullscreen"></i>
-         </button>
-       </div>
-    </div>
+            <i class="bi bi-fullscreen"></i>
+          </button>
+        </div>
+     </div>
 
     <div class="ref-body">
-      <h3 class="ref-title">${r.nombreprod}</h3>
-      <div class="ref-modelo">Modelo: <strong>${r.modelo || '-'}</strong></div>
-      <div class="ref-cantidad">Cantidad: <strong>${r.cantidad} ${r.unidad || ''}</strong></div>
-      <div class="ref-ubicacion btn-mapa" data-ubicacion="${r.ubicacion || ''}" style="cursor:pointer hover:opacity-80">
-  📍 ${r.ubicacion || 'Sin ubicación'}
-</div>
+       <h3 class="ref-title">${r.nombreprod}</h3>
+       <div class="ref-modelo">Modelo: <strong>${r.modelo || '-'}</strong></div>
+       <div class="ref-cantidad">Cantidad: <strong>${r.cantidad} ${r.unidad || ''}</strong></div>
+       <div class="ref-ubicacion btn-mapa" data-ubicacion="${r.ubicacion || ''}" style="cursor:pointer hover:opacity-80">
+   📍 ${r.ubicacion || 'Sin ubicación'}
+ </div>
 
+       ${rol !== "personal" ? `
+   <div class="ref-actions">
+     <a href="paginas/Editar/detalle.html?id=${r.id}" class="btn btn-primary btn-sm">Editar</a>
+   </div> ` : ""}
+      `;
+    } else {
+      card.className = "ref-lista-item";
+      card.innerHTML = `<div>${r.nombreprod}</div>`;
+    }
 
-
-      ${rol !== "personal" ? `
-  <div class="ref-actions">
-    <a href="paginas/Editar/detalle.html?id=${r.id}" class="btn btn-primary btn-sm">Editar</a>
-  </div>` : ""}
-
-
-    </div>
-
-    
-  `;
-
-
-  // va arriba
-//   <div class="ref-actions">
-//     <a href="paginas/Usos de Refaccion/uso.html?id=${r.id}" class="btn btn-primary btn-sm">Registrar Uso</a>
-//   </div>
-
-// <button class="btn btn-primary btn-sm btn-ver-usos" data-id="${r.id}" title="Ver usos">
-//   <i class="bi bi-eye"></i>
-// </button>
-
-
-  const btnUsos = card.querySelector(".btn-ver-usos");
-
-if (btnUsos) {
-  btnUsos.addEventListener("click", (e) => {
-    e.stopPropagation();
-
-    console.log("ID REAL:", r.id); // 👈 DEBUG
-
-    refaccionActual = r.id; // ✅ AQUÍ SE GUARDA BIEN
-    obtenerUsos(r.id);
+    fragment.appendChild(card);
+    cardsDOM.push(card);
   });
+
+  cont.appendChild(fragment);
 }
 
-} else {
+function renderPaginacion() {
+  const cont = document.getElementById("paginacion");
+  if (!cont) return;
 
-  card.className = "ref-lista-item";
+  cont.innerHTML = "";
 
-  card.innerHTML = `
-    <div class="lista-nombre">${r.nombreprod}</div>
-    <div class="lista-ref">${r.refinterna || '-'}</div>
-    <div class="lista-ubicacion btn-mapa" data-ubicacion="${r.ubicacion || ''}" style="cursor:pointer">
-  ${r.ubicacion || 'Sin ubicación'}
-</div>
-    <div>
-      <a href="paginas/Editar/detalle.html?id=${r.id}" class="btn btn-sm btn-outline-primary">
-        Editar
-      </a>
-    </div>
+  let html = "";
+
+  // Botón anterior
+  html += `
+    <button class="btn btn-sm btn-outline-primary me-1" 
+      ${paginaActual === 1 ? "disabled" : ""} 
+      data-page="prev">
+      ←
+    </button>
   `;
+
+  // Números de página
+  for (let i = 1; i <= totalPaginas; i++) {
+    html += `
+      <button class="btn btn-sm ${i === paginaActual ? "btn-primary" : "btn-outline-primary"} me-1"
+        data-page="${i}">
+        ${i}
+      </button>
+    `;
+  }
+
+  // Botón siguiente
+  html += `
+    <button class="btn btn-sm btn-outline-primary" 
+      ${paginaActual === totalPaginas ? "disabled" : ""} 
+      data-page="next">
+      →
+    </button>
+  `;
+
+  cont.innerHTML = html;
 }
 
-      card.dataset.nombreprod = (r.nombreprod || "").toLowerCase();
-      card.dataset.refinterna = (r.refinterna || "").toLowerCase();
-      card.dataset.modelo = (r.modelo || "").toLowerCase();
-      card.dataset.tipoprod = r.tipoprod || "";
-      card.dataset.unidad = r.unidad || "";
-      card.dataset.palclave = (r.palclave || "").toLowerCase();
+document.addEventListener("click", (e) => {
+  const btn = e.target.closest("#paginacion button");
+  if (!btn) return;
+
+  const action = btn.dataset.page;
+
+  if (action === "prev" && paginaActual > 1) {
+    paginaActual--;
+  } else if (action === "next" && paginaActual < totalPaginas) {
+    paginaActual++;
+  } else if (!isNaN(action)) {
+    paginaActual = Number(action);
+  }
+
+  renderPagina();
+  renderPaginacion();
+
+  window.scrollTo({ top: 0, behavior: "smooth" }); // 👈 UX bonito
+});
 
 
-      fragment.appendChild(card);
-      cardsDOM.push(card);
-    });
-
-    cont.appendChild(fragment);
-    
-    attachModalListeners(lista);
-
-}
 
 async function obtenerUsos(refaccionId) {
   document.getElementById("modalUsos").style.display = "flex";
 document.body.style.overflow = "hidden"; // 🚫 bloquea scroll/interacción
   const res = await fetch(`${API}/usos/${refaccionId}`);
   const data = await res.json();
+  console.log("RESPUESTA BACK:", data);
 
   const lista = document.getElementById("listaUsos");
   lista.innerHTML = "";
@@ -597,6 +715,58 @@ async function eliminarUso(id) {
   }
 }
 // --- FUNCIONES DEL MAPA (FUERA de mostrarResultados) ---
+
+
+document.addEventListener("click", async (e) => {
+  if (e.target.closest(".btn-envio")) {
+    const btn = e.target.closest(".btn-envio");
+    const id = btn.dataset.id;
+
+    console.log("CLICK ENVIO", btn.dataset.id);
+
+    try {
+      const res = await fetch(`${API}/refacciones/envio/${id}`, {
+        method: "PUT"
+      });
+
+      const data = await res.json();
+      console.log("RESPUESTA BACK:", data);
+
+      if (data.ok) {
+        const icon = btn.querySelector("i");
+
+        if (data.en_envio) {
+          icon.classList.remove("text-muted");
+          icon.classList.add("text-success");
+        } else {
+          icon.classList.remove("text-success");
+          icon.classList.add("text-muted");
+        }
+        cargarEnvios();
+      }
+
+    } catch (error) {
+      console.error("Error:", error);
+    }
+  }
+});
+
+document.addEventListener("click", async (e) => {
+  const btn = e.target.closest(".btn-quitar-envio");
+  if (!btn) return;
+
+  const id = btn.dataset.id;
+
+  try {
+    await fetch(`${API}/refacciones/envio/${id}`, {
+      method: "PUT"
+    });
+
+    cargarEnvios(); // refrescar
+  } catch (error) {
+    console.error(error);
+  }
+});
 
 // Delegación de eventos para capturar clics en elementos creados dinámicamente
 document.addEventListener("click", (e) => {
@@ -1013,6 +1183,7 @@ async function aplicarFiltros() {
 
       const res = await fetch(`${API}/buscar-refacciones?${params}`);
       const data = await res.json();
+      console.log("RESPUESTA BACK:", data);
 
       // console.log("Total registros global:", data.length);
 
@@ -1131,6 +1302,7 @@ function crearTagVisual(texto) {
 async function llenarSelectsGlobal() {
   const res = await fetch(`${API}/refacciones-metadata`);
   const data = await res.json();
+  console.log("RESPUESTA BACK:", data);
 
   const selectTipo = document.getElementById("filtroTipo");
   const selectUnidad = document.getElementById("filtroUnidad");
@@ -1190,6 +1362,7 @@ document.addEventListener("click", async (e) => {
   });
 
   const data = await res.json();
+  console.log("RESPUESTA BACK:", data);
 
   const icon = btn.querySelector("i");
 
@@ -1212,6 +1385,7 @@ async function cargarDestacadas() {
     if (!res.ok) throw new Error("Error en la respuesta del servidor");
     
     const data = await res.json();
+    console.log("RESPUESTA BACK:", data);
     renderDestacadas(data);
   } catch (error) {
     console.error("Error cargando destacadas:", error);
@@ -1286,4 +1460,57 @@ document.addEventListener("click", async (e) => {
   }
 });
 
-document.addEventListener("DOMContentLoaded", cargarDestacadas);
+async function cargarEnvios() {
+  const contenedor = document.getElementById("contenedorResultadosEnvio");
+  if (!contenedor) return;
+
+  try {
+    const res = await fetch(`${API}/refacciones/envio`);
+    const data = await res.json();
+console.log(data);
+    console.log("RESPUESTA BACK:", data);
+    renderEnvios(data);
+
+  } catch (error) {
+    console.error("Error cargando envíos:", error);
+  }
+}
+
+function renderEnvios(lista) {
+  const contenedor = document.getElementById("contenedorResultadosEnvio");
+
+  if (lista.length === 0) {
+    contenedor.innerHTML = `
+      <div class="alert alert-light text-center border shadow-sm">
+        <i class="bi bi-truck"></i> No hay refacciones en envío.
+      </div>`;
+    return;
+  }
+
+  contenedor.innerHTML = `
+    <div class="card w-100 shadow-sm">
+      <div class="card-header fw-bold bg-white d-flex justify-content-between">
+        <span><i class="bi bi-truck text-success"></i> Panel de Envíos</span>
+        <span class="badge bg-success">${lista.length}</span>
+      </div>
+      <ul class="list-group list-group-flush">
+        ${lista.map(r => `
+          <li class="list-group-item d-flex justify-content-between align-items-center py-3">
+            <div>
+              <strong class="d-block">${r.nombreprod}</strong>
+              <small class="text-muted">
+                ${r.modelo || 'S/M'} | 
+                <i class="bi bi-geo-alt"></i> ${r.ubicacion || 'S/U'}
+              </small>
+            </div>
+
+            <button class="btn btn-outline-success btn-sm btn-quitar-envio" data-id="${r.id}" title="Quitar de envío">
+              <i class="bi bi-x-lg"></i>
+            </button>
+
+          </li>
+        `).join("")}
+      </ul>
+    </div>
+  `;
+}
