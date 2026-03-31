@@ -110,7 +110,7 @@ fd.append(
   }
 
   alert("✅ Refacción actualizada");
-  window.location.href = "paginas/Refacciones Ubicacion/Con.html";
+  window.location.href = "../Refacciones Ubicacion/ConUbi.html";
 
   if (imagenEliminada) {
     formData.append("eliminarImagen", "true");
