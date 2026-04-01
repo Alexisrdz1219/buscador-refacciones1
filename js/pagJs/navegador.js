@@ -506,10 +506,9 @@ function renderPagina() {
         <div class="ref-img">
         <img 
    src="${r.imagen || 'assets/img/no-image.jpg'}"
-   loading="lazy"
    alt="${r.nombreprod}"
    class="card-img-top"
-   onerror="this.onerror=null; this.src='assets/img/no-image.jpg';">
+   onerror="this.onerror=null; this.src='assets/img/no-image.jpg';" loading="lazy">
 
            <div class="card-actions">
            ${rol !== "personal" ? `
@@ -1006,7 +1005,7 @@ if (!document.getElementById("modalDetalles")) {
 
           <!-- Imagen destacada -->
           <div class="modal-imagen flex-shrink-0 text-center position-relative" style="min-width:300px; cursor:pointer;">
-            <img id="modal-img" src="assets/img/no-image.jpg" alt="Producto" class="img-fluid rounded shadow-sm border zoom-img" style="max-height:450px; object-fit:contain;">
+            <img id="modal-img" src="assets/img/no-image.jpg" alt="Producto" class="img-fluid rounded shadow-sm border zoom-img" style="max-height:450px; object-fit:contain;" loading="lazy">
           </div>
 
           <!-- Datos -->
@@ -1134,7 +1133,7 @@ document.addEventListener("click", (e) => {
     const src = e.target.src;
     const overlay = document.createElement("div");
     overlay.className = "img-zoom-overlay d-flex justify-content-center align-items-center";
-    overlay.innerHTML = `<img src="${src}" style="max-width:90%; max-height:90%; border-radius:0.5rem; box-shadow:0 0.5rem 1rem rgba(0,0,0,0.5);">`;
+    overlay.innerHTML = `<img src="${src}" style="max-width:90%; max-height:90%; border-radius:0.5rem; box-shadow:0 0.5rem 1rem rgba(0,0,0,0.5);"> loading="lazy"`;
     overlay.addEventListener("click", ()=>overlay.remove());
     document.body.appendChild(overlay);
   }

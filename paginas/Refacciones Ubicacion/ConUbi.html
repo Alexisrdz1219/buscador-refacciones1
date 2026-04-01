@@ -107,7 +107,7 @@
     <button id="zoomOut">−</button>
     <button id="cerrarVisor">✕</button>
   </div>
-  <img id="visorImg">
+  <img id="visorImg" loading="lazy">
 </div>
 
 <script>
@@ -257,7 +257,7 @@ function renderizarCards() {
           <img 
             src="${ref.imagen || 'https://via.placeholder.com/300x200?text=Sin+Imagen'}"
             class="card-img-top"
-            style="height:200px; object-fit:cover;"
+            style="height:200px; object-fit:cover;" loading="lazy"
           >
 
           <!-- CHECK -->

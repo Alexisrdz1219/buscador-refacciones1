@@ -38,7 +38,7 @@ card.innerHTML = `
     <img 
       src="${r.imagen || 'assets/img/no-image.jpg'}"
       alt="${r.nombreprod || 'Sin nombre'}"
-      onerror="this.onerror=null; this.src='assets/img/no-image.jpg';"
+      onerror="this.onerror=null; this.src='assets/img/no-image.jpg';" loading="lazy"
     />
   </div>
 
