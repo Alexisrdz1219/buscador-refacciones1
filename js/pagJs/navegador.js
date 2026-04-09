@@ -892,9 +892,8 @@ function abrirMapa(ubicacionStr) {
        grid-row: ${r + 1} / span ${height};
 
       width: 100%;
+      height: 100%;
 
-      padding: 4px;
-font-size: 12px;
       display: flex;
       align-items: center;
       justify-content: center;
