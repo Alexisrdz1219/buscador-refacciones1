@@ -34,12 +34,10 @@
   <div class="spinner-border text-danger"></div>
   <p class="mt-2">Cargando refacciones...</p>
 </div>
-  <!-- 
   
-    <button id="btnSinUbicacion" class="btn btn-danger btn-lg">
-  Mostrar refacciones SIN ubicación
-</button>
-  </div> -->
+<button onclick="filtrarTodas()">Todas</button>
+<button onclick="filtrarSinUbicacion()">Sin ubicación</button>
+<button onclick="filtrarConCantidad()">Con stock</button>
 
   <!-- Buscador -->
   <div class="mb-4 d-none" id="buscadorContainer">
@@ -313,32 +311,64 @@ function mostrarProgreso(totalGeneral, totalConUbicacion) {
   `;
 }
 
+// async function cargarRefacciones() {
+//   document.getElementById("loading").style.display = "block";
+//   try {
+
+//     const resp = await fetch("https://buscador-refaccionesbackend.onrender.com/refacciones");
+//     const data = await resp.json();
+
+//     if (!data || (!data.data && !Array.isArray(data))) {
+//       document.getElementById("resultadoUbi").innerHTML =
+//         "<p class='text-danger'>Error en endpoint general</p>";
+//       return;
+//     }
+
+//     const todas = Array.isArray(data) ? data : data.data;
+
+//     // 🔥 filtrar sin ubicación
+//     const sinUbicacion = todas.filter(ref =>
+//       !ref.ubicacion || ref.ubicacion.trim() === ""
+//     );
+
+//     refaccionesOriginal = sinUbicacion;
+//     refaccionesFiltradas = [...refaccionesOriginal];
+//     paginaActual = 1;
+
+//     document.getElementById("buscadorContainer").classList.remove("d-none");
+//     document.getElementById("loading").style.display = "none";
+//     renderizarTodo();
+
+//   } catch (error) {
+//     console.error("Error:", error);
+//   }
+// }
+
+let refaccionesTodas = [];
+
 async function cargarRefacciones() {
   document.getElementById("loading").style.display = "block";
-  try {
 
+  try {
     const resp = await fetch("https://buscador-refaccionesbackend.onrender.com/refacciones");
     const data = await resp.json();
 
-    if (!data || (!data.data && !Array.isArray(data))) {
-      document.getElementById("resultadoUbi").innerHTML =
-        "<p class='text-danger'>Error en endpoint general</p>";
-      return;
-    }
-
     const todas = Array.isArray(data) ? data : data.data;
 
-    // 🔥 filtrar sin ubicación
-    const sinUbicacion = todas.filter(ref =>
+    // 🔥 guardamos TODAS
+    refaccionesTodas = todas;
+
+    // 🔥 por defecto puedes mostrar sin ubicación
+    refaccionesOriginal = todas.filter(ref =>
       !ref.ubicacion || ref.ubicacion.trim() === ""
     );
 
-    refaccionesOriginal = sinUbicacion;
     refaccionesFiltradas = [...refaccionesOriginal];
     paginaActual = 1;
 
     document.getElementById("buscadorContainer").classList.remove("d-none");
     document.getElementById("loading").style.display = "none";
+
     renderizarTodo();
 
   } catch (error) {
@@ -346,7 +376,45 @@ async function cargarRefacciones() {
   }
 }
 
+function filtrarTodas() {
+  refaccionesOriginal = [...refaccionesTodas];
+  refaccionesFiltradas = [...refaccionesOriginal];
+  paginaActual = 1;
+  renderizarTodo();
+}
 
+
+
+function filtrarSinUbicacion() {
+  refaccionesOriginal = refaccionesTodas.filter(ref =>
+    !ref.ubicacion || ref.ubicacion.trim() === ""
+  );
+
+  refaccionesFiltradas = [...refaccionesOriginal];
+  paginaActual = 1;
+  renderizarTodo();
+}
+
+function filtrarConCantidad() {
+  refaccionesOriginal = refaccionesTodas.filter(ref =>
+    Number(ref.cantidad) > 0
+  );
+
+  refaccionesFiltradas = [...refaccionesOriginal];
+  paginaActual = 1;
+  renderizarTodo();
+}
+
+function filtrarImportantes() {
+  refaccionesOriginal = refaccionesTodas.filter(ref =>
+    Number(ref.cantidad) > 0 &&
+    (!ref.ubicacion || ref.ubicacion.trim() === "")
+  );
+
+  refaccionesFiltradas = [...refaccionesOriginal];
+  paginaActual = 1;
+  renderizarTodo();
+}
 document.addEventListener("DOMContentLoaded", () => {
   cargarRefacciones();
 });

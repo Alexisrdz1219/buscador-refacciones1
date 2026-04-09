@@ -797,11 +797,11 @@ document.addEventListener("click", (e) => {
 const CONFIG_ALMACENES = {
   "A1": [
   ["A5", "G1", "G1", "H1", "H1", "I1", "I1", "J1", "J1", null],
-  ["A4", null, "B2", "C2", null, "D1", "E1", null, "F2", null],
-  ["A3", null, "B1", "C1", null, null, null, null, "F1", null],
-  ["A2", null, "Orings", null, null, null, null, null, null, null],
-  ["A1", null, null, null, null, null, null, null, null, null],
-  ["H", null, null, null, null, null, "Solicitar", "Solicitar", "Solicitar", null]
+  ["A4", null, null, null, null, null, null, null, "F2", null],
+  ["A3", null, "B2", "C2", null, "D1", "E1", null, "F1", null],
+  ["A2", null, "B1", "C1", null, null, null, null, null, null],
+  ["A1", null, "Orings", "Orings", null, null, null, null, null, null],
+  ["H", null, null, null, null, null, null, null, null, null]
 ],
 
 "A2": [
@@ -873,19 +873,6 @@ function abrirMapa(ubicacionStr) {
       width++;
     }
 
-    // 🔥 SOLO vertical si NO es "Solicitar"
-    if (id !== "Solicitar") {
-      let expand = true;
-      while (expand) {
-        for (let i = 0; i < width; i++) {
-          if (grid[r + height]?.[c + i] !== id) {
-            expand = false;
-            break;
-          }
-        }
-        if (expand) height++;
-      }
-    }
 
     // marcar visitados
     for (let i = 0; i < height; i++) {
@@ -905,8 +892,9 @@ function abrirMapa(ubicacionStr) {
        grid-row: ${r + 1} / span ${height};
 
       width: 100%;
-      height: 100%;
 
+      padding: 4px;
+font-size: 12px;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -947,10 +935,10 @@ function abrirMapa(ubicacionStr) {
   }
 }
 
-
   container.style.display = "grid";
-  
-  container.style.gap = "6px";
+container.style.gridTemplateColumns = `repeat(${grid[0].length}, 1fr)`;
+container.style.gridAutoRows = "50px"; // 🔥 altura fija
+container.style.gap = "6px";
 
   container.appendChild(fragment);
 }

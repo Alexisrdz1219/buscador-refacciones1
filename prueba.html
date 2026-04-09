@@ -1,0 +1,65 @@
+<h1>Subir Imágenes Masivas</h1>
+
+<input type="file" id="imagenes" multiple />
+<button onclick="subir()">Subir</button>
+
+<div style="margin-top: 10px">
+  <div style="width: 300px; height: 20px; border: 1px solid #000">
+    <div id="barra" style="height: 100%; width: 0%; background: green"></div>
+  </div>
+  <p id="texto">0%</p>
+</div>
+
+<script>
+  function subir() {
+    const files = document.getElementById("imagenes").files;
+
+    if (files.length === 0) {
+      alert("Selecciona imágenes");
+      return;
+    }
+
+    const formData = new FormData();
+
+    for (let f of files) {
+      formData.append("imagenes", f);
+    }
+
+    const xhr = new XMLHttpRequest();
+
+    xhr.open(
+      "POST",
+      "https://buscador-refaccionesbackend.onrender.com/upload-masivo",
+    );
+
+    // 🔥 PROGRESO REAL
+    xhr.upload.onprogress = function (e) {
+      if (e.lengthComputable) {
+        const porcentaje = Math.round((e.loaded / e.total) * 100);
+
+        document.getElementById("barra").style.width = porcentaje + "%";
+        document.getElementById("texto").innerText = porcentaje + "%";
+      }
+    };
+
+    // 🔥 CUANDO TERMINA
+    xhr.onload = function () {
+      if (xhr.status === 200) {
+        const data = JSON.parse(xhr.responseText);
+        console.log(data);
+
+        document.getElementById("texto").innerText = "✅ Completado";
+
+        alert("Subida terminada");
+      } else {
+        alert("Error en la subida");
+      }
+    };
+
+    xhr.onerror = function () {
+      alert("Error de conexión");
+    };
+
+    xhr.send(formData);
+  }
+</script>
