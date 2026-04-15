@@ -805,11 +805,11 @@ const CONFIG_ALMACENES = {
 ],
 
 "A2": [
-  ["N1", "O1", null, null, null, null, null, null, null, null],
-  ["M1", null, null, null, null, null, null, null, null, null],
+  ["N1", "O1", "RN", "RE", null, "MA", "MA", null, null, null],
+  ["M1", null, "RH", "RM", null, null, null, null, null, null],
   ["L1", null, null, null, null, null, null, "P1", null, null],
-  [null, "K1", null, null, null, null, null, null, "Q1", null],
-  [null, null, null, null, null, null, null, null, "R1", null],
+  ["K1", null, null, null, null, null, null, null, "Q1", null],
+  [null, "T1", null, null, null, null, null, null, "R1", null],
   [null, null, "Z1", "Z1", null, null, null, null, "S1", null]
 ],
 
