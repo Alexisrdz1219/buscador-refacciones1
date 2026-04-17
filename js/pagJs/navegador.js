@@ -501,7 +501,7 @@ function renderPagina() {
 
     if (vistaActual === "cards") {
       card.className = "ref-card";
-
+console.log(lista[0]);
       card.innerHTML = `
         <div class="ref-img">
         <img 
