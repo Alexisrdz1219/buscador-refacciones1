@@ -246,7 +246,7 @@ document.addEventListener("click", async (e) => {
     `${API}/refacciones-por-maquinamod?maquinamod=${encodeURIComponent(maquinamod)}`
   );
 
-
+const data = await res.json(); // 🔥 FALTABA ESTO
   resultadosActuales = data;
 
   llenarSelects(data);
