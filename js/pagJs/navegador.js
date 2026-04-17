@@ -496,16 +496,19 @@ function renderPagina() {
 
   const fragment = document.createDocumentFragment();
 
-  const tags = typeof r.tags === "string"
-  ? JSON.parse(r.tags)
-  : r.tags;
+  
   
   datosActuales.slice(inicio, fin).forEach(r => {
+
+    const tags = typeof r.tags === "string"
+  ? JSON.parse(r.tags)
+  : r.tags;
+
     const card = document.createElement("div");
 
     if (vistaActual === "cards") {
       card.className = "ref-card";
-console.log(lista[0]);
+console.log("TAGS:", r.tags);
       card.innerHTML = `
         <div class="ref-img">
         <img 
