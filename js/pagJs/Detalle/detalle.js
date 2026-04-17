@@ -79,10 +79,12 @@ document.getElementById("form").addEventListener("submit", async e => {
   const fd = new FormData();
 
   document
-    .querySelectorAll("input:not([type=checkbox]):not([type=file]), textarea, select")
-    .forEach(el => {
-  if (el.id === "buscarMaquina") return; // 🔥 excluir
-  fd.append(el.id, el.value);
+  .querySelectorAll("input:not([type=checkbox]):not([type=file]), textarea, select")
+  .forEach(el => {
+    if (el.id === "buscarMaquina") return;
+    if (el.id === "inputTags") return; // 🔥 IMPORTANTE
+
+    fd.append(el.id, el.value);
 });
 
 
