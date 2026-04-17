@@ -203,8 +203,7 @@ document.getElementById("btnTodasRefacciones")?.addEventListener("click", async 
 
 const getDestacadas = async () => {
   const res = await fetch("https://buscador-refaccionesbackend.onrender.com/refacciones/destacadas");
-  const data = await res.json();
-  console.log("RESPUESTA BACK:", data);
+
  // console.log(data);  Aquí tienes un array de refacciones destacadas
 };
 
@@ -247,8 +246,6 @@ document.addEventListener("click", async (e) => {
     `${API}/refacciones-por-maquinamod?maquinamod=${encodeURIComponent(maquinamod)}`
   );
 
-  const data = await res.json();
-  console.log("RESPUESTA BACK:", data);
 
   resultadosActuales = data;
 
@@ -350,130 +347,6 @@ function activarBoton(tipo) {
   }
 }
 
-// function mostrarResultados(lista) {
-//   datosActuales = lista;
-//   const cont = document.getElementById("resultados");
-//   if (!cont) return;
-  
-//   cont.innerHTML = ""; // Limpiar resultados anteriores
-//   cardsDOM = []; // Limpiar referencia a cards anteriores
-
-//   cargarMas();
-
-//   const fragment = document.createDocumentFragment();
-
-//     lista.forEach(r => {
-//       const card = document.createElement("div");
-//       if (vistaActual === "cards") {
-//   card.className = "ref-card";
-
-//   card.innerHTML = `
-//     <div class="ref-img">
-     
-//       <img 
-//   src="${r.imagen || 'assets/img/no-image.jpg'}"
-//   loading="lazy"
-//   alt="${r.nombreprod}"
-//   class="card-img-top"
-//   onerror="this.onerror=null; this.src='assets/img/no-image.jpg';">
-
-//            <div class="card-actions">
-//            ${rol !== "personal" ? `
-//          <button class="btn-check-ref" data-id="${r.id}">
-//            <i class="bi ${r.completada ? 'bi-check-circle-fill text-success' : 'bi-circle'}"></i>
-//          </button>
-// ` : ""}
-//         <button class="btn-broadcast" data-id="${r.id}">
-//            <i class="bi ${r.destacada ? 'bi-broadcast text-primary' : 'bi-broadcast'}"></i>
-//          </button>
-          
-//          <button class="btn-envio" data-id="${r.id}">
-//   <i class="bi ${r.en_envio ? 'bi-truck text-success' : 'bi-truck text-muted'}"></i>
-// </button>
-
-//          <button class="btn-fullscreen" data-img="${r.imagen || 'assets/img/no-image.jpg'}">
-//            <i class="bi bi-fullscreen"></i>
-//          </button>
-//        </div>
-//     </div>
-
-//     <div class="ref-body">
-//       <h3 class="ref-title">${r.nombreprod}</h3>
-//       <div class="ref-modelo">Modelo: <strong>${r.modelo || '-'}</strong></div>
-//       <div class="ref-cantidad">Cantidad: <strong>${r.cantidad} ${r.unidad || ''}</strong></div>
-//       <div class="ref-ubicacion btn-mapa" data-ubicacion="${r.ubicacion || ''}" style="cursor:pointer hover:opacity-80">
-//   📍 ${r.ubicacion || 'Sin ubicación'}
-// </div>
-
-//       ${rol !== "personal" ? `
-//   <div class="ref-actions">
-//     <a href="paginas/Editar/detalle.html?id=${r.id}" class="btn btn-primary btn-sm">Editar</a>
-//   </div>` : ""}
-
-
-//     </div>
-
-    
-//   `;
-
-//   // va arriba
-// //   <div class="ref-actions">
-// //     <a href="paginas/Usos de Refaccion/uso.html?id=${r.id}" class="btn btn-primary btn-sm">Registrar Uso</a>
-// //   </div>
-
-// // <button class="btn btn-primary btn-sm btn-ver-usos" data-id="${r.id}" title="Ver usos">
-// //   <i class="bi bi-eye"></i>
-// // </button>
-
-//   const btnUsos = card.querySelector(".btn-ver-usos");
-
-// if (btnUsos) {
-//   btnUsos.addEventListener("click", (e) => {
-//     e.stopPropagation();
-
-//     console.log("ID REAL:", r.id); // 👈 DEBUG
-
-//     refaccionActual = r.id; // ✅ AQUÍ SE GUARDA BIEN
-//     obtenerUsos(r.id);
-//   });
-// }
-
-// } else {
-
-//   card.className = "ref-lista-item";
-
-//   card.innerHTML = `
-//     <div class="lista-nombre">${r.nombreprod}</div>
-//     <div class="lista-ref">${r.refinterna || '-'}</div>
-//     <div class="lista-ubicacion btn-mapa" data-ubicacion="${r.ubicacion || ''}" style="cursor:pointer">
-//   ${r.ubicacion || 'Sin ubicación'}
-// </div>
-//     <div>
-//       <a href="paginas/Editar/detalle.html?id=${r.id}" class="btn btn-sm btn-outline-primary">
-//         Editar
-//       </a>
-//     </div>
-//   `;
-// }
-
-//       card.dataset.nombreprod = (r.nombreprod || "").toLowerCase();
-//       card.dataset.refinterna = (r.refinterna || "").toLowerCase();
-//       card.dataset.modelo = (r.modelo || "").toLowerCase();
-//       card.dataset.tipoprod = r.tipoprod || "";
-//       card.dataset.unidad = r.unidad || "";
-//       card.dataset.palclave = (r.palclave || "").toLowerCase();
-
-
-//       fragment.appendChild(card);
-//       cardsDOM.push(card);
-//     });
-
-//     cont.appendChild(fragment);
-    
-//     attachModalListeners(lista);
-
-// }
-
 function mostrarResultados(lista) {
   datosActuales = lista;
   paginaActual = 1;
@@ -574,13 +447,6 @@ console.log("TAGS:", r.tags);
     cardsDOM.push(card);
   });
 
-  const res = await fetch(`${API}/refacciones`);
-const data = await res.json();
-
-console.log("🔥 DATA REAL:", data);
-
-datosActuales = data;
-renderPagina();
   cont.appendChild(fragment);
 }
 
