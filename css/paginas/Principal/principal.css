@@ -265,22 +265,35 @@
   transition: 0.2s;
 }
 
-.ref-tags {
+/* CONTENEDOR */
+.ref-tags,
+.lista-tags {
   display: flex;
   flex-wrap: wrap;
   gap: 6px;
-  margin-top: 8px;
+  margin-top: 6px;
 }
 
+/* TAG NORMAL */
 .tag {
-  background: #e5e7eb;
-  color: #111827;
+  background: #e0edff;
+  color: #1e3a8a;
+  padding: 4px 8px;
+  border-radius: 12px;
   font-size: 12px;
-  padding: 3px 8px;
-  border-radius: 999px;
   font-weight: 500;
+  transition: all 0.2s ease;
+  cursor: default;
 }
 
+/* TAG PEQUEÑO (lista) */
+.tag.small {
+  font-size: 10px;
+  padding: 3px 6px;
+}
+
+/* HOVER PRO */
 .tag:hover {
-  background: #d1d5db;
+  background: #1e3a8a;
+  color: white;
 }
