@@ -496,6 +496,10 @@ function renderPagina() {
 
   const fragment = document.createDocumentFragment();
 
+  const tags = typeof r.tags === "string"
+  ? JSON.parse(r.tags)
+  : r.tags;
+  
   datosActuales.slice(inicio, fin).forEach(r => {
     const card = document.createElement("div");
 
@@ -535,10 +539,10 @@ console.log(lista[0]);
        <div class="ref-modelo">Modelo: <strong>${r.modelo || '-'}</strong></div>
        <div class="ref-cantidad">Cantidad: <strong>${r.cantidad} ${r.unidad || ''}</strong></div>
        <div class="ref-tags">
-        ${(r.tags || []).map(tag => `
-          <span class="tag">${tag}</span>
-          `).join("")}
-      </div>
+  ${(tags || []).map(tag => `
+    <span class="tag">${tag}</span>
+  `).join("")}
+</div>
        <div class="ref-ubicacion btn-mapa" data-ubicacion="${r.ubicacion || ''}" style="cursor:pointer hover:opacity-80">
    📍 ${r.ubicacion || 'Sin ubicación'}
  </div>
