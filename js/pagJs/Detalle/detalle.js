@@ -78,15 +78,36 @@ document.getElementById("form").addEventListener("submit", async e => {
 
   const fd = new FormData();
 
-  document
-  .querySelectorAll("input:not([type=checkbox]):not([type=file]), textarea, select")
-  .forEach(el => {
-    if (el.id === "buscarMaquina") return;
-    if (el.id === "inputTags") return; // 🔥 IMPORTANTE
+//   document
+//   .querySelectorAll("input:not([type=checkbox]):not([type=file]), textarea, select")
+//   .forEach(el => {
+//     if (el.id === "buscarMaquina") return;
+//     if (el.id === "inputTags") return; // 🔥 IMPORTANTE
 
-    fd.append(el.id, el.value);
+//     fd.append(el.id, el.value);
+// });
+const camposValidos = [
+  "nombreprod",
+  "refinterna",
+  "categoriaprin",
+  "maquinamod",
+  "maquinaesp",
+  "nummaquina",
+  "tipoprod",
+  "modelo",
+  "palclave",
+  "cantidad",
+  "unidad",
+  "ubicacion",
+  "observacion"
+];
+
+camposValidos.forEach(idCampo => {
+  const el = document.getElementById(idCampo);
+  if (el) {
+    fd.append(idCampo, el.value);
+  }
 });
-
 
   const fileInput = document.getElementById("imagen");
   if (fileInput && fileInput.files.length > 0) {
