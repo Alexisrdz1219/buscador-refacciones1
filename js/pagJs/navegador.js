@@ -542,11 +542,9 @@ console.log("TAGS:", r.tags);
        <h3 class="ref-title">${r.nombreprod}</h3>
        <div class="ref-modelo">Modelo: <strong>${r.modelo || '-'}</strong></div>
        <div class="ref-cantidad">Cantidad: <strong>${r.cantidad} ${r.unidad || ''}</strong></div>
-       <div class="ref-tags">
-          ${(tags || []).map(tag => `
-            <span class="tag">${tag}</span>
-          `).join("")}
-        </div>
+      <div class="ref-tags">
+  TAGS: ${JSON.stringify(tags)}
+</div>
        <div class="ref-ubicacion btn-mapa" data-ubicacion="${r.ubicacion || ''}" style="cursor:pointer hover:opacity-80">
    📍 ${r.ubicacion || 'Sin ubicación'}
  </div>
