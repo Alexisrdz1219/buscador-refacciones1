@@ -496,7 +496,8 @@ function renderPagina() {
 
   const fragment = document.createDocumentFragment();
 
-  
+  console.log("DATOS:", datosActuales);
+console.log("LONGITUD:", datosActuales.length);
   
   datosActuales.slice(inicio, fin).forEach(r => {
 
@@ -542,10 +543,10 @@ console.log("TAGS:", r.tags);
        <div class="ref-modelo">Modelo: <strong>${r.modelo || '-'}</strong></div>
        <div class="ref-cantidad">Cantidad: <strong>${r.cantidad} ${r.unidad || ''}</strong></div>
        <div class="ref-tags">
-  ${(tags || []).map(tag => `
-    <span class="tag">${tag}</span>
-  `).join("")}
-</div>
+          ${(tags || []).map(tag => `
+            <span class="tag">${tag}</span>
+          `).join("")}
+        </div>
        <div class="ref-ubicacion btn-mapa" data-ubicacion="${r.ubicacion || ''}" style="cursor:pointer hover:opacity-80">
    📍 ${r.ubicacion || 'Sin ubicación'}
  </div>
