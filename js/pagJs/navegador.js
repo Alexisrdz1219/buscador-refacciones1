@@ -574,6 +574,13 @@ console.log("TAGS:", r.tags);
     cardsDOM.push(card);
   });
 
+  const res = await fetch(`${API}/refacciones`);
+const data = await res.json();
+
+console.log("🔥 DATA REAL:", data);
+
+datosActuales = data;
+renderPagina();
   cont.appendChild(fragment);
 }
 

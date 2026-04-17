@@ -276,7 +276,11 @@
   background: #e5e7eb;
   color: #111827;
   font-size: 12px;
-  padding: 4px 10px;
+  padding: 3px 8px;
   border-radius: 999px;
   font-weight: 500;
+}
+
+.tag:hover {
+  background: #d1d5db;
 }
