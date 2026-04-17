@@ -264,3 +264,23 @@
   transform: scale(1.1);
   transition: 0.2s;
 }
+
+.ref-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 8px;
+}
+
+.tag {
+  background: #e5e7eb;
+  color: #111827;
+  font-size: 12px;
+  padding: 3px 8px;
+  border-radius: 999px;
+  font-weight: 500;
+}
+
+.tag:hover {
+  background: #d1d5db;
+}

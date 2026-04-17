@@ -41,6 +41,11 @@ async function cargarDetalle() {
   btnQuitar.style.display = "block";
 }
   }
+
+  // 🔥 cargar tags en el input
+if (r.tags) {
+  document.getElementById("inputTags").value = r.tags.join(", ");
+}
 }
 
 /* =========================
@@ -105,23 +110,41 @@ fd.append(
   });
 
   if (!res.ok) {
-    alert("❌ Error al guardar");
-    return;
-  }
+  alert("❌ Error al guardar");
+  return;
+}
 
-  alert("✅ Refacción actualizada");
-  window.location.href = "../Refacciones Ubicacion/ConUbi.html";
+// =====================
+// 🔥 GUARDAR TAGS
+// =====================
+const tags = document
+  .getElementById("inputTags")
+  .value.split(",")
+  .map(t => t.trim())
+  .filter(Boolean);
 
-  if (imagenEliminada) {
-    formData.append("eliminarImagen", "true");
-  }
+await fetch(`${API}/refacciones/${id}/tags`, {
+  method: "POST",
+  headers: { "Content-Type": "application/json" },
+  body: JSON.stringify({ tags })
+});
 
-  await fetch(`${API}/refacciones/${id}`, {
-    method: "PUT",
-    body: formData
-  });
+// =====================
+// FINAL
+// =====================
+alert("✅ Refacción actualizada");
+window.location.href = "../Refacciones Ubicacion/ConUbi.html";
 
-  alert("Guardado correctamente");
+  // if (imagenEliminada) {
+  //   formData.append("eliminarImagen", "true");
+  // }
+
+  // await fetch(`${API}/refacciones/${id}`, {
+  //   method: "PUT",
+  //   body: formData
+  // });
+
+  // alert("Guardado correctamente");
 });
 
 /* =========================
