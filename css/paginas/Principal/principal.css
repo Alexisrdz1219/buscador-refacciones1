@@ -276,8 +276,8 @@
 
 /* TAG NORMAL */
 .tag {
-  background: #e0edff;
-  color: #1e3a8a;
+  background: #198754;
+  color: #ffffff;
   padding: 4px 8px;
   border-radius: 12px;
   font-size: 12px;
@@ -294,6 +294,10 @@
 
 /* HOVER PRO */
 .tag:hover {
-  background: #1e3a8a;
+  background: #51c890;
   color: white;
+}
+.alerta-item:hover {
+  background: #f8f9fa;
+  transition: 0.2s;
 }

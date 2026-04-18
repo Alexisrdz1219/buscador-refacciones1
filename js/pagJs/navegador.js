@@ -110,6 +110,8 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   despertarBackend();
 const token = localStorage.getItem("token");
+setInterval(cargarAlertas, 10000); // cada 10 segundos
+cargarAlertas(); // inicial
 
   if (!token) {
     window.location.replace("index.html");
@@ -1401,3 +1403,68 @@ function renderEnvios(lista) {
     </div>
   `;
 }
+
+async function cargarAlertas() {
+  try {
+    const res = await fetch(`${API}/alertas`);
+    const data = await res.json();
+
+    const noLeidas = data.filter(a => !a.leida);
+
+    actualizarContador(noLeidas.length);
+    renderAlertas(data);
+
+  } catch (error) {
+    console.error("Error cargando alertas:", error);
+  }
+}
+
+function actualizarContador(cantidad) {
+  const badge = document.getElementById("contadorAlertas");
+
+  if (cantidad > 0) {
+    badge.style.display = "inline-block";
+    badge.textContent = cantidad;
+  } else {
+    badge.style.display = "none";
+  }
+}
+
+function renderAlertas(alertas) {
+  const cont = document.getElementById("listaAlertas");
+  cont.innerHTML = "";
+
+  if (alertas.length === 0) {
+    cont.innerHTML = "<p class='text-muted'>Sin alertas</p>";
+    return;
+  }
+
+  alertas.forEach(a => {
+    const div = document.createElement("div");
+
+    div.className = "alerta-item mb-2 p-2 border rounded";
+    if (!a.leida) div.style.background = "#ffe5e5";
+
+    div.innerHTML = `
+      <div>${a.mensaje}</div>
+      <small>${new Date(a.fecha).toLocaleString()}</small>
+      <br>
+      ${!a.leida ? `<button class="btn btn-sm btn-success mt-1" onclick="marcarLeida(${a.id})">✔️</button>` : ""}
+    `;
+
+    cont.appendChild(div);
+  });
+}
+async function marcarLeida(id) {
+  await fetch(`${API}/alertas/${id}/leida`, {
+    method: "PUT"
+  });
+
+  cargarAlertas(); // recargar
+}
+const btn = document.getElementById("contenedorAlertas");
+const panel = document.getElementById("panelAlertas");
+
+btn.addEventListener("click", () => {
+  panel.style.display = panel.style.display === "none" ? "block" : "none";
+});
