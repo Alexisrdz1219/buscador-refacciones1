@@ -1443,7 +1443,11 @@ function renderAlertas(alertas) {
     const div = document.createElement("div");
 
     div.className = "alerta-item mb-2 p-2 border rounded";
-    if (!a.leida) div.style.background = "#ffe5e5";
+    if (!a.leida) {
+  div.style.background = "#ffe5e5"; // rojo suave
+} else {
+  div.style.opacity = "0.6"; // más tenue
+}
 
     div.innerHTML = `
       <div>${a.mensaje}</div>
