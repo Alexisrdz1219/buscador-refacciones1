@@ -129,12 +129,11 @@ camposValidos.forEach(idCampo => {
 // =====================
 // 🔥 ALERTA DE STOCK
 // =====================
-const alertaActiva = document.getElementById("alertaActiva")?.checked;
-const stockMinimo = document.getElementById("stockMinimo")?.value;
+const alertaActivaEl = document.getElementById("alertaActiva");
+const stockMinimoEl = document.getElementById("stockMinimo");
 
-// enviar al backend
-fd.append("alerta_activa", alertaActiva ? "true" : "false");
-fd.append("stock_minimo", stockMinimo || "0");
+fd.append("alerta_activa", alertaActivaEl.checked ? "true" : "false");
+fd.append("stock_minimo", stockMinimoEl.value || "0");
 
   const fileInput = document.getElementById("imagen");
   if (fileInput && fileInput.files.length > 0) {
@@ -209,8 +208,6 @@ window.location.href = "../Refacciones Ubicacion/ConUbi.html";
 await cargarOpciones("/opciones/nummaquina", "nummaquina");
 
 
-// 🔥 mostrar si ya estaba activa
-stockMinimo.style.display = r.alerta_activa ? "block" : "none";
   // await cargarMaquinasCompatibles();
   await inicializarMaquinas();
 
