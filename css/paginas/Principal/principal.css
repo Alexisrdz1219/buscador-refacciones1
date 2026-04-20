@@ -297,16 +297,7 @@
   background: #51c890;
   color: white;
 }
-#contenedorAlertas:hover {
-  transform: scale(1.1);
+.alerta-item:hover {
+  background: #f8f9fa;
   transition: 0.2s;
-}
-.alert-item {
-  padding: 8px;
-  border-bottom: 1px solid #eee;
-  font-size: 0.9rem;
-}
-
-.alert-item:hover {
-  background: #f5f5f5;
 }
