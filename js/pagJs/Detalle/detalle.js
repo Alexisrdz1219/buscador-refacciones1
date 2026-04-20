@@ -63,7 +63,6 @@ if (r.tags) {
 // 🔥 FORZAR VALORES CORRECTOS
 // =====================
 const alertaActiva = document.getElementById("alertaActiva");
-const stockMinimoInput = document.getElementById("stockMinimo");
 const contenedor = document.getElementById("contenedorStockMinimo");
 
 if (alertaActiva) {
