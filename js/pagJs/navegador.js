@@ -1365,6 +1365,10 @@ console.log(data);
     console.error("Error cargando envíos:", error);
   }
 }
+const btnAlertas = document.getElementById("btnAlertas");
+const panelAlertas = document.getElementById("panelAlertas");
+const listaAlertas = document.getElementById("listaAlertas");
+const btnLimpiar = document.getElementById("btnLimpiarAlertas");
 
 function renderEnvios(lista) {
   const contenedor = document.getElementById("contenedorResultadosEnvio");
@@ -1468,10 +1472,7 @@ listaAlertas.addEventListener("click", (e) => {
   }
 });
 
-const btnAlertas = document.getElementById("btnAlertas");
-const panelAlertas = document.getElementById("panelAlertas");
-const listaAlertas = document.getElementById("listaAlertas");
-const btnLimpiar = document.getElementById("btnLimpiarAlertas");
+
 
 btnAlertas.addEventListener("click", () => {
   panelAlertas.style.display =
