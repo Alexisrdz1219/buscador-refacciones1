@@ -95,3 +95,15 @@ body{
 .machine-item:hover {
   background:#e2f5ea;
 }
+.stock-box {
+  border: 1px solid #ddd;
+  padding: 10px;
+  border-radius: 8px;
+  margin-top: 10px;
+  background: #f9fafb;
+}
+
+.stock-box.activo {
+  border-color: #f59e0b;
+  background: #fff7ed;
+}

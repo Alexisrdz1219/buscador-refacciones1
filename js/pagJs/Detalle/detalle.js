@@ -12,7 +12,6 @@ const btnEliminarImagen = document.getElementById("btnEliminarImagen");
 let imagenEliminada = false;
 let valoresActuales = {};
 
-
 /* =========================
    CARGAR DETALLE REFACCIÓN
 ========================= */
@@ -46,6 +45,21 @@ async function cargarDetalle() {
 if (r.tags) {
   document.getElementById("inputTags").value = r.tags.join(", ");
 }
+const alertaActiva = document.getElementById("alertaActiva");
+const stockMinimo = document.getElementById("stockMinimo");
+
+if (alertaActiva) {
+  alertaActiva.checked = !!r.alerta_activa;
+}
+
+if (stockMinimo) {
+  stockMinimo.value = r.stock_minimo ?? 0;
+}
+
+// 🔥 mostrar/ocultar dinámicamente
+alertaActiva.addEventListener("change", () => {
+  stockMinimo.style.display = alertaActiva.checked ? "block" : "none";
+});
 }
 
 /* =========================
@@ -78,6 +92,7 @@ document.getElementById("form").addEventListener("submit", async e => {
 
   const fd = new FormData();
 
+
 //   document
 //   .querySelectorAll("input:not([type=checkbox]):not([type=file]), textarea, select")
 //   .forEach(el => {
@@ -108,6 +123,16 @@ camposValidos.forEach(idCampo => {
     fd.append(idCampo, el.value);
   }
 });
+
+// =====================
+// 🔥 ALERTA DE STOCK
+// =====================
+const alertaActiva = document.getElementById("alertaActiva")?.checked;
+const stockMinimo = document.getElementById("stockMinimo")?.value;
+
+// enviar al backend
+fd.append("alerta_activa", alertaActiva ? "true" : "false");
+fd.append("stock_minimo", stockMinimo || "0");
 
   const fileInput = document.getElementById("imagen");
   if (fileInput && fileInput.files.length > 0) {
@@ -180,7 +205,11 @@ window.location.href = "../Refacciones Ubicacion/ConUbi.html";
   await cargarOpciones("/opciones/maquinamod", "maquinamod");
   await cargarOpciones("/opciones/maquinaesp", "maquinaesp");
 await cargarOpciones("/opciones/nummaquina", "nummaquina");
+alertaActiva.checked = r.alerta_activa;
+stockMinimo.value = r.stock_minimo || 0;
 
+// 🔥 mostrar si ya estaba activa
+stockMinimo.style.display = r.alerta_activa ? "block" : "none";
   // await cargarMaquinasCompatibles();
   await inicializarMaquinas();
 
@@ -202,6 +231,15 @@ function renderCompatibles(maquinas) {
   });
 }
 
+const box = document.getElementById("boxStock");
+
+alertaActiva.addEventListener("change", () => {
+  if (alertaActiva.checked) {
+    box.classList.add("activo");
+  } else {
+    box.classList.remove("activo");
+  }
+});
 
 let maquinasDisponibles = [];
 let maquinasSeleccionadas = [];
