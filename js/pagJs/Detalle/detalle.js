@@ -228,16 +228,18 @@ function renderCompatibles(maquinas) {
     `;
   });
 }
-
 const box = document.getElementById("boxStock");
+const alertaActiva = document.getElementById("alertaActiva");
 
-alertaActiva.addEventListener("change", () => {
-  if (alertaActiva.checked) {
-    box.classList.add("activo");
-  } else {
-    box.classList.remove("activo");
-  }
-});
+if (alertaActiva && box) {
+  alertaActiva.addEventListener("change", () => {
+    if (alertaActiva.checked) {
+      box.classList.add("activo");
+    } else {
+      box.classList.remove("activo");
+    }
+  });
+}
 
 
 
