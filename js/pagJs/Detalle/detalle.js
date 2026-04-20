@@ -84,6 +84,29 @@ if (alertaActiva && contenedor) {
 // alertaActiva.addEventListener("change", () => {
 //   stockMinimo.style.display = alertaActiva.checked ? "block" : "none";
 // });
+// =====================
+// 🔥 FORZAR VALORES CORRECTOS
+// =====================
+const alertaActiva = document.getElementById("alertaActiva");
+const stockMinimoInput = document.getElementById("stockMinimo");
+const contenedor = document.getElementById("contenedorStockMinimo");
+
+if (alertaActiva) {
+  alertaActiva.checked = !!r.alerta_activa;
+}
+
+if (stockMinimoInput) {
+  stockMinimoInput.value = r.stock_minimo ?? 0;
+}
+
+// 🔥 Mostrar/ocultar correctamente
+if (alertaActiva && contenedor) {
+  contenedor.style.display = alertaActiva.checked ? "block" : "none";
+
+  alertaActiva.addEventListener("change", () => {
+    contenedor.style.display = alertaActiva.checked ? "block" : "none";
+  });
+}
 }
 
 /* =========================
