@@ -301,3 +301,48 @@
   background: #f8f9fa;
   transition: 0.2s;
 }
+/* CONTENEDOR GENERAL (como FAB) */
+.alertas-float {
+  position: fixed;
+  bottom: 90px; /* arriba del botón de ayuda */
+  right: 20px;
+  z-index: 1050;
+}
+
+/* BOTÓN CAMPANA */
+.alerta-btn {
+  width: 55px;
+  height: 55px;
+  background: #1e3a8a; /* azul como tu sistema */
+  color: white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 22px;
+  cursor: pointer;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+  position: relative;
+  transition: transform 0.2s;
+}
+
+.alerta-btn:hover {
+  transform: scale(1.1);
+}
+
+/* CONTADOR */
+.alerta-btn .badge {
+  position: absolute;
+  top: -5px;
+  right: -5px;
+}
+
+/* PANEL DE ALERTAS */
+.alerta-panel {
+  position: absolute;
+  bottom: 70px;
+  right: 0;
+  width: 300px;
+  display: none;
+  border-radius: 12px;
+}
