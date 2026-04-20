@@ -1430,8 +1430,42 @@ function actualizarContador(cantidad) {
   }
 }
 
+// function renderAlertas(alertas) {
+//   const cont = document.getElementById("listaAlertas");
+//   listaAlertas.innerHTML += `
+//   <div class="alert-item">
+//     ⚠️ Falta stock de pieza
+//   </div>
+// `;
+
+//   if (alertas.length === 0) {
+//     cont.innerHTML = "<p class='text-muted'>Sin alertas</p>";
+//     return;
+//   }
+
+//   alertas.forEach(a => {
+//     const div = document.createElement("div");
+
+//     div.className = "alerta-item mb-2 p-2 border rounded";
+//     if (!a.leida) {
+//   div.style.background = "#ffe5e5"; // rojo suave
+// } else {
+//   div.style.opacity = "0.6"; // más tenue
+// }
+
+//     div.innerHTML = `
+//       <div>${a.mensaje}</div>
+//       <small>${new Date(a.fecha).toLocaleString()}</small>
+//       <br>
+//       ${!a.leida ? `<button class="btn btn-sm btn-success mt-1" onclick="marcarLeida(${a.id})">✔️</button>` : ""}
+//     `;
+
+//     cont.appendChild(div);
+//   });
+// } FUNCIONA
 function renderAlertas(alertas) {
   const cont = document.getElementById("listaAlertas");
+
   cont.innerHTML = "";
 
   if (alertas.length === 0) {
@@ -1440,31 +1474,59 @@ function renderAlertas(alertas) {
   }
 
   alertas.forEach(a => {
-    const div = document.createElement("div");
+    cont.innerHTML += `
+      <div class="alert-item ${!a.leida ? 'rojo' : ''}">
+        <div>${a.mensaje}</div>
+        <small>${new Date(a.fecha).toLocaleString()}</small>
+        <br>
 
-    div.className = "alerta-item mb-2 p-2 border rounded";
-    if (!a.leida) {
-  div.style.background = "#ffe5e5"; // rojo suave
-} else {
-  div.style.opacity = "0.6"; // más tenue
-}
+        ${
+          !a.leida
+            ? `<button class="btn btn-sm btn-success mt-1" onclick="marcarLeida(${a.id})">✔️</button>`
+            : ""
+        }
 
-    div.innerHTML = `
-      <div>${a.mensaje}</div>
-      <small>${new Date(a.fecha).toLocaleString()}</small>
-      <br>
-      ${!a.leida ? `<button class="btn btn-sm btn-success mt-1" onclick="marcarLeida(${a.id})">✔️</button>` : ""}
+        <!-- 🔥 BOTÓN ELIMINAR -->
+        <button class="btn btn-sm btn-danger mt-1"
+          onclick="eliminarAlerta(${a.id})">
+          🗑️
+        </button>
+
+      </div>
     `;
-
-    cont.appendChild(div);
   });
 }
+
 async function marcarLeida(id) {
   await fetch(`${API}/alertas/${id}/leida`, {
     method: "PUT"
   });
 
   cargarAlertas(); // recargar
+}
+
+function toggleAlertas() {
+  const panel = document.getElementById("panelAlertas");
+
+  if (panel.style.display === "none" || panel.style.display === "") {
+    panel.style.display = "block";
+  } else {
+    panel.style.display = "none";
+  }
+}
+
+async function eliminarAlerta(id) {
+  try {
+    await fetch(`${API}/alertas/${id}`, {
+      method: "DELETE",
+    });
+
+    // 🔥 recargar alertas desde el servidor
+    cargarAlertas();
+
+  } catch (error) {
+    console.error("Error eliminando alerta:", error);
+  }
 }
 
 const btnAlertas = document.getElementById("contenedorAlertas");

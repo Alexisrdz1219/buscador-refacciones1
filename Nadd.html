@@ -30,11 +30,14 @@
   </span>
 </div>
 
-<div id="panelAlertas" class="card"
-     style="position:absolute; right:10px; top:60px; width:300px; display:none; z-index:999;">
-  <div class="card-body">
-    <h6>Alertas</h6>
-    <div id="listaAlertas"></div>
+<div id="panelAlertas" class="alert-panel">
+  <div class="alert-header">
+    <span>🔔 Alertas</span>
+    <button onclick="toggleAlertas()">✖</button>
+  </div>
+
+  <div id="listaAlertas" class="alert-list">
+    <!-- Aquí se renderizan las alertas -->
   </div>
 </div>
 

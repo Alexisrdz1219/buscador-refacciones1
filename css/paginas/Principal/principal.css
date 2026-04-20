@@ -337,12 +337,70 @@
   right: -5px;
 }
 
-/* PANEL DE ALERTAS */
-.alerta-panel {
+.alert-panel {
   position: absolute;
-  bottom: 70px;
-  right: 0;
-  width: 300px;
-  display: none;
+  right: 10px;
+  top: 60px;
+  width: 320px;
+  max-height: 400px; /* 🔥 evita que crezca infinito */
+  background: #ffffff;
   border-radius: 12px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+  display: none;
+  z-index: 999;
+  overflow: hidden;
+  font-family: sans-serif;
+}
+
+/* HEADER */
+.alert-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 15px;
+  background: #1e3a8a;
+  color: white;
+  font-weight: bold;
+  border-top-left-radius: 12px;
+  border-top-right-radius: 12px;
+}
+
+.alert-header button {
+  background: none;
+  border: none;
+  color: white;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+/* LISTA SCROLL */
+.alert-list {
+  max-height: 340px;
+  overflow-y: auto; /* 🔥 scroll interno */
+  padding: 10px;
+}
+
+/* ITEM DE ALERTA */
+.alert-item {
+  background: #f9fafb;
+  border-left: 4px solid #1e3a8a;
+  padding: 10px;
+  margin-bottom: 8px;
+  border-radius: 6px;
+  font-size: 13px;
+  transition: 0.2s;
+}
+
+.alert-item:hover {
+  background: #eef2ff;
+}
+
+/* SCROLL BONITO */
+.alert-list::-webkit-scrollbar {
+  width: 6px;
+}
+
+.alert-list::-webkit-scrollbar-thumb {
+  background: #c7d2fe;
+  border-radius: 10px;
 }
