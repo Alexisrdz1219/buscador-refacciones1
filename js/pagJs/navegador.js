@@ -8,7 +8,6 @@ let rol = "usuario";
 let paginaActual = 1;
 const LIMITE = 20;
 let totalPaginas = 1;
-let alertas = [];
 
 // =========================
 // 🔒 Validación de sesión
@@ -1365,10 +1364,6 @@ console.log(data);
     console.error("Error cargando envíos:", error);
   }
 }
-const btnAlertas = document.getElementById("btnAlertas");
-const panelAlertas = document.getElementById("panelAlertas");
-const listaAlertas = document.getElementById("listaAlertas");
-const btnLimpiar = document.getElementById("btnLimpiarAlertas");
 
 function renderEnvios(lista) {
   const contenedor = document.getElementById("contenedorResultadosEnvio");
@@ -1435,26 +1430,35 @@ function actualizarContador(cantidad) {
   }
 }
 
-function renderAlertas() {
-  listaAlertas.innerHTML = "";
+function renderAlertas(alertas) {
+  const cont = document.getElementById("listaAlertas");
+  cont.innerHTML = "";
 
-  alertas.forEach((alerta, index) => {
+  if (alertas.length === 0) {
+    cont.innerHTML = "<p class='text-muted'>Sin alertas</p>";
+    return;
+  }
+
+  alertas.forEach(a => {
     const div = document.createElement("div");
-    div.className = "alerta-item d-flex justify-content-between align-items-center";
 
-    div.innerHTML = `
-      <span>${alerta}</span>
-      <button class="btn btn-sm btn-danger btn-eliminar" data-index="${index}">
-        ✕
-      </button>
-    `;
-
-    listaAlertas.appendChild(div);
-  });
-
-  actualizarContador();
+    div.className = "alerta-item mb-2 p-2 border rounded";
+    if (!a.leida) {
+  div.style.background = "#ffe5e5"; // rojo suave
+} else {
+  div.style.opacity = "0.6"; // más tenue
 }
 
+    div.innerHTML = `
+      <div>${a.mensaje}</div>
+      <small>${new Date(a.fecha).toLocaleString()}</small>
+      <br>
+      ${!a.leida ? `<button class="btn btn-sm btn-success mt-1" onclick="marcarLeida(${a.id})">✔️</button>` : ""}
+    `;
+
+    cont.appendChild(div);
+  });
+}
 async function marcarLeida(id) {
   await fetch(`${API}/alertas/${id}/leida`, {
     method: "PUT"
@@ -1463,43 +1467,16 @@ async function marcarLeida(id) {
   cargarAlertas(); // recargar
 }
 
-listaAlertas.addEventListener("click", (e) => {
-  if (e.target.classList.contains("btn-eliminar")) {
-    const index = e.target.dataset.index;
-
-    alertas.splice(index, 1); // eliminar del array
-    renderAlertas();
-  }
-});
-
-
+const btnAlertas = document.getElementById("contenedorAlertas");
+const panel = document.getElementById("panelAlertas");
 
 btnAlertas.addEventListener("click", () => {
-  panelAlertas.style.display =
-    panelAlertas.style.display === "none" ? "block" : "none";
+  panel.style.display = panel.style.display === "block" ? "none" : "block";
 });
 
-// Limpiar alertas
-btnLimpiar.addEventListener("click", () => {
-  alertas = []; // 🔥 ahora sí borras la fuente real
-  renderAlertas();
-});
+// cerrar si haces click fuera (pro UX)
 document.addEventListener("click", (e) => {
-  if (!panelAlertas.contains(e.target) && !btnAlertas.contains(e.target)) {
-    panelAlertas.style.display = "none";
+  if (!btnAlertas.contains(e.target) && !panel.contains(e.target)) {
+    panel.style.display = "none";
   }
 });
-function actualizarContador() {
-  const contador = document.getElementById("contadorAlertas");
-
-  if (alertas.length > 0) {
-    contador.style.display = "block";
-    contador.textContent = alertas.length;
-  } else {
-    contador.style.display = "none";
-  }
-}
-function agregarAlerta(texto) {
-  alertas.unshift(texto); // nuevas arriba
-  renderAlertas();
-}
