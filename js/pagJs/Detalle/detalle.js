@@ -59,32 +59,7 @@ if (r.tags) {
   document.getElementById("inputTags").value = r.tags.join(", ");
 }
 
-const alertaActiva = document.getElementById("alertaActiva");
-const contenedor = document.getElementById("contenedorStockMinimo");
 
-if (alertaActiva && contenedor) {
-  contenedor.style.display = alertaActiva.checked ? "block" : "none";
-
-  alertaActiva.addEventListener("change", () => {
-    contenedor.style.display = alertaActiva.checked ? "block" : "none";
-  });
-}
-// const alertaActiva = document.getElementById("alertaActiva");
-// const stockMinimo = document.getElementById("stockMinimo");
-
-// if (alertaActiva) {
-//   alertaActiva.checked = !!r.alerta_activa;
-// }
-
-// if (stockMinimo) {
-//   stockMinimo.value = r.stock_minimo ?? 0;
-// }
-
-// // 🔥 mostrar/ocultar dinámicamente
-// alertaActiva.addEventListener("change", () => {
-//   stockMinimo.style.display = alertaActiva.checked ? "block" : "none";
-// });
-// =====================
 // 🔥 FORZAR VALORES CORRECTOS
 // =====================
 const alertaActiva = document.getElementById("alertaActiva");
