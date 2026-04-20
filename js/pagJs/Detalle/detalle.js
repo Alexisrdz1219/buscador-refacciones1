@@ -39,6 +39,11 @@ async function cargarDetalle() {
   }
 });
 
+const stockMinimoInput = document.getElementById("stockMinimo");
+
+if (stockMinimoInput) {
+  stockMinimoInput.value = r.stock_minimo ?? 0;
+}
   // ✅ mostrar imagen si existe
   if (r.imagen) {
     // const img = document.getElementById("preview-imagen");
