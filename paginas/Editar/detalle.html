@@ -114,29 +114,20 @@
           </div>
         </div>
         <div class="card p-3 mt-3">
-  <h6>⚠️ Configuración de Stock</h6>
+ 
+ <div id="boxStock" class="p-3 border rounded">
+  <h6>⚠️ Alerta de stock</h6>
 
   <div class="form-check">
-    <input 
-      class="form-check-input" 
-      type="checkbox" 
-      id="alertaActiva"
-    >
-    <label>
-  <input type="checkbox" id="alertaActiva">
-  Activar alerta de stock bajo
-</label>
+    <input class="form-check-input" type="checkbox" id="alertaActiva">
+    <label for="alertaActiva">Activar alerta</label>
   </div>
 
-  <div class="mt-2">
+  <div class="mt-2" id="contenedorStockMinimo" style="display:none;">
     <label>Stock mínimo</label>
-    <input 
-  type="number" 
-  id="stockMinimo" 
-  placeholder="Stock mínimo" 
-  min="0"
-  style="display:none;"
->
+    <input type="number" id="stockMinimo" min="0" class="form-control">
+  </div>
+</div>
   </div>
 </div>
 

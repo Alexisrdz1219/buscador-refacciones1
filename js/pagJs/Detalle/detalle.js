@@ -47,21 +47,32 @@ async function cargarDetalle() {
 if (r.tags) {
   document.getElementById("inputTags").value = r.tags.join(", ");
 }
+
 const alertaActiva = document.getElementById("alertaActiva");
-const stockMinimo = document.getElementById("stockMinimo");
+const contenedor = document.getElementById("contenedorStockMinimo");
 
-if (alertaActiva) {
-  alertaActiva.checked = !!r.alerta_activa;
+if (alertaActiva && contenedor) {
+  contenedor.style.display = alertaActiva.checked ? "block" : "none";
+
+  alertaActiva.addEventListener("change", () => {
+    contenedor.style.display = alertaActiva.checked ? "block" : "none";
+  });
 }
+// const alertaActiva = document.getElementById("alertaActiva");
+// const stockMinimo = document.getElementById("stockMinimo");
 
-if (stockMinimo) {
-  stockMinimo.value = r.stock_minimo ?? 0;
-}
+// if (alertaActiva) {
+//   alertaActiva.checked = !!r.alerta_activa;
+// }
 
-// 🔥 mostrar/ocultar dinámicamente
-alertaActiva.addEventListener("change", () => {
-  stockMinimo.style.display = alertaActiva.checked ? "block" : "none";
-});
+// if (stockMinimo) {
+//   stockMinimo.value = r.stock_minimo ?? 0;
+// }
+
+// // 🔥 mostrar/ocultar dinámicamente
+// alertaActiva.addEventListener("change", () => {
+//   stockMinimo.style.display = alertaActiva.checked ? "block" : "none";
+// });
 }
 
 /* =========================
