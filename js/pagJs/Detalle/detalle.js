@@ -201,7 +201,7 @@ await fetch(`${API}/refacciones/${id}/tags`, {
 // FINAL
 // =====================
 alert("✅ Refacción actualizada");
-window.location.href = "../Refacciones Ubicacion/ConUbi.html";
+window.location.href = "../../Nadd.html";
 
   // if (imagenEliminada) {
   //   formData.append("eliminarImagen", "true");

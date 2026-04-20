@@ -1294,7 +1294,7 @@ function renderDestacadas(lista) {
   }
 
   contenedor.innerHTML = `
-    <div class="card w-100 shadow-sm">
+    <div class="card w-100 shadow-sm panel-seguimiento">
       <div class="card-header fw-bold bg-white d-flex justify-content-between">
         <span><i class="bi bi-broadcast text-primary"></i> Panel de Seguimiento</span>
         <span class="badge bg-primary">${lista.length}</span>
