@@ -346,3 +346,35 @@
   display: none;
   border-radius: 12px;
 }
+.panel-alertas {
+  position: fixed;
+  right: 20px;
+  bottom: 90px; /* arriba del botón flotante */
+  width: 320px;
+  max-height: 400px;
+  display: none;
+  z-index: 9999;
+  border-radius: 12px;
+}
+
+/* Aquí está la magia */
+.lista-alertas {
+  overflow-y: auto;
+  max-height: 300px;
+  padding-right: 5px;
+}
+
+/* opcional: scrollbar bonito */
+.lista-alertas::-webkit-scrollbar {
+  width: 6px;
+}
+.lista-alertas::-webkit-scrollbar-thumb {
+  background: #ccc;
+  border-radius: 10px;
+}
+.contador-fab {
+  position: absolute;
+  top: -5px;
+  right: -5px;
+  font-size: 10px;
+}

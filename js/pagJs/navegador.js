@@ -1467,16 +1467,23 @@ async function marcarLeida(id) {
   cargarAlertas(); // recargar
 }
 
-const btnAlertas = document.getElementById("contenedorAlertas");
-const panel = document.getElementById("panelAlertas");
+const btnAlertas = document.getElementById("btnAlertas");
+const panelAlertas = document.getElementById("panelAlertas");
+const listaAlertas = document.getElementById("listaAlertas");
+const btnLimpiar = document.getElementById("btnLimpiarAlertas");
 
 btnAlertas.addEventListener("click", () => {
-  panel.style.display = panel.style.display === "block" ? "none" : "block";
+  panelAlertas.style.display =
+    panelAlertas.style.display === "none" ? "block" : "none";
 });
 
-// cerrar si haces click fuera (pro UX)
+// Limpiar alertas
+btnLimpiar.addEventListener("click", () => {
+  listaAlertas.innerHTML = "";
+  document.getElementById("contadorAlertas").style.display = "none";
+});
 document.addEventListener("click", (e) => {
-  if (!btnAlertas.contains(e.target) && !panel.contains(e.target)) {
-    panel.style.display = "none";
+  if (!panelAlertas.contains(e.target) && !btnAlertas.contains(e.target)) {
+    panelAlertas.style.display = "none";
   }
 });
