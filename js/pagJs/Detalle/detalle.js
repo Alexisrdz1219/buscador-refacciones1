@@ -23,15 +23,21 @@ async function cargarDetalle() {
 
   valoresActuales = r;
 
-  Object.keys(r).forEach(key => {
-    // ❌ NUNCA tocar input file
-    if (key === "imagen") return;
+ Object.keys(r).forEach(key => {
+  if (key === "imagen") return;
 
-    const el = document.getElementById(key);
-    if (el && el.tagName !== "SELECT") {
-      el.value = r[key] ?? "";
-    }
-  });
+  const el = document.getElementById(key);
+  if (!el) return;
+
+  // 🔥 CHECKBOX
+  if (el.type === "checkbox") {
+    el.checked = !!r[key];
+  } 
+  // 🔥 INPUT NORMAL
+  else if (el.tagName !== "SELECT") {
+    el.value = r[key] ?? "";
+  }
+});
 
   // ✅ mostrar imagen si existe
   if (r.imagen) {
