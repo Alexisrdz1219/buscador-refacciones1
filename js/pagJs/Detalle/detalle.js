@@ -11,6 +11,8 @@ const btnEliminarImagen = document.getElementById("btnEliminarImagen");
 
 let imagenEliminada = false;
 let valoresActuales = {};
+let maquinasDisponibles = [];
+let maquinasSeleccionadas = [];
 
 /* =========================
    CARGAR DETALLE REFACCIÓN
@@ -205,8 +207,7 @@ window.location.href = "../Refacciones Ubicacion/ConUbi.html";
   await cargarOpciones("/opciones/maquinamod", "maquinamod");
   await cargarOpciones("/opciones/maquinaesp", "maquinaesp");
 await cargarOpciones("/opciones/nummaquina", "nummaquina");
-alertaActiva.checked = r.alerta_activa;
-stockMinimo.value = r.stock_minimo || 0;
+
 
 // 🔥 mostrar si ya estaba activa
 stockMinimo.style.display = r.alerta_activa ? "block" : "none";
@@ -241,8 +242,7 @@ alertaActiva.addEventListener("change", () => {
   }
 });
 
-let maquinasDisponibles = [];
-let maquinasSeleccionadas = [];
+
 
 /* =========================
    CARGAR MAQUINAS EN MODAL
