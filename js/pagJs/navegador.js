@@ -1263,10 +1263,26 @@ document.addEventListener("click", async (e) => {
 });
 
 // 1. Función para obtener datos y pintar el Dashboard
+// async function cargarDestacadas() {
+//   const contenedor = document.getElementById("contenedorResultadosDsah");
+  
+//   // Si no estamos en la página que tiene el dashboard, salimos silenciosamente
+//   if (!contenedor) return; 
+
+//   try {
+//     const res = await fetch(`${API}/refacciones/destacadas`);
+//     if (!res.ok) throw new Error("Error en la respuesta del servidor");
+    
+//     const data = await res.json();
+//     console.log("RESPUESTA BACK:", data);
+//     renderDestacadas(data);
+//   } catch (error) {
+//     console.error("Error cargando destacadas:", error);
+//   }
+// }
 async function cargarDestacadas() {
   const contenedor = document.getElementById("contenedorResultadosDsah");
   
-  // Si no estamos en la página que tiene el dashboard, salimos silenciosamente
   if (!contenedor) return; 
 
   try {
@@ -1275,12 +1291,13 @@ async function cargarDestacadas() {
     
     const data = await res.json();
     console.log("RESPUESTA BACK:", data);
-    renderDestacadas(data);
+
+    renderDestacadas(data.data); // 🔥 FIX
+
   } catch (error) {
     console.error("Error cargando destacadas:", error);
   }
 }
-
 // 2. Función para generar el HTML del Dashboard
 function renderDestacadas(lista) {
   const contenedor = document.getElementById("contenedorResultadosDsah");
