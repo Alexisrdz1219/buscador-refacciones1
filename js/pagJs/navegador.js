@@ -105,13 +105,204 @@ async function despertarBackend() {
   }
 
 }
+// FUNCIONALLLLLLLLL
+// document.addEventListener("DOMContentLoaded", async () => {
+
+//   despertarBackend();
+// const token = localStorage.getItem("token");
+// setInterval(cargarAlertas, 10000); // cada 10 segundos
+// cargarAlertas(); // inicial
+
+//   if (!token) {
+//     window.location.replace("index.html");
+//     return;
+//   }
+
+//   try {
+//     const response = await fetch(`${API}/me`, {
+      
+//       headers: {
+//         "Authorization": "Bearer " + token
+//       }
+//     });
+
+//     if (!response.ok) {
+//       throw new Error("Token inválido");
+//     }
+
+//     const data = await response.json();
+
+//     // 🔥 Mostrar nombre desde backend
+//     const elementoUsuario = document.getElementById("usuarioActivo");
+//     if (elementoUsuario) {
+//       elementoUsuario.textContent = data.nombre;
+//     }
+
+//     // 🔒 Bloqueo estético del botón atrás
+//     window.history.pushState(null, "", window.location.href);
+//     window.onpopstate = function () {
+//       window.history.go(1);
+//     };
+
+//   } catch (error) {
+//     localStorage.clear();
+//     window.location.replace("index.html");
+//     return;
+//   }
+  
+//   const dash = document.getElementById("dash");
+//   const formFiltros = document.getElementById("formFiltros");
+
+// // if (formFiltros) {
+// //   formFiltros.style.display = "none";
+// // }
+//  dash?.classList.remove("d-none");
+//   formFiltros?.classList.add("d-none");
+
+//   document.getElementById("buscarTitulo")?.addEventListener("input", aplicarFiltros);
+//   document.getElementById("buscarRef")?.addEventListener("input", aplicarFiltros);
+//   document.getElementById("buscarModelo")?.addEventListener("input", aplicarFiltros);
+//   document.getElementById("filtroTipo")?.addEventListener("change", aplicarFiltros);
+//   document.getElementById("filtroUnidad")?.addEventListener("change", aplicarFiltros);
+//   document.getElementById("buscarPalabras")
+//   ?.addEventListener("input", aplicarFiltros);
+
+// const inputTag = document.getElementById("inputTag");
+// const contenedorTags = document.getElementById("contenedorTags");
+
+// document.getElementById("btnTodasRefacciones")?.addEventListener("click", async () => {
+
+//   // console.log("🌎 ACTIVANDO MODO GLOBAL");
+
+//   modoGlobal = true;
+
+//     dash?.classList.add("d-none");
+//     formFiltros?.classList.remove("d-none");
+
+//   modeloSeleccionado = "";
+//   resultadosActuales = [];
+
+//   // 🔥 Poner título por defecto
+//   const titulo = document.getElementById("tituloRefacciones");
+//   if (titulo) {
+//     titulo.textContent = "Refacciones IEMCO";
+//     titulo.className = "titulo-default"; // limpia otras clases
+//   }
+
+//   const Stitulo = document.getElementById("subtitulo");
+//   if (Stitulo) {
+//     Stitulo.textContent = "Panel general de control";
+//     Stitulo.className = "titulo-default"; // limpia otras clases
+//   }
+
+
+//   await llenarSelectsGlobal();
+
+//   // Lanza búsqueda inicial automáticamente
+//   await aplicarFiltros();
+// });
+
+
+// const getDestacadas = async () => {
+//   const res = await fetch("https://buscador-refaccionesbackend.onrender.com/refacciones/destacadas");
+
+//  // console.log(data);  Aquí tienes un array de refacciones destacadas
+// };
+
+// inputTag.addEventListener("keydown", function(e) {
+//   if (e.key === "Enter") {
+//     e.preventDefault();
+
+//     const valor = inputTag.value.trim().toLowerCase();
+//     if (!valor) return;
+
+//     if (!tagsActivos.includes(valor)) {
+//       tagsActivos.push(valor);
+//       crearTagVisual(valor);
+//       aplicarFiltros();
+//     }
+
+//     inputTag.value = "";
+//   }
+// });
+
+// document.addEventListener("click", async (e) => {
+//   const link = e.target.closest(".maquina-link");
+//   if (!link) return;
+
+//   e.preventDefault();
+
+//   modoGlobal = false;
+
+//   dash?.classList.add("d-none");
+//   formFiltros?.classList.remove("d-none");
+
+//   tagsActivos = [];
+//   contenedorTags.querySelectorAll(".badge").forEach(t => t.remove());
+//   console.log(contenedorTags.innerHTML);
+
+//   const maquinamod = link.dataset.maquinamod;
+//   modeloSeleccionado = maquinamod;
+
+//   const res = await fetch(
+//     `${API}/refacciones-por-maquinamod?maquinamod=${encodeURIComponent(maquinamod)}`
+//   );
+
+// const data = await res.json(); // 🔥 FALTABA ESTO
+//   resultadosActuales = data;
+
+//   llenarSelects(data);
+//   actualizarTitulo();
+//   mostrarResultados(data);
+//   cargarDestacadas();
+//   cargarEnvios();
+// });
+// });
+let cacheDestacadas = null;
+const cacheMaquinas = {};
+let alertasInterval = null;
+
+function iniciarAlertas() {
+  if (alertasInterval) return;
+
+  alertasInterval = setInterval(() => {
+    if (document.visibilityState === "visible") {
+      cargarAlertas();
+    }
+  }, 30000); // 🔥 cada 30s (antes 10s)
+}
+
+async function cargarDestacadas() {
+  const contenedor = document.getElementById("contenedorResultadosDsah");
+  if (!contenedor) return;
+
+  // 🔥 CACHE
+  if (cacheDestacadas) {
+    renderDestacadas(cacheDestacadas);
+    return;
+  }
+
+  try {
+    const res = await fetch(`${API}/refacciones/destacadas`);
+    const data = await res.json();
+
+    cacheDestacadas = data.data;
+    renderDestacadas(data.data);
+
+  } catch (error) {
+    console.error("Error destacadas:", error);
+  }
+}
 
 document.addEventListener("DOMContentLoaded", async () => {
 
   despertarBackend();
-const token = localStorage.getItem("token");
-setInterval(cargarAlertas, 10000); // cada 10 segundos
-cargarAlertas(); // inicial
+
+  const token = localStorage.getItem("token");
+
+  // 🔥 ALERTAS OPTIMIZADAS
+  iniciarAlertas();
+  cargarAlertas();
 
   if (!token) {
     window.location.replace("index.html");
@@ -120,145 +311,135 @@ cargarAlertas(); // inicial
 
   try {
     const response = await fetch(`${API}/me`, {
-      
       headers: {
         "Authorization": "Bearer " + token
       }
     });
 
-    if (!response.ok) {
-      throw new Error("Token inválido");
-    }
+    if (!response.ok) throw new Error("Token inválido");
 
     const data = await response.json();
 
-    // 🔥 Mostrar nombre desde backend
-    const elementoUsuario = document.getElementById("usuarioActivo");
-    if (elementoUsuario) {
-      elementoUsuario.textContent = data.nombre;
-    }
+    document.getElementById("usuarioActivo")?.textContent = data.nombre;
 
-    // 🔒 Bloqueo estético del botón atrás
+    // 🔒 bloquear atrás
     window.history.pushState(null, "", window.location.href);
-    window.onpopstate = function () {
-      window.history.go(1);
-    };
+    window.onpopstate = () => window.history.go(1);
 
   } catch (error) {
     localStorage.clear();
     window.location.replace("index.html");
     return;
   }
-  
+
   const dash = document.getElementById("dash");
   const formFiltros = document.getElementById("formFiltros");
 
-// if (formFiltros) {
-//   formFiltros.style.display = "none";
-// }
- dash?.classList.remove("d-none");
+  dash?.classList.remove("d-none");
   formFiltros?.classList.add("d-none");
 
-  document.getElementById("buscarTitulo")?.addEventListener("input", aplicarFiltros);
-  document.getElementById("buscarRef")?.addEventListener("input", aplicarFiltros);
-  document.getElementById("buscarModelo")?.addEventListener("input", aplicarFiltros);
-  document.getElementById("filtroTipo")?.addEventListener("change", aplicarFiltros);
-  document.getElementById("filtroUnidad")?.addEventListener("change", aplicarFiltros);
-  document.getElementById("buscarPalabras")
-  ?.addEventListener("input", aplicarFiltros);
+  // 🔍 FILTROS
+  [
+    "buscarTitulo",
+    "buscarRef",
+    "buscarModelo",
+    "buscarPalabras"
+  ].forEach(id => {
+    document.getElementById(id)?.addEventListener("input", aplicarFiltros);
+  });
 
-const inputTag = document.getElementById("inputTag");
-const contenedorTags = document.getElementById("contenedorTags");
+  ["filtroTipo", "filtroUnidad"].forEach(id => {
+    document.getElementById(id)?.addEventListener("change", aplicarFiltros);
+  });
 
-document.getElementById("btnTodasRefacciones")?.addEventListener("click", async () => {
+  const inputTag = document.getElementById("inputTag");
+  const contenedorTags = document.getElementById("contenedorTags");
 
-  // console.log("🌎 ACTIVANDO MODO GLOBAL");
+  document.getElementById("btnTodasRefacciones")?.addEventListener("click", async () => {
 
-  modoGlobal = true;
+    modoGlobal = true;
 
     dash?.classList.add("d-none");
     formFiltros?.classList.remove("d-none");
 
-  modeloSeleccionado = "";
-  resultadosActuales = [];
+    modeloSeleccionado = "";
+    resultadosActuales = [];
 
-  // 🔥 Poner título por defecto
-  const titulo = document.getElementById("tituloRefacciones");
-  if (titulo) {
-    titulo.textContent = "Refacciones IEMCO";
-    titulo.className = "titulo-default"; // limpia otras clases
-  }
+    document.getElementById("tituloRefacciones").textContent = "Refacciones IEMCO";
+    document.getElementById("subtitulo").textContent = "Panel general de control";
 
-  const Stitulo = document.getElementById("subtitulo");
-  if (Stitulo) {
-    Stitulo.textContent = "Panel general de control";
-    Stitulo.className = "titulo-default"; // limpia otras clases
-  }
+    await llenarSelectsGlobal();
+    await aplicarFiltros();
+  });
 
+  // 🏷️ TAGS
+  inputTag?.addEventListener("keydown", function(e) {
+    if (e.key === "Enter") {
+      e.preventDefault();
 
-  await llenarSelectsGlobal();
+      const valor = inputTag.value.trim().toLowerCase();
+      if (!valor) return;
 
-  // Lanza búsqueda inicial automáticamente
-  await aplicarFiltros();
-});
+      if (!tagsActivos.includes(valor)) {
+        tagsActivos.push(valor);
+        crearTagVisual(valor);
+        aplicarFiltros();
+      }
 
+      inputTag.value = "";
+    }
+  });
 
-const getDestacadas = async () => {
-  const res = await fetch("https://buscador-refaccionesbackend.onrender.com/refacciones/destacadas");
+  // 🔥 CLICK EN MÁQUINAS (OPTIMIZADO)
+  document.addEventListener("click", async (e) => {
+    const link = e.target.closest(".maquina-link");
+    if (!link) return;
 
- // console.log(data);  Aquí tienes un array de refacciones destacadas
-};
-
-inputTag.addEventListener("keydown", function(e) {
-  if (e.key === "Enter") {
     e.preventDefault();
 
-    const valor = inputTag.value.trim().toLowerCase();
-    if (!valor) return;
+    modoGlobal = false;
 
-    if (!tagsActivos.includes(valor)) {
-      tagsActivos.push(valor);
-      crearTagVisual(valor);
-      aplicarFiltros();
+    dash?.classList.add("d-none");
+    formFiltros?.classList.remove("d-none");
+
+    tagsActivos = [];
+    contenedorTags.querySelectorAll(".badge").forEach(t => t.remove());
+
+    const maquinamod = link.dataset.maquinamod;
+    modeloSeleccionado = maquinamod;
+
+    // 🔥 CACHE POR MÁQUINA
+    if (cacheMaquinas[maquinamod]) {
+      const data = cacheMaquinas[maquinamod];
+      mostrarResultados(data);
+      return;
     }
 
-    inputTag.value = "";
-  }
+    try {
+      const res = await fetch(
+        `${API}/refacciones-por-maquinamod?maquinamod=${encodeURIComponent(maquinamod)}`
+      );
+
+      const data = await res.json();
+
+      cacheMaquinas[maquinamod] = data;
+
+      resultadosActuales = data;
+
+      llenarSelects(data);
+      actualizarTitulo();
+      mostrarResultados(data);
+
+      // 🔥 SOLO UNA VEZ
+      cargarDestacadas();
+      cargarEnvios();
+
+    } catch (error) {
+      console.error("Error máquina:", error);
+    }
+  });
+
 });
-
-document.addEventListener("click", async (e) => {
-  const link = e.target.closest(".maquina-link");
-  if (!link) return;
-
-  e.preventDefault();
-
-  modoGlobal = false;
-
-  dash?.classList.add("d-none");
-  formFiltros?.classList.remove("d-none");
-
-  tagsActivos = [];
-  contenedorTags.querySelectorAll(".badge").forEach(t => t.remove());
-  console.log(contenedorTags.innerHTML);
-
-  const maquinamod = link.dataset.maquinamod;
-  modeloSeleccionado = maquinamod;
-
-  const res = await fetch(
-    `${API}/refacciones-por-maquinamod?maquinamod=${encodeURIComponent(maquinamod)}`
-  );
-
-const data = await res.json(); // 🔥 FALTABA ESTO
-  resultadosActuales = data;
-
-  llenarSelects(data);
-  actualizarTitulo();
-  mostrarResultados(data);
-  cargarDestacadas();
-  cargarEnvios();
-});
-});
-
 
 function actualizarTitulo() {
   const titulo = document.getElementById("tituloRefacciones");
