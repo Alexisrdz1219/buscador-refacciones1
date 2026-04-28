@@ -304,8 +304,8 @@
 /* CONTENEDOR GENERAL (como FAB) */
 .alertas-float {
   position: fixed;
-  bottom: 90px; /* arriba del botón de ayuda */
-  right: 20px;
+  bottom: 90px;
+  right: 35px; /* 🔥 separación elegante */
   z-index: 1050;
 }
 
@@ -339,17 +339,21 @@
 
 .alert-panel {
   position: absolute;
-  right: 10px;
+  right: 0;
   top: 60px;
   width: 320px;
   max-height: 400px; /* 🔥 evita que crezca infinito */
-  background: #ffffff;
-  border-radius: 12px;
-  box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+  background: rgba(255,255,255,0.9);
+  /* border-radius: 12px; */
+  border-radius: 16px;
+  /* box-shadow: 0 10px 25px rgba(0,0,0,0.15); */
+  box-shadow: 0 12px 30px rgba(0,0,0,0.12);
+  backdrop-filter: blur(10px);
   display: none;
   z-index: 999;
   overflow: hidden;
   font-family: sans-serif;
+  margin-right: 35px; /* 🔥 evita que se pegue */
 }
 
 /* HEADER */
@@ -358,9 +362,10 @@
   justify-content: space-between;
   align-items: center;
   padding: 12px 15px;
-  background: #1e3a8a;
-  color: white;
-  font-weight: bold;
+  background: transparent;
+  color: #0f172a;
+  font-weight: 600;
+  border-bottom: 1px solid #f1f5f9;
   border-top-left-radius: 12px;
   border-top-right-radius: 12px;
 }
@@ -368,7 +373,7 @@
 .alert-header button {
   background: none;
   border: none;
-  color: white;
+  color: #0f172a;
   font-size: 14px;
   cursor: pointer;
 }
@@ -377,31 +382,78 @@
 .alert-list {
   max-height: 340px;
   overflow-y: auto; /* 🔥 scroll interno */
-  padding: 10px;
+  padding: 8px;
 }
 
 /* ITEM DE ALERTA */
 .alert-item {
   background: #f9fafb;
-  border-left: 4px solid #1e3a8a;
-  padding: 10px;
+  border: 1px solid #f1f5f9;
+  padding: 10px 12px;
   margin-bottom: 8px;
-  border-radius: 6px;
+  border-radius: 12px;
   font-size: 13px;
-  transition: 0.2s;
+  transition: all 0.2s ease;
 }
 
 .alert-item:hover {
-  background: #eef2ff;
+  background: #f9fafb;
+  transform: translateY(-1px);
+}
+
+/* ALERTA NO LEÍDA (más elegante, no rojo fuerte) */
+.alert-item.rojo {
+  background: #fff5f5;
+  border: 1px solid #ffe4e6;
+}
+
+
+/* TEXTO */
+.alert-item div {
+  font-size: 13px;
+  color: #0f172a;
+}
+
+.alert-item small {
+  font-size: 11px;
+  color: #94a3b8;
+}
+
+/* BOTONES MÁS LIMPIOS */
+.alert-item .btn {
+  border-radius: 8px;
+  padding: 3px 6px;
+  font-size: 11px;
+  transition: all 0.2s ease;
+}
+
+/* BOTÓN OK */
+.alert-item .btn-success {
+  background: #22c55e;
+  border: none;
+}
+
+.alert-item .btn-success:hover {
+  background: #16a34a;
+}
+
+/* BOTÓN ELIMINAR */
+.alert-item .btn-danger {
+  background: #ef4444;
+  border: none;
+}
+
+.alert-item .btn-danger:hover {
+  background: #dc2626;
 }
 
 /* SCROLL BONITO */
 .alert-list::-webkit-scrollbar {
-  width: 6px;
+  width: 4px;
 }
 
 .alert-list::-webkit-scrollbar-thumb {
-  background: #c7d2fe;
+  background: #e2e8f0;
   border-radius: 10px;
 }
 /* CONTENEDOR */
