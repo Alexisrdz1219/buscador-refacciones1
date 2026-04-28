@@ -319,7 +319,7 @@ function renderModal(lista) {
 
       return `
         <div class="col-md-6 mb-2">
-          <div class="machine-item">
+          <div class="machine-item" onclick="this.querySelector('input').click()">
             <input type="checkbox"
                   value="${m.id}"
                   data-categoria="${m.categoriaprin}"

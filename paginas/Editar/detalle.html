@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!-- <!DOCTYPE html>
 <html lang="es">
 <head>
 <meta charset="UTF-8">
@@ -18,18 +18,11 @@
 
 <div class="row g-4">
 
-  <!-- FORM PRINCIPAL -->
+ 
   <div class="col-lg-8">
     <div class="card card-clean p-4">
 
-      <div class="d-flex justify-content-between align-items-center mb-3">
-        <h5 class="fw-bold m-0">
-          <i class="bi bi-pencil-square me-2"></i>Editar Refacción
-        </h5>
-        <span class="badge bg-light text-dark border">
-          ID: <span id="ref-id-display">---</span>
-        </span>
-      </div>
+     
 
       <form id="form">
 
@@ -50,24 +43,17 @@
           </div>
         </div>
 
-        <!-- MAQUINARIA -->
+        
         <div class="section-title">Clasificación maquinaria</div>
         <div class="row g-3 mb-4">
           <div class="col-md-4">
             <label class="form-label">Máquina</label>
             <select id="maquinamod" class="form-select"></select>
           </div>
-          <div class="col-md-4">
-            <label class="form-label">Unidad</label>
-            <select id="maquinaesp" class="form-select"></select>
-          </div>
-          <div class="col-md-4">
-            <label class="form-label">Número</label>
-            <select id="nummaquina" class="form-select"></select>
-          </div>
+          
         </div>
 
-        <!-- ESPECIFICACIONES -->
+       
         <div class="section-title">Especificaciones</div>
         <div class="row g-3 mb-4">
           <div class="col-md-4">
@@ -93,25 +79,19 @@
 </div>
         </div>
 
-        <!-- INVENTARIO -->
+         INVENTARIO
         <div class="section-title">Inventario</div>
         <div class="row g-3 mb-4">
           <div class="col-md-4">
             <label class="form-label">Cantidad</label>
             <input type="number" id="cantidad" class="form-control" min="0">
           </div>
-          <div class="col-md-4">
-            <label class="form-label">Unidad</label>
-            <input type="text" id="unidad" class="form-control">
-          </div>
+         
           <div class="col-md-4">
             <label class="form-label">Ubicación</label>
             <input type="text" id="ubicacion" class="form-control">
           </div>
-          <div class="col-12">
-            <label class="form-label">Observación</label>
-            <textarea id="observacion" class="form-control"></textarea>
-          </div>
+        
         </div>
         <div class="card p-3 mt-3">
  
@@ -131,7 +111,7 @@
   </div>
 </div>
 
-        <!-- COMPATIBLES -->
+      
         <div class="section-title">Máquinas compatibles</div>
         <div id="lista-maquinas" class="d-flex flex-wrap gap-2 mb-3"></div>
 
@@ -142,9 +122,6 @@
   <i class="bi bi-plus"></i> Agregar máquina
 </button>
 
-<h1>Registrar Uso</h1>
-
-<h1>Usos</h1>
 
         <div class="text-end">
           <button type="submit" class="btn btn-save text-white">
@@ -156,7 +133,7 @@
     </div>
   </div>
 
-  <!-- PANEL LATERAL IMAGEN -->
+  
   <div class="col-lg-4">
     <div class="card card-clean p-4">
 
@@ -186,7 +163,7 @@
 </div>
 </div>
 
-<!-- MODAL MAQUINAS -->
+
 <div class="modal fade" id="modalMaquinas" tabindex="-1">
   <div class="modal-dialog modal-lg modal-dialog-scrollable">
     <div class="modal-content">
@@ -200,13 +177,12 @@
 
       <div class="modal-body">
 
-        <!-- Buscador -->
+        
         <input type="text"
                id="buscarMaquina"
                class="form-control mb-3"
                placeholder="Buscar máquina...">
 
-        <!-- Lista -->
         <div id="lista-maquinas-modal" class="row g-2"></div>
 
       </div>
@@ -222,13 +198,6 @@
   </div>
 </div>
 
- <!-- <h3>Registrar uso</h3> -->
-
-<!-- <input id="usuario" placeholder="Quién usó">
-<input id="zona" placeholder="Zona">
-<input id="cantidad" type="number" placeholder="Cantidad">
-
-<button onclick="guardarUso()">Guardar</button> -->
 
 <script>
 async function guardarUso() {
@@ -255,6 +224,275 @@ async function guardarUso() {
     alert("❌ Error");
   }
 }
+</script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+<script src="../../js/pagJs/Detalle/detalle.js" defer></script>
+
+</body>
+</html> -->
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Editar Refacción | IEMCO</title>
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="../../css/paginas/Detalle/detalle.css">
+</head>
+
+<body>
+
+<div class="container container-edit">
+
+<div class="row g-4">
+
+  <!-- FORM PRINCIPAL -->
+  <div class="col-12">
+    <div class="card card-clean p-4">
+      <form id="form">
+
+<!-- HEADER -->
+<div class="d-flex justify-content-between align-items-center mb-3">
+  <h5 class="fw-bold m-0">
+    <i class="bi bi-pencil-square me-2"></i>Editar Refacción
+  </h5>
+  <span class="badge bg-light text-dark border">
+    ID: <span id="ref-id-display">---</span>
+  </span>
+</div>
+
+<!-- 🔥 TABS -->
+<ul class="nav nav-pills mb-3 tabs-clean">
+  <li class="nav-item">
+    <button type="button" class="nav-link active" data-bs-toggle="pill" data-bs-target="#tab-general">General</button>
+  </li>
+  <li class="nav-item">
+    <button type="button" class="nav-link" data-bs-toggle="pill" data-bs-target="#tab-maquina">Máquina</button>
+  </li>
+  <li class="nav-item">
+    <button type="button" class="nav-link" data-bs-toggle="pill" data-bs-target="#tab-inventario">Inventario</button>
+  </li>
+  <li class="nav-item">
+    <button type="button" class="nav-link" data-bs-toggle="pill" data-bs-target="#tab-imagen">Imagen</button>
+  </li>
+</ul>
+
+<div class="tab-content">
+
+<!-- ================= GENERAL ================= -->
+<div class="tab-pane fade show active" id="tab-general">
+
+  <div class="section-title">Información principal</div>
+  <div class="row g-3 mb-3">
+    <div class="col-12">
+      <label class="form-label">Nombre del Producto</label>
+      <input type="text" id="nombreprod" class="form-control" required>
+    </div>
+    <div class="col-md-6">
+      <label class="form-label">Referencia Interna</label>
+      <input type="text" id="refinterna" class="form-control" required disabled>
+    </div>
+    <div class="col-md-6">
+      <label class="form-label">Categoría</label>
+      <select id="categoriaprin" class="form-select"></select>
+    </div>
+  </div>
+
+  <div class="section-title">Especificaciones</div>
+  <div class="row g-3 mb-3">
+    <div class="col-md-4">
+      <label class="form-label">Tipo</label>
+      <input type="text" id="tipoprod" class="form-control">
+    </div>
+    <div class="col-md-4">
+      <label class="form-label">Modelo</label>
+      <input type="text" id="modelo" class="form-control">
+    </div>
+    <div class="col-md-4">
+      <label class="form-label">Palabras Clave</label>
+      <input type="text" id="palclave" class="form-control">
+    </div>
+
+    <div class="col-12">
+      <label class="form-label">Tags</label>
+      <input type="text" id="inputTags" class="form-control">
+    </div>
+  </div>
+
+</div>
+
+<!-- ================= MAQUINA ================= -->
+<div class="tab-pane fade" id="tab-maquina">
+
+  <div class="section-title">Clasificación maquinaria</div>
+  <div class="row g-3 mb-3">
+    <div class="col-md-6">
+      <label class="form-label">Máquina</label>
+      <select id="maquinamod" class="form-select"></select>
+    </div>
+  </div>
+
+  <div class="section-title">Máquinas compatibles</div>
+  <div id="lista-maquinas" class="d-flex flex-wrap gap-2 mb-3"></div>
+
+  <button type="button"
+    class="btn btn-outline-secondary btn-sm"
+    data-bs-toggle="modal"
+    data-bs-target="#modalMaquinas">
+    <i class="bi bi-plus"></i> Agregar máquina
+  </button>
+
+</div>
+
+<!-- ================= INVENTARIO ================= -->
+<div class="tab-pane fade" id="tab-inventario">
+
+  <div class="section-title">Inventario</div>
+  <div class="row g-3 mb-3">
+    <div class="col-md-4">
+      <label class="form-label">Cantidad</label>
+      <input type="number" id="cantidad" class="form-control" min="0">
+    </div>
+    <div class="col-md-4">
+      <label class="form-label">Ubicación</label>
+      <input type="text" id="ubicacion" class="form-control">
+    </div>
+  </div>
+
+  <div class="card p-3 mt-2">
+    <div id="boxStock" class="p-2">
+      <h6>⚠️ Alerta de stock</h6>
+
+      <div class="form-check">
+        <input class="form-check-input" type="checkbox" id="alertaActiva">
+        <label for="alertaActiva">Activar alerta</label>
+      </div>
+
+      <div class="mt-2" id="contenedorStockMinimo" style="display:none;">
+        <label>Stock mínimo</label>
+        <input type="number" id="stockMinimo" class="form-control">
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- ================= IMAGEN ================= -->
+<div class="tab-pane fade" id="tab-imagen">
+
+  <div class="image-wrapper image-preview position-relative">
+    <img id="previewImagen" style="display:none;" loading="lazy"/>
+
+    <button type="button"
+      id="btnQuitarImagen"
+      class="btn btn-danger btn-sm position-absolute top-0 end-0 m-2"
+      style="display:none;">
+      <i class="bi bi-x"></i>
+    </button>
+  </div>
+
+  <input type="file" id="imagen" class="form-control mt-3" accept="image/*">
+  <input type="text" id="imagenUrl" class="form-control mt-2">
+
+  <button type="button"
+    id="btnEliminarImagen"
+    class="btn btn-outline-danger btn-sm mt-3">
+    <i class="bi bi-trash"></i> Eliminar imagen
+  </button>
+
+</div>
+
+</div>
+
+<!-- BOTÓN FINAL -->
+<div class="text-end mt-3">
+  <button type="submit" class="btn btn-save text-white">
+    <i class="bi bi-floppy"></i> Guardar Cambios
+  </button>
+</div>
+
+      </form>
+
+    </div>
+  </div>
+</div>
+
+<!-- MODAL MAQUINAS -->
+ <div class="modal fade" id="modalMaquinas" tabindex="-1">
+  <div class="modal-dialog modal-lg modal-dialog-scrollable">
+    <div class="modal-content">
+
+      <div class="modal-header">
+        <h5 class="modal-title">
+          <i class="bi bi-hdd-stack"></i> Seleccionar Máquinas
+        </h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+
+      <div class="modal-body">
+
+        
+        <input type="text"
+               id="buscarMaquina"
+               class="form-control mb-3"
+               placeholder="Buscar máquina...">
+
+        <div id="lista-maquinas-modal" class="row g-2"></div>
+
+      </div>
+
+      <div class="modal-footer">
+        <button class="btn btn-light" data-bs-dismiss="modal">Cancelar</button>
+        <button class="btn btn-success" id="confirmarMaquinas">
+          Confirmar seleccion
+        </button>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+
+    const modal = document.getElementById("modalMaquinas");
+
+modal.addEventListener("shown.bs.modal", () => {
+  renderModal(maquinasDisponibles);
+});
+  inicializarMaquinas();
+});
+async function guardarUso() {
+  const data = {
+    refaccion_id: id,
+    nombre: valoresActuales.nombreprod,
+    refinterna: valoresActuales.refinterna,
+    usuario: document.getElementById("usuario").value,
+    zona: document.getElementById("zona").value,
+    cantidad: Number(document.getElementById("cantidad").value)
+  };
+
+  const res = await fetch(`${API}/historial-uso`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify(data)
+  });
+
+  if (res.ok) {
+    alert("✅ Uso registrado");
+  } else {
+    alert("❌ Error");
+  }
+}
+
 </script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 
