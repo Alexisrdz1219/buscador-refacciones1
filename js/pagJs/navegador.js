@@ -370,9 +370,15 @@ function renderPagina() {
   const fin = inicio + LIMITE;
 
   const fragment = document.createDocumentFragment();
+  const rol = localStorage.getItem("rol");
 
+  let datosFiltrados = datosActuales;
+
+if (rol !== "admin") {
+  datosFiltrados = datosActuales.filter(r => r.tipo === "refaccion");
+}
   
-  datosActuales.slice(inicio, fin).forEach(r => {
+  datosFiltrados.slice(inicio, fin).forEach(r => {
 
     const tags = typeof r.tags === "string"
   ? JSON.parse(r.tags)
@@ -382,66 +388,66 @@ function renderPagina() {
 
     if (vistaActual === "cards") {
       card.className = "ref-card";
-console.log("TAGS:", r.tags);
-      card.innerHTML = `
-        <div class="ref-img">
-        <img 
-   src="${r.imagen || 'assets/img/no-image.jpg'}"
-   alt="${r.nombreprod}"
-   class="card-img-top"
-   onerror="this.onerror=null; this.src='assets/img/no-image.jpg';" loading="lazy">
+  // console.log("TAGS:", r.tags);
+        card.innerHTML = `
+          <div class="ref-img">
+          <img 
+            src="${r.imagen || 'assets/img/no-image.jpg'}"
+            alt="${r.nombreprod}"
+            class="card-img-top"
+            onerror="this.onerror=null; this.src='assets/img/no-image.jpg';" loading="lazy">
 
-           <div class="card-actions">
-           ${rol !== "personal" ? `
-          <button class="btn-check-ref" data-id="${r.id}">
-            <i class="bi ${r.completada ? 'bi-check-circle-fill text-success' : 'bi-circle'}"></i>
+            <div class="card-actions">
+            ${rol !== "personal" ? `
+            <button class="btn-check-ref" data-id="${r.id}">
+              <i class="bi ${r.completada ? 'bi-check-circle-fill text-success' : 'bi-circle'}"></i>
+            </button>
+            ` : ""}
+          <button class="btn-broadcast" data-id="${r.id}">
+              <i class="bi ${r.destacada ? 'bi-broadcast text-primary' : 'bi-broadcast'}"></i>
+            </button>
+            
+            <button class="btn-envio" data-id="${r.id}">
+            <i class="bi ${r.en_envio ? 'bi-truck text-success' : 'bi-truck text-muted'}"></i>
           </button>
- ` : ""}
-        <button class="btn-broadcast" data-id="${r.id}">
-            <i class="bi ${r.destacada ? 'bi-broadcast text-primary' : 'bi-broadcast'}"></i>
-          </button>
-          
-          <button class="btn-envio" data-id="${r.id}">
-   <i class="bi ${r.en_envio ? 'bi-truck text-success' : 'bi-truck text-muted'}"></i>
- </button>
 
-         <button class="btn-fullscreen" data-img="${r.imagen || 'assets/img/no-image.jpg'}">
-            <i class="bi bi-fullscreen"></i>
-          </button>
-        </div>
-     </div>
+                  <button class="btn-fullscreen" data-img="${r.imagen || 'assets/img/no-image.jpg'}">
+                      <i class="bi bi-fullscreen"></i>
+                    </button>
+                  </div>
+              </div>
 
-    <div class="ref-body">
-       <h3 class="ref-title">${r.nombreprod}</h3>
-       <div class="ref-modelo">Modelo: <strong>${r.modelo || '-'}</strong></div>
-       <div class="ref-cantidad">Cantidad: <strong>${r.cantidad} ${r.unidad || ''}</strong></div>
-      <div class="ref-tags">
-  ${(tags || []).map(tag => `
-    <span class="tag">${tag}</span>
-  `).join("")}
-</div>
-       <div class="ref-ubicacion btn-mapa" data-ubicacion="${r.ubicacion || ''}" style="cursor:pointer hover:opacity-80">
-   📍 ${r.ubicacion || 'Sin ubicación'}
- </div>
+              <div class="ref-body">
+                <h3 class="ref-title">${r.nombreprod}</h3>
+                <div class="ref-modelo">Modelo: <strong>${r.modelo || '-'}</strong></div>
+                <div class="ref-cantidad">Cantidad: <strong>${r.cantidad} ${r.unidad || ''}</strong></div>
+                <div class="ref-tags">
+            ${(tags || []).map(tag => `
+              <span class="tag">${tag}</span>
+            `).join("")}
+          </div>
+                <div class="ref-ubicacion btn-mapa" data-ubicacion="${r.ubicacion || ''}" style="cursor:pointer hover:opacity-80">
+            📍 ${r.ubicacion || 'Sin ubicación'}
+          </div>
 
-       ${rol !== "personal" ? `
-   <div class="ref-actions">
-     <a href="paginas/Editar/detalle.html?id=${r.id}" class="btn btn-primary btn-sm">Editar</a>
-   </div> ` : ""}
-      `;
-    } else {
-      card.className = "ref-lista-item";
-      card.innerHTML = `
-      <div class="lista-nombre">${r.nombreprod}</div>
-     <div class="lista-ref">${r.refinterna || '-'}</div>
-     <div class="lista-tags">
-  ${(tags || []).map(tag => `
-    <span class="tag small">${tag}</span>
-  `).join("")}
-</div>
-     <div class="lista-ubicacion btn-mapa" data-ubicacion="${r.ubicacion || ''}" style="cursor:pointer">
-   ${r.ubicacion || 'Sin ubicación'}
- </div>
+        ${rol !== "personal" ? `
+            <div class="ref-actions">
+              <a href="paginas/Editar/detalle.html?id=${r.id}" class="btn btn-primary btn-sm">Editar</a>
+            </div> ` : ""}
+                `;
+              } else {
+                card.className = "ref-lista-item";
+                card.innerHTML = `
+                <div class="lista-nombre">${r.nombreprod}</div>
+              <div class="lista-ref">${r.refinterna || '-'}</div>
+              <div class="lista-tags">
+            ${(tags || []).map(tag => `
+              <span class="tag small">${tag}</span>
+            `).join("")}
+          </div>
+      <div class="lista-ubicacion btn-mapa" data-ubicacion="${r.ubicacion || ''}" style="cursor:pointer">
+    ${r.ubicacion || 'Sin ubicación'}
+  </div>
      <div>
        <a href="paginas/Editar/detalle.html?id=${r.id}" class="btn btn-sm btn-outline-primary">
          Editar
@@ -1374,7 +1380,7 @@ async function cargarEnvios() {
     const res = await fetch(`${API}/refacciones/envio`);
     const data = await res.json();
 console.log(data);
-    console.log("RESPUESTA BACK:", data);
+    // console.log("RESPUESTA BACK:", data);
     renderEnvios(data);
 
   } catch (error) {
