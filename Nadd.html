@@ -855,20 +855,98 @@
     arrastrando = false;
     });
 
-async function cargarDashboard() {
+// async function cargarDashboard() {
     
-  const res = await fetch("https://buscador-refaccionesbackend.onrender.com/refacciones");
+//   const res = await fetch("https://buscador-refaccionesbackend.onrender.com/refacciones");
+//   const data = await res.json();
+
+//   const resUb = await fetch("https://buscador-refaccionesbackend.onrender.com/refacciones/con-ubicacion");
+//   const dataUb = await resUb.json();
+
+//   const total = data.length;
+//   const conUbicacion = dataUb.data.length;
+//   const sinUbicacion = total - conUbicacion;
+
+//   // ✅ AHORA SÍ EXISTEN
+//   const porcentaje = ((conUbicacion / total) * 100).toFixed(1);
+
+//   const ultimas = data.slice(-3).reverse();
+
+//   document.getElementById("graficaUbicacionTitulo").innerHTML = `
+//     <div class="p-3">
+//       <h6 class="mb-3">Estado de Ubicación</h6>
+//       <h6>${porcentaje}% con ubicación</h6>
+//       <canvas id="graficaUbicacion"></canvas>
+//     </div>
+//   `;
+
+//   const ctx = document.getElementById("graficaUbicacion");
+
+//   new Chart(ctx, {
+//     type: "pie",
+//     data: {
+//       labels: ["Con ubicación", "Sin ubicación"],
+//       datasets: [{
+//         data: [conUbicacion, sinUbicacion],
+//         backgroundColor: ["#7c878e", "#3e5b6d"]
+//       }]
+//     },
+//     options: {
+//       responsive: true,
+//       plugins: {
+//         legend: {
+//           position: "bottom"
+//         }
+//       }
+//     }
+//   });
+
+// }
+async function cargarDashboard() {
+  const token = localStorage.getItem("token");
+
+  // 🔹 REFACCIONES
+  const res = await fetch("https://buscador-refaccionesbackend.onrender.com/refacciones", {
+    headers: {
+      Authorization: `Bearer ${token}`
+    }
+  });
+
+  if (res.status === 401) {
+    alert("Sesión expirada");
+    window.location.href = "/login.html";
+    return;
+  }
+
   const data = await res.json();
 
-  const resUb = await fetch("https://buscador-refaccionesbackend.onrender.com/refacciones/con-ubicacion");
+  if (!Array.isArray(data)) {
+    console.error("Error en refacciones:", data);
+    return;
+  }
+
+  // 🔹 CON UBICACIÓN
+  const resUb = await fetch("https://buscador-refaccionesbackend.onrender.com/refacciones/con-ubicacion", {
+    headers: {
+      Authorization: `Bearer ${token}`
+    }
+  });
+
   const dataUb = await resUb.json();
 
+  if (!dataUb.ok) {
+    console.error("Error en ubicaciones:", dataUb);
+    return;
+  }
+
+  // 🔥 AQUÍ YA NO TRUENA
   const total = data.length;
   const conUbicacion = dataUb.data.length;
   const sinUbicacion = total - conUbicacion;
 
-  // ✅ AHORA SÍ EXISTEN
-  const porcentaje = ((conUbicacion / total) * 100).toFixed(1);
+  const porcentaje = total > 0 
+    ? ((conUbicacion / total) * 100).toFixed(1)
+    : 0;
 
   const ultimas = data.slice(-3).reverse();
 
@@ -900,7 +978,6 @@ async function cargarDashboard() {
       }
     }
   });
-
 }
 
 
