@@ -1,0 +1,52 @@
+SELECT id, nombreprod, tipo
+FROM refacciones
+WHERE id = 5231;
+
+SELECT *
+FROM refacciones
+WHERE id = 5231;
+
+
+5231 | BROCA 9/64" PARA FIERRO 
+
+UPDATE refacciones
+SET tipo = 'herramienta'
+WHERE refinterna = 'R02633';
+
+dbbuscador=> ALTER TABLE refacciones 
+dbbuscador-> ADD CONSTRAINT chk_tipo
+dbbuscador-> CHECK (tipo IN ('refaccion', 'consumible', 'uso_personal', 'herramienta'));
+
+UPDATE refacciones
+SET tipo = 'consumible'
+WHERE nombreprod ILIKE '%abrazadera%';
+
+SELECT * FROM refacciones
+WHERE tipo = 'consumible'
+WHERE nombreprod ILIKE '%abrazadera%';
+
+UPDATE refacciones
+SET tipo = 'consumible'
+WHERE nombreprod ILIKE '%abrazadera%';
+
+<!-- vgsvjcdsadmhdscdcbhsabcbhascbhsabcbdsbcdscdschdschdsbhbjhdscd -->
+
+UPDATE refacciones
+SET tipo = 'herramienta'
+WHERE refinterna IN ('R00503', 'R00557', 'R00588', 'R01016', 'R01458', 'R01459', 'R01580'a, 'R04683', 'R04682', 'R04681', 'R04677', 'R04597', 'R04592', 'R04591', 'R04590', 'R04552');
+
+
+<!-- DSBHSDBJCBDSJCBJHASBHASBHBHJASXAS -->
+
+R00503
+R00557
+R00588
+R01016
+R01458
+R01459
+R01580
+
+
+
+
+

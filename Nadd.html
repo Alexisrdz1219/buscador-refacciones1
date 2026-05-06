@@ -22,7 +22,7 @@
         <body id="bodyTag">
 
 
-            <div id="contenedorAlertas" style="position:absolute; cursor:pointer; width: 50px; right: 40px; padding:10px; top: 13px;">
+            <div id="contenedorAlertas" style="position:fixed; cursor:pointer; width: 50px; right: 40px; padding:10px; top: 13px; z-index: 9999;">
   <i class="bi bi-bell" style="font-size: 1.5rem;"></i>
   <span id="contadorAlertas" class="badge bg-danger"
         style="position:absolute; top:-5px; right:-10px; display:none;">
@@ -339,7 +339,7 @@
                         <!-- ELECTRICIDAD -->
                         <li class="mb-1" id="sidebar">
                             <button class="btn-toggle collapsed" data-bs-toggle="collapse" data-bs-target="#ELECTRICIDAD-collapse">
-                                <i class="bi bi-lightning-charge-fill me-2" style="color: #f0c000;"></i> ELECTRICIDAD
+                                <i class="bi bi-lightning-charge-fill me-2" style="color: #f0c000;"></i> Electricidad
                             </button>
                             <div class="collapse" id="ELECTRICIDAD-collapse" data-bs-parent="#sidebar">
                                 <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
@@ -390,7 +390,7 @@
                         <!-- TERMINAN EQUIPOS AUXILIARES -->
 
                         <!-- MATERIALES -->
-                        <li class="mb-1" id="sidebar">
+                        <!-- <li class="mb-1" id="sidebar">
                             <button class="btn-toggle collapsed" data-bs-toggle="collapse" data-bs-target="#MAT-collapse">
                                 <i class="bi bi-box-seam me-2" style="color: #01ecfd;"></i> Materiales
                             </button>
@@ -404,7 +404,7 @@
                                     <li><a href="javascript:void(0)" class="link-body-emphasis maquina-link d-block" data-categoriaprin="SERVICIOS" data-maquinamod="REFACCIONES NEUMATICAS">REFACCIONES NEUMATICAS</a></li>
                                 </ul>
                             </div>
-                        </li>
+                        </li> -->
                         <!-- TERMINAN MATERIALES -->
 
                     </ul>
@@ -488,19 +488,6 @@
                         </div>
                     </div>
                     </div>
-
-                        <!-- Cards futuras -->
-                        <div class="col-12 col-lg-3">
-                            <div class="">
-                                <div id="graficaUbicacionTitulo">
-                                    <canvas id="graficaUbicacion"></canvas>
-                                </div>
-                            </div>
-                        </div>
-
-                       
-
-
                         <!-- Card envíos -->
 <div class="col-12 col-lg-6">
   <div class="card border-0 shadow-sm h-100">
@@ -645,10 +632,10 @@
     </ul>
   </div>
 
-  <!-- ❓ AYUDA -->
+  <!-- ❓ AYUDA
   <button class="btn btn-danger fab" data-bs-toggle="modal" data-bs-target="#modalAyuda" title="Ayuda">
     <i class="bi bi-question-lg"></i>
-  </button>
+  </button> -->
 
             </div>
 
