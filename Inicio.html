@@ -1,4 +1,4 @@
-SELECT id, nombreprod, tipo
+<!-- SELECT id, nombreprod, tipo
 FROM refacciones
 WHERE id = 5231;
 
@@ -10,8 +10,8 @@ WHERE id = 5231;
 5231 | BROCA 9/64" PARA FIERRO 
 
 UPDATE refacciones
-SET tipo = 'herramienta'
-WHERE refinterna = 'R02633';
+SET tipo = 'uso_personal'
+WHERE refinterna = 'R03859';
 
 dbbuscador=> ALTER TABLE refacciones 
 dbbuscador-> ADD CONSTRAINT chk_tipo
@@ -29,14 +29,17 @@ UPDATE refacciones
 SET tipo = 'consumible'
 WHERE nombreprod ILIKE '%abrazadera%';
 
-<!-- vgsvjcdsadmhdscdcbhsabcbhascbhsabcbdsbcdscdschdschdsbhbjhdscd -->
+
+CHECK (tipo IN ('refaccion', 'consumible', 'uso_personal', 'herramienta'));
+
+ vgsvjcdsadmhdscdcbhsabcbhascbhsabcbdsbcdscdschdschdsbhbjhdscd 
 
 UPDATE refacciones
-SET tipo = 'herramienta'
-WHERE refinterna IN ('R00503', 'R00557', 'R00588', 'R01016', 'R01458', 'R01459', 'R01580'a, 'R04683', 'R04682', 'R04681', 'R04677', 'R04597', 'R04592', 'R04591', 'R04590', 'R04552');
+SET tipo = 'uso_personal'
+WHERE refinterna IN ('');
 
 
-<!-- DSBHSDBJCBDSJCBJHASBHASBHBHJASXAS -->
+ DSBHSDBJCBDSJCBJHASBHASBHBHJASXAS
 
 R00503
 R00557
@@ -45,8 +48,20 @@ R01016
 R01458
 R01459
 R01580
+R01582
+R01622
+R01630
+R01797
+R02090
+R02275
+R03041
+R03477
+R04020
+R04396
+R04427
 
 
 
-
-
+UPDATE refacciones
+SET tipo = 'refaccion'
+WHERE codigo = 'R02931'; -->

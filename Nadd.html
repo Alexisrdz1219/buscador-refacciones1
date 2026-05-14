@@ -1,8 +1,5 @@
 <!DOCTYPE html>
     <html lang="es" data-bs-theme="light">
-<!-- //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// -->
-<!-- //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// -->
-<!-- //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// -->
         <head>
             <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
             <title>IEMCO</title>
@@ -16,30 +13,26 @@
             <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
             <link rel="stylesheet" href="css/paginas/Principal/principal.css">
         </head>
-<!-- //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// -->
-<!-- //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// -->
-<!-- //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// -->
+
         <body id="bodyTag">
-
-
             <div id="contenedorAlertas" style="position:fixed; cursor:pointer; width: 50px; right: 40px; padding:10px; top: 13px; z-index: 9999;">
-  <i class="bi bi-bell" style="font-size: 1.5rem;"></i>
-  <span id="contadorAlertas" class="badge bg-danger"
-        style="position:absolute; top:-5px; right:-10px; display:none;">
-    0
-  </span>
-</div>
+                <i class="bi bi-bell" style="font-size: 1.5rem;"></i>
+                <span id="contadorAlertas" class="badge bg-danger"
+                        style="position:absolute; top:-5px; right:-10px; display:none;">
+                    0
+                </span>
+            </div>
 
-<div id="panelAlertas" class="alert-panel">
-  <div class="alert-header">
-    <span>🔔 Alertas</span>
-    <button onclick="toggleAlertas()">✖</button>
-  </div>
+            <div id="panelAlertas" class="alert-panel">
+            <div class="alert-header">
+                <span>🔔 Alertas</span>
+                <button onclick="toggleAlertas()">✖</button>
+            </div>
 
-  <div id="listaAlertas" class="alert-list">
-    <!-- Aquí se renderizan las alertas -->
-  </div>
-</div>
+            <div id="listaAlertas" class="alert-list">
+                <!-- Aquí se renderizan las alertas -->
+            </div>
+            </div>
 
             <button class="btn mobile-toggle-btn d-lg-none" id="btnToggle"><i class="bi bi-list fs-3"></i></button>
             <div class="sidebar-overlay" id="overlay"></div>
@@ -609,33 +602,33 @@
 
             <div class="fab-container">
 
-  <!-- 🛠️ HERRAMIENTAS -->
-  <div class="dropup" style="display: none;">
-    <button class="btn btn-primary fab" data-bs-toggle="dropdown" data-bs-toggle="tooltip" title="Herramientas">
-      <i class="bi bi-tools"></i>
-    </button>
-    <ul class="dropdown-menu">
-      <li><a class="dropdown-item" href="#">Importar Excel</a></li>
-      <li><a class="dropdown-item" href="#">Exportar datos</a></li>
-      <li><a class="dropdown-item" href="#">Configuración</a></li>
-    </ul>
-  </div>
+            <!-- 🛠️ HERRAMIENTAS -->
+            <div class="dropup" style="display: none;">
+                <button class="btn btn-primary fab" data-bs-toggle="dropdown" data-bs-toggle="tooltip" title="Herramientas">
+                <i class="bi bi-tools"></i>
+                </button>
+                <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="#">Importar Excel</a></li>
+                <li><a class="dropdown-item" href="#">Exportar datos</a></li>
+                <li><a class="dropdown-item" href="#">Configuración</a></li>
+                </ul>
+            </div>
 
-  <!-- 👤 PERFIL -->
-  <div class="dropup" style="display: none;">
-    <button class="btn btn-light fab p-0" data-bs-toggle="dropdown" title="Perfil">
-      <img src="https://static.vecteezy.com/system/resources/thumbnails/019/896/008/small_2x/male-user-avatar-icon-in-flat-design-style-person-signs-illustration-png.png" class="rounded-circle" width="40" height="40" loading="lazy">
-    </button>
-    <ul class="dropdown-menu">
-      <li><a class="dropdown-item" href="#">Mi perfil</a></li>
-      <li><a class="dropdown-item" href="#">Cerrar sesión</a></li>
-    </ul>
-  </div>
+            <!-- 👤 PERFIL -->
+            <div class="dropup" style="display: none;">
+                <button class="btn btn-light fab p-0" data-bs-toggle="dropdown" title="Perfil">
+                <img src="https://static.vecteezy.com/system/resources/thumbnails/019/896/008/small_2x/male-user-avatar-icon-in-flat-design-style-person-signs-illustration-png.png" class="rounded-circle" width="40" height="40" loading="lazy">
+                </button>
+                <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="#">Mi perfil</a></li>
+                <li><a class="dropdown-item" href="#">Cerrar sesión</a></li>
+                </ul>
+            </div>
 
-  <!-- ❓ AYUDA
-  <button class="btn btn-danger fab" data-bs-toggle="modal" data-bs-target="#modalAyuda" title="Ayuda">
-    <i class="bi bi-question-lg"></i>
-  </button> -->
+            <!-- ❓ AYUDA
+            <button class="btn btn-danger fab" data-bs-toggle="modal" data-bs-target="#modalAyuda" title="Ayuda">
+                <i class="bi bi-question-lg"></i>
+            </button> -->
 
             </div>
 
@@ -669,7 +662,7 @@
 
             <script>
 
-    document.addEventListener("DOMContentLoaded", async () => {
+                document.addEventListener("DOMContentLoaded", async () => {
         cargarEnvios(); 
     cargarDestacadas();
     const token = localStorage.getItem("token");
@@ -725,7 +718,7 @@
 
     });
 
-    function aplicarPermisos(rol) {
+                function aplicarPermisos(rol) {
 
     // console.log("Rol detectado:", rol);
 
@@ -743,9 +736,9 @@
     }
     }
 
-    const btnAgregarTag = document.getElementById("btnAgregarTag");
+                const btnAgregarTag = document.getElementById("btnAgregarTag");
 
-    btnAgregarTag?.addEventListener("click", () => {
+                btnAgregarTag?.addEventListener("click", () => {
     const valor = inputTag.value.trim().toLowerCase();
     if (!valor) return;
 
@@ -758,21 +751,21 @@
     inputTag.value = "";
     });
 
-    let escala = 1;
-    let posX = 0;
-    let posY = 0;
-    let arrastrando = false;
-    let inicioX = 0;
-    let inicioY = 0;
+                let escala = 1;
+                let posX = 0;
+                let posY = 0;
+                let arrastrando = false;
+                let inicioX = 0;
+                let inicioY = 0;
     
-    const visor = document.getElementById("visorImagen");
-    const img = document.getElementById("visorImg");
+                const visor = document.getElementById("visorImagen");
+                const img = document.getElementById("visorImg");
 
-    function actualizarTransform() {
+                function actualizarTransform() {
     img.style.transform = `translate(${posX}px, ${posY}px) scale(${escala})`;
     }
 
-    document.addEventListener("click", (e) => {
+                document.addEventListener("click", (e) => {
     const btn = e.target.closest(".btn-fullscreen");
     if (!btn) return;
 
@@ -785,191 +778,189 @@
     visor.classList.remove("visor-hidden");
     });
 
-    document.getElementById("cerrarVisor").addEventListener("click", () => {
+                document.getElementById("cerrarVisor").addEventListener("click", () => {
     visor.classList.add("visor-hidden");
     });
 
-    document.getElementById("zoomIn").addEventListener("click", () => {
+                document.getElementById("zoomIn").addEventListener("click", () => {
     escala += 0.2;
     actualizarTransform();
     });
 
-    document.getElementById("zoomOut").addEventListener("click", () => {
+                document.getElementById("zoomOut").addEventListener("click", () => {
     escala -= 0.2;
     if (escala < 1) escala = 1;
     actualizarTransform();
     });
 
 
-    // 🖱 MOUSE DRAG
-    img.addEventListener("mousedown", (e) => {
-    if (escala === 1) return;
-    arrastrando = true;
-    inicioX = e.clientX - posX;
-    inicioY = e.clientY - posY;
-    img.style.cursor = "grabbing";
-    });
+                // 🖱 MOUSE DRAG
+                img.addEventListener("mousedown", (e) => {
+                if (escala === 1) return;
+                arrastrando = true;
+                inicioX = e.clientX - posX;
+                inicioY = e.clientY - posY;
+                img.style.cursor = "grabbing";
+                });
 
-    document.addEventListener("mousemove", (e) => {
+                document.addEventListener("mousemove", (e) => {
     if (!arrastrando) return;
     posX = e.clientX - inicioX;
     posY = e.clientY - inicioY;
     actualizarTransform();
     });
 
-    document.addEventListener("mouseup", () => {
+                document.addEventListener("mouseup", () => {
     arrastrando = false;
     img.style.cursor = "grab";
     });
 
 
-    // 📱 TOUCH
-    img.addEventListener("touchstart", (e) => {
-    if (escala === 1) return;
-    arrastrando = true;
-    inicioX = e.touches[0].clientX - posX;
-    inicioY = e.touches[0].clientY - posY;
-    });
+                // 📱 TOUCH
+                img.addEventListener("touchstart", (e) => {
+                if (escala === 1) return;
+                arrastrando = true;
+                inicioX = e.touches[0].clientX - posX;
+                inicioY = e.touches[0].clientY - posY;
+                });
 
-    img.addEventListener("touchmove", (e) => {
-    if (!arrastrando) return;
-    posX = e.touches[0].clientX - inicioX;
-    posY = e.touches[0].clientY - inicioY;
-    actualizarTransform();
-    });
+                img.addEventListener("touchmove", (e) => {
+                if (!arrastrando) return;
+                posX = e.touches[0].clientX - inicioX;
+                posY = e.touches[0].clientY - inicioY;
+                actualizarTransform();
+                });
 
-    img.addEventListener("touchend", () => {
-    arrastrando = false;
-    });
+                img.addEventListener("touchend", () => {
+                arrastrando = false;
+                });
 
-// async function cargarDashboard() {
-    
-//   const res = await fetch("https://buscador-refaccionesbackend.onrender.com/refacciones");
-//   const data = await res.json();
+                // async function cargarDashboard() {
+                    
+                //   const res = await fetch("https://buscador-refaccionesbackend.onrender.com/refacciones");
+                //   const data = await res.json();
 
-//   const resUb = await fetch("https://buscador-refaccionesbackend.onrender.com/refacciones/con-ubicacion");
-//   const dataUb = await resUb.json();
+                //   const resUb = await fetch("https://buscador-refaccionesbackend.onrender.com/refacciones/con-ubicacion");
+                //   const dataUb = await resUb.json();
 
-//   const total = data.length;
-//   const conUbicacion = dataUb.data.length;
-//   const sinUbicacion = total - conUbicacion;
+                //   const total = data.length;
+                //   const conUbicacion = dataUb.data.length;
+                //   const sinUbicacion = total - conUbicacion;
 
-//   // ✅ AHORA SÍ EXISTEN
-//   const porcentaje = ((conUbicacion / total) * 100).toFixed(1);
+                //   // ✅ AHORA SÍ EXISTEN
+                //   const porcentaje = ((conUbicacion / total) * 100).toFixed(1);
 
-//   const ultimas = data.slice(-3).reverse();
+                //   const ultimas = data.slice(-3).reverse();
 
-//   document.getElementById("graficaUbicacionTitulo").innerHTML = `
-//     <div class="p-3">
-//       <h6 class="mb-3">Estado de Ubicación</h6>
-//       <h6>${porcentaje}% con ubicación</h6>
-//       <canvas id="graficaUbicacion"></canvas>
-//     </div>
-//   `;
+                //   document.getElementById("graficaUbicacionTitulo").innerHTML = `
+                //     <div class="p-3">
+                //       <h6 class="mb-3">Estado de Ubicación</h6>
+                //       <h6>${porcentaje}% con ubicación</h6>
+                //       <canvas id="graficaUbicacion"></canvas>
+                //     </div>
+                //   `;
 
-//   const ctx = document.getElementById("graficaUbicacion");
+                //   const ctx = document.getElementById("graficaUbicacion");
 
-//   new Chart(ctx, {
-//     type: "pie",
-//     data: {
-//       labels: ["Con ubicación", "Sin ubicación"],
-//       datasets: [{
-//         data: [conUbicacion, sinUbicacion],
-//         backgroundColor: ["#7c878e", "#3e5b6d"]
-//       }]
-//     },
-//     options: {
-//       responsive: true,
-//       plugins: {
-//         legend: {
-//           position: "bottom"
-//         }
-//       }
-//     }
-//   });
+                //   new Chart(ctx, {
+                //     type: "pie",
+                //     data: {
+                //       labels: ["Con ubicación", "Sin ubicación"],
+                //       datasets: [{
+                //         data: [conUbicacion, sinUbicacion],
+                //         backgroundColor: ["#7c878e", "#3e5b6d"]
+                //       }]
+                //     },
+                //     options: {
+                //       responsive: true,
+                //       plugins: {
+                //         legend: {
+                //           position: "bottom"
+                //         }
+                //       }
+                //     }
+                //   });
 
-// }
-async function cargarDashboard() {
-  const token = localStorage.getItem("token");
+                // }
+                async function cargarDashboard() {
+                const token = localStorage.getItem("token");
 
-  // 🔹 REFACCIONES
-  const res = await fetch("https://buscador-refaccionesbackend.onrender.com/refacciones", {
-    headers: {
-      Authorization: `Bearer ${token}`
-    }
-  });
+                // 🔹 REFACCIONES
+                const res = await fetch("https://buscador-refaccionesbackend.onrender.com/refacciones", {
+                    headers: {
+                    Authorization: `Bearer ${token}`
+                    }
+                });
 
-  if (res.status === 401) {
-    alert("Sesión expirada");
-    window.location.href = "/login.html";
-    return;
-  }
+                if (res.status === 401) {
+                    alert("Sesión expirada");
+                    window.location.href = "/login.html";
+                    return;
+                }
 
-  const data = await res.json();
+                const data = await res.json();
 
-  if (!Array.isArray(data)) {
-    console.error("Error en refacciones:", data);
-    return;
-  }
+                if (!Array.isArray(data)) {
+                    console.error("Error en refacciones:", data);
+                    return;
+                }
 
-  // 🔹 CON UBICACIÓN
-  const resUb = await fetch("https://buscador-refaccionesbackend.onrender.com/refacciones/con-ubicacion", {
-    headers: {
-      Authorization: `Bearer ${token}`
-    }
-  });
+                // 🔹 CON UBICACIÓN
+                const resUb = await fetch("https://buscador-refaccionesbackend.onrender.com/refacciones/con-ubicacion", {
+                    headers: {
+                    Authorization: `Bearer ${token}`
+                    }
+                });
 
-  const dataUb = await resUb.json();
+                const dataUb = await resUb.json();
 
-  if (!dataUb.ok) {
-    console.error("Error en ubicaciones:", dataUb);
-    return;
-  }
+                if (!dataUb.ok) {
+                    console.error("Error en ubicaciones:", dataUb);
+                    return;
+                }
 
-  // 🔥 AQUÍ YA NO TRUENA
-  const total = data.length;
-  const conUbicacion = dataUb.data.length;
-  const sinUbicacion = total - conUbicacion;
+                // 🔥 AQUÍ YA NO TRUENA
+                const total = data.length;
+                const conUbicacion = dataUb.data.length;
+                const sinUbicacion = total - conUbicacion;
 
-  const porcentaje = total > 0 
-    ? ((conUbicacion / total) * 100).toFixed(1)
-    : 0;
+                const porcentaje = total > 0 
+                    ? ((conUbicacion / total) * 100).toFixed(1)
+                    : 0;
 
-  const ultimas = data.slice(-3).reverse();
+                const ultimas = data.slice(-3).reverse();
 
-  document.getElementById("graficaUbicacionTitulo").innerHTML = `
-    <div class="p-3">
-      <h6 class="mb-3">Estado de Ubicación</h6>
-      <h6>${porcentaje}% con ubicación</h6>
-      <canvas id="graficaUbicacion"></canvas>
-    </div>
-  `;
+                document.getElementById("graficaUbicacionTitulo").innerHTML = `
+                    <div class="p-3">
+                    <h6 class="mb-3">Estado de Ubicación</h6>
+                    <h6>${porcentaje}% con ubicación</h6>
+                    <canvas id="graficaUbicacion"></canvas>
+                    </div>
+                `;
 
-  const ctx = document.getElementById("graficaUbicacion");
+                const ctx = document.getElementById("graficaUbicacion");
 
-  new Chart(ctx, {
-    type: "pie",
-    data: {
-      labels: ["Con ubicación", "Sin ubicación"],
-      datasets: [{
-        data: [conUbicacion, sinUbicacion],
-        backgroundColor: ["#7c878e", "#3e5b6d"]
-      }]
-    },
-    options: {
-      responsive: true,
-      plugins: {
-        legend: {
-          position: "bottom"
-        }
-      }
-    }
-  });
-}
+                new Chart(ctx, {
+                    type: "pie",
+                    data: {
+                    labels: ["Con ubicación", "Sin ubicación"],
+                    datasets: [{
+                        data: [conUbicacion, sinUbicacion],
+                        backgroundColor: ["#7c878e", "#3e5b6d"]
+                    }]
+                    },
+                    options: {
+                    responsive: true,
+                    plugins: {
+                        legend: {
+                        position: "bottom"
+                        }
+                    }
+                    }
+                });
+                }
 
-
-
-cargarDashboard();
+                cargarDashboard();
 
             </script>
             
@@ -979,7 +970,4 @@ cargarDashboard();
             <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
             <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
         </body>
-<!-- //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// -->
-<!-- //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// -->
-<!-- //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// -->
     </html>
