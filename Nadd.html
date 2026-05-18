@@ -15,7 +15,8 @@
         </head>
 
         <body id="bodyTag">
-            <div id="contenedorAlertas" style="position:fixed; cursor:pointer; width: 50px; right: 40px; padding:10px; top: 13px; z-index: 9999;">
+
+            <!-- <div id="contenedorAlertas" style="position:fixed; cursor:pointer; width: 50px; right: 40px; padding:10px; top: 13px; z-index: 9999;">
                 <i class="bi bi-bell" style="font-size: 1.5rem;"></i>
                 <span id="contadorAlertas" class="badge bg-danger"
                         style="position:absolute; top:-5px; right:-10px; display:none;">
@@ -30,9 +31,34 @@
             </div>
 
             <div id="listaAlertas" class="alert-list">
-                <!-- Aquí se renderizan las alertas -->
+               
             </div>
-            </div>
+            </div> -->
+            <div id="zonaAlertas" style="display: none;">
+
+    <div id="contenedorAlertas"
+        style="position:fixed; cursor:pointer; width: 50px; right: 40px; padding:10px; top: 13px; z-index: 9999;">
+        
+        <i class="bi bi-bell" style="font-size: 1.5rem;"></i>
+
+        <span id="contadorAlertas" class="badge bg-danger"
+            style="position:absolute; top:-5px; right:-10px; display:none;">
+            0
+        </span>
+    </div>
+
+    <div id="panelAlertas" class="alert-panel">
+        <div class="alert-header">
+            <span>🔔 Alertas</span>
+            <button onclick="toggleAlertas()">✖</button>
+        </div>
+
+        <div id="listaAlertas" class="alert-list">
+            <!-- Aquí se renderizan las alertas -->
+        </div>
+    </div>
+
+</div>
 
             <button class="btn mobile-toggle-btn d-lg-none" id="btnToggle"><i class="bi bi-list fs-3"></i></button>
             <div class="sidebar-overlay" id="overlay"></div>
@@ -399,7 +425,11 @@
                             </div>
                         </li> -->
                         <!-- TERMINAN MATERIALES -->
-
+                        <!-- <li class="mb-1">
+                            <a class="btn-toggle" href="paginas/Aceites/Aceites.html" style="text-decoration: none;">
+                                <i class="bi bi-droplet-half me-2" style="color: #fff048;"></i>Aceites
+                            </a>
+                        </li> -->
                     </ul>
                     <!-- TERMINAN ENLACES -->
 
@@ -735,6 +765,12 @@
         if (editar) editar.style.display = "none";
     }
     }
+
+const usuario = JSON.parse(localStorage.getItem("usuario"));
+
+if (usuario?.rol === "admin") {
+    document.getElementById("zonaAlertas").style.display = "block";
+}
 
                 const btnAgregarTag = document.getElementById("btnAgregarTag");
 

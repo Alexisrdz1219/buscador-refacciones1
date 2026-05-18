@@ -1,0 +1,673 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Centro de Lubricación Industrial</title>
+
+<!-- Bootstrap -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+<!-- Icons -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
+<!-- Google Font -->
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    font-family: 'Inter', sans-serif;
+    background:
+    linear-gradient(rgba(5,10,25,.88), rgba(5,10,25,.92)),
+    url('https://images.unsplash.com/photo-1517048676732-d65bc937f952?q=80&w=1600&auto=format&fit=crop');
+    background-size: cover;
+    background-attachment: fixed;
+    min-height:100vh;
+    color:white;
+}
+
+/* HEADER */
+
+.hero{
+    padding:70px 20px 40px;
+}
+
+.hero-title{
+    font-size:3rem;
+    font-weight:800;
+    letter-spacing:1px;
+}
+
+.hero-sub{
+    color:#cbd5e1;
+    margin-top:15px;
+    font-size:1.1rem;
+}
+
+.linea{
+    width:120px;
+    height:5px;
+    background:linear-gradient(to right,#3b82f6,#06b6d4);
+    border-radius:20px;
+    margin-top:20px;
+}
+
+/* GRID */
+
+.grid-equipos{
+    padding-bottom:50px;
+}
+
+/* CARD */
+
+.machine-card{
+    position:relative;
+    overflow:hidden;
+    border-radius:28px;
+    background:rgba(255,255,255,0.06);
+    backdrop-filter: blur(14px);
+    border:1px solid rgba(255,255,255,0.08);
+    transition:.35s ease;
+    height:100%;
+    box-shadow:0 10px 35px rgba(0,0,0,.35);
+}
+
+.machine-card:hover{
+    transform:translateY(-8px) scale(1.02);
+    box-shadow:0 18px 45px rgba(0,0,0,.45);
+}
+
+.machine-img{
+    width:100%;
+    height:240px;
+    object-fit:cover;
+}
+
+.overlay{
+    position:absolute;
+    inset:0;
+    background:linear-gradient(to top,
+    rgba(2,6,23,.95) 8%,
+    rgba(2,6,23,.25) 55%,
+    rgba(2,6,23,.05) 100%);
+}
+
+.machine-content{
+    position:relative;
+    padding:22px;
+    margin-top:-110px;
+    z-index:5;
+}
+
+.machine-tag{
+    display:inline-block;
+    padding:7px 15px;
+    border-radius:40px;
+    background:rgba(59,130,246,.18);
+    border:1px solid rgba(96,165,250,.4);
+    color:#93c5fd;
+    font-size:.8rem;
+    margin-bottom:15px;
+    font-weight:600;
+}
+
+.machine-title{
+    font-size:1.7rem;
+    font-weight:800;
+    margin-bottom:18px;
+}
+
+/* INFO */
+
+.info-panel{
+    background:rgba(255,255,255,.05);
+    border:1px solid rgba(255,255,255,.05);
+    border-radius:18px;
+    padding:18px;
+}
+
+.info-item{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    margin-bottom:16px;
+}
+
+.info-item:last-child{
+    margin-bottom:0;
+}
+
+.icon-circle{
+    min-width:42px;
+    height:42px;
+    border-radius:50%;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    background:rgba(59,130,246,.15);
+    color:#60a5fa;
+    font-size:1.1rem;
+}
+
+.info-label{
+    color:#94a3b8;
+    font-size:.82rem;
+}
+
+.info-value{
+    font-weight:700;
+    font-size:1rem;
+}
+
+/* STATUS */
+
+.status{
+    position:absolute;
+    top:18px;
+    right:18px;
+    background:#22c55e;
+    color:white;
+    padding:8px 14px;
+    border-radius:40px;
+    font-size:.75rem;
+    font-weight:700;
+    box-shadow:0 0 15px rgba(34,197,94,.5);
+}
+
+/* FOOTER */
+
+.footer{
+    text-align:center;
+    padding:25px;
+    color:#94a3b8;
+    font-size:.9rem;
+}
+
+/* RESPONSIVE */
+
+@media(max-width:768px){
+
+    .hero-title{
+        font-size:2.2rem;
+    }
+
+    .machine-title{
+        font-size:1.4rem;
+    }
+
+}
+
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+
+<div class="container hero">
+
+    <div class="row align-items-center">
+
+        <div class="col-lg-8">
+
+            <h1 class="hero-title">
+                <i class="bi bi-cpu-fill"></i>
+                CENTRO DE LUBRICACIÓN
+            </h1>
+
+            <p class="hero-sub">
+                Control industrial de aceites, grasas y mantenimiento preventivo
+                para maquinaria crítica de planta.
+            </p>
+
+            <div class="linea"></div>
+
+        </div>
+
+        <div class="col-lg-4 text-lg-end mt-4 mt-lg-0">
+
+            <div class="d-inline-flex gap-3">
+
+                <div class="bg-dark bg-opacity-50 rounded-4 px-4 py-3">
+                    <div class="fw-bold fs-3">7</div>
+                    <small class="text-secondary">
+                        Equipos
+                    </small>
+                </div>
+
+                <div class="bg-dark bg-opacity-50 rounded-4 px-4 py-3">
+                    <div class="fw-bold fs-3 text-info">OK</div>
+                    <small class="text-secondary">
+                        Estado
+                    </small>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<!-- GRID -->
+
+<div class="container grid-equipos">
+
+    <div class="row g-4">
+
+        <!-- CARD -->
+
+        <div class="col-md-6 col-xl-4">
+
+            <div class="machine-card">
+
+                <div class="status">
+                    ACTIVO
+                </div>
+
+                <img
+                src="https://images.unsplash.com/photo-1565043589221-1a6fd9ae45c7?q=80&w=1200&auto=format&fit=crop"
+                class="machine-img">
+
+                <div class="overlay"></div>
+
+                <div class="machine-content">
+
+                    <span class="machine-tag">
+                        SOPLADO PET
+                    </span>
+
+                    <div class="machine-title">
+                        AOKI
+                    </div>
+
+                    <div class="info-panel">
+
+                        <div class="info-item">
+
+                            <div class="icon-circle">
+                                <i class="bi bi-droplet-half"></i>
+                            </div>
+
+                            <div>
+                                <div class="info-label">
+                                    ACEITE
+                                </div>
+
+                                <div class="info-value">
+                                    ISO VG 46
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="info-item">
+
+                            <div class="icon-circle">
+                                <i class="bi bi-speedometer2"></i>
+                            </div>
+
+                            <div>
+                                <div class="info-label">
+                                    CAMBIO
+                                </div>
+
+                                <div class="info-value">
+                                    4000 HORAS
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="info-item">
+
+                            <div class="icon-circle">
+                                <i class="bi bi-thermometer-half"></i>
+                            </div>
+
+                            <div>
+                                <div class="info-label">
+                                    TEMPERATURA
+                                </div>
+
+                                <div class="info-value">
+                                    40°C
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- ASB -->
+
+        <div class="col-md-6 col-xl-4">
+
+            <div class="machine-card">
+
+                <div class="status">
+                    ACTIVO
+                </div>
+
+                <img
+                src="https://images.unsplash.com/photo-1581092918484-8313b6d4d0c8?q=80&w=1200&auto=format&fit=crop"
+                class="machine-img">
+
+                <div class="overlay"></div>
+
+                <div class="machine-content">
+
+                    <span class="machine-tag">
+                        SOPLADO
+                    </span>
+
+                    <div class="machine-title">
+                        ASB
+                    </div>
+
+                    <div class="info-panel">
+
+                        <div class="info-item">
+                            <div class="icon-circle">
+                                <i class="bi bi-droplet"></i>
+                            </div>
+
+                            <div>
+                                <div class="info-label">
+                                    ACEITE
+                                </div>
+
+                                <div class="info-value">
+                                    Mobil DTE 25
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="info-item">
+                            <div class="icon-circle">
+                                <i class="bi bi-calendar-check"></i>
+                            </div>
+
+                            <div>
+                                <div class="info-label">
+                                    SERVICIO
+                                </div>
+
+                                <div class="info-value">
+                                    CADA 6 MESES
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- SUMITOMO -->
+
+        <div class="col-md-6 col-xl-4">
+
+            <div class="machine-card">
+
+                <div class="status">
+                    ACTIVO
+                </div>
+
+                <img
+                src="https://images.unsplash.com/photo-1504307651254-35680f356dfd?q=80&w=1200&auto=format&fit=crop"
+                class="machine-img">
+
+                <div class="overlay"></div>
+
+                <div class="machine-content">
+
+                    <span class="machine-tag">
+                        ELÉCTRICA
+                    </span>
+
+                    <div class="machine-title">
+                        SUMITOMO
+                    </div>
+
+                    <div class="info-panel">
+
+                        <div class="info-item">
+                            <div class="icon-circle">
+                                <i class="bi bi-tools"></i>
+                            </div>
+
+                            <div>
+                                <div class="info-label">
+                                    GRASA
+                                </div>
+
+                                <div class="info-value">
+                                    Lithium EP2
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="info-item">
+                            <div class="icon-circle">
+                                <i class="bi bi-cpu"></i>
+                            </div>
+
+                            <div>
+                                <div class="info-label">
+                                    TIPO
+                                </div>
+
+                                <div class="info-value">
+                                    SERVOMOTORES
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- COMPRESORES -->
+
+        <div class="col-md-6 col-xl-4">
+
+            <div class="machine-card">
+
+                <div class="status">
+                    OK
+                </div>
+
+                <img
+                src="https://images.unsplash.com/photo-1581092580497-e0d23cbdf1dc?q=80&w=1200&auto=format&fit=crop"
+                class="machine-img">
+
+                <div class="overlay"></div>
+
+                <div class="machine-content">
+
+                    <span class="machine-tag">
+                        AIRE
+                    </span>
+
+                    <div class="machine-title">
+                        COMPRESORES AF
+                    </div>
+
+                    <div class="info-panel">
+
+                        <div class="info-item">
+                            <div class="icon-circle">
+                                <i class="bi bi-wind"></i>
+                            </div>
+
+                            <div>
+                                <div class="info-label">
+                                    ACEITE
+                                </div>
+
+                                <div class="info-value">
+                                    ROTO INJECT
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="info-item">
+                            <div class="icon-circle">
+                                <i class="bi bi-activity"></i>
+                            </div>
+
+                            <div>
+                                <div class="info-label">
+                                    PRESIÓN
+                                </div>
+
+                                <div class="info-value">
+                                    125 PSI
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- TERMORREGULADORES -->
+
+        <div class="col-md-6 col-xl-4">
+
+            <div class="machine-card">
+
+                <div class="status">
+                    OK
+                </div>
+
+                <img
+                src="https://images.unsplash.com/photo-1518770660439-4636190af475?q=80&w=1200&auto=format&fit=crop"
+                class="machine-img">
+
+                <div class="overlay"></div>
+
+                <div class="machine-content">
+
+                    <span class="machine-tag">
+                        TEMPERATURA
+                    </span>
+
+                    <div class="machine-title">
+                        TERMORREGULADORES
+                    </div>
+
+                    <div class="info-panel">
+
+                        <div class="info-item">
+                            <div class="icon-circle">
+                                <i class="bi bi-fire"></i>
+                            </div>
+
+                            <div>
+                                <div class="info-label">
+                                    FLUIDO
+                                </div>
+
+                                <div class="info-value">
+                                    THERMAL OIL 300
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- FRESADORA -->
+
+        <div class="col-md-6 col-xl-4">
+
+            <div class="machine-card">
+
+                <div class="status">
+                    TALLER
+                </div>
+
+                <img
+                src="https://images.unsplash.com/photo-1565043666747-69f6646db940?q=80&w=1200&auto=format&fit=crop"
+                class="machine-img">
+
+                <div class="overlay"></div>
+
+                <div class="machine-content">
+
+                    <span class="machine-tag">
+                        MAQUINADO
+                    </span>
+
+                    <div class="machine-title">
+                        FRESADORA
+                    </div>
+
+                    <div class="info-panel">
+
+                        <div class="info-item">
+                            <div class="icon-circle">
+                                <i class="bi bi-gear"></i>
+                            </div>
+
+                            <div>
+                                <div class="info-label">
+                                    ACEITE GUÍA
+                                </div>
+
+                                <div class="info-value">
+                                    ISO VG 68
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<div class="footer">
+    Sistema industrial de control de lubricación © 2026
+</div>
+
+</body>
+</html>

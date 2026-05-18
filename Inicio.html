@@ -1,67 +1,737 @@
-<!-- SELECT id, nombreprod, tipo
-FROM refacciones
-WHERE id = 5231;
+<!DOCTYPE html>
+    <html lang="es" data-bs-theme="light">
+        <head>
+            <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <title>IEMCO</title>
+            
+            <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+            <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+            <link rel="preconnect" href="https://fonts.googleapis.com">
+            <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+            <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+            <link rel="icon" type="image/png" href="assets/img/logo-faa.png">
+            <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
+            <link rel="stylesheet" href="css/paginas/Principal/principalInicio.css">
+        </head>
 
-SELECT *
-FROM refacciones
-WHERE id = 5231;
+        <body id="bodyTag">
+            <!-- BOTON ALERTAS -->
 
+<div id="contenedorAlertas">
 
-5231 | BROCA 9/64" PARA FIERRO 
+    <button id="btnAlertas" onclick="toggleAlertas()">
 
-UPDATE refacciones
-SET tipo = 'uso_personal'
-WHERE refinterna = 'R03859';
+        <i class="bi bi-bell"></i>
 
-dbbuscador=> ALTER TABLE refacciones 
-dbbuscador-> ADD CONSTRAINT chk_tipo
-dbbuscador-> CHECK (tipo IN ('refaccion', 'consumible', 'uso_personal', 'herramienta'));
+        <span id="contadorAlertas">
+            0
+        </span>
 
-UPDATE refacciones
-SET tipo = 'consumible'
-WHERE nombreprod ILIKE '%abrazadera%';
+    </button>
 
-SELECT * FROM refacciones
-WHERE tipo = 'consumible'
-WHERE nombreprod ILIKE '%abrazadera%';
-
-UPDATE refacciones
-SET tipo = 'consumible'
-WHERE nombreprod ILIKE '%abrazadera%';
-
-
-CHECK (tipo IN ('refaccion', 'consumible', 'uso_personal', 'herramienta'));
-
- vgsvjcdsadmhdscdcbhsabcbhascbhsabcbdsbcdscdschdschdsbhbjhdscd 
-
-UPDATE refacciones
-SET tipo = 'uso_personal'
-WHERE refinterna IN ('');
+</div>
 
 
- DSBHSDBJCBDSJCBJHASBHASBHBHJASXAS
+<!-- PANEL ALERTAS -->
 
-R00503
-R00557
-R00588
-R01016
-R01458
-R01459
-R01580
-R01582
-R01622
-R01630
-R01797
-R02090
-R02275
-R03041
-R03477
-R04020
-R04396
-R04427
+<div id="panelAlertas" class="alert-panel">
+
+    <div class="alert-header">
+
+        <div class="alert-title">
+            <i class="bi bi-bell-fill"></i>
+            <span>Alertas</span>
+        </div>
+
+        <button class="close-alerts" onclick="toggleAlertas()">
+            <i class="bi bi-x-lg"></i>
+        </button>
+
+    </div>
+
+    <div id="listaAlertas" class="alert-list">
+
+        <!-- ALERTA -->
+        <!--
+        <div class="alert-item">
+            <div class="alert-dot"></div>
+
+            <div>
+                <h6>Inventario Bajo</h6>
+                <p>La refacción X tiene poco stock</p>
+            </div>
+        </div>
+        -->
+
+    </div>
+
+</div>
 
 
+<!-- BOTON MOBILE -->
 
-UPDATE refacciones
-SET tipo = 'refaccion'
-WHERE codigo = 'R02931'; -->
+<button class="mobile-toggle-btn d-lg-none" id="btnToggle">
+
+    <i class="bi bi-list"></i>
+
+</button>
+
+
+<!-- OVERLAY -->
+
+<div class="sidebar-overlay" id="overlay"></div>
+
+            <main>
+                <aside class="sidebar-container" id="sidebar">
+
+    <!-- LOGO -->
+    <div class="sidebar-logo">
+        <img src="https://th.bing.com/th/id/OIP.aK4kdJ4NwfAc5WRLRGUeuAAAAA?w=256&h=86&c=7&r=0&o=7&dpr=1.3&pid=1.7&rm=3"
+            alt="IEMCO">
+    </div>
+
+    <!-- MENU -->
+    <ul class="sidebar-menu">
+
+        <li>
+            <a href="#" class="sidebar-link active">
+                <i class="bi bi-search"></i>
+                <span>Buscar</span>
+            </a>
+        </li>
+
+        <li>
+            <a href="#" class="sidebar-link">
+                <i class="bi bi-grid"></i>
+                <span>Catálogo</span>
+            </a>
+        </li>
+
+        <li>
+            <a href="#" class="sidebar-link">
+                <i class="bi bi-gear-wide-connected"></i>
+                <span>Piezas</span>
+            </a>
+        </li>
+
+        <li>
+            <a href="#" class="sidebar-link">
+                <i class="bi bi-geo-alt"></i>
+                <span>Ubicaciones</span>
+            </a>
+        </li>
+
+        <li>
+            <a href="#" class="sidebar-link">
+                <i class="bi bi-box-seam"></i>
+                <span>Inventario</span>
+            </a>
+        </li>
+
+        <li>
+            <a href="#" class="sidebar-link">
+                <i class="bi bi-clock-history"></i>
+                <span>Historial</span>
+            </a>
+        </li>
+
+        <li>
+            <a href="#" class="sidebar-link">
+                <i class="bi bi-bar-chart"></i>
+                <span>Reportes</span>
+            </a>
+        </li>
+
+    </ul>
+
+    <!-- FOOTER USUARIO -->
+    <div class="sidebar-user">
+
+        <img src="https://static.vecteezy.com/system/resources/thumbnails/019/896/008/small_2x/male-user-avatar-icon-in-flat-design-style-person-signs-illustration-png.png">
+
+        <div>
+            <strong id="nombreUsuario">Alexis</strong>
+            <small>Administrador</small>
+        </div>
+
+    </div>
+
+                </aside>
+                
+                <section class="content-area">
+
+    <div class="container-fluid">
+
+        <!-- HEADER -->
+        <div class="top-header">
+
+            <div>
+                <h1 id="tituloRefacciones">Refacciones IEMCO</h1>
+                <p id="subtitulo">Panel general de control</p>
+            </div>
+
+            <div class="header-actions">
+
+                <button id="btnVistaCards" class="view-btn active">
+                    <i class="bi bi-grid"></i>
+                </button>
+
+                <button id="btnVistaLista" class="view-btn">
+                    <i class="bi bi-list"></i>
+                </button>
+
+            </div>
+
+        </div>
+
+        <!-- STATS -->
+        <div class="stats-grid">
+
+            <!-- TOTAL -->
+            <div class="modern-card stat-card">
+                <div class="stat-icon bg-primary-soft">
+                    <i class="bi bi-box-seam"></i>
+                </div>
+
+                <div>
+                    <span>Total de Refacciones</span>
+                    <h3 id="totalRefacciones">0</h3>
+                </div>
+            </div>
+
+            <!-- ULTIMO -->
+            <div class="modern-card stat-card">
+                <div class="stat-icon bg-success-soft">
+                    <i class="bi bi-plus-circle"></i>
+                </div>
+
+                <div>
+                    <span>Último Producto</span>
+                    <h3 id="ultimoProducto">---</h3>
+                    <div id="ultimasEtiquetas"></div>
+                </div>
+            </div>
+
+            <!-- ACTUALIZADO -->
+            <div class="modern-card stat-card">
+                <div class="stat-icon bg-warning-soft">
+                    <i class="bi bi-clock-history"></i>
+                </div>
+
+                <div>
+                    <span>Última Actualización</span>
+                    <h3 id="ultimaActualizacion">---</h3>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- BUSCADOR -->
+        <div class="modern-card search-card">
+
+            <div class="search-header">
+                <h5>Buscar Refacciones</h5>
+            </div>
+
+            <div class="row g-3">
+
+                <!-- TAGS -->
+                <div class="col-12 col-lg-4">
+                    <div id="contenedorTags" class="modern-input tags-container">
+
+                        <i class="bi bi-search"></i>
+
+                        <input
+                            type="text"
+                            id="inputTag"
+                            placeholder="Palabras clave">
+
+                    </div>
+                </div>
+
+                <!-- TITULO -->
+                <div class="col-12 col-lg-3">
+                    <input
+                        type="text"
+                        id="buscarTitulo"
+                        class="modern-input"
+                        placeholder="Buscar por título">
+                </div>
+
+                <!-- REF -->
+                <div class="col-12 col-lg-2">
+                    <input
+                        type="text"
+                        id="buscarRef"
+                        class="modern-input"
+                        placeholder="Ref. Interna">
+                </div>
+
+                <!-- MODELO -->
+                <div class="col-12 col-lg-3">
+                    <input
+                        type="text"
+                        id="buscarModelo"
+                        class="modern-input"
+                        placeholder="Modelo">
+                </div>
+
+                <!-- TIPO -->
+                <div class="col-6 col-lg-3">
+                    <select id="filtroTipo" class="modern-input">
+                        <option value="">Todos los tipos</option>
+                    </select>
+                </div>
+
+                <!-- UNIDAD -->
+                <div class="col-6 col-lg-3">
+                    <select id="filtroUnidad" class="modern-input">
+                        <option value="">Todas las unidades</option>
+                    </select>
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- DASHBOARD -->
+        <div class="row g-4 mb-4">
+
+            <div class="col-12 col-xl-6">
+                <div class="modern-card dashboard-card">
+                    <div id="contenedorResultadosDsah"></div>
+                </div>
+            </div>
+
+            <div class="col-12 col-xl-6">
+                <div class="modern-card dashboard-card">
+                    <div id="contenedorResultadosEnvio"></div>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- RESULTADOS -->
+        <div class="ref-container" id="resultados">
+
+            <div id="contenedorResultados"></div>
+
+        </div>
+
+        <!-- PAGINACION -->
+        <div id="paginacion" class="modern-pagination"></div>
+
+    </div>
+
+                </section>
+            </main>
+        
+            <div class="modal fade" id="modalImagen" tabindex="-1">
+                <div class="modal-dialog modal-dialog-centered modal-lg">
+                    <div class="modal-content bg-transparent border-0">
+                    <img id="imgFullscreen" class="w-100 rounded" loading="lazy">
+                    </div>
+                </div>
+            </div>
+
+            <div id="visorImagen" class="visor-hidden">
+            <div class="visor-controls">
+                <button id="zoomIn">+</button>
+                <button id="zoomOut">−</button>
+                <button id="cerrarVisor">✕</button>
+            </div>
+            <img id="visorImg" loading="lazy">
+            </div>
+            
+
+            <div id="modalMapa" class="modal-mapa">
+            <div class="modal-box">
+
+                <div class="modal-header">
+                <h4>
+                    Ubicación: 
+                    <span id="ubicacionTextoDisplay">---</span>
+                </h4>
+                <button onclick="cerrarMapa()">✕</button>
+                </div>
+
+                <div class="modal-body">
+                <div id="contenedorMapaDinamico"></div>
+                </div>
+
+                <button class="btn-cerrar" onclick="cerrarMapa()">CERRAR</button>
+
+            </div>
+            </div>
+
+            <div class="fab-container">
+
+            <!-- 🛠️ HERRAMIENTAS -->
+            <div class="dropup" style="display: none;">
+                <button class="btn btn-primary fab" data-bs-toggle="dropdown" data-bs-toggle="tooltip" title="Herramientas">
+                <i class="bi bi-tools"></i>
+                </button>
+                <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="#">Importar Excel</a></li>
+                <li><a class="dropdown-item" href="#">Exportar datos</a></li>
+                <li><a class="dropdown-item" href="#">Configuración</a></li>
+                </ul>
+            </div>
+
+            <!-- 👤 PERFIL -->
+            <div class="dropup" style="display: none;">
+                <button class="btn btn-light fab p-0" data-bs-toggle="dropdown" title="Perfil">
+                <img src="https://static.vecteezy.com/system/resources/thumbnails/019/896/008/small_2x/male-user-avatar-icon-in-flat-design-style-person-signs-illustration-png.png" class="rounded-circle" width="40" height="40" loading="lazy">
+                </button>
+                <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="#">Mi perfil</a></li>
+                <li><a class="dropdown-item" href="#">Cerrar sesión</a></li>
+                </ul>
+            </div>
+
+            <!-- ❓ AYUDA
+            <button class="btn btn-danger fab" data-bs-toggle="modal" data-bs-target="#modalAyuda" title="Ayuda">
+                <i class="bi bi-question-lg"></i>
+            </button> -->
+
+            </div>
+
+            <div class="modal fade" id="modalAyuda" tabindex="-1">
+            <div class="modal-dialog modal-dialog-centered modal-lg modal-dialog-scrollable">
+                <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Ayuda</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <img src="assets/img/MODAL.JPG" alt="" class="img-fluid rounded" loading="lazy">
+                </div>
+                </div>
+            </div>
+            </div>
+
+            <div id="modalUsos" style="display:none; background:#00000088; position:fixed; top:0; left:0; width:100%; height:100%;">
+            <div style="background:white; padding:20px; margin:10% auto; width:300px;">
+                
+                <h3>Usos</h3>
+                <ul id="listaUsos"></ul>
+
+                <button onclick="cerrarModal()">Cerrar</button>
+            </div>
+            </div>
+<!-- //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// -->
+<!-- //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// -->
+<!-- //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// -->
+            <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+            <script>
+
+                document.addEventListener("DOMContentLoaded", async () => {
+        cargarEnvios(); 
+    cargarDestacadas();
+    const token = localStorage.getItem("token");
+
+    if (!token) {
+        window.location.href = "index.html";
+        return;
+    }
+
+    try {
+        const res = await fetch(`${API_URL}/me`, {
+        headers: {
+            "Authorization": "Bearer " + token
+        }
+        });
+
+        if (!res.ok) {
+        throw new Error("Token inválido");
+        }
+
+        const usuario = await res.json();
+        aplicarPermisos(usuario.rol);
+
+    } catch (error) {
+        console.error("Sesión inválida:", error);
+        localStorage.clear();
+        window.location.href = "index.html";
+        return;
+    }
+
+    // Sidebar seguro
+    const sidebar = document.getElementById('sidebar');
+    const overlay = document.getElementById('overlay');
+    const bodyTag = document.getElementById('bodyTag');
+    const btnToggle = document.getElementById('btnToggle');
+    const btnClose = document.getElementById('btnClose');
+
+    function openMenu() {
+        sidebar?.classList.add('show');
+        overlay?.classList.add('show');
+        bodyTag?.classList.add('sidebar-open');
+    }
+
+    function closeMenu() {
+        sidebar?.classList.remove('show');
+        overlay?.classList.remove('show');
+        bodyTag?.classList.remove('sidebar-open');
+    }
+
+    btnToggle?.addEventListener('click', openMenu);
+    btnClose?.addEventListener('click', closeMenu);
+    overlay?.addEventListener('click', closeMenu);
+
+    });
+
+                function aplicarPermisos(rol) {
+
+    // console.log("Rol detectado:", rol);
+
+    if (rol !== "admin") {
+        const acciones = document
+        .querySelector('[data-bs-target="#dash-collapse"]')
+        ?.closest("li");
+
+        if (acciones) acciones.style.display = "none";
+    }
+
+    if (rol === "usuario") {
+        const editar = document.querySelector('a[href="refacciones.html"]');
+        if (editar) editar.style.display = "none";
+    }
+    }
+
+                const btnAgregarTag = document.getElementById("btnAgregarTag");
+
+                btnAgregarTag?.addEventListener("click", () => {
+    const valor = inputTag.value.trim().toLowerCase();
+    if (!valor) return;
+
+    if (!tagsActivos.includes(valor)) {
+        tagsActivos.push(valor);
+        crearTagVisual(valor);
+        aplicarFiltros();
+    }
+
+    inputTag.value = "";
+    });
+
+                let escala = 1;
+                let posX = 0;
+                let posY = 0;
+                let arrastrando = false;
+                let inicioX = 0;
+                let inicioY = 0;
+    
+                const visor = document.getElementById("visorImagen");
+                const img = document.getElementById("visorImg");
+
+                function actualizarTransform() {
+    img.style.transform = `translate(${posX}px, ${posY}px) scale(${escala})`;
+    }
+
+                document.addEventListener("click", (e) => {
+    const btn = e.target.closest(".btn-fullscreen");
+    if (!btn) return;
+
+    escala = 1;
+    posX = 0;
+    posY = 0;
+    actualizarTransform();
+
+    img.src = btn.dataset.img;
+    visor.classList.remove("visor-hidden");
+    });
+
+                document.getElementById("cerrarVisor").addEventListener("click", () => {
+    visor.classList.add("visor-hidden");
+    });
+
+                document.getElementById("zoomIn").addEventListener("click", () => {
+    escala += 0.2;
+    actualizarTransform();
+    });
+
+                document.getElementById("zoomOut").addEventListener("click", () => {
+    escala -= 0.2;
+    if (escala < 1) escala = 1;
+    actualizarTransform();
+    });
+
+
+                // 🖱 MOUSE DRAG
+                img.addEventListener("mousedown", (e) => {
+                if (escala === 1) return;
+                arrastrando = true;
+                inicioX = e.clientX - posX;
+                inicioY = e.clientY - posY;
+                img.style.cursor = "grabbing";
+                });
+
+                document.addEventListener("mousemove", (e) => {
+    if (!arrastrando) return;
+    posX = e.clientX - inicioX;
+    posY = e.clientY - inicioY;
+    actualizarTransform();
+    });
+
+                document.addEventListener("mouseup", () => {
+    arrastrando = false;
+    img.style.cursor = "grab";
+    });
+
+
+                // 📱 TOUCH
+                img.addEventListener("touchstart", (e) => {
+                if (escala === 1) return;
+                arrastrando = true;
+                inicioX = e.touches[0].clientX - posX;
+                inicioY = e.touches[0].clientY - posY;
+                });
+
+                img.addEventListener("touchmove", (e) => {
+                if (!arrastrando) return;
+                posX = e.touches[0].clientX - inicioX;
+                posY = e.touches[0].clientY - inicioY;
+                actualizarTransform();
+                });
+
+                img.addEventListener("touchend", () => {
+                arrastrando = false;
+                });
+
+                // async function cargarDashboard() {
+                    
+                //   const res = await fetch("https://buscador-refaccionesbackend.onrender.com/refacciones");
+                //   const data = await res.json();
+
+                //   const resUb = await fetch("https://buscador-refaccionesbackend.onrender.com/refacciones/con-ubicacion");
+                //   const dataUb = await resUb.json();
+
+                //   const total = data.length;
+                //   const conUbicacion = dataUb.data.length;
+                //   const sinUbicacion = total - conUbicacion;
+
+                //   // ✅ AHORA SÍ EXISTEN
+                //   const porcentaje = ((conUbicacion / total) * 100).toFixed(1);
+
+                //   const ultimas = data.slice(-3).reverse();
+
+                //   document.getElementById("graficaUbicacionTitulo").innerHTML = `
+                //     <div class="p-3">
+                //       <h6 class="mb-3">Estado de Ubicación</h6>
+                //       <h6>${porcentaje}% con ubicación</h6>
+                //       <canvas id="graficaUbicacion"></canvas>
+                //     </div>
+                //   `;
+
+                //   const ctx = document.getElementById("graficaUbicacion");
+
+                //   new Chart(ctx, {
+                //     type: "pie",
+                //     data: {
+                //       labels: ["Con ubicación", "Sin ubicación"],
+                //       datasets: [{
+                //         data: [conUbicacion, sinUbicacion],
+                //         backgroundColor: ["#7c878e", "#3e5b6d"]
+                //       }]
+                //     },
+                //     options: {
+                //       responsive: true,
+                //       plugins: {
+                //         legend: {
+                //           position: "bottom"
+                //         }
+                //       }
+                //     }
+                //   });
+
+                // }
+                async function cargarDashboard() {
+                const token = localStorage.getItem("token");
+
+                // 🔹 REFACCIONES
+                const res = await fetch("https://buscador-refaccionesbackend.onrender.com/refacciones", {
+                    headers: {
+                    Authorization: `Bearer ${token}`
+                    }
+                });
+
+                if (res.status === 401) {
+                    alert("Sesión expirada");
+                    window.location.href = "/login.html";
+                    return;
+                }
+
+                const data = await res.json();
+
+                if (!Array.isArray(data)) {
+                    console.error("Error en refacciones:", data);
+                    return;
+                }
+
+                // 🔹 CON UBICACIÓN
+                const resUb = await fetch("https://buscador-refaccionesbackend.onrender.com/refacciones/con-ubicacion", {
+                    headers: {
+                    Authorization: `Bearer ${token}`
+                    }
+                });
+
+                const dataUb = await resUb.json();
+
+                if (!dataUb.ok) {
+                    console.error("Error en ubicaciones:", dataUb);
+                    return;
+                }
+
+                // 🔥 AQUÍ YA NO TRUENA
+                const total = data.length;
+                const conUbicacion = dataUb.data.length;
+                const sinUbicacion = total - conUbicacion;
+
+                const porcentaje = total > 0 
+                    ? ((conUbicacion / total) * 100).toFixed(1)
+                    : 0;
+
+                const ultimas = data.slice(-3).reverse();
+
+                document.getElementById("graficaUbicacionTitulo").innerHTML = `
+                    <div class="p-3">
+                    <h6 class="mb-3">Estado de Ubicación</h6>
+                    <h6>${porcentaje}% con ubicación</h6>
+                    <canvas id="graficaUbicacion"></canvas>
+                    </div>
+                `;
+
+                const ctx = document.getElementById("graficaUbicacion");
+
+                new Chart(ctx, {
+                    type: "pie",
+                    data: {
+                    labels: ["Con ubicación", "Sin ubicación"],
+                    datasets: [{
+                        data: [conUbicacion, sinUbicacion],
+                        backgroundColor: ["#7c878e", "#3e5b6d"]
+                    }]
+                    },
+                    options: {
+                    responsive: true,
+                    plugins: {
+                        legend: {
+                        position: "bottom"
+                        }
+                    }
+                    }
+                });
+                }
+
+                cargarDashboard();
+
+            </script>
+            
+            <script src="js/pagJs/script.js"></script>
+            <script src="js/pagJs/navegador.js"></script>
+            <script src="js/iniJs/session.js"></script>
+            <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+            <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+        </body>
+    </html>
