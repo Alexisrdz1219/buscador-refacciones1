@@ -1,22 +1,34 @@
-<!DOCTYPE html>
-    <html lang="es" data-bs-theme="light">
-        <head>
-            <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-            <title>IEMCO</title>
-            
-            <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-            <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
-            <link rel="preconnect" href="https://fonts.googleapis.com">
-            <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-            <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700;800&display=swap" rel="stylesheet">
-            <link rel="icon" type="image/png" href="assets/img/logo-faa.png">
-            <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
-            <link rel="stylesheet" href="css/paginas/Principal/principal.css">
-        </head>
+<!doctype html>
+<html lang="es" data-bs-theme="light">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>IEMCO</title>
 
-        <body id="bodyTag">
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="icon" type="image/png" href="assets/img/logo-faa.png" />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css"
+    />
+    <link rel="stylesheet" href="css/paginas/Principal/principal.css" />
+  </head>
 
-            <!-- <div id="contenedorAlertas" style="position:fixed; cursor:pointer; width: 50px; right: 40px; padding:10px; top: 13px; z-index: 9999;">
+  <body id="bodyTag">
+    <!-- <div id="contenedorAlertas" style="position:fixed; cursor:pointer; width: 50px; right: 40px; padding:10px; top: 13px; z-index: 9999;">
                 <i class="bi bi-bell" style="font-size: 1.5rem;"></i>
                 <span id="contadorAlertas" class="badge bg-danger"
                         style="position:absolute; top:-5px; right:-10px; display:none;">
@@ -34,382 +46,1214 @@
                
             </div>
             </div> -->
-            <div id="zonaAlertas" style="display: none;">
+    <div id="zonaAlertas" style="display: none">
+      <div
+        id="contenedorAlertas"
+        style="
+          position: fixed;
+          cursor: pointer;
+          width: 50px;
+          right: 40px;
+          padding: 10px;
+          top: 13px;
+          z-index: 9999;
+        "
+      >
+        <i class="bi bi-bell" style="font-size: 1.5rem"></i>
 
-    <div id="contenedorAlertas"
-        style="position:fixed; cursor:pointer; width: 50px; right: 40px; padding:10px; top: 13px; z-index: 9999;">
-        
-        <i class="bi bi-bell" style="font-size: 1.5rem;"></i>
-
-        <span id="contadorAlertas" class="badge bg-danger"
-            style="position:absolute; top:-5px; right:-10px; display:none;">
-            0
+        <span
+          id="contadorAlertas"
+          class="badge bg-danger"
+          style="position: absolute; top: -5px; right: -10px; display: none"
+        >
+          0
         </span>
-    </div>
+      </div>
 
-    <div id="panelAlertas" class="alert-panel">
+      <div id="panelAlertas" class="alert-panel">
         <div class="alert-header">
-            <span>🔔 Alertas</span>
-            <button onclick="toggleAlertas()">✖</button>
+          <span>🔔 Alertas</span>
+          <button onclick="toggleAlertas()">✖</button>
         </div>
 
         <div id="listaAlertas" class="alert-list">
-            <!-- Aquí se renderizan las alertas -->
+          <!-- Aquí se renderizan las alertas -->
         </div>
+      </div>
     </div>
 
-</div>
+    <button class="btn mobile-toggle-btn d-lg-none" id="btnToggle">
+      <i class="bi bi-list fs-3"></i>
+    </button>
+    <div class="sidebar-overlay" id="overlay"></div>
 
-            <button class="btn mobile-toggle-btn d-lg-none" id="btnToggle"><i class="bi bi-list fs-3"></i></button>
-            <div class="sidebar-overlay" id="overlay"></div>
+    <main>
+      <aside class="sidebar-container d-flex flex-column p-3" id="sidebar">
+        <!-- LOGOTIPO -->
+        <div class="d-flex align-items-center mb-3">
+          <a href="/" class="text-decoration-none flex-grow-1 text-center"
+            ><img
+              src="https://th.bing.com/th/id/OIP.aK4kdJ4NwfAc5WRLRGUeuAAAAA?w=256&h=86&c=7&r=0&o=7&dpr=1.3&pid=1.7&rm=3"
+              alt="IEMCO"
+              loading="lazy"
+              style="max-width: 160px; height: auto"
+              onerror="
+                this.onerror = null;
+                this.src = 'assets/img/no-image.jpg';
+              "
+          /></a>
+          <button
+            class="btn-close d-lg-none ms-2"
+            id="btnClose"
+            aria-label="Close"
+          ></button>
+        </div>
+        <!-- TERMINA LOGOTIPO  -->
 
-            <main>
-                <aside class="sidebar-container d-flex flex-column p-3" id="sidebar">
+        <hr />
 
-                    <!-- LOGOTIPO -->
-                    <div class="d-flex align-items-center mb-3">
-                        <a href="/" class="text-decoration-none flex-grow-1 text-center"><img src="https://th.bing.com/th/id/OIP.aK4kdJ4NwfAc5WRLRGUeuAAAAA?w=256&h=86&c=7&r=0&o=7&dpr=1.3&pid=1.7&rm=3" alt="IEMCO" loading="lazy" style="max-width: 160px; height: auto;" onerror="this.onerror=null; this.src='assets/img/no-image.jpg';"></a>
-                        <button class="btn-close d-lg-none ms-2" id="btnClose" aria-label="Close"></button>
+        <!-- INICIAN ENLACES  -->
+        <ul class="nav nav-pills flex-column mb-auto">
+          <!-- BOTON INICIO -->
+          <li class="nav-item">
+            <a href="" style="background-color: #007a33" class="nav-link active"
+              ><i class="bi bi-house-door me-2"></i> Inicio</a
+            >
+          </li>
+          <!-- TERMINA BOTON INICIO -->
+
+          <!-- BOTON DE REFACCIONES -->
+          <li class="mb-1">
+            <button class="btn-toggle" id="btnTodasRefacciones">
+              <i class="bi bi-hammer me-2" style="color: #007a33"></i
+              >Refacciones
+            </button>
+          </li>
+          <!-- BOTON DE REFACCIONES -->
+
+          <!-- BOTON DE ACCIONES -->
+          <li class="mb-1" id="sidebar">
+            <button
+              class="btn-toggle collapsed"
+              data-bs-toggle="collapse"
+              data-bs-target="#dash-collapse"
+            >
+              <i class="bi bi-pencil-square me-2" style="color: #007a33"></i>
+              Acciones
+            </button>
+            <div class="collapse" id="dash-collapse" data-bs-parent="#sidebar">
+              <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+                <li>
+                  <a href="paginas/Refacciones Ubicacion/ConUbi.html"
+                    >Con Ubicacion</a
+                  >
+                </li>
+                <li>
+                  <a href="paginas/Refacciones Ubicacion/Sin.html"
+                    >Sin Ubicacion</a
+                  >
+                </li>
+                <li>
+                  <a href="paginas/Importar/importar-odoo.html"
+                    >Actualizar refacciones</a
+                  >
+                </li>
+                <!-- <li><a href="refacciones.html">Editar refacciones</a></li> -->
+                <li><a href="paginas/Historial de Uso/uso.html">Uso</a></li>
+                <!-- <li><a href="HistorialUso/registro.html">Registro de Uso</a></li> -->
+                <li><a href="paginas/Info/Info.html">Consola</a></li>
+              </ul>
+            </div>
+          </li>
+          <!-- TERMINA BOTON DE ACCIONES -->
+
+          <!-- MAQUINAS -->
+          <li class="mb-1" id="sidebar">
+            <button
+              class="btn-toggle collapsed"
+              data-bs-toggle="collapse"
+              data-bs-target="#MAQU-collapse"
+            >
+              <i class="bi bi-tools me-2" style="color: #675e5e"></i> Maquinas
+            </button>
+            <div class="collapse" id="MAQU-collapse" data-bs-parent="#sidebar">
+              <ul
+                class="btn-toggle-nav list-unstyled fw-normal pb-1 small"
+                id="collapseMAquinas"
+              >
+                <li>
+                  <a
+                    href="javascript:void(0)"
+                    class="link-body-emphasis maquina-link d-block"
+                    data-categoriaprin="Maquinas"
+                    data-maquinamod="AOKI SBIII-500-150"
+                    >AOKI</a
+                  >
+                </li>
+                <li class="mb-2">
+                  <a
+                    href="#collapseASB"
+                    class="link-body-emphasis d-block"
+                    data-bs-toggle="collapse"
+                    role="button"
+                    aria-expanded="false"
+                    aria-controls="collapseASB"
+                    >ASB</a
+                  >
+                  <div
+                    class="collapse mt-2 ps-3"
+                    id="collapseASB"
+                    data-bs-parent="#collapseMAquinas"
+                  >
+                    <div
+                      class="card card-body pt-1 pb-1 border-start border-0 rounded-0"
+                    >
+                      <a
+                        href="javascript:void(0)"
+                        class="link-body-emphasis maquina-link d-block"
+                        data-categoriaprin="Maquinas"
+                        data-maquinamod="ASB 150DP"
+                        ><small class="text-muted">ASB 150DP</small></a
+                      >
                     </div>
-                    <!-- TERMINA LOGOTIPO  -->
+                    <div
+                      class="card card-body pt-1 pb-1 border-start border-0 rounded-0"
+                    >
+                      <a
+                        href="javascript:void(0)"
+                        class="link-body-emphasis maquina-link d-block"
+                        data-categoriaprin="Maquinas"
+                        data-maquinamod="ASB 150 DP STD"
+                        ><small class="text-muted">ASB 150DP STD</small></a
+                      >
+                    </div>
+                    <div
+                      class="card card-body pt-1 pb-1 border-start border-0 rounded-0"
+                    >
+                      <a
+                        href="javascript:void(0)"
+                        class="link-body-emphasis maquina-link d-block"
+                        data-categoriaprin="Maquinas"
+                        data-maquinamod="ASB 12M"
+                        ><small class="text-muted">ASB 12M</small></a
+                      >
+                    </div>
+                  </div>
+                </li>
+                <li class="mb-2">
+                  <a
+                    href="#collapseNISSEI"
+                    class="link-body-emphasis d-block"
+                    data-bs-toggle="collapse"
+                    role="button"
+                    aria-expanded="false"
+                    aria-controls="collapseNISSEI"
+                    >NISSEI</a
+                  >
+                  <div
+                    class="collapse mt-2 ps-3"
+                    id="collapseNISSEI"
+                    data-bs-parent="#collapseMAquinas"
+                  >
+                    <div
+                      class="card card-body pt-1 pb-1 border-start border-0 rounded-0"
+                    >
+                      <a
+                        href="javascript:void(0)"
+                        class="link-body-emphasis maquina-link d-block"
+                        data-categoriaprin="Maquinas"
+                        data-maquinamod="NISSEI FS 160"
+                        ><small class="text-muted">NISSEI FS 160</small></a
+                      >
+                    </div>
+                    <div
+                      class="card card-body pt-1 pb-1 border-start border-0 rounded-0"
+                    >
+                      <a
+                        href="javascript:void(0)"
+                        class="link-body-emphasis maquina-link d-block"
+                        data-categoriaprin="Maquinas"
+                        data-maquinamod="NISSEI FN3000"
+                        ><small class="text-muted">NISSEI FN3000</small></a
+                      >
+                    </div>
+                    <div
+                      class="card card-body pt-1 pb-1 border-start border-0 rounded-0"
+                    >
+                      <a
+                        href="javascript:void(0)"
+                        class="link-body-emphasis maquina-link d-block"
+                        data-categoriaprin="Maquinas"
+                        data-maquinamod="NISSEI FNX280"
+                        ><small class="text-muted">NISSEI FNX280</small></a
+                      >
+                    </div>
+                    <div
+                      class="card card-body pt-1 pb-1 border-start border-0 rounded-0"
+                    >
+                      <a
+                        href="javascript:void(0)"
+                        class="link-body-emphasis maquina-link d-block"
+                        data-categoriaprin="Maquinas"
+                        data-maquinamod="NISSEI FNX220"
+                        ><small class="text-muted">NISSEI FNX220</small></a
+                      >
+                    </div>
+                  </div>
+                </li>
+                <li class="mb-2">
+                  <a
+                    href="#collapseSuMITOMO"
+                    class="link-body-emphasis d-block"
+                    data-bs-toggle="collapse"
+                    role="button"
+                    aria-expanded="false"
+                    aria-controls="collapseSuMITOMO"
+                    >SUMITOMO</a
+                  >
+                  <div
+                    class="collapse mt-2 ps-3"
+                    id="collapseSuMITOMO"
+                    data-bs-parent="#collapseMAquinas"
+                  >
+                    <div
+                      class="card card-body pt-1 pb-1 border-start border-0 rounded-0"
+                    >
+                      <a
+                        href="javascript:void(0)"
+                        class="link-body-emphasis maquina-link d-block"
+                        data-categoriaprin="Maquinas"
+                        data-maquinamod="SUMITOMO SYSTEC 280"
+                        ><small class="text-muted"
+                          >SUMITOMO SYSTEC 280</small
+                        ></a
+                      >
+                    </div>
+                    <div
+                      class="card card-body pt-1 pb-1 border-start border-0 rounded-0"
+                    >
+                      <a
+                        href="javascript:void(0)"
+                        class="link-body-emphasis maquina-link d-block"
+                        data-categoriaprin="Maquinas"
+                        data-maquinamod="SUMITOMO SYSTEC 580"
+                        ><small class="text-muted"
+                          >SUMITOMO SYSTEC 580</small
+                        ></a
+                      >
+                    </div>
+                    <div
+                      class="card card-body pt-1 pb-1 border-start border-0 rounded-0"
+                    >
+                      <a
+                        href="javascript:void(0)"
+                        class="link-body-emphasis maquina-link d-block"
+                        data-categoriaprin="Maquinas"
+                        data-maquinamod="SUMITOMO INTELECT2 S 220"
+                        ><small class="text-muted"
+                          >SUMITOMO INTELECT2 S 220</small
+                        ></a
+                      >
+                    </div>
+                  </div>
+                </li>
+                <li class="mb-2">
+                  <a
+                    href="#collapseENLAINADORA"
+                    class="link-body-emphasis d-block"
+                    data-bs-toggle="collapse"
+                    role="button"
+                    aria-expanded="false"
+                    aria-controls="collapseENLAINADORA"
+                    >ENLAINADORAS</a
+                  >
+                  <div
+                    class="collapse mt-2 ps-3"
+                    id="collapseENLAINADORA"
+                    data-bs-parent="#collapseMAquinas"
+                  >
+                    <div
+                      class="card card-body pt-1 pb-1 border-start border-0 rounded-0"
+                    >
+                      <a
+                        href="javascript:void(0)"
+                        class="link-body-emphasis maquina-link d-block"
+                        data-categoriaprin="Maquinas"
+                        data-maquinamod="AUTING SMN-03"
+                        ><small class="text-muted">ENLAINADORA 1</small></a
+                      >
+                    </div>
+                    <div
+                      class="card card-body pt-1 pb-1 border-start border-0 rounded-0"
+                    >
+                      <a
+                        href="javascript:void(0)"
+                        class="link-body-emphasis maquina-link d-block"
+                        data-categoriaprin="Maquinas"
+                        data-maquinamod="AUTING LSM-025"
+                        ><small class="text-muted">ENLAINADORA 2</small></a
+                      >
+                    </div>
+                  </div>
+                </li>
+                <li class="mb-2">
+                  <a
+                    href="#collapseREVOLV"
+                    class="link-body-emphasis d-block"
+                    data-bs-toggle="collapse"
+                    role="button"
+                    aria-expanded="false"
+                    aria-controls="collapseREVOLV"
+                    >REVOLVEDORAS</a
+                  >
+                  <div
+                    class="collapse mt-2 ps-3"
+                    id="collapseREVOLV"
+                    data-bs-parent="#collapseMAquinas"
+                  >
+                    <div
+                      class="card card-body pt-1 pb-1 border-start border-0 rounded-0"
+                    >
+                      <a
+                        href="javascript:void(0)"
+                        class="link-body-emphasis maquina-link d-block"
+                        data-categoriaprin="Maquinas"
+                        data-maquinamod="XHS-50KGS"
+                        ><small class="text-muted">REVOLVEDORA 1</small></a
+                      >
+                    </div>
+                    <div
+                      class="card card-body pt-1 pb-1 border-start border-0 rounded-0"
+                    >
+                      <a
+                        href="javascript:void(0)"
+                        class="link-body-emphasis maquina-link d-block"
+                        data-categoriaprin="Maquinas"
+                        data-maquinamod="XHS-50KGS"
+                        ><small class="text-muted">REVOLVEDORA 2</small></a
+                      >
+                    </div>
+                  </div>
+                </li>
+                <li class="mb-2">
+                  <a
+                    href="#collapseMOLINO"
+                    class="link-body-emphasis d-block"
+                    data-bs-toggle="collapse"
+                    role="button"
+                    aria-expanded="false"
+                    aria-controls="collapseMOLINO"
+                    >MOLINOS</a
+                  >
+                  <div
+                    class="collapse mt-2 ps-3"
+                    id="collapseMOLINO"
+                    data-bs-parent="#collapseMAquinas"
+                  >
+                    <div
+                      class="card card-body pt-1 pb-1 border-start border-0 rounded-0"
+                    >
+                      <a
+                        href="javascript:void(0)"
+                        class="link-body-emphasis maquina-link d-block"
+                        data-categoriaprin="Maquinas"
+                        data-maquinamod="PAGANI"
+                        ><small class="text-muted">MOLINO PAGANI</small></a
+                      >
+                    </div>
+                    <div
+                      class="card card-body pt-1 pb-1 border-start border-0 rounded-0"
+                    >
+                      <a
+                        href="javascript:void(0)"
+                        class="link-body-emphasis maquina-link d-block"
+                        data-categoriaprin="Maquinas"
+                        data-maquinamod="RAPID"
+                        ><small class="text-muted">MOLINO RAPID</small></a
+                      >
+                    </div>
+                  </div>
+                </li>
+                <li class="mb-2">
+                  <a
+                    href="#collapseDESHUMIDIFICADORES"
+                    class="link-body-emphasis d-block"
+                    data-bs-toggle="collapse"
+                    role="button"
+                    aria-expanded="false"
+                    aria-controls="collapseDESHUMIDIFICADORES"
+                    >DESHUMI.</a
+                  >
+                  <div
+                    class="collapse mt-2 ps-3"
+                    id="collapseDESHUMIDIFICADORES"
+                    data-bs-parent="#collapseMAquinas"
+                  >
+                    <div
+                      class="card card-body pt-1 pb-1 border-start border-0 rounded-0"
+                    >
+                      <a
+                        href="javascript:void(0)"
+                        class="link-body-emphasis maquina-link d-block"
+                        data-categoriaprin="Maquinas"
+                        data-maquinamod="DESH. MATSUI"
+                        ><small class="text-muted">DESH. MATSUI</small></a
+                      >
+                    </div>
+                    <div
+                      class="card card-body pt-1 pb-1 border-start border-0 rounded-0"
+                    >
+                      <a
+                        href="javascript:void(0)"
+                        class="link-body-emphasis maquina-link d-block"
+                        data-categoriaprin="Maquinas"
+                        data-maquinamod="BLUE AIR"
+                        ><small class="text-muted">BLUE AIR</small></a
+                      >
+                    </div>
+                    <div
+                      class="card card-body pt-1 pb-1 border-start border-0 rounded-0"
+                    >
+                      <a
+                        href="javascript:void(0)"
+                        class="link-body-emphasis maquina-link d-block"
+                        data-categoriaprin="Maquinas"
+                        data-maquinamod="DESH. PIOVAN"
+                        ><small class="text-muted">DESH. PIOVAN</small></a
+                      >
+                    </div>
+                  </div>
+                </li>
+                <li class="mb-2">
+                  <a
+                    href="#collapseCHILLERS"
+                    class="link-body-emphasis d-block"
+                    data-bs-toggle="collapse"
+                    role="button"
+                    aria-expanded="false"
+                    aria-controls="collapseCHILLERS"
+                    >CHILLERS</a
+                  >
+                  <div
+                    class="collapse mt-2 ps-3"
+                    id="collapseCHILLERS"
+                    data-bs-parent="#collapseMAquinas"
+                  >
+                    <div
+                      class="card card-body pt-1 pb-1 border-start border-0 rounded-0"
+                    >
+                      <a
+                        href="javascript:void(0)"
+                        class="link-body-emphasis maquina-link d-block"
+                        data-categoriaprin="Maquinas"
+                        data-maquinamod="EUROKLIMAT"
+                        ><small class="text-muted">CHILLER EUROKLIMAT</small></a
+                      >
+                    </div>
+                    <div
+                      class="card card-body pt-1 pb-1 border-start border-0 rounded-0"
+                    >
+                      <a
+                        href="javascript:void(0)"
+                        class="link-body-emphasis maquina-link d-block"
+                        data-categoriaprin="Maquinas"
+                        data-maquinamod="FRIGEL"
+                        ><small class="text-muted">CHILLER FRIGEL</small></a
+                      >
+                    </div>
+                    <div
+                      class="card card-body pt-1 pb-1 border-start border-0 rounded-0"
+                    >
+                      <a
+                        href="javascript:void(0)"
+                        class="link-body-emphasis maquina-link d-block"
+                        data-categoriaprin="Maquinas"
+                        data-maquinamod="PRASAD"
+                        ><small class="text-muted">CHILLER PRASAD</small></a
+                      >
+                    </div>
+                    <div
+                      class="card card-body pt-1 pb-1 border-start border-0 rounded-0"
+                    >
+                      <a
+                        href="javascript:void(0)"
+                        class="link-body-emphasis maquina-link d-block"
+                        data-categoriaprin="Maquinas"
+                        data-maquinamod="CHILL. PIOVAN"
+                        ><small class="text-muted">CHILLER PIOVAN</small></a
+                      >
+                    </div>
+                  </div>
+                </li>
+                <li>
+                  <a
+                    href="javascript:void(0)"
+                    class="link-body-emphasis maquina-link d-block"
+                    data-categoriaprin="Maquinas"
+                    data-maquinamod="TERM. PIOVAN"
+                    >TERMOREGULADOR</a
+                  >
+                </li>
+                <li class="mb-2">
+                  <a
+                    href="#collapseTOLVAS/SECADOR/ACOND."
+                    class="link-body-emphasis d-block"
+                    data-bs-toggle="collapse"
+                    role="button"
+                    aria-expanded="false"
+                    aria-controls="collapseTOLVAS/SECADOR/ACOND."
+                    >OTROS</a
+                  >
+                  <div
+                    class="collapse mt-2 ps-3"
+                    id="collapseTOLVAS/SECADOR/ACOND."
+                    data-bs-parent="#collapseMAquinas"
+                  >
+                    <div
+                      class="card card-body pt-1 pb-1 border-start border-0 rounded-0"
+                    >
+                      <a
+                        href="javascript:void(0)"
+                        class="link-body-emphasis maquina-link d-block"
+                        data-categoriaprin="Maquinas"
+                        data-maquinamod="MATSUI"
+                        ><small class="text-muted">MATSUI</small></a
+                      >
+                    </div>
+                    <div
+                      class="card card-body pt-1 pb-1 border-start border-0 rounded-0"
+                    >
+                      <a
+                        href="javascript:void(0)"
+                        class="link-body-emphasis maquina-link d-block"
+                        data-categoriaprin="Maquinas"
+                        data-maquinamod="PIOVAN"
+                        ><small class="text-muted">PIOVAN</small></a
+                      >
+                    </div>
+                    <div
+                      class="card card-body pt-1 pb-1 border-start border-0 rounded-0"
+                    >
+                      <a
+                        href="javascript:void(0)"
+                        class="link-body-emphasis maquina-link d-block"
+                        data-categoriaprin="Maquinas"
+                        data-maquinamod="TOSHIBA"
+                        ><small class="text-muted">TOSHIBA</small></a
+                      >
+                    </div>
+                    <div
+                      class="card card-body pt-1 pb-1 border-start border-0 rounded-0"
+                    >
+                      <a
+                        href="javascript:void(0)"
+                        class="link-body-emphasis maquina-link d-block"
+                        data-categoriaprin="Maquinas"
+                        data-maquinamod="INCYCLE"
+                        ><small class="text-muted">INCYCLE</small></a
+                      >
+                    </div>
+                    <div
+                      class="card card-body pt-1 pb-1 border-start border-0 rounded-0"
+                    >
+                      <a
+                        href="javascript:void(0)"
+                        class="link-body-emphasis maquina-link d-block"
+                        data-categoriaprin="Maquinas"
+                        data-maquinamod="SML"
+                        ><small class="text-muted">SML</small></a
+                      >
+                    </div>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </li>
+          <!-- TERMINA MAQUINAS -->
 
-                    <hr>
+          <!-- MOLDES -->
+          <li class="mb-1" id="sidebar">
+            <button
+              class="btn-toggle collapsed"
+              data-bs-toggle="collapse"
+              data-bs-target="#MOLDES-collapse"
+            >
+              <i class="bi bi-box-seam-fill me-2" style="color: #ab1091"></i>
+              Moldes
+            </button>
+            <div
+              class="collapse"
+              id="MOLDES-collapse"
+              data-bs-parent="#sidebar"
+            >
+              <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+                <li>
+                  <a
+                    href="javascript:void(0)"
+                    class="link-body-emphasis maquina-link d-block"
+                    data-categoriaprin="MOLDES DE INYECCION PP"
+                    data-maquinamod="MOLDE TAPA"
+                    >MOLDES DE INYECCION PP</a
+                  >
+                </li>
+                <li>
+                  <a
+                    href="javascript:void(0)"
+                    class="link-body-emphasis maquina-link d-block"
+                    data-categoriaprin="MOLDES DE INYECCION SOPLADO"
+                    data-maquinamod="MOLDE SOPLADO"
+                    >MOLDES DE INYECCION SOPLADO</a
+                  >
+                </li>
+                <li class="mb-2">
+                  <a
+                    href="#collapseHDPE"
+                    class="link-body-emphasis d-block"
+                    data-bs-toggle="collapse"
+                    role="button"
+                    aria-expanded="false"
+                    aria-controls="collapseHDPE"
+                    >MOLDES DE INYECCION HDPE</a
+                  >
+                  <div class="collapse mt-2 ps-3" id="collapseHDPE">
+                    <div
+                      class="card card-body pt-1 pb-1 border-start border-0 rounded-0"
+                    >
+                      <a
+                        href="javascript:void(0)"
+                        class="link-body-emphasis maquina-link d-block"
+                        data-categoriaprin="MOLDES DE INYECCION HDPE"
+                        data-maquinamod="MOLDE TAPA CUBETA 19L"
+                        ><small class="text-muted"
+                          >MOLDE TAPA CUBETA 19L</small
+                        ></a
+                      >
+                    </div>
+                    <div
+                      class="card card-body pt-1 pb-1 border-start border-0 rounded-0"
+                    >
+                      <a
+                        href="javascript:void(0)"
+                        class="link-body-emphasis maquina-link d-block"
+                        data-categoriaprin="MOLDES DE INYECCION HDPE"
+                        data-maquinamod="MOLDE CUBETA 19L IML"
+                        ><small class="text-muted"
+                          >MOLDE CUBETA 19L IML</small
+                        ></a
+                      >
+                    </div>
+                    <div
+                      class="card card-body pt-1 pb-1 border-start border-0 rounded-0"
+                    >
+                      <a
+                        href="javascript:void(0)"
+                        class="link-body-emphasis maquina-link d-block"
+                        data-categoriaprin="MOLDES DE INYECCION HDPE"
+                        data-maquinamod="MOLDE TAPA 63mm"
+                        ><small class="text-muted">MOLDE TAPA 63mm</small></a
+                      >
+                    </div>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </li>
+          <!-- TERMINA MOLDES -->
 
-                    <!-- INICIAN ENLACES  -->
-                    <ul class="nav nav-pills flex-column mb-auto">
+          <!-- COMPRESORES -->
+          <li class="mb-1" id="sidebar">
+            <button
+              class="btn-toggle collapsed"
+              data-bs-toggle="collapse"
+              data-bs-target="#PER-collapse"
+            >
+              <i
+                class="bi bi-gear-wide-connected me-2"
+                style="color: #1091ab"
+              ></i>
+              Compresores
+            </button>
+            <div class="collapse" id="PER-collapse" data-bs-parent="#sidebar">
+              <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+                <li class="mb-2">
+                  <a
+                    href="#collapseCOM"
+                    class="link-body-emphasis d-block"
+                    data-bs-toggle="collapse"
+                    role="button"
+                    aria-expanded="false"
+                    aria-controls="collapseCOM"
+                    >COMPRESORES</a
+                  >
+                  <div class="collapse mt-2 ps-3" id="collapseCOM">
+                    <div
+                      class="card card-body pt-1 pb-1 border-start border-0 rounded-0"
+                    >
+                      <a
+                        href="javascript:void(0)"
+                        class="link-body-emphasis maquina-link d-block"
+                        data-categoriaprin="Maquinas"
+                        data-maquinamod="COMPRESOR AF 1"
+                        ><small class="text-muted">COMPRESOR AF 1</small></a
+                      >
+                    </div>
+                    <div
+                      class="card card-body pt-1 pb-1 border-start border-0 rounded-0"
+                    >
+                      <a
+                        href="javascript:void(0)"
+                        class="link-body-emphasis maquina-link d-block"
+                        data-categoriaprin="Maquinas"
+                        data-maquinamod="COMPRESOR AF 2"
+                        ><small class="text-muted">COMPRESOR AF 2</small></a
+                      >
+                    </div>
+                    <div
+                      class="card card-body pt-1 pb-1 border-start border-0 rounded-0"
+                    >
+                      <a
+                        href="javascript:void(0)"
+                        class="link-body-emphasis maquina-link d-block"
+                        data-categoriaprin="Maquinas"
+                        data-maquinamod="COMPRESOR B&M 1"
+                        ><small class="text-muted">COMPRESOR B&M 1</small></a
+                      >
+                    </div>
+                    <div
+                      class="card card-body pt-1 pb-1 border-start border-0 rounded-0"
+                    >
+                      <a
+                        href="javascript:void(0)"
+                        class="link-body-emphasis maquina-link d-block"
+                        data-categoriaprin="Maquinas"
+                        data-maquinamod="COMPRESOR B&M 2"
+                        ><small class="text-muted">COMPRESOR B&M 2</small></a
+                      >
+                    </div>
+                    <div
+                      class="card card-body pt-1 pb-1 border-start border-0 rounded-0"
+                    >
+                      <a
+                        href="javascript:void(0)"
+                        class="link-body-emphasis maquina-link d-block"
+                        data-categoriaprin="Maquinas"
+                        data-maquinamod="COMPRESOR SULLAIR 1"
+                        ><small class="text-muted"
+                          >COMPRESOR SULLAIR 1</small
+                        ></a
+                      >
+                    </div>
+                    <div
+                      class="card card-body pt-1 pb-1 border-start border-0 rounded-0"
+                    >
+                      <a
+                        href="javascript:void(0)"
+                        class="link-body-emphasis maquina-link d-block"
+                        data-categoriaprin="Maquinas"
+                        data-maquinamod="COMPRESOR SULLAIR 2"
+                        ><small class="text-muted"
+                          >COMPRESOR SULLAIR 2</small
+                        ></a
+                      >
+                    </div>
+                  </div>
+                </li>
+                <li class="mb-2">
+                  <a
+                    href="#collapseSECA"
+                    class="link-body-emphasis d-block"
+                    data-bs-toggle="collapse"
+                    role="button"
+                    aria-expanded="false"
+                    aria-controls="collapseSECA"
+                    >SECADORES</a
+                  >
+                  <div class="collapse mt-2 ps-3" id="collapseSECA">
+                    <div
+                      class="card card-body pt-1 pb-1 border-start border-0 rounded-0"
+                    >
+                      <a
+                        href="javascript:void(0)"
+                        class="link-body-emphasis maquina-link d-block"
+                        data-categoriaprin="Maquinas"
+                        data-maquinamod="SECADOR AF 1"
+                        ><small class="text-muted">SECADOR AF 1</small></a
+                      >
+                    </div>
+                    <div
+                      class="card card-body pt-1 pb-1 border-start border-0 rounded-0"
+                    >
+                      <a
+                        href="javascript:void(0)"
+                        class="link-body-emphasis maquina-link d-block"
+                        data-categoriaprin="Maquinas"
+                        data-maquinamod="SECADOR AF 2"
+                        ><small class="text-muted">SECADOR AF 2</small></a
+                      >
+                    </div>
+                    <div
+                      class="card card-body pt-1 pb-1 border-start border-0 rounded-0"
+                    >
+                      <a
+                        href="javascript:void(0)"
+                        class="link-body-emphasis maquina-link d-block"
+                        data-categoriaprin="Maquinas"
+                        data-maquinamod="SECADOR B&M 1"
+                        ><small class="text-muted">SECADOR B&M 1</small></a
+                      >
+                    </div>
+                    <div
+                      class="card card-body pt-1 pb-1 border-start border-0 rounded-0"
+                    >
+                      <a
+                        href="javascript:void(0)"
+                        class="link-body-emphasis maquina-link d-block"
+                        data-categoriaprin="Maquinas"
+                        data-maquinamod="SECADOR B&M 2"
+                        ><small class="text-muted">SECADOR B&M 2</small></a
+                      >
+                    </div>
+                    <div
+                      class="card card-body pt-1 pb-1 border-start border-0 rounded-0"
+                    >
+                      <a
+                        href="javascript:void(0)"
+                        class="link-body-emphasis maquina-link d-block"
+                        data-categoriaprin="Maquinas"
+                        data-maquinamod="SECADOR SULLAIR 1"
+                        ><small class="text-muted">SECADOR SULLAIR 1</small></a
+                      >
+                    </div>
+                    <div
+                      class="card card-body pt-1 pb-1 border-start border-0 rounded-0"
+                    >
+                      <a
+                        href="javascript:void(0)"
+                        class="link-body-emphasis maquina-link d-block"
+                        data-categoriaprin="Maquinas"
+                        data-maquinamod="SECADOR SULLAIR 2"
+                        ><small class="text-muted">SECADOR SULLAIR 2</small></a
+                      >
+                    </div>
+                  </div>
+                </li>
+                <li class="mb-2">
+                  <a
+                    href="#collapseBAC"
+                    class="link-body-emphasis d-block"
+                    data-bs-toggle="collapse"
+                    role="button"
+                    aria-expanded="false"
+                    aria-controls="collapseBAC"
+                    >TORRES BAC</a
+                  >
+                  <div class="collapse mt-2 ps-3" id="collapseBAC">
+                    <div
+                      class="card card-body pt-1 pb-1 border-start border-0 rounded-0"
+                    >
+                      <a
+                        href="javascript:void(0)"
+                        class="link-body-emphasis maquina-link d-block"
+                        data-categoriaprin="Maquinas"
+                        data-maquinamod="TORRE BAC 1"
+                        ><small class="text-muted">TORRE BAC 1</small></a
+                      >
+                    </div>
+                    <div
+                      class="card card-body pt-1 pb-1 border-start border-0 rounded-0"
+                    >
+                      <a
+                        href="javascript:void(0)"
+                        class="link-body-emphasis maquina-link d-block"
+                        data-categoriaprin="Maquinas"
+                        data-maquinamod="TORRE BAC 2"
+                        ><small class="text-muted">TORRE BAC 2</small></a
+                      >
+                    </div>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </li>
+          <!-- COMPRESORES -->
 
-                        <!-- BOTON INICIO -->
-                        <li class="nav-item">
-                            <a href="" style="background-color: #007a33;" class="nav-link active"><i class="bi bi-house-door me-2"></i> Inicio</a>
-                        </li>
-                        <!-- TERMINA BOTON INICIO -->
+          <!-- RED DE AGUA -->
+          <li class="mb-1" id="sidebar">
+            <button
+              class="btn-toggle collapsed"
+              data-bs-toggle="collapse"
+              data-bs-target="#RedAg-collapse"
+            >
+              <i class="bi bi-droplet-fill me-2" style="color: #3ab5f7"></i> Red
+              de Agua
+            </button>
+            <div class="collapse" id="RedAg-collapse" data-bs-parent="#sidebar">
+              <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+                <li>
+                  <a
+                    href="javascript:void(0)"
+                    class="link-body-emphasis maquina-link d-block"
+                    data-categoriaprin="Maquinas"
+                    data-maquinamod="SISTEMA RED DE AGUA REYMSA"
+                    >SISTEMA RED DE AGUA REYMSA</a
+                  >
+                </li>
+                <li>
+                  <a
+                    href="javascript:void(0)"
+                    class="link-body-emphasis maquina-link d-block"
+                    data-categoriaprin="Maquinas"
+                    data-maquinamod="SISTEMA RED DE AGUA FRIGEL"
+                    >SISTEMA RED DE AGUA FRIGEL</a
+                  >
+                </li>
+                <li>
+                  <a
+                    href="javascript:void(0)"
+                    class="link-body-emphasis maquina-link d-block"
+                    data-categoriaprin="Maquinas"
+                    data-maquinamod="SISTEMA RED DE AGUA"
+                    >SISTEMA RED DE AGUA</a
+                  >
+                </li>
+                <li>
+                  <a
+                    href="javascript:void(0)"
+                    class="link-body-emphasis maquina-link d-block"
+                    data-categoriaprin="Maquinas"
+                    data-maquinamod="MATERIALES"
+                    >MATERIALES</a
+                  >
+                </li>
+              </ul>
+            </div>
+          </li>
+          <!-- TERMINA RED DE AGUA -->
 
-                        <!-- BOTON DE REFACCIONES -->
-                        <li class="mb-1">
-                            <button class="btn-toggle" id="btnTodasRefacciones">
-                                <i class="bi bi-hammer me-2" style="color: #007a33;"></i>Refacciones
-                            </button>
-                        </li>
-                        <!-- BOTON DE REFACCIONES -->
+          <!-- ELECTRICIDAD -->
+          <li class="mb-1" id="sidebar">
+            <button
+              class="btn-toggle collapsed"
+              data-bs-toggle="collapse"
+              data-bs-target="#ELECTRICIDAD-collapse"
+            >
+              <i
+                class="bi bi-lightning-charge-fill me-2"
+                style="color: #f0c000"
+              ></i>
+              Electricidad
+            </button>
+            <div
+              class="collapse"
+              id="ELECTRICIDAD-collapse"
+              data-bs-parent="#sidebar"
+            >
+              <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+                <li>
+                  <a
+                    href="javascript:void(0)"
+                    class="link-body-emphasis maquina-link d-block"
+                    data-categoriaprin="ELECTRICIDAD"
+                    data-maquinamod="SUBESTACION 1"
+                    >SUBESTACION 1</a
+                  >
+                </li>
+                <li>
+                  <a
+                    href="javascript:void(0)"
+                    class="link-body-emphasis maquina-link d-block"
+                    data-categoriaprin="ELECTRICIDAD"
+                    data-maquinamod="SUBESTACION 2"
+                    >SUBESTACION 2</a
+                  >
+                </li>
+                <li>
+                  <a
+                    href="javascript:void(0)"
+                    class="link-body-emphasis maquina-link d-block"
+                    data-categoriaprin="SERVICIOS"
+                    data-maquinamod="REFACCIONES ELECTRICAS"
+                    >REFACCIONES ELECTRICAS</a
+                  >
+                </li>
+              </ul>
+            </div>
+          </li>
+          <!-- TERMINA ELECTRICIDAD -->
 
-                        <!-- BOTON DE ACCIONES -->
-                        <li class="mb-1" id="sidebar">
-                            <button class="btn-toggle collapsed" data-bs-toggle="collapse" data-bs-target="#dash-collapse">
-                                <i class="bi bi-pencil-square me-2" style="color: #007a33;"></i> Acciones
-                            </button>
-                            <div class="collapse" id="dash-collapse" data-bs-parent="#sidebar">
-                                <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
-                                    <li><a href="paginas/Refacciones Ubicacion/ConUbi.html">Con Ubicacion</a></li>
-                                    <li><a href="paginas/Refacciones Ubicacion/Sin.html">Sin Ubicacion</a></li>
-                                    <li><a href="paginas/Importar/importar-odoo.html">Actualizar refacciones</a></li>
-                                    <!-- <li><a href="refacciones.html">Editar refacciones</a></li> -->
-                                    <li><a href="paginas/Historial de Uso/uso.html">Uso</a></li>
-                                    <!-- <li><a href="HistorialUso/registro.html">Registro de Uso</a></li> -->
-                                    <li><a href="paginas/Info/Info.html">Consola</a></li>
-                                </ul>
-                            </div>
-                        </li>
-                        <!-- TERMINA BOTON DE ACCIONES -->
+          <!-- TRANSPORTES -->
+          <li class="mb-1" id="sidebar">
+            <button
+              class="btn-toggle collapsed"
+              data-bs-toggle="collapse"
+              data-bs-target="#TRransportes-collapse"
+            >
+              <i class="bi bi-truck me-2" style="color: #d50c3b"></i>
+              Transportes
+            </button>
+            <div
+              class="collapse"
+              id="TRransportes-collapse"
+              data-bs-parent="#sidebar"
+            >
+              <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+                <li>
+                  <a
+                    href="javascript:void(0)"
+                    class="link-body-emphasis maquina-link d-block"
+                    data-categoriaprin="TRANSPORTES"
+                    data-maquinamod="CAMIONETAS"
+                    >CAMIONETAS</a
+                  >
+                </li>
+                <li>
+                  <a
+                    href="javascript:void(0)"
+                    class="link-body-emphasis maquina-link d-block"
+                    data-categoriaprin="TRANSPORTES"
+                    data-maquinamod="CAMIONES"
+                    >CAMIONES</a
+                  >
+                </li>
+                <li>
+                  <a
+                    href="javascript:void(0)"
+                    class="link-body-emphasis maquina-link d-block"
+                    data-categoriaprin="TRANSPORTES"
+                    data-maquinamod="TRACTOR"
+                    >TRACTOR</a
+                  >
+                </li>
+                <li>
+                  <a
+                    href="javascript:void(0)"
+                    class="link-body-emphasis maquina-link d-block"
+                    data-categoriaprin="TRANSPORTES"
+                    data-maquinamod="MONTACARGAS"
+                    >MONTACARGAS</a
+                  >
+                </li>
+              </ul>
+            </div>
+          </li>
+          <!-- TERMINA TRANSPORTES -->
 
-                        <!-- MAQUINAS -->
-                        <li class="mb-1" id="sidebar">
-                            <button class="btn-toggle collapsed" data-bs-toggle="collapse" data-bs-target="#MAQU-collapse">
-                                <i class="bi bi-tools me-2" style="color: #675e5e;"></i> Maquinas
-                            </button>
-                            <div class="collapse" id="MAQU-collapse" data-bs-parent="#sidebar">
-                                <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small" id="collapseMAquinas">
-                                    <li><a href="javascript:void(0)" class="link-body-emphasis maquina-link d-block " data-categoriaprin="Maquinas" data-maquinamod="AOKI SBIII-500-150">AOKI</a></li>
-                                    <li class="mb-2"><a href="#collapseASB" class="link-body-emphasis  d-block" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="collapseASB">ASB</a>
-                                        <div class="collapse mt-2 ps-3" id="collapseASB" data-bs-parent="#collapseMAquinas">
-                                            <div class="card card-body pt-1 pb-1 border-start border-0 rounded-0" >
-                                                <a href="javascript:void(0)" class="link-body-emphasis maquina-link d-block" data-categoriaprin="Maquinas" data-maquinamod="ASB 150DP"><small class="text-muted">ASB 150DP</small></a>
-                                            </div>
-                                            <div class="card card-body pt-1 pb-1 border-start border-0 rounded-0">
-                                                <a href="javascript:void(0)" class="link-body-emphasis maquina-link d-block" data-categoriaprin="Maquinas" data-maquinamod="ASB 150 DP STD"><small class="text-muted">ASB 150DP STD</small></a>
-                                            </div>
-                                            <div class="card card-body pt-1 pb-1 border-start border-0 rounded-0">
-                                                <a href="javascript:void(0)" class="link-body-emphasis maquina-link d-block" data-categoriaprin="Maquinas" data-maquinamod="ASB 12M"><small class="text-muted">ASB 12M</small></a>
-                                            </div>
-                                        </div>
-                                    </li>
-                                    <li class="mb-2"><a href="#collapseNISSEI" class="link-body-emphasis  d-block" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="collapseNISSEI">NISSEI</a>
-                                        <div class="collapse mt-2 ps-3" id="collapseNISSEI" data-bs-parent="#collapseMAquinas">
-                                            <div class="card card-body pt-1 pb-1 border-start border-0 rounded-0">
-                                                <a href="javascript:void(0)" class="link-body-emphasis maquina-link d-block" data-categoriaprin="Maquinas" data-maquinamod="NISSEI FS 160"><small class="text-muted">NISSEI FS 160</small></a>
-                                            </div>
-                                            <div class="card card-body pt-1 pb-1 border-start border-0 rounded-0">
-                                                <a href="javascript:void(0)" class="link-body-emphasis maquina-link d-block" data-categoriaprin="Maquinas" data-maquinamod="NISSEI FN3000"><small class="text-muted">NISSEI FN3000</small></a>
-                                            </div>
-                                            <div class="card card-body pt-1 pb-1 border-start border-0 rounded-0">
-                                                <a href="javascript:void(0)" class="link-body-emphasis maquina-link d-block" data-categoriaprin="Maquinas" data-maquinamod="NISSEI FNX280"><small class="text-muted">NISSEI FNX280</small></a>
-                                            </div>
-                                            <div class="card card-body pt-1 pb-1 border-start border-0 rounded-0">
-                                                <a href="javascript:void(0)" class="link-body-emphasis maquina-link d-block" data-categoriaprin="Maquinas" data-maquinamod="NISSEI FNX220"><small class="text-muted">NISSEI FNX220</small></a>
-                                            </div>
-                                        </div>
-                                    </li>
-                                    <li class="mb-2"><a href="#collapseSuMITOMO" class="link-body-emphasis  d-block " data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="collapseSuMITOMO">SUMITOMO</a>
-                                        <div class="collapse mt-2 ps-3" id="collapseSuMITOMO" data-bs-parent="#collapseMAquinas">
-                                            <div class="card card-body pt-1 pb-1 border-start border-0 rounded-0">
-                                                <a href="javascript:void(0)" class="link-body-emphasis maquina-link d-block" data-categoriaprin="Maquinas" data-maquinamod="SUMITOMO SYSTEC 280"><small class="text-muted">SUMITOMO SYSTEC 280</small></a>
-                                            </div>
-                                            <div class="card card-body pt-1 pb-1 border-start border-0 rounded-0">
-                                                <a href="javascript:void(0)" class="link-body-emphasis maquina-link d-block" data-categoriaprin="Maquinas" data-maquinamod="SUMITOMO SYSTEC 580"><small class="text-muted">SUMITOMO SYSTEC 580</small></a>
-                                            </div>
-                                            <div class="card card-body pt-1 pb-1 border-start border-0 rounded-0">
-                                                <a href="javascript:void(0)" class="link-body-emphasis maquina-link d-block" data-categoriaprin="Maquinas" data-maquinamod="SUMITOMO INTELECT2 S 220"><small class="text-muted">SUMITOMO INTELECT2 S 220</small></a>
-                                            </div>
-                                        </div>
-                                    </li>
-                                    <li class="mb-2"><a href="#collapseENLAINADORA" class="link-body-emphasis  d-block" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="collapseENLAINADORA" >ENLAINADORAS</a>
-                                        <div class="collapse mt-2 ps-3" id="collapseENLAINADORA" data-bs-parent="#collapseMAquinas">
-                                            <div class="card card-body pt-1 pb-1 border-start border-0 rounded-0">
-                                                <a href="javascript:void(0)" class="link-body-emphasis maquina-link d-block" data-categoriaprin="Maquinas" data-maquinamod="AUTING SMN-03"><small class="text-muted">ENLAINADORA 1</small></a>
-                                            </div>
-                                            <div class="card card-body pt-1 pb-1 border-start border-0 rounded-0">
-                                                <a href="javascript:void(0)" class="link-body-emphasis maquina-link d-block" data-categoriaprin="Maquinas" data-maquinamod="AUTING LSM-025"><small class="text-muted">ENLAINADORA 2</small></a>
-                                            </div>
-                                        </div>
-                                    </li>
-                                    <li class="mb-2"><a href="#collapseREVOLV" class="link-body-emphasis  d-block" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="collapseREVOLV">REVOLVEDORAS</a>
-                                        <div class="collapse mt-2 ps-3" id="collapseREVOLV" data-bs-parent="#collapseMAquinas">
-                                            <div class="card card-body pt-1 pb-1 border-start border-0 rounded-0">
-                                                <a href="javascript:void(0)" class="link-body-emphasis maquina-link d-block" data-categoriaprin="Maquinas" data-maquinamod="XHS-50KGS"><small class="text-muted">REVOLVEDORA 1</small></a>
-                                            </div>
-                                            <div class="card card-body pt-1 pb-1 border-start border-0 rounded-0">
-                                                <a href="javascript:void(0)" class="link-body-emphasis maquina-link d-block" data-categoriaprin="Maquinas" data-maquinamod="XHS-50KGS"><small class="text-muted">REVOLVEDORA 2</small></a>
-                                            </div>
-                                        </div>
-                                    </li>
-                                    <li class="mb-2"><a href="#collapseMOLINO" class="link-body-emphasis  d-block" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="collapseMOLINO">MOLINOS</a>
-                                        <div class="collapse mt-2 ps-3" id="collapseMOLINO" data-bs-parent="#collapseMAquinas">
-                                            <div class="card card-body pt-1 pb-1 border-start border-0 rounded-0">
-                                                <a href="javascript:void(0)" class="link-body-emphasis maquina-link d-block" data-categoriaprin="Maquinas" data-maquinamod="PAGANI"><small class="text-muted">MOLINO PAGANI</small></a>
-                                            </div>
-                                            <div class="card card-body pt-1 pb-1 border-start border-0 rounded-0">
-                                                <a href="javascript:void(0)" class="link-body-emphasis maquina-link d-block" data-categoriaprin="Maquinas" data-maquinamod="RAPID"><small class="text-muted">MOLINO RAPID</small></a>
-                                            </div>
-                                        </div>
-                                    </li>
-                                    <li class="mb-2"><a href="#collapseDESHUMIDIFICADORES" class="link-body-emphasis  d-block" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="collapseDESHUMIDIFICADORES">DESHUMI.</a>
-                                        <div class="collapse mt-2 ps-3" id="collapseDESHUMIDIFICADORES" data-bs-parent="#collapseMAquinas">
-                                            <div class="card card-body pt-1 pb-1 border-start border-0 rounded-0">
-                                                <a href="javascript:void(0)" class="link-body-emphasis maquina-link d-block" data-categoriaprin="Maquinas" data-maquinamod="DESH. MATSUI"><small class="text-muted">DESH. MATSUI</small></a>
-                                            </div>
-                                            <div class="card card-body pt-1 pb-1 border-start border-0 rounded-0">
-                                                <a href="javascript:void(0)" class="link-body-emphasis maquina-link d-block" data-categoriaprin="Maquinas" data-maquinamod="BLUE AIR"><small class="text-muted">BLUE AIR</small></a>
-                                            </div>
-                                            <div class="card card-body pt-1 pb-1 border-start border-0 rounded-0">
-                                                <a href="javascript:void(0)" class="link-body-emphasis maquina-link d-block" data-categoriaprin="Maquinas" data-maquinamod="DESH. PIOVAN"><small class="text-muted">DESH. PIOVAN</small></a>
-                                            </div>
-                                        </div>
-                                    </li>
-                                    <li class="mb-2"><a href="#collapseCHILLERS" class="link-body-emphasis  d-block" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="collapseCHILLERS">CHILLERS</a>
-                                        <div class="collapse mt-2 ps-3" id="collapseCHILLERS" data-bs-parent="#collapseMAquinas">
-                                            <div class="card card-body pt-1 pb-1 border-start border-0 rounded-0">
-                                                <a href="javascript:void(0)" class="link-body-emphasis maquina-link d-block" data-categoriaprin="Maquinas" data-maquinamod="EUROKLIMAT"><small class="text-muted">CHILLER EUROKLIMAT</small></a>
-                                            </div>
-                                            <div class="card card-body pt-1 pb-1 border-start border-0 rounded-0">
-                                                <a href="javascript:void(0)" class="link-body-emphasis maquina-link d-block" data-categoriaprin="Maquinas" data-maquinamod="FRIGEL"><small class="text-muted">CHILLER FRIGEL</small></a>
-                                            </div>
-                                            <div class="card card-body pt-1 pb-1 border-start border-0 rounded-0">
-                                                <a href="javascript:void(0)" class="link-body-emphasis maquina-link d-block" data-categoriaprin="Maquinas" data-maquinamod="PRASAD"><small class="text-muted">CHILLER PRASAD</small></a>
-                                            </div>
-                                            <div class="card card-body pt-1 pb-1 border-start border-0 rounded-0">
-                                                <a href="javascript:void(0)" class="link-body-emphasis maquina-link d-block" data-categoriaprin="Maquinas" data-maquinamod="CHILL. PIOVAN"><small class="text-muted">CHILLER PIOVAN</small></a>
-                                            </div>
-                                        </div>
-                                    </li>
-                                    <li><a href="javascript:void(0)" class="link-body-emphasis maquina-link d-block" data-categoriaprin="Maquinas" data-maquinamod="TERM. PIOVAN">TERMOREGULADOR</a></li>
-                                    <li class="mb-2"><a href="#collapseTOLVAS/SECADOR/ACOND." class="link-body-emphasis  d-block" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="collapseTOLVAS/SECADOR/ACOND.">OTROS</a>
-                                        <div class="collapse mt-2 ps-3" id="collapseTOLVAS/SECADOR/ACOND." data-bs-parent="#collapseMAquinas">
-                                            <div class="card card-body pt-1 pb-1 border-start border-0 rounded-0">
-                                                <a href="javascript:void(0)" class="link-body-emphasis maquina-link d-block" data-categoriaprin="Maquinas" data-maquinamod="MATSUI"><small class="text-muted">MATSUI</small></a>
-                                            </div>
-                                            <div class="card card-body pt-1 pb-1 border-start border-0 rounded-0">
-                                                <a href="javascript:void(0)" class="link-body-emphasis maquina-link d-block" data-categoriaprin="Maquinas" data-maquinamod="PIOVAN"><small class="text-muted">PIOVAN</small></a>
-                                            </div>
-                                            <div class="card card-body pt-1 pb-1 border-start border-0 rounded-0">
-                                                <a href="javascript:void(0)" class="link-body-emphasis maquina-link d-block" data-categoriaprin="Maquinas" data-maquinamod="TOSHIBA"><small class="text-muted">TOSHIBA</small></a>
-                                            </div>
-                                            <div class="card card-body pt-1 pb-1 border-start border-0 rounded-0">
-                                                <a href="javascript:void(0)" class="link-body-emphasis maquina-link d-block" data-categoriaprin="Maquinas" data-maquinamod="INCYCLE"><small class="text-muted">INCYCLE</small></a>
-                                            </div>
-                                            <div class="card card-body pt-1 pb-1 border-start border-0 rounded-0">
-                                                <a href="javascript:void(0)" class="link-body-emphasis maquina-link d-block" data-categoriaprin="Maquinas" data-maquinamod="SML"><small class="text-muted">SML</small></a>
-                                            </div>
-                                        </div>
-                                    </li>
-                                    
-                                </ul>
-                            </div>
-                        </li>
-                        <!-- TERMINA MAQUINAS -->
+          <!-- EQUIPOS AUXILIARES -->
+          <li class="mb-1" id="sidebar">
+            <button
+              class="btn-toggle collapsed"
+              data-bs-toggle="collapse"
+              data-bs-target="#EquiposAuxiliares-collapse"
+            >
+              <i
+                class="bi bi-wrench-adjustable me-2"
+                style="color: #62604f"
+              ></i>
+              Equipos Auxiliares
+            </button>
+            <div
+              class="collapse"
+              id="EquiposAuxiliares-collapse"
+              data-bs-parent="#sidebar"
+            >
+              <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+                <li>
+                  <a
+                    href="javascript:void(0)"
+                    class="link-body-emphasis maquina-link d-block"
+                    data-categoriaprin="EQUIPOS AUXILIARES"
+                    data-maquinamod="MAQUINA BARREDOR"
+                    >BARREDORA</a
+                  >
+                </li>
+                <li>
+                  <a
+                    href="javascript:void(0)"
+                    class="link-body-emphasis maquina-link d-block"
+                    data-categoriaprin="EQUIPOS AUXILIARES"
+                    data-maquinamod="FILTRADORA DE ACEITE"
+                    >FILTRADORA DE ACEITE</a
+                  >
+                </li>
+                <li>
+                  <a
+                    href="javascript:void(0)"
+                    class="link-body-emphasis maquina-link d-block"
+                    data-categoriaprin="EQUIPOS AUXILIARES"
+                    data-maquinamod="SOPLADORA DE MOCHILA"
+                    >SOPLADORA DE MOCHILA</a
+                  >
+                </li>
+                <li>
+                  <a
+                    href="javascript:void(0)"
+                    class="link-body-emphasis maquina-link d-block"
+                    data-categoriaprin="EQUIPOS AUXILIARES"
+                    data-maquinamod="GRUA"
+                    >GRUA</a
+                  >
+                </li>
+                <li>
+                  <a
+                    href="javascript:void(0)"
+                    class="link-body-emphasis maquina-link d-block"
+                    data-categoriaprin="EQUIPOS AUXILIARES"
+                    data-maquinamod="LAVADORA DE MOLDES"
+                    >LAVADORA BLUE WAVE</a
+                  >
+                </li>
+                <li>
+                  <a
+                    href="javascript:void(0)"
+                    class="link-body-emphasis maquina-link d-block"
+                    data-categoriaprin="EQUIPOS AUXILIARES"
+                    data-maquinamod="DESBROZADORA"
+                    >DESBROZADORA</a
+                  >
+                </li>
+                <li>
+                  <a
+                    href="javascript:void(0)"
+                    class="link-body-emphasis maquina-link d-block"
+                    data-categoriaprin="EQUIPOS AUXILIARES"
+                    data-maquinamod="MAQUINA DE SERIGRAFIA"
+                    >SERIGRAFIA</a
+                  >
+                </li>
+                <li>
+                  <a
+                    href="javascript:void(0)"
+                    class="link-body-emphasis maquina-link d-block"
+                    data-categoriaprin="EQUIPOS AUXILIARES"
+                    data-maquinamod="MAQUINA DE TAMPOGRAFIA"
+                    >TAMPOGRAFIA</a
+                  >
+                </li>
+                <li>
+                  <a
+                    href="javascript:void(0)"
+                    class="link-body-emphasis maquina-link d-block"
+                    data-categoriaprin="EQUIPOS AUXILIARES"
+                    data-maquinamod="ROBOT IML"
+                    >ROBOT IML</a
+                  >
+                </li>
+                <li>
+                  <a
+                    href="javascript:void(0)"
+                    class="link-body-emphasis maquina-link d-block"
+                    data-categoriaprin="EQUIPOS AUXILIARES"
+                    data-maquinamod="HIDROLAVADORA"
+                    >HIDROLAVADORA</a
+                  >
+                </li>
+              </ul>
+            </div>
+          </li>
+          <!-- TERMINAN EQUIPOS AUXILIARES -->
 
-                        <!-- MOLDES -->
-                        <li class="mb-1" id="sidebar">
-                            <button class="btn-toggle collapsed" data-bs-toggle="collapse" data-bs-target="#MOLDES-collapse">
-                                <i class="bi bi-box-seam-fill me-2" style="color: #ab1091;"></i> Moldes
-                            </button>
-                            <div class="collapse" id="MOLDES-collapse" data-bs-parent="#sidebar">
-                                <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
-                                    <li><a href="javascript:void(0)" class="link-body-emphasis maquina-link d-block " data-categoriaprin="MOLDES DE INYECCION PP" data-maquinamod="MOLDE TAPA">MOLDES DE INYECCION PP</a></li>
-                                    <li><a href="javascript:void(0)" class="link-body-emphasis maquina-link d-block " data-categoriaprin="MOLDES DE INYECCION SOPLADO" data-maquinamod="MOLDE SOPLADO">MOLDES DE INYECCION SOPLADO</a></li>
-                                    <li class="mb-2"><a href="#collapseHDPE" class="link-body-emphasis  d-block" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="collapseHDPE">MOLDES DE INYECCION HDPE</a>
-                                        <div class="collapse mt-2 ps-3" id="collapseHDPE">
-                                            <div class="card card-body pt-1 pb-1 border-start border-0 rounded-0">
-                                                <a href="javascript:void(0)" class="link-body-emphasis maquina-link d-block" data-categoriaprin="MOLDES DE INYECCION HDPE" data-maquinamod="MOLDE TAPA CUBETA 19L"><small class="text-muted">MOLDE TAPA CUBETA 19L</small></a>
-                                            </div>
-                                            <div class="card card-body pt-1 pb-1 border-start border-0 rounded-0">
-                                                <a href="javascript:void(0)" class="link-body-emphasis maquina-link d-block" data-categoriaprin="MOLDES DE INYECCION HDPE" data-maquinamod="MOLDE CUBETA 19L IML"><small class="text-muted">MOLDE CUBETA 19L IML</small></a>
-                                            </div>
-                                            <div class="card card-body pt-1 pb-1 border-start border-0 rounded-0">
-                                                <a href="javascript:void(0)" class="link-body-emphasis maquina-link d-block" data-categoriaprin="MOLDES DE INYECCION HDPE" data-maquinamod="MOLDE TAPA 63mm"><small class="text-muted">MOLDE TAPA 63mm</small></a>
-                                            </div>
-                                        </div>
-                                    </li>
-                                </ul>
-                            </div>
-                        </li>
-                        <!-- TERMINA MOLDES -->
-
-                        <!-- COMPRESORES -->
-                        <li class="mb-1" id="sidebar">
-                            <button class="btn-toggle collapsed" data-bs-toggle="collapse" data-bs-target="#PER-collapse">
-                                <i class="bi bi-gear-wide-connected me-2" style="color: #1091ab;"></i> Compresores
-                            </button>
-                            <div class="collapse" id="PER-collapse" data-bs-parent="#sidebar">
-                                <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
-                                    <li class="mb-2"><a href="#collapseCOM" class="link-body-emphasis  d-block" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="collapseCOM">COMPRESORES</a>
-                                        <div class="collapse mt-2 ps-3" id="collapseCOM">
-                                            <div class="card card-body pt-1 pb-1 border-start border-0 rounded-0">
-                                                <a href="javascript:void(0)" class="link-body-emphasis maquina-link d-block" data-categoriaprin="Maquinas" data-maquinamod="COMPRESOR AF 1"><small class="text-muted">COMPRESOR AF 1</small></a>
-                                            </div>
-                                            <div class="card card-body pt-1 pb-1 border-start border-0 rounded-0">
-                                                <a href="javascript:void(0)" class="link-body-emphasis maquina-link d-block" data-categoriaprin="Maquinas" data-maquinamod="COMPRESOR AF 2"><small class="text-muted">COMPRESOR AF 2</small></a>
-                                            </div>
-                                            <div class="card card-body pt-1 pb-1 border-start border-0 rounded-0">
-                                                <a href="javascript:void(0)" class="link-body-emphasis maquina-link d-block" data-categoriaprin="Maquinas" data-maquinamod="COMPRESOR B&M 1"><small class="text-muted">COMPRESOR B&M 1</small></a>
-                                            </div>
-                                            <div class="card card-body pt-1 pb-1 border-start border-0 rounded-0">
-                                                <a href="javascript:void(0)" class="link-body-emphasis maquina-link d-block" data-categoriaprin="Maquinas" data-maquinamod="COMPRESOR B&M 2"><small class="text-muted">COMPRESOR B&M 2</small></a>
-                                            </div>
-                                            <div class="card card-body pt-1 pb-1 border-start border-0 rounded-0">
-                                                <a href="javascript:void(0)" class="link-body-emphasis maquina-link d-block" data-categoriaprin="Maquinas" data-maquinamod="COMPRESOR SULLAIR 1"><small class="text-muted">COMPRESOR SULLAIR 1</small></a>
-                                            </div>
-                                            <div class="card card-body pt-1 pb-1 border-start border-0 rounded-0">
-                                                <a href="javascript:void(0)" class="link-body-emphasis maquina-link d-block" data-categoriaprin="Maquinas" data-maquinamod="COMPRESOR SULLAIR 2"><small class="text-muted">COMPRESOR SULLAIR 2</small></a>
-                                            </div>
-                                        </div>
-                                    </li>
-                                    <li class="mb-2"><a href="#collapseSECA" class="link-body-emphasis  d-block" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="collapseSECA">SECADORES</a>
-                                        <div class="collapse mt-2 ps-3" id="collapseSECA">
-                                            <div class="card card-body pt-1 pb-1 border-start border-0 rounded-0">
-                                                <a href="javascript:void(0)" class="link-body-emphasis maquina-link d-block" data-categoriaprin="Maquinas" data-maquinamod="SECADOR AF 1"><small class="text-muted">SECADOR AF 1</small></a>
-                                            </div>
-                                            <div class="card card-body pt-1 pb-1 border-start border-0 rounded-0">
-                                                <a href="javascript:void(0)" class="link-body-emphasis maquina-link d-block" data-categoriaprin="Maquinas" data-maquinamod="SECADOR AF 2"><small class="text-muted">SECADOR AF 2</small></a>
-                                            </div>
-                                            <div class="card card-body pt-1 pb-1 border-start border-0 rounded-0">
-                                                <a href="javascript:void(0)" class="link-body-emphasis maquina-link d-block" data-categoriaprin="Maquinas" data-maquinamod="SECADOR B&M 1"><small class="text-muted">SECADOR B&M 1</small></a>
-                                            </div>
-                                            <div class="card card-body pt-1 pb-1 border-start border-0 rounded-0">
-                                                <a href="javascript:void(0)" class="link-body-emphasis maquina-link d-block" data-categoriaprin="Maquinas" data-maquinamod="SECADOR B&M 2"><small class="text-muted">SECADOR B&M 2</small></a>
-                                            </div>
-                                            <div class="card card-body pt-1 pb-1 border-start border-0 rounded-0">
-                                                <a href="javascript:void(0)" class="link-body-emphasis maquina-link d-block" data-categoriaprin="Maquinas" data-maquinamod="SECADOR SULLAIR 1"><small class="text-muted">SECADOR SULLAIR 1</small></a>
-                                            </div>
-                                            <div class="card card-body pt-1 pb-1 border-start border-0 rounded-0">
-                                                <a href="javascript:void(0)" class="link-body-emphasis maquina-link d-block" data-categoriaprin="Maquinas" data-maquinamod="SECADOR SULLAIR 2"><small class="text-muted">SECADOR SULLAIR 2</small></a>
-                                            </div>
-                                        </div>
-                                    </li>
-                                    <li class="mb-2"><a href="#collapseBAC" class="link-body-emphasis  d-block " data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="collapseBAC">TORRES BAC</a>
-                                        <div class="collapse mt-2 ps-3" id="collapseBAC">
-                                            <div class="card card-body pt-1 pb-1 border-start border-0 rounded-0">
-                                                <a href="javascript:void(0)" class="link-body-emphasis maquina-link d-block" data-categoriaprin="Maquinas" data-maquinamod="TORRE BAC 1"><small class="text-muted">TORRE BAC 1</small></a>
-                                            </div>
-                                            <div class="card card-body pt-1 pb-1 border-start border-0 rounded-0">
-                                                <a href="javascript:void(0)" class="link-body-emphasis maquina-link d-block" data-categoriaprin="Maquinas" data-maquinamod="TORRE BAC 2"><small class="text-muted">TORRE BAC 2</small></a>
-                                            </div>
-                                        </div>
-                                    </li>
-                                </ul>
-                            </div>
-                        </li>
-                        <!-- COMPRESORES -->
-
-                        <!-- RED DE AGUA -->
-                        <li class="mb-1" id="sidebar">
-                            <button class="btn-toggle collapsed" data-bs-toggle="collapse" data-bs-target="#RedAg-collapse">
-                                <i class="bi bi-droplet-fill me-2" style="color: #3ab5f7;"></i> Red de Agua
-                            </button>
-                            <div class="collapse" id="RedAg-collapse" data-bs-parent="#sidebar">
-                                <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
-                                    <li><a href="javascript:void(0)" class="link-body-emphasis maquina-link d-block" data-categoriaprin="Maquinas" data-maquinamod="SISTEMA RED DE AGUA REYMSA">SISTEMA RED DE AGUA REYMSA</a></li>
-                                    <li><a href="javascript:void(0)" class="link-body-emphasis maquina-link d-block" data-categoriaprin="Maquinas" data-maquinamod="SISTEMA RED DE AGUA FRIGEL">SISTEMA RED DE AGUA FRIGEL</a></li>
-                                    <li><a href="javascript:void(0)" class="link-body-emphasis maquina-link d-block" data-categoriaprin="Maquinas" data-maquinamod="SISTEMA RED DE AGUA">SISTEMA RED DE AGUA</a></li>
-                                    <li><a href="javascript:void(0)" class="link-body-emphasis maquina-link d-block " data-categoriaprin="Maquinas" data-maquinamod="MATERIALES">MATERIALES</a></li>
-                                </ul>
-                            </div>
-                        </li>
-                        <!-- TERMINA RED DE AGUA -->
-
-                        <!-- ELECTRICIDAD -->
-                        <li class="mb-1" id="sidebar">
-                            <button class="btn-toggle collapsed" data-bs-toggle="collapse" data-bs-target="#ELECTRICIDAD-collapse">
-                                <i class="bi bi-lightning-charge-fill me-2" style="color: #f0c000;"></i> Electricidad
-                            </button>
-                            <div class="collapse" id="ELECTRICIDAD-collapse" data-bs-parent="#sidebar">
-                                <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
-                                    <li><a href="javascript:void(0)" class="link-body-emphasis maquina-link d-block" data-categoriaprin="ELECTRICIDAD" data-maquinamod="SUBESTACION 1">SUBESTACION 1</a></li>
-                                    <li><a href="javascript:void(0)" class="link-body-emphasis maquina-link d-block" data-categoriaprin="ELECTRICIDAD" data-maquinamod="SUBESTACION 2">SUBESTACION 2</a></li>
-                                    <li><a href="javascript:void(0)" class="link-body-emphasis maquina-link d-block" data-categoriaprin="SERVICIOS" data-maquinamod="REFACCIONES ELECTRICAS">REFACCIONES ELECTRICAS</a></li>
-                                </ul>
-                            </div>
-                        </li>
-                        <!-- TERMINA ELECTRICIDAD -->
-
-                        <!-- TRANSPORTES -->
-                        <li class="mb-1" id="sidebar">
-                            <button class="btn-toggle collapsed" data-bs-toggle="collapse" data-bs-target="#TRransportes-collapse">
-                                <i class="bi bi-truck me-2" style="color: #d50c3b;"></i> Transportes
-                            </button>
-                            <div class="collapse" id="TRransportes-collapse" data-bs-parent="#sidebar">
-                                <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
-                                    <li><a href="javascript:void(0)" class="link-body-emphasis maquina-link d-block" data-categoriaprin="TRANSPORTES" data-maquinamod="CAMIONETAS">CAMIONETAS</a></li>
-                                    <li><a href="javascript:void(0)" class="link-body-emphasis maquina-link d-block" data-categoriaprin="TRANSPORTES" data-maquinamod="CAMIONES">CAMIONES</a></li>
-                                    <li><a href="javascript:void(0)" class="link-body-emphasis maquina-link d-block" data-categoriaprin="TRANSPORTES" data-maquinamod="TRACTOR">TRACTOR</a></li>
-                                    <li><a href="javascript:void(0)" class="link-body-emphasis maquina-link d-block" data-categoriaprin="TRANSPORTES" data-maquinamod="MONTACARGAS">MONTACARGAS</a></li>
-                                </ul>
-                            </div>
-                        </li>
-                        <!-- TERMINA TRANSPORTES -->
-
-                        <!-- EQUIPOS AUXILIARES -->
-                        <li class="mb-1" id="sidebar">
-                            <button class="btn-toggle collapsed" data-bs-toggle="collapse" data-bs-target="#EquiposAuxiliares-collapse">
-                                <i class="bi bi-wrench-adjustable me-2" style="color: #62604f;"></i> Equipos Auxiliares
-                            </button>
-                            <div class="collapse" id="EquiposAuxiliares-collapse" data-bs-parent="#sidebar">
-                                <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
-                                    <li><a href="javascript:void(0)" class="link-body-emphasis maquina-link d-block" data-categoriaprin="EQUIPOS AUXILIARES" data-maquinamod="MAQUINA BARREDOR">BARREDORA</a></li>
-                                    <li><a href="javascript:void(0)" class="link-body-emphasis maquina-link d-block" data-categoriaprin="EQUIPOS AUXILIARES" data-maquinamod="FILTRADORA DE ACEITE">FILTRADORA DE ACEITE</a></li>
-                                    <li><a href="javascript:void(0)" class="link-body-emphasis maquina-link d-block" data-categoriaprin="EQUIPOS AUXILIARES" data-maquinamod="SOPLADORA DE MOCHILA">SOPLADORA DE MOCHILA</a></li>
-                                    <li><a href="javascript:void(0)" class="link-body-emphasis maquina-link d-block" data-categoriaprin="EQUIPOS AUXILIARES" data-maquinamod="GRUA">GRUA</a></li>
-                                    <li><a href="javascript:void(0)" class="link-body-emphasis maquina-link d-block" data-categoriaprin="EQUIPOS AUXILIARES" data-maquinamod="LAVADORA DE MOLDES">LAVADORA BLUE WAVE</a></li>
-                                    <li><a href="javascript:void(0)" class="link-body-emphasis maquina-link d-block" data-categoriaprin="EQUIPOS AUXILIARES" data-maquinamod="DESBROZADORA">DESBROZADORA</a></li>
-                                    <li><a href="javascript:void(0)" class="link-body-emphasis maquina-link d-block" data-categoriaprin="EQUIPOS AUXILIARES" data-maquinamod="MAQUINA DE SERIGRAFIA">SERIGRAFIA</a></li>
-                                    <li><a href="javascript:void(0)" class="link-body-emphasis maquina-link d-block" data-categoriaprin="EQUIPOS AUXILIARES" data-maquinamod="MAQUINA DE TAMPOGRAFIA">TAMPOGRAFIA</a></li>
-                                    <li><a href="javascript:void(0)" class="link-body-emphasis maquina-link d-block" data-categoriaprin="EQUIPOS AUXILIARES" data-maquinamod="ROBOT IML">ROBOT IML</a></li>
-                                    <li><a href="javascript:void(0)" class="link-body-emphasis maquina-link d-block" data-categoriaprin="EQUIPOS AUXILIARES" data-maquinamod="HIDROLAVADORA">HIDROLAVADORA</a></li>           
-                                </ul>
-                            </div>
-                        </li>
-                        <!-- TERMINAN EQUIPOS AUXILIARES -->
-
-                        <!-- MATERIALES -->
-                        <!-- <li class="mb-1" id="sidebar">
+          <!-- MATERIALES -->
+          <!-- <li class="mb-1" id="sidebar">
                             <button class="btn-toggle collapsed" data-bs-toggle="collapse" data-bs-target="#MAT-collapse">
                                 <i class="bi bi-box-seam me-2" style="color: #01ecfd;"></i> Materiales
                             </button>
@@ -424,549 +1268,622 @@
                                 </ul>
                             </div>
                         </li> -->
-                        <!-- TERMINAN MATERIALES -->
-                        <!-- <li class="mb-1">
+          <!-- TERMINAN MATERIALES -->
+          <!-- <li class="mb-1">
                             <a class="btn-toggle" href="paginas/Aceites/Aceites.html" style="text-decoration: none;">
                                 <i class="bi bi-droplet-half me-2" style="color: #fff048;"></i>Aceites
                             </a>
                         </li> -->
-                    </ul>
-                    <!-- TERMINAN ENLACES -->
+        </ul>
+        <!-- TERMINAN ENLACES -->
 
-                    <hr>
+        <hr />
 
-                    <!-- LO DE PERFIL -->
-                    <div class="dropdown">
-                        <a href="#" class="d-flex align-items-center link-dark text-decoration-none dropdown-toggle" data-bs-toggle="dropdown">
-                            <img src="https://static.vecteezy.com/system/resources/thumbnails/019/896/008/small_2x/male-user-avatar-icon-in-flat-design-style-person-signs-illustration-png.png" width="32" height="32" class="rounded-circle me-2" loading="lazy" onerror="this.onerror=null; this.src='assets/img/no-image.jpg';">
-                            <strong id="nombreUsuario">Cargando...</strong>
-                        </a>
-                        <ul class="dropdown-menu shadow">
-                            <li><a class="dropdown-item" href="#">Perfil</a></li>
-                            <li><hr class="dropdown-divider"></li>
-                            <li><a class="dropdown-item" href="#" id="logoutBtn">Salir</a></li>
-                        </ul>
-                    </div>
-                    <!-- TERMINA PERFIL -->
+        <!-- LO DE PERFIL -->
+        <div class="dropdown">
+          <a
+            href="#"
+            class="d-flex align-items-center link-dark text-decoration-none dropdown-toggle"
+            data-bs-toggle="dropdown"
+          >
+            <img
+              src="https://static.vecteezy.com/system/resources/thumbnails/019/896/008/small_2x/male-user-avatar-icon-in-flat-design-style-person-signs-illustration-png.png"
+              width="32"
+              height="32"
+              class="rounded-circle me-2"
+              loading="lazy"
+              onerror="
+                this.onerror = null;
+                this.src = 'assets/img/no-image.jpg';
+              "
+            />
+            <strong id="nombreUsuario">Cargando...</strong>
+          </a>
+          <ul class="dropdown-menu shadow">
+            <li><a class="dropdown-item" href="#">Perfil</a></li>
+            <li><hr class="dropdown-divider" /></li>
+            <li><a class="dropdown-item" href="#" id="logoutBtn">Salir</a></li>
+          </ul>
+        </div>
+        <!-- TERMINA PERFIL -->
+      </aside>
 
-                </aside>  
-                
-                <section class="content-area">
-                    <div class="container-fluid">
-                        <div class="text-center mb-4">
-                            <h1 class="fw-bold display-5" id="tituloRefacciones">Refacciones IEMCO</h1>
-                            <p class="text-muted mb-0" id="subtitulo">Panel general de control</p>
-                        </div>
+      <section class="content-area">
+        <div class="container-fluid">
+          <div class="text-center mb-4">
+            <h1 class="fw-bold display-5" id="tituloRefacciones">
+              Refacciones IEMCO
+            </h1>
+            <p class="text-muted mb-0" id="subtitulo">
+              Panel general de control
+            </p>
+          </div>
 
-                        <div id="dash">
+          <div id="dash">
+            <div class="row g-3 mb-4">
+              <!-- Total -->
+              <div class="col-12 col-md-4">
+                <div class="card border-0 shadow-sm text-center h-100">
+                  <div class="card-body">
+                    <i class="bi bi-box-seam text-primary fs-2"></i>
+                    <h6 class="text-muted mt-2">Total de Refacciones</h6>
+                    <h4 class="fw-bold" id="totalRefacciones">Cargando...</h4>
+                  </div>
+                </div>
+              </div>
 
-                        <div class="row g-3 mb-4" >
+              <!-- Último -->
+              <div class="col-12 col-md-4">
+                <div class="card border-0 shadow-sm text-center h-100">
+                  <div class="card-body">
+                    <i class="bi bi-plus-circle text-success fs-2"></i>
+                    <h6 class="text-muted mt-2">Último Producto</h6>
+                    <h5 class="fw-bold" id="ultimoProducto">Cargando...</h5>
+                    <div id="ultimasEtiquetas"></div>
+                  </div>
+                </div>
+              </div>
 
-                        <!-- Total -->
-                        <div class="col-12 col-md-4">
-                            <div class="card border-0 shadow-sm text-center h-100">
-                            <div class="card-body">
-                                <i class="bi bi-box-seam text-primary fs-2"></i>
-                                <h6 class="text-muted mt-2">Total de Refacciones</h6>
-                                <h4 class="fw-bold" id="totalRefacciones">Cargando...</h4>
-                            </div>
-                            </div>
-                        </div>
+              <!-- Actualizado -->
+              <div class="col-12 col-md-4">
+                <div class="card border-0 shadow-sm text-center h-100">
+                  <div class="card-body">
+                    <i class="bi bi-clock-history text-warning fs-2"></i>
+                    <h6 class="text-muted mt-2">Última Actualización</h6>
+                    <h5 class="fw-bold" id="ultimaActualizacion">
+                      Cargando...
+                    </h5>
+                  </div>
+                </div>
+              </div>
+            </div>
 
-                        <!-- Último -->
-                        <div class="col-12 col-md-4">
-                            <div class="card border-0 shadow-sm text-center h-100">
-                            <div class="card-body">
-                                <i class="bi bi-plus-circle text-success fs-2"></i>
-                                <h6 class="text-muted mt-2">Último Producto</h6>
-                                <h5 class="fw-bold" id="ultimoProducto">Cargando...</h5>
-                                <div id="ultimasEtiquetas"></div>
-                            </div>
-                            </div>
-                        </div>
+            <!-- 🔹 SEGUIMIENTO + FUTURAS -->
+            <div class="row g-3 mb-4">
+              <!-- Card grande seguimiento -->
+              <div class="col-12 col-lg-6">
+                <div class="card border-0 shadow-sm">
+                  <div class="card-body p-0">
+                    <!-- Aquí se inyecta TODO lo que tu JS genera -->
+                    <div id="contenedorResultadosDsah"></div>
+                  </div>
+                </div>
+              </div>
+              <!-- Card envíos -->
+              <div class="col-12 col-lg-6">
+                <div class="card border-0 shadow-sm h-100">
+                  <div class="card-body p-0">
+                    <!-- ESTE ES NUEVO -->
+                    <div id="contenedorResultadosEnvio"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
 
-                        <!-- Actualizado -->
-                        <div class="col-12 col-md-4">
-                            <div class="card border-0 shadow-sm text-center h-100">
-                            <div class="card-body">
-                                <i class="bi bi-clock-history text-warning fs-2"></i>
-                                <h6 class="text-muted mt-2">Última Actualización</h6>
-                                <h5 class="fw-bold" id="ultimaActualizacion">Cargando...</h5>
-                            </div>
-                            </div>
-                        </div>
+          <div class="card border-0 shadow-sm mb-4" id="formFiltros">
+            <div class="card-body p-3">
+              <!-- Botones vista -->
+              <div class="d-flex justify-content-end gap-2 mb-3">
+                <button
+                  id="btnVistaCards"
+                  class="btn btn-sm btn-primary active"
+                >
+                  <i class="bi bi-grid"></i> Cards
+                </button>
+                <button
+                  id="btnVistaLista"
+                  class="btn btn-sm btn-outline-primary"
+                >
+                  <i class="bi bi-list"></i> Lista
+                </button>
+              </div>
 
-                        </div>
+              <form class="row g-3">
+                <div class="col-12 col-lg-4">
+                  <div
+                    id="contenedorTags"
+                    class="form-control d-flex flex-wrap gap-2 align-items-center"
+                  >
+                    <input
+                      type="text"
+                      id="inputTag"
+                      style="
+                        border: none;
+                        outline: none;
+                        flex: 1;
+                        min-width: 120px;
+                      "
+                      placeholder="Buscar por palabras clave"
+                    />
+                  </div>
+                  <!-- 🔥 Botón opcional -->
+                  <button
+                    type="button"
+                    id="btnAgregarTag"
+                    class="btn btn-sm btn-success d-lg-none"
+                  >
+                    Agregar
+                  </button>
+                </div>
+                <div class="col-12 col-lg-3">
+                  <input
+                    type="text"
+                    id="buscarTitulo"
+                    class="form-control"
+                    placeholder="Buscar por Titulo"
+                  />
+                </div>
+                <!-- Buscar por referencia interna -->
+                <div class="col-12 col-lg-3">
+                  <input
+                    type="text"
+                    id="buscarRef"
+                    class="form-control"
+                    placeholder="Buscar por Ref. Interna"
+                  />
+                </div>
+                <!-- Buscar por modelo -->
+                <div class="col-12 col-lg-3">
+                  <input
+                    type="text"
+                    id="buscarModelo"
+                    class="form-control"
+                    placeholder="Buscar por Modelo"
+                  />
+                </div>
+                <!-- Filtrar por Tipo -->
+                <div class="col-6 col-lg-3">
+                  <select id="filtroTipo" class="form-select">
+                    <option value="">Todos los tipos</option>
+                  </select>
+                </div>
+                <!-- Filtrar por Unidad -->
+                <div class="col-6 col-lg-3">
+                  <select id="filtroUnidad" class="form-select">
+                    <option value="">Todas las unidades</option>
+                  </select>
+                </div>
+              </form>
+            </div>
+          </div>
 
-                        <!-- 🔹 SEGUIMIENTO + FUTURAS -->
-                        <div class="row g-3 mb-4" >
+          <div class="ref-container" id="resultados">
+            <div id="contenedorResultados"></div>
+            <div id="contenedorResultadosDsah"></div>
+          </div>
+          <div id="paginacion" class="mt-3 text-center"></div>
+        </div>
+      </section>
+    </main>
 
-                        <!-- Card grande seguimiento -->
-                    <div class="col-12 col-lg-6">
-                    <div class="card border-0 shadow-sm">
-                        <div class="card-body p-0">
-
-                        <!-- Aquí se inyecta TODO lo que tu JS genera -->
-                        <div id="contenedorResultadosDsah"></div>
-                        </div>
-                    </div>
-                    </div>
-                        <!-- Card envíos -->
-<div class="col-12 col-lg-6">
-  <div class="card border-0 shadow-sm h-100">
-    <div class="card-body p-0">
-
-      <!-- ESTE ES NUEVO -->
-      <div id="contenedorResultadosEnvio"></div>
-
+    <div class="modal fade" id="modalImagen" tabindex="-1">
+      <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content bg-transparent border-0">
+          <img id="imgFullscreen" class="w-100 rounded" loading="lazy" />
+        </div>
+      </div>
     </div>
-  </div>
-</div>
-                        </div>
-                        
-                        </div>
 
-                        <div class="card border-0 shadow-sm mb-4" id="formFiltros">
-                        <div class="card-body p-3">
-                            
-                            <!-- Botones vista -->
-                            <div class="d-flex justify-content-end gap-2 mb-3">
-                            <button id="btnVistaCards" class="btn btn-sm btn-primary active">
-                                <i class="bi bi-grid"></i> Cards
-                            </button>
-                            <button id="btnVistaLista" class="btn btn-sm btn-outline-primary">
-                                <i class="bi bi-list"></i> Lista
-                            </button>
-                            </div>
+    <div id="visorImagen" class="visor-hidden">
+      <div class="visor-controls">
+        <button id="zoomIn">+</button>
+        <button id="zoomOut">−</button>
+        <button id="cerrarVisor">✕</button>
+      </div>
+      <img id="visorImg" loading="lazy" />
+    </div>
 
-                            <form class="row g-3" >
-                                            <div class="col-12 col-lg-4"> 
-                                                <div id="contenedorTags" class="form-control d-flex flex-wrap gap-2 align-items-center">
-                                                    <input type="text" id="inputTag" 
-                                                    style="border:none; outline:none; flex:1; min-width:120px;"
-                                                    placeholder="Buscar por palabras clave">
-                                                </div>
-                                                <!-- 🔥 Botón opcional -->
-                        <button type="button" id="btnAgregarTag" 
-                        class="btn btn-sm btn-success d-lg-none">
-                        Agregar
-                        </button>
-                                            </div>
-                                            <div class="col-12 col-lg-3">
-                                                <input type="text" id="buscarTitulo" class="form-control"
-                                                placeholder="Buscar por Titulo">
-                                            </div>
-                                            <!-- Buscar por referencia interna -->
-                                            <div class="col-12 col-lg-3">
-                                                <input type="text" id="buscarRef" class="form-control"
-                                                placeholder="Buscar por Ref. Interna">
-                                            </div>
-                                            <!-- Buscar por modelo -->
-                                            <div class="col-12 col-lg-3">
-                                                <input type="text" id="buscarModelo" class="form-control"
-                                                placeholder="Buscar por Modelo">
-                                            </div>
-                                            <!-- Filtrar por Tipo -->
-                                            <div class="col-6 col-lg-3">
-                                                <select id="filtroTipo" class="form-select">
-                                                <option value="">Todos los tipos</option>
-                                                </select>
-                                            </div>
-                                            <!-- Filtrar por Unidad -->
-                                            <div class="col-6 col-lg-3">
-                                                <select id="filtroUnidad" class="form-select">
-                                                <option value="">Todas las unidades</option>
-                                                </select>
-                                            </div>
-                            </form>
-                            
-                        </div>
-                        </div>
+    <div id="modalMapa" class="modal-mapa">
+      <div class="modal-box">
+        <div class="modal-header">
+          <h4>
+            Ubicación:
+            <span id="ubicacionTextoDisplay">---</span>
+          </h4>
+          <button onclick="cerrarMapa()">✕</button>
+        </div>
 
-                        <div class="ref-container" id="resultados">
-                            <div id="contenedorResultados"></div>
-                            <div id="contenedorResultadosDsah"></div>
-                        </div>
-                        <div id="paginacion" class="mt-3 text-center"></div>
-                    </div>
-                </section>
-            </main>
-        
-            <div class="modal fade" id="modalImagen" tabindex="-1">
-                <div class="modal-dialog modal-dialog-centered modal-lg">
-                    <div class="modal-content bg-transparent border-0">
-                    <img id="imgFullscreen" class="w-100 rounded" loading="lazy">
-                    </div>
-                </div>
-            </div>
+        <div class="modal-body">
+          <div id="contenedorMapaDinamico"></div>
+        </div>
 
-            <div id="visorImagen" class="visor-hidden">
-            <div class="visor-controls">
-                <button id="zoomIn">+</button>
-                <button id="zoomOut">−</button>
-                <button id="cerrarVisor">✕</button>
-            </div>
-            <img id="visorImg" loading="lazy">
-            </div>
-            
+        <button class="btn-cerrar" onclick="cerrarMapa()">CERRAR</button>
+      </div>
+    </div>
 
-            <div id="modalMapa" class="modal-mapa">
-            <div class="modal-box">
+    <div class="fab-container">
+      <!-- 🛠️ HERRAMIENTAS -->
+      <div class="dropup" style="display: none">
+        <button
+          class="btn btn-primary fab"
+          data-bs-toggle="dropdown"
+          data-bs-toggle="tooltip"
+          title="Herramientas"
+        >
+          <i class="bi bi-tools"></i>
+        </button>
+        <ul class="dropdown-menu">
+          <li><a class="dropdown-item" href="#">Importar Excel</a></li>
+          <li><a class="dropdown-item" href="#">Exportar datos</a></li>
+          <li><a class="dropdown-item" href="#">Configuración</a></li>
+        </ul>
+      </div>
 
-                <div class="modal-header">
-                <h4>
-                    Ubicación: 
-                    <span id="ubicacionTextoDisplay">---</span>
-                </h4>
-                <button onclick="cerrarMapa()">✕</button>
-                </div>
+      <!-- 👤 PERFIL -->
+      <div class="dropup" style="display: none">
+        <button
+          class="btn btn-light fab p-0"
+          data-bs-toggle="dropdown"
+          title="Perfil"
+        >
+          <img
+            src="https://static.vecteezy.com/system/resources/thumbnails/019/896/008/small_2x/male-user-avatar-icon-in-flat-design-style-person-signs-illustration-png.png"
+            class="rounded-circle"
+            width="40"
+            height="40"
+            loading="lazy"
+          />
+        </button>
+        <ul class="dropdown-menu">
+          <li><a class="dropdown-item" href="#">Mi perfil</a></li>
+          <li><a class="dropdown-item" href="#">Cerrar sesión</a></li>
+        </ul>
+      </div>
 
-                <div class="modal-body">
-                <div id="contenedorMapaDinamico"></div>
-                </div>
-
-                <button class="btn-cerrar" onclick="cerrarMapa()">CERRAR</button>
-
-            </div>
-            </div>
-
-            <div class="fab-container">
-
-            <!-- 🛠️ HERRAMIENTAS -->
-            <div class="dropup" style="display: none;">
-                <button class="btn btn-primary fab" data-bs-toggle="dropdown" data-bs-toggle="tooltip" title="Herramientas">
-                <i class="bi bi-tools"></i>
-                </button>
-                <ul class="dropdown-menu">
-                <li><a class="dropdown-item" href="#">Importar Excel</a></li>
-                <li><a class="dropdown-item" href="#">Exportar datos</a></li>
-                <li><a class="dropdown-item" href="#">Configuración</a></li>
-                </ul>
-            </div>
-
-            <!-- 👤 PERFIL -->
-            <div class="dropup" style="display: none;">
-                <button class="btn btn-light fab p-0" data-bs-toggle="dropdown" title="Perfil">
-                <img src="https://static.vecteezy.com/system/resources/thumbnails/019/896/008/small_2x/male-user-avatar-icon-in-flat-design-style-person-signs-illustration-png.png" class="rounded-circle" width="40" height="40" loading="lazy">
-                </button>
-                <ul class="dropdown-menu">
-                <li><a class="dropdown-item" href="#">Mi perfil</a></li>
-                <li><a class="dropdown-item" href="#">Cerrar sesión</a></li>
-                </ul>
-            </div>
-
-            <!-- ❓ AYUDA
+      <!-- ❓ AYUDA
             <button class="btn btn-danger fab" data-bs-toggle="modal" data-bs-target="#modalAyuda" title="Ayuda">
                 <i class="bi bi-question-lg"></i>
             </button> -->
+    </div>
 
-            </div>
+    <div class="modal fade" id="modalAyuda" tabindex="-1">
+      <div
+        class="modal-dialog modal-dialog-centered modal-lg modal-dialog-scrollable"
+      >
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Ayuda</h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <img
+              src="assets/img/MODAL.JPG"
+              alt=""
+              class="img-fluid rounded"
+              loading="lazy"
+            />
+          </div>
+        </div>
+      </div>
+    </div>
 
-            <div class="modal fade" id="modalAyuda" tabindex="-1">
-            <div class="modal-dialog modal-dialog-centered modal-lg modal-dialog-scrollable">
-                <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Ayuda</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                </div>
-                <div class="modal-body">
-                    <img src="assets/img/MODAL.JPG" alt="" class="img-fluid rounded" loading="lazy">
-                </div>
-                </div>
-            </div>
-            </div>
+    <div
+      id="modalUsos"
+      style="
+        display: none;
+        background: #00000088;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+      "
+    >
+      <div
+        style="background: white; padding: 20px; margin: 10% auto; width: 300px"
+      >
+        <h3>Usos</h3>
+        <ul id="listaUsos"></ul>
 
-            <div id="modalUsos" style="display:none; background:#00000088; position:fixed; top:0; left:0; width:100%; height:100%;">
-            <div style="background:white; padding:20px; margin:10% auto; width:300px;">
-                
-                <h3>Usos</h3>
-                <ul id="listaUsos"></ul>
+        <button onclick="cerrarModal()">Cerrar</button>
+      </div>
+    </div>
+    <!-- //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// -->
+    <!-- //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// -->
+    <!-- //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
-                <button onclick="cerrarModal()">Cerrar</button>
-            </div>
-            </div>
-<!-- //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// -->
-<!-- //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// -->
-<!-- //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// -->
-            <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+      document.addEventListener("DOMContentLoaded", async () => {
+        cargarEnvios();
+        cargarDestacadas();
+        const token = localStorage.getItem("token");
 
-            <script>
-
-                document.addEventListener("DOMContentLoaded", async () => {
-        cargarEnvios(); 
-    cargarDestacadas();
-    const token = localStorage.getItem("token");
-
-    if (!token) {
-        window.location.href = "index.html";
-        return;
-    }
-
-    try {
-        const res = await fetch(`${API_URL}/me`, {
-        headers: {
-            "Authorization": "Bearer " + token
+        if (!token) {
+          window.location.href = "index.html";
+          return;
         }
-        });
 
-        if (!res.ok) {
-        throw new Error("Token inválido");
+        try {
+          const res = await fetch(`${API_URL}/me`, {
+            headers: {
+              Authorization: "Bearer " + token,
+            },
+          });
+
+          if (!res.ok) {
+            throw new Error("Token inválido");
+          }
+
+          const usuario = await res.json();
+          aplicarPermisos(usuario.rol);
+        } catch (error) {
+          console.error("Sesión inválida:", error);
+          localStorage.clear();
+          window.location.href = "index.html";
+          return;
         }
 
-        const usuario = await res.json();
-        aplicarPermisos(usuario.rol);
+        // Sidebar seguro
+        const sidebar = document.getElementById("sidebar");
+        const overlay = document.getElementById("overlay");
+        const bodyTag = document.getElementById("bodyTag");
+        const btnToggle = document.getElementById("btnToggle");
+        const btnClose = document.getElementById("btnClose");
 
-    } catch (error) {
-        console.error("Sesión inválida:", error);
-        localStorage.clear();
-        window.location.href = "index.html";
-        return;
-    }
+        function openMenu() {
+          sidebar?.classList.add("show");
+          overlay?.classList.add("show");
+          bodyTag?.classList.add("sidebar-open");
+        }
 
-    // Sidebar seguro
-    const sidebar = document.getElementById('sidebar');
-    const overlay = document.getElementById('overlay');
-    const bodyTag = document.getElementById('bodyTag');
-    const btnToggle = document.getElementById('btnToggle');
-    const btnClose = document.getElementById('btnClose');
+        function closeMenu() {
+          sidebar?.classList.remove("show");
+          overlay?.classList.remove("show");
+          bodyTag?.classList.remove("sidebar-open");
+        }
 
-    function openMenu() {
-        sidebar?.classList.add('show');
-        overlay?.classList.add('show');
-        bodyTag?.classList.add('sidebar-open');
-    }
+        btnToggle?.addEventListener("click", openMenu);
+        btnClose?.addEventListener("click", closeMenu);
+        overlay?.addEventListener("click", closeMenu);
+      });
 
-    function closeMenu() {
-        sidebar?.classList.remove('show');
-        overlay?.classList.remove('show');
-        bodyTag?.classList.remove('sidebar-open');
-    }
+      function aplicarPermisos(rol) {
+        // console.log("Rol detectado:", rol);
 
-    btnToggle?.addEventListener('click', openMenu);
-    btnClose?.addEventListener('click', closeMenu);
-    overlay?.addEventListener('click', closeMenu);
+        if (rol !== "admin") {
+          const acciones = document
+            .querySelector('[data-bs-target="#dash-collapse"]')
+            ?.closest("li");
 
-    });
+          if (acciones) acciones.style.display = "none";
+        }
 
-                function aplicarPermisos(rol) {
+        if (rol === "usuario") {
+          const editar = document.querySelector('a[href="refacciones.html"]');
+          if (editar) editar.style.display = "none";
+        }
+      }
 
-    // console.log("Rol detectado:", rol);
+      const usuario = JSON.parse(localStorage.getItem("usuario"));
 
-    if (rol !== "admin") {
-        const acciones = document
-        .querySelector('[data-bs-target="#dash-collapse"]')
-        ?.closest("li");
+      if (usuario?.rol === "admin") {
+        document.getElementById("zonaAlertas").style.display = "block";
+      }
 
-        if (acciones) acciones.style.display = "none";
-    }
+      const btnAgregarTag = document.getElementById("btnAgregarTag");
 
-    if (rol === "usuario") {
-        const editar = document.querySelector('a[href="refacciones.html"]');
-        if (editar) editar.style.display = "none";
-    }
-    }
+      btnAgregarTag?.addEventListener("click", () => {
+        const valor = inputTag.value.trim().toLowerCase();
+        if (!valor) return;
 
-const usuario = JSON.parse(localStorage.getItem("usuario"));
+        if (!tagsActivos.includes(valor)) {
+          tagsActivos.push(valor);
+          crearTagVisual(valor);
+          aplicarFiltros();
+        }
 
-if (usuario?.rol === "admin") {
-    document.getElementById("zonaAlertas").style.display = "block";
-}
+        inputTag.value = "";
+      });
 
-                const btnAgregarTag = document.getElementById("btnAgregarTag");
+      let escala = 1;
+      let posX = 0;
+      let posY = 0;
+      let arrastrando = false;
+      let inicioX = 0;
+      let inicioY = 0;
 
-                btnAgregarTag?.addEventListener("click", () => {
-    const valor = inputTag.value.trim().toLowerCase();
-    if (!valor) return;
+      const visor = document.getElementById("visorImagen");
+      const img = document.getElementById("visorImg");
 
-    if (!tagsActivos.includes(valor)) {
-        tagsActivos.push(valor);
-        crearTagVisual(valor);
-        aplicarFiltros();
-    }
+      function actualizarTransform() {
+        img.style.transform = `translate(${posX}px, ${posY}px) scale(${escala})`;
+      }
 
-    inputTag.value = "";
-    });
+      document.addEventListener("click", (e) => {
+        const btn = e.target.closest(".btn-fullscreen");
+        if (!btn) return;
 
-                let escala = 1;
-                let posX = 0;
-                let posY = 0;
-                let arrastrando = false;
-                let inicioX = 0;
-                let inicioY = 0;
-    
-                const visor = document.getElementById("visorImagen");
-                const img = document.getElementById("visorImg");
+        escala = 1;
+        posX = 0;
+        posY = 0;
+        actualizarTransform();
 
-                function actualizarTransform() {
-    img.style.transform = `translate(${posX}px, ${posY}px) scale(${escala})`;
-    }
+        img.src = btn.dataset.img;
+        visor.classList.remove("visor-hidden");
+      });
 
-                document.addEventListener("click", (e) => {
-    const btn = e.target.closest(".btn-fullscreen");
-    if (!btn) return;
+      document.getElementById("cerrarVisor").addEventListener("click", () => {
+        visor.classList.add("visor-hidden");
+      });
 
-    escala = 1;
-    posX = 0;
-    posY = 0;
-    actualizarTransform();
+      document.getElementById("zoomIn").addEventListener("click", () => {
+        escala += 0.2;
+        actualizarTransform();
+      });
 
-    img.src = btn.dataset.img;
-    visor.classList.remove("visor-hidden");
-    });
+      document.getElementById("zoomOut").addEventListener("click", () => {
+        escala -= 0.2;
+        if (escala < 1) escala = 1;
+        actualizarTransform();
+      });
 
-                document.getElementById("cerrarVisor").addEventListener("click", () => {
-    visor.classList.add("visor-hidden");
-    });
+      // 🖱 MOUSE DRAG
+      img.addEventListener("mousedown", (e) => {
+        if (escala === 1) return;
+        arrastrando = true;
+        inicioX = e.clientX - posX;
+        inicioY = e.clientY - posY;
+        img.style.cursor = "grabbing";
+      });
 
-                document.getElementById("zoomIn").addEventListener("click", () => {
-    escala += 0.2;
-    actualizarTransform();
-    });
+      document.addEventListener("mousemove", (e) => {
+        if (!arrastrando) return;
+        posX = e.clientX - inicioX;
+        posY = e.clientY - inicioY;
+        actualizarTransform();
+      });
 
-                document.getElementById("zoomOut").addEventListener("click", () => {
-    escala -= 0.2;
-    if (escala < 1) escala = 1;
-    actualizarTransform();
-    });
+      document.addEventListener("mouseup", () => {
+        arrastrando = false;
+        img.style.cursor = "grab";
+      });
 
+      // 📱 TOUCH
+      img.addEventListener("touchstart", (e) => {
+        if (escala === 1) return;
+        arrastrando = true;
+        inicioX = e.touches[0].clientX - posX;
+        inicioY = e.touches[0].clientY - posY;
+      });
 
-                // 🖱 MOUSE DRAG
-                img.addEventListener("mousedown", (e) => {
-                if (escala === 1) return;
-                arrastrando = true;
-                inicioX = e.clientX - posX;
-                inicioY = e.clientY - posY;
-                img.style.cursor = "grabbing";
-                });
+      img.addEventListener("touchmove", (e) => {
+        if (!arrastrando) return;
+        posX = e.touches[0].clientX - inicioX;
+        posY = e.touches[0].clientY - inicioY;
+        actualizarTransform();
+      });
 
-                document.addEventListener("mousemove", (e) => {
-    if (!arrastrando) return;
-    posX = e.clientX - inicioX;
-    posY = e.clientY - inicioY;
-    actualizarTransform();
-    });
+      img.addEventListener("touchend", () => {
+        arrastrando = false;
+      });
 
-                document.addEventListener("mouseup", () => {
-    arrastrando = false;
-    img.style.cursor = "grab";
-    });
+      // async function cargarDashboard() {
 
+      //   const res = await fetch("https://buscador-refaccionesbackend.onrender.com/refacciones");
+      //   const data = await res.json();
 
-                // 📱 TOUCH
-                img.addEventListener("touchstart", (e) => {
-                if (escala === 1) return;
-                arrastrando = true;
-                inicioX = e.touches[0].clientX - posX;
-                inicioY = e.touches[0].clientY - posY;
-                });
+      //   const resUb = await fetch("https://buscador-refaccionesbackend.onrender.com/refacciones/con-ubicacion");
+      //   const dataUb = await resUb.json();
 
-                img.addEventListener("touchmove", (e) => {
-                if (!arrastrando) return;
-                posX = e.touches[0].clientX - inicioX;
-                posY = e.touches[0].clientY - inicioY;
-                actualizarTransform();
-                });
+      //   const total = data.length;
+      //   const conUbicacion = dataUb.data.length;
+      //   const sinUbicacion = total - conUbicacion;
 
-                img.addEventListener("touchend", () => {
-                arrastrando = false;
-                });
+      //   // ✅ AHORA SÍ EXISTEN
+      //   const porcentaje = ((conUbicacion / total) * 100).toFixed(1);
 
-                // async function cargarDashboard() {
-                    
-                //   const res = await fetch("https://buscador-refaccionesbackend.onrender.com/refacciones");
-                //   const data = await res.json();
+      //   const ultimas = data.slice(-3).reverse();
 
-                //   const resUb = await fetch("https://buscador-refaccionesbackend.onrender.com/refacciones/con-ubicacion");
-                //   const dataUb = await resUb.json();
+      //   document.getElementById("graficaUbicacionTitulo").innerHTML = `
+      //     <div class="p-3">
+      //       <h6 class="mb-3">Estado de Ubicación</h6>
+      //       <h6>${porcentaje}% con ubicación</h6>
+      //       <canvas id="graficaUbicacion"></canvas>
+      //     </div>
+      //   `;
 
-                //   const total = data.length;
-                //   const conUbicacion = dataUb.data.length;
-                //   const sinUbicacion = total - conUbicacion;
+      //   const ctx = document.getElementById("graficaUbicacion");
 
-                //   // ✅ AHORA SÍ EXISTEN
-                //   const porcentaje = ((conUbicacion / total) * 100).toFixed(1);
+      //   new Chart(ctx, {
+      //     type: "pie",
+      //     data: {
+      //       labels: ["Con ubicación", "Sin ubicación"],
+      //       datasets: [{
+      //         data: [conUbicacion, sinUbicacion],
+      //         backgroundColor: ["#7c878e", "#3e5b6d"]
+      //       }]
+      //     },
+      //     options: {
+      //       responsive: true,
+      //       plugins: {
+      //         legend: {
+      //           position: "bottom"
+      //         }
+      //       }
+      //     }
+      //   });
 
-                //   const ultimas = data.slice(-3).reverse();
+      // }
+      async function cargarDashboard() {
+        const token = localStorage.getItem("token");
 
-                //   document.getElementById("graficaUbicacionTitulo").innerHTML = `
-                //     <div class="p-3">
-                //       <h6 class="mb-3">Estado de Ubicación</h6>
-                //       <h6>${porcentaje}% con ubicación</h6>
-                //       <canvas id="graficaUbicacion"></canvas>
-                //     </div>
-                //   `;
+        // 🔹 REFACCIONES
+        const res = await fetch(
+          "https://buscador-refaccionesbackend.onrender.com/refacciones",
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          },
+        );
 
-                //   const ctx = document.getElementById("graficaUbicacion");
+        if (res.status === 401) {
+          alert("Sesión expirada");
+          window.location.href = "/login.html";
+          return;
+        }
 
-                //   new Chart(ctx, {
-                //     type: "pie",
-                //     data: {
-                //       labels: ["Con ubicación", "Sin ubicación"],
-                //       datasets: [{
-                //         data: [conUbicacion, sinUbicacion],
-                //         backgroundColor: ["#7c878e", "#3e5b6d"]
-                //       }]
-                //     },
-                //     options: {
-                //       responsive: true,
-                //       plugins: {
-                //         legend: {
-                //           position: "bottom"
-                //         }
-                //       }
-                //     }
-                //   });
+        const data = await res.json();
 
-                // }
-                async function cargarDashboard() {
-                const token = localStorage.getItem("token");
+        if (!Array.isArray(data)) {
+          console.error("Error en refacciones:", data);
+          return;
+        }
 
-                // 🔹 REFACCIONES
-                const res = await fetch("https://buscador-refaccionesbackend.onrender.com/refacciones", {
-                    headers: {
-                    Authorization: `Bearer ${token}`
-                    }
-                });
+        // 🔹 CON UBICACIÓN
+        const resUb = await fetch(
+          "https://buscador-refaccionesbackend.onrender.com/refacciones/con-ubicacion",
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          },
+        );
 
-                if (res.status === 401) {
-                    alert("Sesión expirada");
-                    window.location.href = "/login.html";
-                    return;
-                }
+        const dataUb = await resUb.json();
 
-                const data = await res.json();
+        if (!dataUb.ok) {
+          console.error("Error en ubicaciones:", dataUb);
+          return;
+        }
 
-                if (!Array.isArray(data)) {
-                    console.error("Error en refacciones:", data);
-                    return;
-                }
+        // 🔥 AQUÍ YA NO TRUENA
+        const total = data.length;
+        const conUbicacion = dataUb.data.length;
+        const sinUbicacion = total - conUbicacion;
 
-                // 🔹 CON UBICACIÓN
-                const resUb = await fetch("https://buscador-refaccionesbackend.onrender.com/refacciones/con-ubicacion", {
-                    headers: {
-                    Authorization: `Bearer ${token}`
-                    }
-                });
+        const porcentaje =
+          total > 0 ? ((conUbicacion / total) * 100).toFixed(1) : 0;
 
-                const dataUb = await resUb.json();
+        const ultimas = data.slice(-3).reverse();
 
-                if (!dataUb.ok) {
-                    console.error("Error en ubicaciones:", dataUb);
-                    return;
-                }
-
-                // 🔥 AQUÍ YA NO TRUENA
-                const total = data.length;
-                const conUbicacion = dataUb.data.length;
-                const sinUbicacion = total - conUbicacion;
-
-                const porcentaje = total > 0 
-                    ? ((conUbicacion / total) * 100).toFixed(1)
-                    : 0;
-
-                const ultimas = data.slice(-3).reverse();
-
-                document.getElementById("graficaUbicacionTitulo").innerHTML = `
+        document.getElementById("graficaUbicacionTitulo").innerHTML = `
                     <div class="p-3">
                     <h6 class="mb-3">Estado de Ubicación</h6>
                     <h6>${porcentaje}% con ubicación</h6>
@@ -974,36 +1891,37 @@ if (usuario?.rol === "admin") {
                     </div>
                 `;
 
-                const ctx = document.getElementById("graficaUbicacion");
+        const ctx = document.getElementById("graficaUbicacion");
 
-                new Chart(ctx, {
-                    type: "pie",
-                    data: {
-                    labels: ["Con ubicación", "Sin ubicación"],
-                    datasets: [{
-                        data: [conUbicacion, sinUbicacion],
-                        backgroundColor: ["#7c878e", "#3e5b6d"]
-                    }]
-                    },
-                    options: {
-                    responsive: true,
-                    plugins: {
-                        legend: {
-                        position: "bottom"
-                        }
-                    }
-                    }
-                });
-                }
+        new Chart(ctx, {
+          type: "pie",
+          data: {
+            labels: ["Con ubicación", "Sin ubicación"],
+            datasets: [
+              {
+                data: [conUbicacion, sinUbicacion],
+                backgroundColor: ["#7c878e", "#3e5b6d"],
+              },
+            ],
+          },
+          options: {
+            responsive: true,
+            plugins: {
+              legend: {
+                position: "bottom",
+              },
+            },
+          },
+        });
+      }
 
-                cargarDashboard();
+      cargarDashboard();
+    </script>
 
-            </script>
-            
-            <script src="js/pagJs/script.js"></script>
-            <script src="js/pagJs/navegador.js"></script>
-            <script src="js/iniJs/session.js"></script>
-            <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-            <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-        </body>
-    </html>
+    <script src="js/pagJs/script.js"></script>
+    <script src="js/pagJs/navegador.js"></script>
+    <script src="js/iniJs/session.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+  </body>
+</html>
