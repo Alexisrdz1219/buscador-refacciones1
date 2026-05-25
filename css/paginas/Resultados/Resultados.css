@@ -1,0 +1,29 @@
+.lista-resultados{
+    max-height: 600px;
+    overflow-y: auto;
+}
+
+.resultado-item{
+    border-bottom: 1px solid #eee;
+    padding: 15px;
+    cursor: pointer;
+    transition: .2s;
+}
+
+.resultado-item:hover{
+    background: #f5f5f5;
+}
+
+.resultado-titulo{
+    font-weight: bold;
+    font-size: 15px;
+}
+
+.resultado-ref{
+    color: gray;
+    font-size: 13px;
+}
+
+.resultado-item.active{
+    background: #e9f2ff;
+}
