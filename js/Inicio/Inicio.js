@@ -44,11 +44,11 @@ inputBusqueda.addEventListener("input", async (e) => {
                 >
 
                     <div class="sugerencia-titulo">
-                        ${ref.titulo}
+                        ${ref.nombreprod}
                     </div>
 
                     <div class="sugerencia-ref">
-                        ${ref.ref_interna}
+                        ${ref.refInterna}
                     </div>
 
                 </div>
