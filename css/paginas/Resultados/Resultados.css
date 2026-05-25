@@ -27,3 +27,48 @@
 .resultado-item.active{
     background: #e9f2ff;
 }
+
+.btn-ver-mas{
+
+    background: transparent;
+    border: none;
+
+    color: #6b7280;
+
+    font-size: 14px;
+    font-weight: 500;
+
+    padding: 10px 16px;
+
+    border-radius: 12px;
+
+    transition: all 0.2s ease;
+
+}
+
+.btn-ver-mas:hover{
+
+    background: rgba(239, 239, 239, 0.05);
+
+    color: #111827;
+
+}
+
+.btn-ver-mas:active{
+
+    transform: scale(0.97);
+
+}
+
+.btn-ver-mas:focus{
+
+    outline: none;
+    box-shadow: none;
+
+}
+#btnVerMas{
+
+    position: sticky;
+    bottom: 0;
+
+}

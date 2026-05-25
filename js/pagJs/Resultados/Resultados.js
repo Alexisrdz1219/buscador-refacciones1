@@ -1,5 +1,5 @@
 const API_Resultados = "https://buscador-refaccionesbackend.onrender.com";
-
+let limiteResultados = 5;
 const listaResultados = document.getElementById("listaResultados");
 const vistaProducto = document.getElementById("vistaProducto");
 
@@ -11,7 +11,7 @@ const query = params.get("q");
 // BUSCAR
 buscarResultados(query);
 
-let limiteResultados = 5;
+
 
 async function buscarResultados(texto){
 
