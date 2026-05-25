@@ -107,7 +107,7 @@ async function buscar(texto){
 function seleccionarRefaccion(id){
 
     window.location.href = `
-        resultados.html?id=${id}
+        ../Resultados/Resultados.html?id=${id}
     `;
 
 }

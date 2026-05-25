@@ -1,4 +1,4 @@
-const API = "https://buscador-refaccionesbackend.onrender.com";
+const API_Resultados = "https://buscador-refaccionesbackend.onrender.com";
 
 const listaResultados = document.getElementById("listaResultados");
 const vistaProducto = document.getElementById("vistaProducto");
@@ -11,19 +11,23 @@ const query = params.get("q");
 // BUSCAR
 buscarResultados(query);
 
+let limiteResultados = 5;
+
 async function buscarResultados(texto){
 
     try{
 
         const resp = await fetch(
-            `${API}/buscar?q=${encodeURIComponent(texto)}`
+            `${API_Resultados}/buscar?q=${encodeURIComponent(texto)}&limit=${limiteResultados}`
         );
 
         const data = await resp.json();
 
+        console.log(data);
+
         listaResultados.innerHTML = "";
 
-        data.forEach((ref, index) => {
+        data.forEach((ref) => {
 
             listaResultados.innerHTML += `
 
@@ -33,11 +37,11 @@ async function buscarResultados(texto){
                 >
 
                     <div class="resultado-titulo">
-                        ${ref.nombreProd}
+                        ${ref.nombreprod || "Sin nombre"}
                     </div>
 
                     <div class="resultado-ref">
-                        ${ref.ref_interna}
+                        ${ref.refinterna || "Sin ref"}
                     </div>
 
                 </div>
@@ -49,6 +53,23 @@ async function buscarResultados(texto){
         if(data.length > 0){
 
             verProducto(data[0].id);
+
+        }
+
+        // BOTON VER MAS
+        const btnVerMas = document.getElementById("btnVerMas");
+
+        if(data.length >= limiteResultados){
+
+            btnVerMas.classList.remove("d-none");
+
+            btnVerMas.innerText = `
+                Ver más resultados
+            `;
+
+        }else{
+
+            btnVerMas.classList.add("d-none");
 
         }
 
@@ -75,7 +96,7 @@ async function verProducto(id, elemento){
 
         // FETCH A TU ENDPOINT REAL
         const resp = await fetch(
-            `${API}/refacciones/${id}`
+            `${API_Resultados}/refacciones/${id}`
         );
 
         if(!resp.ok){
@@ -83,19 +104,27 @@ async function verProducto(id, elemento){
         }
 
         const producto = await resp.json();
-
+        console.log(producto);
         // MOSTRAR INFO
         vistaProducto.innerHTML = `
 
             <h3 class="mb-3">
-                ${producto.nombre || "Sin nombre"}
+                ${producto.nombreprod || "Sin nombre"}
             </h3>
+
+            <hr>
+
+            <img 
+                src="${producto.imagen || "https://via.placeholder.com/400x300?text=Sin+Imagen"}" 
+                alt="${producto.nombreprod || "Refacción"}"
+                class="img-fluid mb-3"
+            >
 
             <hr>
 
             <p>
                 <strong>Ref Interna:</strong>
-                ${producto.ref_interna || "N/A"}
+                ${producto.refinterna || "N/A"}
             </p>
 
             <p>
@@ -105,17 +134,17 @@ async function verProducto(id, elemento){
 
             <p>
                 <strong>Tipo:</strong>
-                ${producto.tipo || "Sin tipo"}
+                ${producto.unidad || "Sin tipo"}
             </p>
 
             <p>
                 <strong>Stock:</strong>
-                ${producto.stock || 0}
+                ${producto.cantidad || 0}
             </p>
 
             <p>
                 <strong>Descripción:</strong>
-                ${producto.descripcion || "Sin descripción"}
+                ${producto.palClave || "Sin descripción"}
             </p>
 
             <hr>
@@ -151,3 +180,12 @@ async function verProducto(id, elemento){
     }
 
 }
+
+document.getElementById("btnVerMas")
+.addEventListener("click", () => {
+
+    limiteResultados += 10;
+
+    buscarResultados(query);
+
+});
