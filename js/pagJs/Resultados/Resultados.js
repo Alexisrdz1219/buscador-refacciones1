@@ -7,11 +7,59 @@ const vistaProducto = document.getElementById("vistaProducto");
 const params = new URLSearchParams(window.location.search);
 
 const query = params.get("q");
+const id = params.get("id");
 
-// BUSCAR
-buscarResultados(query);
+// SI VIENE QUERY
+if(query){
 
+    buscarResultados(query);
 
+}
+
+// SI VIENE ID
+if(id){
+
+    cargarProductoIndividual(id);
+
+}
+
+async function cargarProductoIndividual(id){
+
+    try{
+
+        const resp = await fetch(
+            `${API_Resultados}/refacciones/${id}`
+        );
+
+        const producto = await resp.json();
+
+        listaResultados.innerHTML = `
+
+            <div 
+                class="resultado-item active"
+            >
+
+                <div class="resultado-titulo">
+                    ${producto.nombreprod || "Sin nombre"}
+                </div>
+
+                <div class="resultado-ref">
+                    ${producto.refinterna || "Sin ref"}
+                </div>
+
+            </div>
+
+        `;
+
+        verProducto(id);
+
+    }catch(error){
+
+        console.log(error);
+
+    }
+
+}
 
 async function buscarResultados(texto){
 
