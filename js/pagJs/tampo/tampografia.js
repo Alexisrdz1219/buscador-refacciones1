@@ -23,7 +23,7 @@ scannerInput.addEventListener("change", async (e) => {
         .innerText = data.nombreprod;
 
         document.getElementById("codigoProducto")
-        .innerText = data.refInterna;
+        .innerText = data.refinterna;
 
         document.getElementById("ubicacionProducto")
         .innerText = data.ubicacion;
