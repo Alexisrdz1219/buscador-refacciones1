@@ -1,0 +1,53 @@
+
+<div class="container mt-4">
+
+    <h2>Registro de Salidas</h2>
+
+    <input
+        type="text"
+        id="scannerInput"
+        class="form-control mb-3"
+        placeholder="Escanea código"
+        autofocus
+    />
+
+    <div class="card p-3">
+
+        <h4 id="nombreProducto">Producto</h4>
+
+        <p>
+            Codigo:
+            <span id="codigoProducto"></span>
+        </p>
+
+        <p>
+            Ubicación:
+            <span id="ubicacionProducto"></span>
+        </p>
+
+        <input
+            type="number"
+            id="cantidad"
+            class="form-control mb-2"
+            placeholder="Cantidad"
+        />
+
+        <input
+            type="text"
+            id="solicitadoPor"
+            class="form-control mb-2"
+            placeholder="Solicitado por"
+        />
+
+        <button
+            class="btn btn-primary"
+            onclick="guardarMovimiento()"
+        >
+            Guardar
+        </button>
+
+    </div>
+
+</div>
+
+<script src="../js/pagJs/tampo/tampografia.js"></script>
