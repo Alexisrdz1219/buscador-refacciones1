@@ -1,4 +1,3 @@
-
 <div class="container mt-4">
 
     <h2>Registro de Salidas</h2>
@@ -9,101 +8,100 @@
         class="form-control mb-3"
         placeholder="Escanea código"
         autofocus
-    />
+    >
 
     <div class="card p-3">
 
-        <h4 id="nombreProducto">Producto</h4>
+        <h4 id="nombreProducto">
+
+            Producto
+
+        </h4>
 
         <p>
-            Codigo:
+
+            Código:
             <span id="codigoProducto"></span>
+
         </p>
 
         <p>
+
             Ubicación:
             <span id="ubicacionProducto"></span>
+
         </p>
-
-        <input
-            type="number"
-            id="cantidad"
-            class="form-control mb-2"
-            placeholder="Cantidad"
-        />
-
-        <input
-            type="text"
-            id="solicitadoPor"
-            class="form-control mb-2"
-            placeholder="Solicitado por"
-        />
-
 
     </div>
 
+    <h3 class="mt-4">
+
+        Productos escaneados
+
+    </h3>
+
+    <table class="table table-bordered">
+
+        <thead>
+
+            <tr>
+
+                <th>Código</th>
+                <th>Producto</th>
+                <th>Cantidad</th>
+                <th>Eliminar</th>
+
+            </tr>
+
+        </thead>
+
+        <tbody id="tbodySalidas">
+
+        </tbody>
+
+    </table>
+
+    <input
+        type="text"
+        id="solicitadoPor"
+        class="form-control mb-3"
+        placeholder="Solicitado por"
+    >
+
+    <label class="mb-1">
+
+        Entregado por
+
+    </label>
+
+    <select
+        id="entregadoPor"
+        class="form-select mb-3"
+    >
+
+        <option value="Miguel">
+            Miguel
+        </option>
+
+        <option value="Brandon">
+            Brandon
+        </option>
+
+        <option value="Alexis">
+            Alexis
+        </option>
+
+    </select>
+
+    <button
+        class="btn btn-success"
+        onclick="guardarTodas()"
+    >
+
+        Guardar Todas las Salidas
+
+    </button>
+
 </div>
 
-<h3 class="mt-4">
-    Productos escaneados
-</h3>
-
-<table class="table table-bordered">
-
-    <thead>
-
-        <tr>
-            <th>Código</th>
-            <th>Producto</th>
-            <th>Cantidad</th>
-            <th>Eliminar</th>
-        </tr>
-
-    </thead>
-
-    <tbody id="tbodySalidas">
-
-    </tbody>
-
-</table>
-
-
-<input
-    type="text"
-    id="solicitadoPor"
-    class="form-control mb-3"
-    placeholder="Solicitado por"
-/>
-
-<button
-    class="btn btn-success"
-    onclick="guardarTodas()"
->
-
-    Guardar Todas las Salidas
-
-</button>
-
-<label class="mb-1">
-    Entregado por
-</label>
-
-<select
-    id="entregadoPor"
-    class="form-select mb-3"
->
-
-    <option value="Alexis">
-        Miguel
-    </option>
-
-    <option value="Juan">
-        Brandon
-    </option>
-
-    <option value="Pedro">
-        Alexis
-    </option>
-
-</select>
 <script src="../js/pagJs/tampo/tampografia.js"></script>

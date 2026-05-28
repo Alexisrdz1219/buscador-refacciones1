@@ -164,8 +164,9 @@ async function guardarTodas(){
 
         const solicitado_por =
         document.getElementById("solicitadoPor").value;
+
         const entregado_por =
-document.getElementById("entregadoPor").value;
+        document.getElementById("entregadoPor").value;
 
         const res = await fetch(
 
@@ -183,7 +184,7 @@ document.getElementById("entregadoPor").value;
 
                     solicitado_por,
 
-                    entregado_por: "Alexis",
+                    entregado_por,
 
                     movimientos: carritoSalidas
 
@@ -202,12 +203,6 @@ document.getElementById("entregadoPor").value;
         carritoSalidas = [];
 
         renderTabla();
-
-        document.getElementById(
-            "solicitadoPor"
-        ).value = "";
-
-        scannerInput.focus();
 
     }catch(error){
 
