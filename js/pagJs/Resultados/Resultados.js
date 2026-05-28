@@ -156,64 +156,151 @@ async function verProducto(id, elemento){
         // MOSTRAR INFO
         vistaProducto.innerHTML = `
 
-            <h3 class="mb-3">
-                ${producto.nombreprod || "Sin nombre"}
-            </h3>
+<div class="producto-detalle">
 
-            <hr>
+    <!-- HEADER -->
+    <div class="producto-top">
 
-            <img 
-                src="${producto.imagen || "https://via.placeholder.com/400x300?text=Sin+Imagen"}" 
-                alt="${producto.nombreprod || "Refacción"}"
-                class="img-fluid mb-3"
-            >
+        <div>
 
-            <hr>
+            <div class="producto-badges">
 
-            <p>
-                <strong>Ref Interna:</strong>
-                ${producto.refinterna || "N/A"}
-            </p>
-
-            <p>
-                <strong>Ubicación:</strong>
-                ${producto.ubicacion || "Sin ubicación"}
-            </p>
-
-            <p>
-                <strong>Tipo:</strong>
-                ${producto.unidad || "Sin tipo"}
-            </p>
-
-            <p>
-                <strong>Stock:</strong>
-                ${producto.cantidad || 0}
-            </p>
-
-            <p>
-                <strong>Descripción:</strong>
-                ${producto.palClave || "Sin descripción"}
-            </p>
-
-            <hr>
-
-            <h6>Tags</h6>
-
-            <div class="d-flex flex-wrap gap-2">
-
-                ${
-                    producto.tags?.length > 0
-                    ? producto.tags.map(tag => `
-                        <span class="badge bg-primary">
-                            ${tag}
-                        </span>
-                    `).join("")
-                    : "<span>Sin tags</span>"
-                }
+                <span class="badge-original">
+                    Original
+                </span>
 
             </div>
 
-        `;
+            <h2 class="producto-titulo">
+                ${producto.nombreprod || "Sin nombre"}
+            </h2>
+
+            <p class="producto-subtitulo">
+                ${producto.palclave || "Sin descripción"}
+            </p>
+
+            <div class="producto-estados">
+
+    ${producto.completada ? `
+        <span class="estado-badge completada">
+            ✅ Completada
+        </span>
+    ` : ''}
+
+    ${producto.en_envio ? `
+        <span class="estado-badge envio">
+            🚚 En envío
+        </span>
+    ` : ''}
+
+    ${producto.destacada ? `
+        <span class="estado-badge destacada">
+            ⭐ Seguimiento
+        </span>
+    ` : ''}
+
+    ${producto.alerta_activa ? `
+        <span class="estado-badge alerta">
+            🚨 Alerta activa
+        </span>
+    ` : ''}
+
+</div>
+
+        </div>
+
+        <div class="producto-stock-box">
+
+            <span class="stock-badge">
+                En existencia (${producto.cantidad || 0})
+            </span>
+
+        </div>
+
+    </div>
+
+    <!-- CONTENIDO -->
+    <div class="producto-grid">
+
+        <!-- IMAGEN -->
+        <div class="producto-imagen-box">
+
+            <img 
+                src="${producto.imagen || "https://via.placeholder.com/500x400?text=Sin+Imagen"}"
+                class="producto-imagen"
+            >
+
+        </div>
+
+        <!-- INFO -->
+        <div class="producto-info-box">
+
+            <div class="info-row">
+                <span>Ref Interna</span>
+                <strong>${producto.refinterna || "N/A"}</strong>
+            </div>
+
+            <div class="info-row">
+                <span>Ubicación</span>
+                <strong>${producto.ubicacion || "N/A"}</strong>
+            </div>
+
+            <div class="info-row">
+                <span>Tipo</span>
+                <strong>${producto.unidad || "N/A"}</strong>
+            </div>
+
+            <div class="info-row">
+                <span>Stock</span>
+                <strong>${producto.cantidad || 0}</strong>
+            </div>
+
+            <div class="info-row">
+                <span>Palabras clave</span>
+                <strong>${producto.palclave || "N/A"}</strong>
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- UBICACION -->
+    <div class="ubicacion-box">
+
+        <div class="ubicacion-header">
+
+            <div>
+                <h4>Ubicación en almacén</h4>
+
+                <span class="ubicacion-code">
+                    ${producto.ubicacion || "Sin ubicación"}
+                </span>
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- BOTONES -->
+    <div class="producto-actions">
+
+        <button class="btn-apple primary">
+            Ver detalles completos
+        </button>
+
+        <button class="btn-apple">
+            Agregar a lista
+        </button>
+
+        <button class="btn-apple">
+            Imprimir ubicación
+        </button>
+
+    </div>
+
+</div>
+
+`;
 
     }catch(error){
 
