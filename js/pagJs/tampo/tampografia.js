@@ -8,11 +8,19 @@ const API =
 const scannerInput =
 document.getElementById("scannerInput");
 
-scannerInput.addEventListener("change", async (e) => {
+scannerInput.addEventListener("input", async (e) => {
 
-    const codigo = e.target.value.trim();
+    const codigo =
+    e.target.value.trim();
 
-    console.log("CODIGO ESCANEADO:", codigo);
+    // SI AUN NO COMPLETA
+    if(codigo.length < 6){
+
+        return;
+
+    }
+
+    console.log("CODIGO:", codigo);
 
     try{
 
@@ -30,23 +38,19 @@ scannerInput.addEventListener("change", async (e) => {
 
         const producto = await res.json();
 
-        console.log("PRODUCTO:", producto);
-
-        // BUSCAR SI YA EXISTE
+        // VERIFICAR SI YA EXISTE
         const existe = carritoSalidas.find(
 
             item => item.id === producto.id
 
         );
 
-        // SI YA EXISTE
         if(existe){
 
             existe.cantidad++;
 
         }else{
 
-            // AGREGAR NUEVO
             carritoSalidas.push({
 
                 id: producto.id,
@@ -65,6 +69,7 @@ scannerInput.addEventListener("change", async (e) => {
 
         renderTabla();
 
+        // LIMPIAR INPUT AUTOMÁTICO
         scannerInput.value = "";
 
         scannerInput.focus();
@@ -73,7 +78,7 @@ scannerInput.addEventListener("change", async (e) => {
 
         console.log(error);
 
-        alert("Producto no encontrado");
+        scannerInput.value = "";
 
     }
 
