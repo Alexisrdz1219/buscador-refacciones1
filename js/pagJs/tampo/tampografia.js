@@ -164,6 +164,8 @@ async function guardarTodas(){
 
         const solicitado_por =
         document.getElementById("solicitadoPor").value;
+        const entregado_por =
+document.getElementById("entregadoPor").value;
 
         const res = await fetch(
 
