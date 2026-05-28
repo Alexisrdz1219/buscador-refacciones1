@@ -1,6 +1,9 @@
+let carritoSalidas = [];
+
 let refaccionActual = null;
 
-const API = "https://buscador-refaccionesbackend.onrender.com";
+const API =
+"https://buscador-refaccionesbackend.onrender.com";
 
 const scannerInput =
 document.getElementById("scannerInput");
@@ -19,27 +22,52 @@ scannerInput.addEventListener("change", async (e) => {
 
         );
 
-        // SI NO ENCUENTRA
         if(!res.ok){
 
-            throw new Error("Producto no encontrado");
+            throw new Error("No encontrado");
 
         }
 
-        const data = await res.json();
+        const producto = await res.json();
 
-        console.log("PRODUCTO:", data);
+        console.log("PRODUCTO:", producto);
 
-        refaccionActual = data;
+        // BUSCAR SI YA EXISTE
+        const existe = carritoSalidas.find(
 
-        document.getElementById("nombreProducto")
-        .innerText = data.nombreprod || "Sin nombre";
+            item => item.id === producto.id
 
-        document.getElementById("codigoProducto")
-        .innerText = data.refinterna || data.refInterna || "";
+        );
 
-        document.getElementById("ubicacionProducto")
-        .innerText = data.ubicacion || "Sin ubicación";
+        // SI YA EXISTE
+        if(existe){
+
+            existe.cantidad++;
+
+        }else{
+
+            // AGREGAR NUEVO
+            carritoSalidas.push({
+
+                id: producto.id,
+
+                codigo:
+                producto.refinterna,
+
+                nombreprod:
+                producto.nombreprod,
+
+                cantidad: 1
+
+            });
+
+        }
+
+        renderTabla();
+
+        scannerInput.value = "";
+
+        scannerInput.focus();
 
     }catch(error){
 
@@ -51,26 +79,90 @@ scannerInput.addEventListener("change", async (e) => {
 
 });
 
-async function guardarMovimiento(){
+
+function renderTabla(){
+
+    const tbody =
+    document.getElementById("tbodySalidas");
+
+    tbody.innerHTML = "";
+
+    carritoSalidas.forEach((item, index) => {
+
+        tbody.innerHTML += `
+
+            <tr>
+
+                <td>${item.codigo}</td>
+
+                <td>${item.nombreprod}</td>
+
+                <td>
+
+                    <input
+                        type="number"
+                        min="1"
+                        value="${item.cantidad}"
+                        onchange="cambiarCantidad(${index}, this.value)"
+                        class="form-control"
+                    >
+
+                </td>
+
+                <td>
+
+                    <button
+                        class="btn btn-danger"
+                        onclick="eliminarProducto(${index})"
+                    >
+
+                        X
+
+                    </button>
+
+                </td>
+
+            </tr>
+
+        `;
+
+    });
+
+}
+
+function cambiarCantidad(index, valor){
+
+    carritoSalidas[index].cantidad =
+    Number(valor);
+
+}
+
+function eliminarProducto(index){
+
+    carritoSalidas.splice(index, 1);
+
+    renderTabla();
+
+}
+
+async function guardarTodas(){
 
     try{
 
-        if(!refaccionActual){
+        if(carritoSalidas.length === 0){
 
-            alert("No hay producto seleccionado");
+            alert("No hay productos");
 
             return;
-        }
 
-        const cantidad =
-        document.getElementById("cantidad").value;
+        }
 
         const solicitado_por =
         document.getElementById("solicitadoPor").value;
 
         const res = await fetch(
 
-            `${API}/movimientos`,
+            `${API}/movimientos-masivos`,
 
             {
 
@@ -82,13 +174,11 @@ async function guardarMovimiento(){
 
                 body: JSON.stringify({
 
-                    refaccion_id: refaccionActual.id,
-
-                    cantidad,
-
                     solicitado_por,
 
-                    entregado_por: "Alexis"
+                    entregado_por: "Alexis",
+
+                    movimientos: carritoSalidas
 
                 })
 
@@ -100,25 +190,15 @@ async function guardarMovimiento(){
 
         console.log(data);
 
-        alert("Movimiento guardado");
+        alert("Salidas registradas");
 
-        // LIMPIAR FORMULARIO
-        scannerInput.value = "";
+        carritoSalidas = [];
 
-        document.getElementById("cantidad").value = "";
+        renderTabla();
 
-        document.getElementById("solicitadoPor").value = "";
-
-        document.getElementById("nombreProducto")
-        .innerText = "Producto";
-
-        document.getElementById("codigoProducto")
-        .innerText = "";
-
-        document.getElementById("ubicacionProducto")
-        .innerText = "";
-
-        refaccionActual = null;
+        document.getElementById(
+            "solicitadoPor"
+        ).value = "";
 
         scannerInput.focus();
 

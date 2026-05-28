@@ -39,15 +39,48 @@
             placeholder="Solicitado por"
         />
 
-        <button
-            class="btn btn-primary"
-            onclick="guardarMovimiento()"
-        >
-            Guardar
-        </button>
 
     </div>
 
 </div>
 
+<h3 class="mt-4">
+    Productos escaneados
+</h3>
+
+<table class="table table-bordered">
+
+    <thead>
+
+        <tr>
+            <th>Código</th>
+            <th>Producto</th>
+            <th>Cantidad</th>
+            <th>Eliminar</th>
+        </tr>
+
+    </thead>
+
+    <tbody id="tbodySalidas">
+
+    </tbody>
+
+</table>
+
+
+<input
+    type="text"
+    id="solicitadoPor"
+    class="form-control mb-3"
+    placeholder="Solicitado por"
+/>
+
+<button
+    class="btn btn-success"
+    onclick="guardarTodas()"
+>
+
+    Guardar Todas las Salidas
+
+</button>
 <script src="../js/pagJs/tampo/tampografia.js"></script>
