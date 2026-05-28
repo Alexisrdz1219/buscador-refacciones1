@@ -9,6 +9,24 @@ let paginaActual = 1;
 const LIMITE = 20;
 let totalPaginas = 1;
 
+
+if("serviceWorker" in navigator){
+
+    navigator.serviceWorker.register("/sw.js")
+
+    .then(() => {
+
+        console.log("SW registrado");
+
+    })
+
+    .catch((error) => {
+
+        console.log(error);
+
+    });
+
+}
 // =========================
 // 🔒 Validación de sesión
 // =========================
