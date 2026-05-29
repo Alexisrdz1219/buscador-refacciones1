@@ -47,76 +47,33 @@ async function mostrarUltimaActualizacion(){
 
   try{
 
-    const token =
-    localStorage.getItem("token");
-
     const res = await fetch(
 
-      "https://buscador-refaccionesbackend.onrender.com/refacciones?page=1&limit=20",
-
-      {
-        headers: {
-          Authorization: `Bearer ${token}`
-        }
-      }
+      "https://buscador-refaccionesbackend.onrender.com/ultima-actualizacion"
 
     );
 
-    if(res.status === 401){
-
-      elemento.textContent =
-      "Sesión expirada";
-
-      window.location.href =
-      "/login.html";
-
-      return;
-
-    }
-
-    const respuesta =
+    const data =
     await res.json();
 
-    const data =
-    respuesta.data;
+    if(
 
-    if(!Array.isArray(data)
-      || data.length === 0){
+      !data.ok ||
+
+      !data.ultimaActualizacion
+
+    ){
 
       elemento.textContent =
-      "No hay registros aún";
+      "Sin actualizaciones";
 
       return;
 
     }
 
-    // FILTRAR FECHAS VALIDAS
-    const fechasValidas = data
+    const fecha = new Date(
 
-    .map(r =>
-
-      r.updated_at ||
-      r.created_at
-
-    )
-
-    .filter(Boolean)
-
-    .map(f => new Date(f));
-
-    // SI NO HAY FECHAS
-    if(fechasValidas.length === 0){
-
-      elemento.textContent =
-      "Sin fecha disponible";
-
-      return;
-
-    }
-
-    const ultima = new Date(
-
-      Math.max(...fechasValidas)
+      data.ultimaActualizacion
 
     );
 
@@ -126,25 +83,25 @@ async function mostrarUltimaActualizacion(){
 
     if(
 
-      ultima.toDateString()
+      fecha.toDateString()
       ===
       ahora.toDateString()
 
     ){
 
-      texto = `Hoy, ${ultima.toLocaleTimeString([], {
+      texto = `Hoy, ${fecha.toLocaleTimeString([], {
 
-        hour: '2-digit',
-        minute: '2-digit'
+        hour: "2-digit",
+        minute: "2-digit"
 
       })}`;
 
     }else{
 
-      texto = ultima.toLocaleString([], {
+      texto = fecha.toLocaleString([], {
 
-        dateStyle: 'short',
-        timeStyle: 'short'
+        dateStyle: "short",
+        timeStyle: "short"
 
       });
 
@@ -152,18 +109,19 @@ async function mostrarUltimaActualizacion(){
 
     elemento.textContent = texto;
 
-  }catch(err){
+  }catch(error){
+
+    console.log(error);
 
     elemento.textContent =
-    "Error al obtener actualización";
-
-    console.error(err);
+    "Error al obtener fecha";
 
   }
 
 }
 
 mostrarUltimaActualizacion();
+
 
 async function mostrarTotalRefacciones(){
 
