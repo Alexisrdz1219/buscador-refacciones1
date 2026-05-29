@@ -35,6 +35,9 @@ fetch("https://buscador-refaccionesbackend.onrender.com/health")
     console.error(err);
   });
 
+
+
+
 async function mostrarUltimaActualizacion(){
 
   const elemento =
@@ -87,21 +90,35 @@ async function mostrarUltimaActualizacion(){
 
     }
 
-    const ultima =
-    data.reduce((max, r) => {
+    // FILTRAR FECHAS VALIDAS
+    const fechasValidas = data
 
-      const fecha = new Date(
+    .map(r =>
 
-        r.updated_at ||
-        r.created_at
+      r.updated_at ||
+      r.created_at
 
-      );
+    )
 
-      return fecha > max
-        ? fecha
-        : max;
+    .filter(Boolean)
 
-    }, new Date(0));
+    .map(f => new Date(f));
+
+    // SI NO HAY FECHAS
+    if(fechasValidas.length === 0){
+
+      elemento.textContent =
+      "Sin fecha disponible";
+
+      return;
+
+    }
+
+    const ultima = new Date(
+
+      Math.max(...fechasValidas)
+
+    );
 
     const ahora = new Date();
 
