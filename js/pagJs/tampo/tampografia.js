@@ -163,10 +163,29 @@ async function guardarTodas(){
         }
 
         const solicitado_por =
-        document.getElementById("solicitadoPor").value;
+        document.getElementById("solicitadoPor").value.trim();
 
         const entregado_por =
         document.getElementById("entregadoPor").value;
+
+        const maquina =
+        document.getElementById("maquina").value.trim();
+
+        if(!solicitado_por){
+
+            alert("Ingresa quién solicitó");
+
+            return;
+
+        }
+
+        if(!maquina){
+
+            alert("Ingresa la máquina");
+
+            return;
+
+        }
 
         const res = await fetch(
 
@@ -186,6 +205,8 @@ async function guardarTodas(){
 
                     entregado_por,
 
+                    maquina,
+
                     movimientos: carritoSalidas
 
                 })
@@ -203,6 +224,11 @@ async function guardarTodas(){
         carritoSalidas = [];
 
         renderTabla();
+
+        document.getElementById("solicitadoPor").value = "";
+        document.getElementById("maquina").value = "";
+
+        scannerInput.focus();
 
     }catch(error){
 

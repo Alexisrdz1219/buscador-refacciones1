@@ -63,6 +63,12 @@ async function cargarMovimientos(){
 
                     </td>
 
+                    <td>
+
+    ${mov.maquina || ""}
+
+</td>
+
                 </tr>
 
             `;
