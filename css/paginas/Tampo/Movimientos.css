@@ -1,0 +1,165 @@
+body{
+
+    background: #f5f5f7;
+
+    font-family:
+    -apple-system,
+    BlinkMacSystemFont,
+    "SF Pro Display",
+    sans-serif;
+
+    color: #1d1d1f;
+}
+
+/* CONTENEDOR */
+
+.container{
+
+    max-width: 1200px;
+}
+
+/* TITULO */
+
+h2{
+
+    font-size: 2rem;
+
+    font-weight: 700;
+
+    color: #111;
+
+    margin-bottom: 30px !important;
+}
+
+/* TABLA */
+
+.table{
+
+    background: rgba(255,255,255,0.92);
+
+    backdrop-filter: blur(20px);
+
+    -webkit-backdrop-filter: blur(20px);
+
+    border-radius: 24px;
+
+    overflow: hidden;
+
+    border: none !important;
+
+    box-shadow:
+    0 10px 35px rgba(0,0,0,0.08);
+}
+
+/* HEADER */
+
+.table thead{
+
+    background: #f2f2f7;
+
+    color: #1d1d1f;
+}
+
+/* ELIMINAR BOOTSTRAP DARK */
+
+.table-dark{
+
+    --bs-table-bg: #f2f2f7 !important;
+
+    --bs-table-color: #1d1d1f !important;
+
+    border: none !important;
+}
+
+/* COLUMNAS HEADER */
+
+.table th{
+
+    border: none !important;
+
+    padding: 20px;
+
+    font-size: 0.95rem;
+
+    font-weight: 700;
+
+    letter-spacing: 0.3px;
+}
+
+/* CELDAS */
+
+.table td{
+
+    padding: 18px;
+
+    vertical-align: middle;
+
+    border-color: #ececec;
+
+    color: #3a3a3c;
+
+    font-size: 0.95rem;
+}
+
+/* HOVER FILAS */
+
+.table-hover tbody tr{
+
+    transition: 0.2s;
+}
+
+.table-hover tbody tr:hover{
+
+    background: rgba(0,113,227,0.04);
+
+    transform: scale(1.002);
+}
+
+/* CODIGO */
+
+.table td:nth-child(2){
+
+    font-weight: 600;
+
+    color: #0071e3;
+}
+
+/* PRODUCTO */
+
+.table td:nth-child(3){
+
+    font-weight: 600;
+
+    color: #1d1d1f;
+}
+
+/* CANTIDAD */
+
+.table td:nth-child(4){
+
+    font-weight: 700;
+
+    color: #34c759;
+}
+
+/* RESPONSIVE */
+
+@media(max-width: 768px){
+
+    h2{
+
+        font-size: 1.5rem;
+    }
+
+    .table{
+
+        font-size: 0.85rem;
+    }
+
+    .table th,
+    .table td{
+
+        padding: 12px;
+    }
+
+}
