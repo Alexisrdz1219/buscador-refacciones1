@@ -35,249 +35,240 @@ fetch("https://buscador-refaccionesbackend.onrender.com/health")
     console.error(err);
   });
 
+//   async function mostrarUltimaActualizacion() {
+//     const elemento = document.getElementById("ultimaActualizacion");
 
+//     try {
+//       const res = await fetch("https://buscador-refaccionesbackend.onrender.com/refacciones");
+//       const data = await res.json();
 
+//       if (data.length === 0) {
+//         elemento.textContent = "No hay registros aún";
+//         return;
+//       }
 
-async function mostrarUltimaActualizacion(){
+//       // Suponiendo que cada refacción tiene 'updated_at' o 'created_at'
+//       const ultima = data.reduce((max, r) => {
+//         const fecha = new Date(r.updated_at || r.created_at);
+//         return fecha > max ? fecha : max;
+//       }, new Date(0));
 
-  const elemento =
-  document.getElementById(
-    "ultimaActualizacion"
-  );
+//       // Formateo legible, ejemplo: Hoy, 10:45 AM
+//       const ahora = new Date();
+//       let texto = "";
 
-  try{
+//       if (ultima.toDateString() === ahora.toDateString()) {
+//         texto = `Hoy, ${ultima.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}`;
+//       } else {
+//         texto = ultima.toLocaleString([], { dateStyle: 'short', timeStyle: 'short' });
+//       }
 
-    const res = await fetch(
+//       elemento.textContent = texto;
 
-      "https://buscador-refaccionesbackend.onrender.com/ultima-actualizacion"
+//     } catch (err) {
+//       elemento.textContent = "Error al obtener actualización";
+//       console.error(err);
+//     }
+// }
+async function mostrarUltimaActualizacion() {
+  const elemento = document.getElementById("ultimaActualizacion");
 
-    );
+  try {
+    const token = localStorage.getItem("token");
 
-    const data =
-    await res.json();
+    const res = await fetch("https://buscador-refaccionesbackend.onrender.com/refacciones", {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    });
 
-    if(
-
-      !data.ok ||
-
-      !data.ultimaActualizacion
-
-    ){
-
-      elemento.textContent =
-      "Sin actualizaciones";
-
+    if (res.status === 401) {
+      elemento.textContent = "Sesión expirada";
+      window.location.href = "/login.html";
       return;
-
     }
 
-    const fecha = new Date(
+    const data = await res.json();
 
-      data.ultimaActualizacion
+    if (!Array.isArray(data) || data.length === 0) {
+      elemento.textContent = "No hay registros aún";
+      return;
+    }
 
-    );
+    const ultima = data.reduce((max, r) => {
+      const fecha = new Date(r.updated_at || r.created_at);
+      return fecha > max ? fecha : max;
+    }, new Date(0));
 
     const ahora = new Date();
-
     let texto = "";
 
-    if(
-
-      fecha.toDateString()
-      ===
-      ahora.toDateString()
-
-    ){
-
-      texto = `Hoy, ${fecha.toLocaleTimeString([], {
-
-        hour: "2-digit",
-        minute: "2-digit"
-
-      })}`;
-
-    }else{
-
-      texto = fecha.toLocaleString([], {
-
-        dateStyle: "short",
-        timeStyle: "short"
-
-      });
-
+    if (ultima.toDateString() === ahora.toDateString()) {
+      texto = `Hoy, ${ultima.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}`;
+    } else {
+      texto = ultima.toLocaleString([], { dateStyle: 'short', timeStyle: 'short' });
     }
 
     elemento.textContent = texto;
 
-  }catch(error){
-
-    console.log(error);
-
-    elemento.textContent =
-    "Error al obtener fecha";
-
+  } catch (err) {
+    elemento.textContent = "Error al obtener actualización";
+    console.error(err);
   }
-
 }
 
+// Llamar la función al cargar la página
 mostrarUltimaActualizacion();
 
+// async function mostrarTotalRefacciones() {
+//   const elemento = document.getElementById("totalRefacciones");
 
-async function mostrarTotalRefacciones(){
+//   try {
+//     const res = await fetch("https://buscador-refaccionesbackend.onrender.com/refacciones");
+//     const data = await res.json();
 
-  const elemento =
-  document.getElementById(
-    "totalRefacciones"
-  );
+//     // Total de registros
+//     const total = data.length;
 
-  try{
+//     // Mostrar en la tarjeta con formato de miles
+//     elemento.textContent = `${total.toLocaleString()} Refacciones`;
 
-    const token =
-    localStorage.getItem("token");
+//   } catch (err) {
+//     elemento.textContent = "Error al obtener total";
+//     console.error(err);
+//   }
+// }
 
-    const res = await fetch(
+async function mostrarTotalRefacciones() {
+  const elemento = document.getElementById("totalRefacciones");
 
-      "https://buscador-refaccionesbackend.onrender.com/refacciones?page=1&limit=1",
+  try {
+    const token = localStorage.getItem("token");
 
-      {
-        headers: {
-          Authorization: `Bearer ${token}`
-        }
+    const res = await fetch("https://buscador-refaccionesbackend.onrender.com/refacciones", {
+      headers: {
+        Authorization: `Bearer ${token}`
       }
+    });
 
-    );
-
-    if(res.status === 401){
-
-      elemento.textContent =
-      "Sesión expirada";
-
-      window.location.href =
-      "/login.html";
-
+    if (res.status === 401) {
+      elemento.textContent = "Sesión expirada";
+      window.location.href = "/login.html";
       return;
-
     }
 
-    const data =
-    await res.json();
+    const data = await res.json();
 
-    elemento.textContent =
-    `${data.total.toLocaleString()} Refacciones`;
+    if (!Array.isArray(data)) {
+      elemento.textContent = "Error en datos";
+      console.error(data);
+      return;
+    }
 
-  }catch(err){
+    const total = data.length;
 
-    elemento.textContent =
-    "Error al obtener total";
+    elemento.textContent = `${total.toLocaleString()} Refacciones`;
 
+  } catch (err) {
+    elemento.textContent = "Error al obtener total";
     console.error(err);
-
   }
-
 }
 
+// Llamar la función al cargar la página
 mostrarTotalRefacciones();
 
-async function mostrarUltimosProductos(){
 
-  const nombreElem =
-  document.getElementById(
-    "ultimoProducto"
-  );
+// async function mostrarUltimosProductos() {
+//   const nombreElem = document.getElementById("ultimoProducto");
+//   const etiquetasElem = document.getElementById("ultimasEtiquetas");
 
-  const etiquetasElem =
-  document.getElementById(
-    "ultimasEtiquetas"
-  );
+//   // 🔥 VALIDACIÓN CLAVE
+//   if (!nombreElem || !etiquetasElem) return;
 
-  if(!nombreElem || !etiquetasElem){
+//   try {
+//     const res = await fetch("https://buscador-refaccionesbackend.onrender.com/refacciones");
+//     const data = await res.json();
 
-    return;
+//     if (!data.length) {
+//       nombreElem.textContent = "No hay refacciones";
+//       return;
+//     }
 
-  }
+//     const ultimos = data.sort((a, b) => b.id - a.id).slice(0, 1);
+//     const ultimo = ultimos[0];
 
-  try{
+//     nombreElem.textContent = ultimo.nombreprod || "Sin nombre";
 
-    const token =
-    localStorage.getItem("token");
+//     etiquetasElem.innerHTML = "";
 
-    const res = await fetch(
+//     if (ultimo.palclave) {
+//       const etiquetas = ultimo.palclave.split(",");
+//       etiquetas.forEach(et => {
+//         const span = document.createElement("span");
+//         span.className = "badge bg-light text-dark border rounded-pill px-3";
+//         span.textContent = et.trim();
+//         etiquetasElem.appendChild(span);
+//       });
+//     }
 
-      "https://buscador-refaccionesbackend.onrender.com/refacciones?page=1&limit=1",
+//   } catch (err) {
+//     if (nombreElem) {
+//       nombreElem.textContent = "Error al cargar";
+//     }
+//     console.error(err);
+//   }
+// }
+async function mostrarUltimosProductos() {
+  const nombreElem = document.getElementById("ultimoProducto");
+  const etiquetasElem = document.getElementById("ultimasEtiquetas");
 
-      {
-        headers: {
-          Authorization: `Bearer ${token}`
-        }
+  if (!nombreElem || !etiquetasElem) return;
+
+  try {
+    const token = localStorage.getItem("token");
+
+    const res = await fetch("https://buscador-refaccionesbackend.onrender.com/refacciones", {
+      headers: {
+        Authorization: `Bearer ${token}`
       }
+    });
 
-    );
-
-    if(res.status === 401){
-
-      nombreElem.textContent =
-      "Sesión expirada";
-
-      window.location.href =
-      "/login.html";
-
+    if (res.status === 401) {
+      nombreElem.textContent = "Sesión expirada";
+      window.location.href = "/login.html";
       return;
-
     }
 
-    const respuesta =
-    await res.json();
+    const data = await res.json();
 
-    const data =
-    respuesta.data;
-
-    if(!Array.isArray(data)
-      || data.length === 0){
-
-      nombreElem.textContent =
-      "No hay refacciones";
-
+    if (!Array.isArray(data) || data.length === 0) {
+      nombreElem.textContent = "No hay refacciones";
       return;
-
     }
 
-    const ultimo = data[0];
+    const ultimo = data.sort((a, b) => b.id - a.id)[0];
 
-    nombreElem.textContent =
-    ultimo.nombreprod || "Sin nombre";
+    nombreElem.textContent = ultimo.nombreprod || "Sin nombre";
 
     etiquetasElem.innerHTML = "";
 
-    if(ultimo.tags
-      && ultimo.tags.length > 0){
-
-      ultimo.tags.forEach(et => {
-
-        const span =
-        document.createElement("span");
-
-        span.className =
-        "badge bg-light text-dark border rounded-pill px-3";
-
-        span.textContent = et;
-
+    if (ultimo.palclave) {
+      const etiquetas = ultimo.palclave.split(",");
+      etiquetas.forEach(et => {
+        const span = document.createElement("span");
+        span.className = "badge bg-light text-dark border rounded-pill px-3";
+        span.textContent = et.trim();
         etiquetasElem.appendChild(span);
-
       });
-
     }
 
-  }catch(err){
-
-    nombreElem.textContent =
-    "Error al cargar";
-
+  } catch (err) {
+    nombreElem.textContent = "Error al cargar";
     console.error(err);
-
   }
-
 }
-
+// Llamar al cargar la página
 mostrarUltimosProductos();
 
 async function cargarLogs() {
