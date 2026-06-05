@@ -7,9 +7,12 @@ const API = "https://buscador-refaccionesbackend.onrender.com";
 const scannerInput = document.getElementById("scannerInput");
 const sugerenciasBox = document.getElementById("sugerenciasBox");
 
-// ─── UN SOLO LISTENER DE INPUT ───────────────────────────────────────────────
+let ultimoTiempo = 0;
+let bufferCodigo = "";
+
 scannerInput.addEventListener("input", (e) => {
     const q = e.target.value.trim();
+    const ahora = Date.now();
 
     clearTimeout(debounceTimer);
     sugerenciasBox.style.display = "none";
@@ -17,12 +20,33 @@ scannerInput.addEventListener("input", (e) => {
 
     if (q.length < 2) return;
 
-    // Escáner: cuando llega un código largo de golpe (≥6 chars sin pausa)
-    // el debounce igual lo maneja, no necesitas lógica separada
+    const tiempoDesdeUltimaLetra = ahora - ultimoTiempo;
+    ultimoTiempo = ahora;
+
+    // Si el escáner pegó el código de golpe (caracteres muy rápidos)
+    // esperamos 80ms sin actividad para confirmar que terminó
+    const esEscaner = tiempoDesdeUltimaLetra < 50;
 
     debounceTimer = setTimeout(async () => {
+        const valorActual = scannerInput.value.trim();
+        if (!valorActual) return;
+
         try {
-            const res = await fetch(`${API}/buscar-sugerencias?q=${encodeURIComponent(q)}`);
+            const res = await fetch(`${API}/buscar-codigo?codigo=${encodeURIComponent(valorActual)}`);
+
+            if (res.ok) {
+                // ✅ Encontró por código exacto (escáner)
+                const producto = await res.json();
+                agregarAlCarrito(producto);
+                scannerInput.value = "";
+                scannerInput.focus();
+                return;
+            }
+        } catch (e) {}
+
+        // Si no encontró por código exacto, muestra sugerencias (escritura manual)
+        try {
+            const res = await fetch(`${API}/buscar-sugerencias?q=${encodeURIComponent(valorActual)}`);
             const sugerencias = await res.json();
 
             if (!sugerencias.length) return;
@@ -47,7 +71,8 @@ scannerInput.addEventListener("input", (e) => {
         } catch (e) {
             console.error("Error sugerencias:", e);
         }
-    }, 300);
+
+    }, esEscaner ? 80 : 300); // escáner espera poco, escritura manual espera más
 });
 
 // ─── ENTER: busca por código exacto (escáner físico) ─────────────────────────
