@@ -24,6 +24,19 @@
 
     </h2>
 
+    <div class="container mt-4">
+
+    <h2 class="mb-4">Historial de Movimientos</h2>
+
+    <!-- ← agrega esto -->
+    <div class="d-flex align-items-center gap-3 mb-3">
+        <label class="mb-0 fw-semibold">Mes:</label>
+        <select id="filtroMes" class="form-select w-auto" onchange="cambiarMes()">
+            <option value="">Todos</option>
+        </select>
+        <span id="totalMovimientos" class="text-muted"></span>
+    </div>
+
     <table class="table table-bordered table-hover">
 
     <thead class="table-dark">
@@ -38,6 +51,7 @@
         <th>Entregó</th>
         <th>Máquina</th>
         <th>Nota</th>
+        <th>Eliminar</th>  <!-- ← agrega esto -->
 
     </tr>
 
