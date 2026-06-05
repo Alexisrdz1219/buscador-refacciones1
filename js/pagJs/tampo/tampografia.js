@@ -64,11 +64,12 @@ scannerInput.addEventListener("keydown", async (e) => {
 
         const producto = await res.json();
         agregarAlCarrito(producto);
-        scannerInput.value = "";
-        scannerInput.focus();
+        scannerInput.value = "";   // ← limpia
+        scannerInput.focus();      // ← listo para el siguiente escaneo
     } catch (error) {
         console.log("No encontrado:", error);
         scannerInput.value = "";
+        scannerInput.focus();
     }
 });
 
