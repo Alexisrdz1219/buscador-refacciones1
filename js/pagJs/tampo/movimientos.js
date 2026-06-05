@@ -1,88 +1,36 @@
-const API =
-"https://buscador-refaccionesbackend.onrender.com";
+const API = "https://buscador-refaccionesbackend.onrender.com";
 
-async function cargarMovimientos(){
+async function cargarMovimientos() {
+  try {
+    const res = await fetch(`${API}/movimientos`);
 
-    try{
+    const data = await res.json();
 
-        const res = await fetch(
+    console.log(data);
 
-            `${API}/movimientos`
+    const tbody = document.getElementById("tbodyMovimientos");
 
-        );
+    tbody.innerHTML = "";
 
-        const data = await res.json();
+   data.forEach((mov) => {
+    tbody.innerHTML += `
+        <tr>
+            <td>${new Date(mov.fecha).toLocaleString()}</td>
+            <td>${mov.refinterna || ""}</td>
+            <td>${mov.nombreprod || ""}</td>
+            <td>${mov.cantidad}</td>
+            <td>${mov.solicitado_por || ""}</td>
+            <td>${mov.entregado_por || ""}</td>
+            <td>${mov.maquina || ""}</td>
+            <td>${mov.nota || "—"}</td>  
+        </tr>
+    `;
+});
+  } catch (error) {
+    console.log(error);
 
-        console.log(data);
-
-        const tbody =
-        document.getElementById("tbodyMovimientos");
-
-        tbody.innerHTML = "";
-
-        data.forEach((mov) => {
-
-            tbody.innerHTML += `
-
-                <tr>
-
-                    <td>
-
-                        ${new Date(mov.fecha)
-                        .toLocaleString()}
-
-                    </td>
-
-                    <td>
-
-                        ${mov.refinterna || ""}
-
-                    </td>
-
-                    <td>
-
-                        ${mov.nombreprod || ""}
-
-                    </td>
-
-                    <td>
-
-                        ${mov.cantidad}
-
-                    </td>
-
-                    <td>
-
-                        ${mov.solicitado_por || ""}
-
-                    </td>
-
-                    <td>
-
-                        ${mov.entregado_por || ""}
-
-                    </td>
-
-                    <td>
-
-    ${mov.maquina || ""}
-
-</td>
-
-                </tr>
-
-            `;
-
-        });
-
-    }catch(error){
-
-        console.log(error);
-
-        alert("Error al cargar");
-
-    }
-
+    alert("Error al cargar");
+  }
 }
 
 cargarMovimientos();

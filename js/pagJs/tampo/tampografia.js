@@ -1,109 +1,107 @@
 let carritoSalidas = [];
-
 let refaccionActual = null;
+let debounceTimer = null;
 
-const API =
-"https://buscador-refaccionesbackend.onrender.com";
+const API = "https://buscador-refaccionesbackend.onrender.com";
 
-const scannerInput =
-document.getElementById("scannerInput");
+const scannerInput = document.getElementById("scannerInput");
+const sugerenciasBox = document.getElementById("sugerenciasBox");
 
-scannerInput.addEventListener("input", async (e) => {
+// ─── UN SOLO LISTENER DE INPUT ───────────────────────────────────────────────
+scannerInput.addEventListener("input", (e) => {
+    const q = e.target.value.trim();
 
-    const codigo =
-    e.target.value.trim();
+    clearTimeout(debounceTimer);
+    sugerenciasBox.style.display = "none";
+    sugerenciasBox.innerHTML = "";
 
-    // SI AUN NO COMPLETA
-    if(codigo.length < 6){
+    if (q.length < 2) return;
 
-        return;
+    // Escáner: cuando llega un código largo de golpe (≥6 chars sin pausa)
+    // el debounce igual lo maneja, no necesitas lógica separada
 
-    }
+    debounceTimer = setTimeout(async () => {
+        try {
+            const res = await fetch(`${API}/buscar-sugerencias?q=${encodeURIComponent(q)}`);
+            const sugerencias = await res.json();
 
-    console.log("CODIGO:", codigo);
+            if (!sugerencias.length) return;
 
-    try{
-
-        const res = await fetch(
-
-            `${API}/buscar-codigo?codigo=${codigo}`
-
-        );
-
-        if(!res.ok){
-
-            throw new Error("No encontrado");
-
-        }
-
-        const producto = await res.json();
-
-        // VERIFICAR SI YA EXISTE
-        const existe = carritoSalidas.find(
-
-            item => item.id === producto.id
-
-        );
-
-        if(existe){
-
-            existe.cantidad++;
-
-        }else{
-
-            carritoSalidas.push({
-
-                id: producto.id,
-
-                codigo:
-                producto.refinterna,
-
-                nombreprod:
-                producto.nombreprod,
-
-                cantidad: 1
-
+            sugerencias.forEach(prod => {
+                const item = document.createElement("div");
+                item.className = "sug-item";
+                item.innerHTML = `
+                    <span class="sug-codigo">${prod.refinterna}</span>
+                    <span class="sug-nombre"> — ${prod.nombreprod}</span>
+                `;
+                item.addEventListener("mousedown", () => {
+                    agregarAlCarrito(prod);
+                    sugerenciasBox.style.display = "none";
+                    scannerInput.value = "";
+                    scannerInput.focus();
+                });
+                sugerenciasBox.appendChild(item);
             });
 
+            sugerenciasBox.style.display = "block";
+        } catch (e) {
+            console.error("Error sugerencias:", e);
         }
-
-        renderTabla();
-
-        // LIMPIAR INPUT AUTOMÁTICO
-        scannerInput.value = "";
-
-        scannerInput.focus();
-
-    }catch(error){
-
-        console.log(error);
-
-        scannerInput.value = "";
-
-    }
-
+    }, 300);
 });
 
+// ─── ENTER: busca por código exacto (escáner físico) ─────────────────────────
+scannerInput.addEventListener("keydown", async (e) => {
+    if (e.key !== "Enter") return;
 
-function renderTabla(){
+    sugerenciasBox.style.display = "none";
+    const codigo = scannerInput.value.trim();
+    if (!codigo) return;
 
-    const tbody =
-    document.getElementById("tbodySalidas");
+    try {
+        const res = await fetch(`${API}/buscar-codigo?codigo=${encodeURIComponent(codigo)}`);
+        if (!res.ok) throw new Error("No encontrado");
 
+        const producto = await res.json();
+        agregarAlCarrito(producto);
+        scannerInput.value = "";
+        scannerInput.focus();
+    } catch (error) {
+        console.log("No encontrado:", error);
+        scannerInput.value = "";
+    }
+});
+
+// Cierra dropdown al perder foco
+scannerInput.addEventListener("blur", () => {
+    setTimeout(() => { sugerenciasBox.style.display = "none"; }, 150);
+});
+
+// ─── LÓGICA DE CARRITO ────────────────────────────────────────────────────────
+function agregarAlCarrito(producto) {
+    const existe = carritoSalidas.find(item => item.codigo === producto.refinterna); // ← cambia esto
+    if (existe) {
+        existe.cantidad++;
+    } else {
+        carritoSalidas.push({
+            id: producto.id,
+            codigo: producto.refinterna,
+            nombreprod: producto.nombreprod,
+            cantidad: 1,
+        });
+    }
+    renderTabla();
+}
+
+function renderTabla() {
+    const tbody = document.getElementById("tbodySalidas");
     tbody.innerHTML = "";
-
     carritoSalidas.forEach((item, index) => {
-
         tbody.innerHTML += `
-
             <tr>
-
                 <td>${item.codigo}</td>
-
                 <td>${item.nombreprod}</td>
-
                 <td>
-
                     <input
                         type="number"
                         min="1"
@@ -111,131 +109,85 @@ function renderTabla(){
                         onchange="cambiarCantidad(${index}, this.value)"
                         class="form-control"
                     >
-
                 </td>
-
                 <td>
-
-                    <button
-                        class="btn btn-danger"
-                        onclick="eliminarProducto(${index})"
-                    >
-
-                        X
-
-                    </button>
-
+                    <button class="btn btn-danger" onclick="eliminarProducto(${index})">X</button>
                 </td>
-
             </tr>
-
         `;
-
     });
-
 }
 
-function cambiarCantidad(index, valor){
-
-    carritoSalidas[index].cantidad =
-    Number(valor);
-
+function cambiarCantidad(index, valor) {
+    carritoSalidas[index].cantidad = Number(valor);
 }
 
-function eliminarProducto(index){
-
+function eliminarProducto(index) {
     carritoSalidas.splice(index, 1);
-
     renderTabla();
-
 }
 
-async function guardarTodas(){
+// async function guardarTodas() {
+//     if (carritoSalidas.length === 0) { alert("No hay productos"); return; }
 
-    try{
+//     const solicitado_por = document.getElementById("solicitadoPor").value.trim();
+//     const entregado_por = document.getElementById("entregadoPor").value;
+//     const maquina = document.getElementById("maquina").value.trim();
 
-        if(carritoSalidas.length === 0){
+//     if (!solicitado_por) { alert("Ingresa quién solicitó"); return; }
+//     if (!maquina) { alert("Ingresa la máquina"); return; }
 
-            alert("No hay productos");
+//     try {
+//         const res = await fetch(`${API}/movimientos-masivos`, {
+//             method: "POST",
+//             headers: { "Content-Type": "application/json" },
+//             body: JSON.stringify({ solicitado_por, entregado_por, maquina, movimientos: carritoSalidas }),
+//         });
 
-            return;
+//         const data = await res.json();
+//         console.log(data);
+//         alert("Salidas registradas");
 
-        }
+//         carritoSalidas = [];
+//         renderTabla();
+//         document.getElementById("solicitadoPor").value = "";
+//         document.getElementById("maquina").value = "";
+//         scannerInput.focus();
+//     } catch (error) {
+//         console.log(error);
+//         alert("Error al guardar");
+//     }
+// }
+async function guardarTodas() {
+    if (carritoSalidas.length === 0) { alert("No hay productos"); return; }
 
-        const solicitado_por =
-        document.getElementById("solicitadoPor").value.trim();
+    const solicitado_por = document.getElementById("solicitadoPor").value.trim();
+    const entregado_por = document.getElementById("entregadoPor").value;
+    const maquina = document.getElementById("maquina").value.trim();
+    const nota = document.getElementById("notaSalida").value.trim(); // ← agrega esto
 
-        const entregado_por =
-        document.getElementById("entregadoPor").value;
+    if (!solicitado_por) { alert("Ingresa quién solicitó"); return; }
+    if (!maquina) { alert("Ingresa la máquina"); return; }
 
-        const maquina =
-        document.getElementById("maquina").value.trim();
-
-        if(!solicitado_por){
-
-            alert("Ingresa quién solicitó");
-
-            return;
-
-        }
-
-        if(!maquina){
-
-            alert("Ingresa la máquina");
-
-            return;
-
-        }
-
-        const res = await fetch(
-
-            `${API}/movimientos-masivos`,
-
-            {
-
-                method: "POST",
-
-                headers: {
-                    "Content-Type": "application/json"
-                },
-
-                body: JSON.stringify({
-
-                    solicitado_por,
-
-                    entregado_por,
-
-                    maquina,
-
-                    movimientos: carritoSalidas
-
-                })
-
-            }
-
-        );
+    try {
+        const res = await fetch(`${API}/movimientos-masivos`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ solicitado_por, entregado_por, maquina, nota, movimientos: carritoSalidas }), // ← agrega nota
+        });
 
         const data = await res.json();
-
         console.log(data);
-
         alert("Salidas registradas");
 
         carritoSalidas = [];
-
         renderTabla();
-
         document.getElementById("solicitadoPor").value = "";
         document.getElementById("maquina").value = "";
-
+        document.getElementById("notaSalida").value = ""; // ← limpia el campo
         scannerInput.focus();
-
-    }catch(error){
-
+    } catch (error) {
         console.log(error);
-
         alert("Error al guardar");
-
     }
-
 }
