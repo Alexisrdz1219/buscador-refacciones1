@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Historial por Producto</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="../css/paginas/Tampo/Movimientos.css">
+    <style>
+        #sugerenciasBox {
+            position: fixed;
+            z-index: 1000;
+            background: white;
+            border: 1px solid #dee2e6;
+            border-radius: 0 0 6px 6px;
+            width: 400px;
+            max-height: 220px;
+            overflow-y: auto;
+            display: none;
+        }
+        #sugerenciasBox .sug-item {
+            padding: 8px 12px;
+            cursor: pointer;
+            font-size: 0.9rem;
+        }
+        #sugerenciasBox .sug-item:hover {
+            background-color: #f0f4ff;
+        }
+        .sug-codigo { font-weight: 600; color: #0d6efd; }
+        .sug-nombre { color: #555; }
+        .input-wrapper { position: relative; }
+    </style>
+</head>
+
+<body>
+
+<div class="container mt-4">
+
+    <div class="mb-4">
+        <h2 class="mb-1">Historial por Producto</h2>
+        <p class="text-muted mb-0">Busca una refacción para ver todos sus movimientos.</p>
+        <hr>
+    </div>
+
+    <div class="input-wrapper mb-3">
+        <input
+            type="text"
+            id="buscarInput"
+            class="form-control"
+            placeholder="Escribe código o nombre del producto"
+            autocomplete="off"
+        >
+        <div id="sugerenciasBox"></div>
+    </div>
+
+    <!-- Tarjeta resumen del producto -->
+    <div id="resumenProducto" class="card p-3 mb-4" style="display:none;">
+        <h5 id="resumenNombre" class="mb-1"></h5>
+        <p class="mb-0 text-muted">
+            Código: <span id="resumenCodigo"></span> &nbsp;|&nbsp;
+            Total salidas: <span id="resumenTotal" class="fw-bold text-danger"></span>
+        </p>
+    </div>
+
+    <table class="table table-bordered table-hover" id="tablaHistorial" style="display:none;">
+        <thead class="table-dark">
+            <tr>
+                <th>Fecha</th>
+                <th>Cantidad</th>
+                <th>Solicitó</th>
+                <th>Entregó</th>
+                <th>Máquina</th>
+                <th>Nota</th>
+            </tr>
+        </thead>
+        <tbody id="tbodyHistorial"></tbody>
+    </table>
+
+    <p id="sinResultados" class="text-muted" style="display:none;">
+        No se encontraron movimientos para este producto.
+    </p>
+
+</div>
+
+<script src="../js/pagJs/tampo/historial.js"></script>
+
+</body>
+</html>
