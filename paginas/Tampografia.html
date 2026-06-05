@@ -1,138 +1,47 @@
-<!-- <head>
-    <meta charset="UTF-8">
 
-    <title>Salidas</title>
-
-    <link
-        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
-        rel="stylesheet"
-    >
-    <link
-        href="../css/paginas/Tampo/Tampo.css"
-        rel="stylesheet"
-    >
-</head>
-
-<div class="container mt-4">
-
-    <h2>Registro de Salidas</h2>
-
-    <input
-        type="text"
-        id="scannerInput"
-        class="form-control mb-3"
-        placeholder="Escanea código"
-        autofocus
-    >
-
-    <div class="card p-3">
-
-        <h4 id="nombreProducto">
-
-            Producto
-
-        </h4>
-
-        <p>
-
-            Código:
-            <span id="codigoProducto"></span>
-
-        </p>
-
-        <p>
-
-            Ubicación:
-            <span id="ubicacionProducto"></span>
-
-        </p>
-
-    </div>
-
-    <h3 class="mt-4">
-
-        Productos escaneados
-
-    </h3>
-
-    <table class="table table-bordered">
-
-        <thead>
-
-            <tr>
-
-                <th>Código</th>
-                <th>Producto</th>
-                <th>Cantidad</th>
-                <th>Eliminar</th>
-
-            </tr>
-
-        </thead>
-
-        <tbody id="tbodySalidas">
-
-        </tbody>
-
-    </table>
-
-    <input
-        type="text"
-        id="solicitadoPor"
-        class="form-control mb-3"
-        placeholder="Solicitado por"
-    >
-
-    <input
-    type="text"
-    id="maquina"
-    class="form-control mb-3"
-    placeholder="Máquina (Ej. Aoki 500, Tampografía 2, ASB 70DPH)"
->
-
-    <label class="mb-1">
-
-        Entregado por
-
-    </label>
-
-    <select
-        id="entregadoPor"
-        class="form-select mb-3"
-    >
-
-        <option value="Miguel">
-            Miguel
-        </option>
-
-        <option value="Brandon">
-            Brandon
-        </option>
-
-        <option value="Alexis">
-            Alexis
-        </option>
-
-    </select>
-
-    <button
-        class="btn btn-success"
-        onclick="guardarTodas()"
-    >
-
-        Guardar Todas las Salidas
-
-    </button>
-
-</div>
-
-<script src="../js/pagJs/tampo/tampografia.js"></script> -->
 <head>
     <meta charset="UTF-8">
     <title>Salidas</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="../css/paginas/Tampo/Tampo.css" rel="stylesheet">
     <style>
+        @media (max-width: 768px) {
+    .container {
+        padding: 0 12px;
+    }
+
+    h2 {
+        font-size: 1.3rem;
+    }
+
+    h3 {
+        font-size: 1.1rem;
+    }
+
+    /* Tabla con scroll horizontal en móvil */
+    .table-responsive-wrapper {
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    /* Inputs y botón full width */
+    .form-control,
+    .form-select,
+    .btn {
+        font-size: 1rem;
+        height: 48px; /* más fácil de tocar con el dedo */
+    }
+
+    .btn-success {
+        width: 100%;
+        margin-top: 8px;
+    }
+
+    /* Dropdown de sugerencias */
+    #sugerenciasBox {
+        width: 90vw;
+    }
+}
         /* Dropdown de sugerencias */
         #sugerenciasBox {
             position: fixed;
@@ -198,7 +107,7 @@
     </div>
 
     <h3 class="mt-4">Productos escaneados</h3>
-
+<div class="table-responsive-wrapper"> 
     <table class="table table-bordered">
         <thead>
             <tr>
@@ -210,7 +119,7 @@
         </thead>
         <tbody id="tbodySalidas"></tbody>
     </table>
-
+</div>  <!-- ← cierra aquí -->
     <input type="text" id="solicitadoPor" class="form-control mb-3" placeholder="Solicitado por">
     <input type="text" id="maquina" class="form-control mb-3" placeholder="Máquina (Ej. Aoki 500, Tampografía 2, ASB 70DPH)">
 
