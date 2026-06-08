@@ -1611,7 +1611,12 @@
     <!-- //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// -->
     <!-- //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// -->
     <!-- //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// -->
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+ 
+    <script src="js/pagJs/script.js"></script>
+    <script src="js/pagJs/navegador.js"></script>
+    <script src="js/iniJs/session.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
 
     <script>
       document.addEventListener("DOMContentLoaded", async () => {
@@ -1788,89 +1793,50 @@
         arrastrando = false;
       });
 
-      // async function cargarDashboard() {
+     async function cargarDashboard() {
+    const token = localStorage.getItem("token");
+    if (!token) return;
 
-      //   const res = await fetch("https://buscador-refaccionesbackend.onrender.com/refacciones");
-      //   const data = await res.json();
+    // Usa caché si existe y es reciente
+    const CACHE_KEY = "dashboard_stats";
+    const CACHE_TTL = 5 * 60 * 1000;
+    const cached = localStorage.getItem(CACHE_KEY);
 
-      //   const resUb = await fetch("https://buscador-refaccionesbackend.onrender.com/refacciones/con-ubicacion");
-      //   const dataUb = await resUb.json();
-
-      //   const total = data.length;
-      //   const conUbicacion = dataUb.data.length;
-      //   const sinUbicacion = total - conUbicacion;
-
-      //   // ✅ AHORA SÍ EXISTEN
-      //   const porcentaje = ((conUbicacion / total) * 100).toFixed(1);
-
-      //   const ultimas = data.slice(-3).reverse();
-
-      //   document.getElementById("graficaUbicacionTitulo").innerHTML = `
-      //     <div class="p-3">
-      //       <h6 class="mb-3">Estado de Ubicación</h6>
-      //       <h6>${porcentaje}% con ubicación</h6>
-      //       <canvas id="graficaUbicacion"></canvas>
-      //     </div>
-      //   `;
-
-      //   const ctx = document.getElementById("graficaUbicacion");
-
-      //   new Chart(ctx, {
-      //     type: "pie",
-      //     data: {
-      //       labels: ["Con ubicación", "Sin ubicación"],
-      //       datasets: [{
-      //         data: [conUbicacion, sinUbicacion],
-      //         backgroundColor: ["#7c878e", "#3e5b6d"]
-      //       }]
-      //     },
-      //     options: {
-      //       responsive: true,
-      //       plugins: {
-      //         legend: {
-      //           position: "bottom"
-      //         }
-      //       }
-      //     }
-      //   });
-
-      // }
-      async function cargarDashboard() {
-        const token = localStorage.getItem("token");
-
-        // 🔹 REFACCIONES
-        const res = await fetch(
-          "https://buscador-refaccionesbackend.onrender.com/refacciones",
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          },
-        );
-
-        if (res.status === 401) {
-          alert("Sesión expirada");
-          window.location.href = "/login.html";
-          return;
+    let data;
+    if (cached) {
+        const { data: cachedData, timestamp } = JSON.parse(cached);
+        if (Date.now() - timestamp < CACHE_TTL) {
+            data = cachedData;
         }
+    }
 
-        const data = await res.json();
+    if (!data) {
+        try {
+            const res = await fetch(`${API_URL}/dashboard-stats`, {
+                headers: { Authorization: `Bearer ${token}` }
+            });
 
-        if (!Array.isArray(data)) {
-          console.error("Error en refacciones:", data);
-          return;
+            if (res.status === 401) {
+                alert("Sesión expirada");
+                window.location.href = "/login.html";
+                return;
+            }
+
+            data = await res.json();
+            localStorage.setItem(CACHE_KEY, JSON.stringify({
+                data,
+                timestamp: Date.now()
+            }));
+        } catch (err) {
+            console.error("Error dashboard:", err);
+            return;
         }
+    }
+}
 
-        const ultimas = data.slice(-3).reverse();
-      }
-
-      cargarDashboard();
+cargarDashboard();
     </script>
 
-    <script src="js/pagJs/script.js"></script>
-    <script src="js/pagJs/navegador.js"></script>
-    <script src="js/iniJs/session.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
   </body>
 </html>

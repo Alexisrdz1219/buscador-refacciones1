@@ -1,301 +1,123 @@
-// console.log("Script.js Cargado");
 const API_URL = "https://buscador-refaccionesbackend.onrender.com";
+const CACHE_KEY = "dashboard_stats";
+const CACHE_TTL = 5 * 60 * 1000; // 5 minutos
 
-fetch("https://buscador-refaccionesbackend.onrender.com/health")
-  .then(res => res.json())
-  .then(data => {
-    // console.log("RESPUESTA BACKEND:", data);
-  })
-  .catch(err => {
-    console.error("ERROR:", err);
-  });
-
-  const statusDiv = document.getElementById("backend-status");
-
-fetch("https://buscador-refaccionesbackend.onrender.com/health")
-  .then(res => res.json())
-  .then(data => {
-
-    if (!statusDiv) return; // 👈 ESTA ES LA CLAVE
-
-    if (data.ok) {
-      statusDiv.innerHTML = `
-        <p>Backend  y BD Conectados</p>
-       
-        <p>Hora servidor: ${data.time}</p>
-      `;
-    } else {
-      statusDiv.innerHTML = "Backend respondió, pero algo falló";
-    }
-  })
-  .catch(err => {
-    if (statusDiv) {
-      statusDiv.innerHTML = "No se pudo conectar al backend";
-    }
-    console.error(err);
-  });
-
-//   async function mostrarUltimaActualizacion() {
-//     const elemento = document.getElementById("ultimaActualizacion");
-
-//     try {
-//       const res = await fetch("https://buscador-refaccionesbackend.onrender.com/refacciones");
-//       const data = await res.json();
-
-//       if (data.length === 0) {
-//         elemento.textContent = "No hay registros aún";
-//         return;
-//       }
-
-//       // Suponiendo que cada refacción tiene 'updated_at' o 'created_at'
-//       const ultima = data.reduce((max, r) => {
-//         const fecha = new Date(r.updated_at || r.created_at);
-//         return fecha > max ? fecha : max;
-//       }, new Date(0));
-
-//       // Formateo legible, ejemplo: Hoy, 10:45 AM
-//       const ahora = new Date();
-//       let texto = "";
-
-//       if (ultima.toDateString() === ahora.toDateString()) {
-//         texto = `Hoy, ${ultima.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}`;
-//       } else {
-//         texto = ultima.toLocaleString([], { dateStyle: 'short', timeStyle: 'short' });
-//       }
-
-//       elemento.textContent = texto;
-
-//     } catch (err) {
-//       elemento.textContent = "Error al obtener actualización";
-//       console.error(err);
-//     }
-// }
-async function mostrarUltimaActualizacion() {
-  const elemento = document.getElementById("ultimaActualizacion");
-
-  try {
-    const token = localStorage.getItem("token");
-
-    const res = await fetch("https://buscador-refaccionesbackend.onrender.com/refacciones", {
-      headers: {
-        Authorization: `Bearer ${token}`
-      }
-    });
-
-    if (res.status === 401) {
-      elemento.textContent = "Sesión expirada";
-      window.location.href = "/login.html";
-      return;
-    }
-
-    const data = await res.json();
-
-    if (!Array.isArray(data) || data.length === 0) {
-      elemento.textContent = "No hay registros aún";
-      return;
-    }
-
-    const ultima = data.reduce((max, r) => {
-      const fecha = new Date(r.updated_at || r.created_at);
-      return fecha > max ? fecha : max;
-    }, new Date(0));
-
-    const ahora = new Date();
-    let texto = "";
-
-    if (ultima.toDateString() === ahora.toDateString()) {
-      texto = `Hoy, ${ultima.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}`;
-    } else {
-      texto = ultima.toLocaleString([], { dateStyle: 'short', timeStyle: 'short' });
-    }
-
-    elemento.textContent = texto;
-
-  } catch (err) {
-    elemento.textContent = "Error al obtener actualización";
-    console.error(err);
-  }
+// ─── HEALTH CHECK ─────────────────────────────────────────────────────────────
+const statusDiv = document.getElementById("backend-status");
+if (statusDiv) {
+    fetch(`${API_URL}/health`)
+        .then(r => r.json())
+        .then(data => {
+            statusDiv.innerHTML = data.ok
+                ? `<p>Backend y BD Conectados</p><p>Hora servidor: ${data.time}</p>`
+                : "Backend respondió, pero algo falló";
+        })
+        .catch(() => {
+            statusDiv.innerHTML = "No se pudo conectar al backend";
+        });
 }
 
-// Llamar la función al cargar la página
-mostrarUltimaActualizacion();
-
-// async function mostrarTotalRefacciones() {
-//   const elemento = document.getElementById("totalRefacciones");
-
-//   try {
-//     const res = await fetch("https://buscador-refaccionesbackend.onrender.com/refacciones");
-//     const data = await res.json();
-
-//     // Total de registros
-//     const total = data.length;
-
-//     // Mostrar en la tarjeta con formato de miles
-//     elemento.textContent = `${total.toLocaleString()} Refacciones`;
-
-//   } catch (err) {
-//     elemento.textContent = "Error al obtener total";
-//     console.error(err);
-//   }
-// }
-
-async function mostrarTotalRefacciones() {
-  const elemento = document.getElementById("totalRefacciones");
-
-  try {
+// ─── DASHBOARD (1 sola llamada con caché) ─────────────────────────────────────
+async function cargarDashboard() {
     const token = localStorage.getItem("token");
+    if (!token) return;
 
-    const res = await fetch("https://buscador-refaccionesbackend.onrender.com/refacciones", {
-      headers: {
-        Authorization: `Bearer ${token}`
-      }
-    });
-
-    if (res.status === 401) {
-      elemento.textContent = "Sesión expirada";
-      window.location.href = "/login.html";
-      return;
+    // Si hay caché reciente, usa eso sin llamar al backend
+    const cached = localStorage.getItem(CACHE_KEY);
+    if (cached) {
+        const { data, timestamp } = JSON.parse(cached);
+        if (Date.now() - timestamp < CACHE_TTL) {
+            renderDashboard(data);
+            return;
+        }
     }
 
-    const data = await res.json();
+    try {
+        const res = await fetch(`${API_URL}/dashboard-stats`, {
+            headers: { Authorization: `Bearer ${token}` }
+        });
 
-    if (!Array.isArray(data)) {
-      elemento.textContent = "Error en datos";
-      console.error(data);
-      return;
+        if (res.status === 401) {
+            window.location.href = "/login.html";
+            return;
+        }
+
+        const data = await res.json();
+
+        localStorage.setItem(CACHE_KEY, JSON.stringify({
+            data,
+            timestamp: Date.now()
+        }));
+
+        renderDashboard(data);
+
+    } catch (err) {
+        console.error("Error dashboard:", err);
     }
-
-    const total = data.length;
-
-    elemento.textContent = `${total.toLocaleString()} Refacciones`;
-
-  } catch (err) {
-    elemento.textContent = "Error al obtener total";
-    console.error(err);
-  }
 }
 
-// Llamar la función al cargar la página
-mostrarTotalRefacciones();
-
-
-// async function mostrarUltimosProductos() {
-//   const nombreElem = document.getElementById("ultimoProducto");
-//   const etiquetasElem = document.getElementById("ultimasEtiquetas");
-
-//   // 🔥 VALIDACIÓN CLAVE
-//   if (!nombreElem || !etiquetasElem) return;
-
-//   try {
-//     const res = await fetch("https://buscador-refaccionesbackend.onrender.com/refacciones");
-//     const data = await res.json();
-
-//     if (!data.length) {
-//       nombreElem.textContent = "No hay refacciones";
-//       return;
-//     }
-
-//     const ultimos = data.sort((a, b) => b.id - a.id).slice(0, 1);
-//     const ultimo = ultimos[0];
-
-//     nombreElem.textContent = ultimo.nombreprod || "Sin nombre";
-
-//     etiquetasElem.innerHTML = "";
-
-//     if (ultimo.palclave) {
-//       const etiquetas = ultimo.palclave.split(",");
-//       etiquetas.forEach(et => {
-//         const span = document.createElement("span");
-//         span.className = "badge bg-light text-dark border rounded-pill px-3";
-//         span.textContent = et.trim();
-//         etiquetasElem.appendChild(span);
-//       });
-//     }
-
-//   } catch (err) {
-//     if (nombreElem) {
-//       nombreElem.textContent = "Error al cargar";
-//     }
-//     console.error(err);
-//   }
-// }
-async function mostrarUltimosProductos() {
-  const nombreElem = document.getElementById("ultimoProducto");
-  const etiquetasElem = document.getElementById("ultimasEtiquetas");
-
-  if (!nombreElem || !etiquetasElem) return;
-
-  try {
-    const token = localStorage.getItem("token");
-
-    const res = await fetch("https://buscador-refaccionesbackend.onrender.com/refacciones", {
-      headers: {
-        Authorization: `Bearer ${token}`
-      }
-    });
-
-    if (res.status === 401) {
-      nombreElem.textContent = "Sesión expirada";
-      window.location.href = "/login.html";
-      return;
+function renderDashboard(data) {
+    // Total refacciones
+    const totalElem = document.getElementById("totalRefacciones");
+    if (totalElem) {
+        totalElem.textContent = `${Number(data.total).toLocaleString()} Refacciones`;
     }
 
-    const data = await res.json();
-
-    if (!Array.isArray(data) || data.length === 0) {
-      nombreElem.textContent = "No hay refacciones";
-      return;
+    // Última actualización
+    const ultimaElem = document.getElementById("ultimaActualizacion");
+    if (ultimaElem && data.ultima_actualizacion) {
+        const fecha = new Date(data.ultima_actualizacion);
+        const ahora = new Date();
+        ultimaElem.textContent = fecha.toDateString() === ahora.toDateString()
+            ? `Hoy, ${fecha.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}`
+            : fecha.toLocaleString([], { dateStyle: 'short', timeStyle: 'short' });
     }
 
-    const ultimo = data.sort((a, b) => b.id - a.id)[0];
+    // Último producto
+    const nombreElem = document.getElementById("ultimoProducto");
+    const etiquetasElem = document.getElementById("ultimasEtiquetas");
 
-    nombreElem.textContent = ultimo.nombreprod || "Sin nombre";
-
-    etiquetasElem.innerHTML = "";
-
-    if (ultimo.palclave) {
-      const etiquetas = ultimo.palclave.split(",");
-      etiquetas.forEach(et => {
-        const span = document.createElement("span");
-        span.className = "badge bg-light text-dark border rounded-pill px-3";
-        span.textContent = et.trim();
-        etiquetasElem.appendChild(span);
-      });
+    if (nombreElem) {
+        nombreElem.textContent = data.ultimo_producto || "Sin nombre";
     }
 
-  } catch (err) {
-    nombreElem.textContent = "Error al cargar";
-    console.error(err);
-  }
+    if (etiquetasElem && data.ultimo_palclave) {
+        etiquetasElem.innerHTML = "";
+        data.ultimo_palclave.split(",").forEach(et => {
+            const span = document.createElement("span");
+            span.className = "badge bg-light text-dark border rounded-pill px-3";
+            span.textContent = et.trim();
+            etiquetasElem.appendChild(span);
+        });
+    }
 }
-// Llamar al cargar la página
-mostrarUltimosProductos();
 
+// ─── LOGS ─────────────────────────────────────────────────────────────────────
 async function cargarLogs() {
+    const tabla = document.getElementById("tablaLogs");
+    if (!tabla) return;
 
-  const res = await fetch(`${API_URL}/logs-db`);
-  const logs = await res.json();
+    try {
+        const res = await fetch(`${API_URL}/logs-db`);
+        const logs = await res.json();
 
-  const tabla = document.getElementById("tablaLogs");
-
-if (!tabla) return; // 🔥 corta ejecución si no existe
-
-tabla.innerHTML = "";
-
-logs.forEach(log => {
-  const fila = document.createElement("tr");
-
-  fila.innerHTML = `
-    <td>${new Date(log.created_at).toLocaleString()}</td>
-    <td>${log.level}</td>
-    <td>${log.message}</td>
-    <td>${log.route || ""}</td>
-    <td>${log.data ? JSON.stringify(log.data) : ""}</td>
-  `;
-
-  tabla.appendChild(fila);
-});
-
+        tabla.innerHTML = "";
+        logs.forEach(log => {
+            const fila = document.createElement("tr");
+            fila.innerHTML = `
+                <td>${new Date(log.created_at).toLocaleString()}</td>
+                <td>${log.level}</td>
+                <td>${log.message}</td>
+                <td>${log.route || ""}</td>
+                <td>${log.data ? JSON.stringify(log.data) : ""}</td>
+            `;
+            tabla.appendChild(fila);
+        });
+    } catch (err) {
+        console.error("Error logs:", err);
+    }
 }
 
+// ─── ARRANQUE ─────────────────────────────────────────────────────────────────
+cargarDashboard();
 cargarLogs();
