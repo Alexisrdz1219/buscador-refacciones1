@@ -5,74 +5,49 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="../css/paginas/Tampo/Tampo.css" rel="stylesheet">
     <style>
-        @media (max-width: 768px) {
-    .container {
-        padding: 0 12px;
-    }
-
-    h2 {
-        font-size: 1.3rem;
-    }
-
-    h3 {
-        font-size: 1.1rem;
-    }
-
-    /* Tabla con scroll horizontal en móvil */
-    .table-responsive-wrapper {
-        overflow-x: auto;
-        -webkit-overflow-scrolling: touch;
-    }
-
-    /* Inputs y botón full width */
-    .form-control,
-    .form-select,
-    .btn {
-        font-size: 1rem;
-        height: 48px; /* más fácil de tocar con el dedo */
-    }
-
-    .btn-success {
-        width: 100%;
-        margin-top: 8px;
-    }
-
-    /* Dropdown de sugerencias */
+    /* ── Base ── */
     #sugerenciasBox {
-        width: 90vw;
+        position: fixed;
+        z-index: 1000;
+        background: white;
+        border: 1px solid #dee2e6;
+        border-radius: 0 0 6px 6px;
+        width: 400px;
+        max-height: 220px;
+        overflow-y: auto;
+        display: none;
     }
-}
-        /* Dropdown de sugerencias */
-        #sugerenciasBox {
-            position: fixed;
-            z-index: 1000;
-            background: white;
-            border: 1px solid #dee2e6;
-            border-radius: 0 0 6px 6px;
-            width: 400px;
-            max-height: 220px;
-            overflow-y: auto;
-            display: none;
+    #sugerenciasBox .sug-item {
+        padding: 8px 12px;
+        cursor: pointer;
+        font-size: 0.9rem;
+    }
+    #sugerenciasBox .sug-item:hover { background-color: #f0f4ff; }
+    .sug-codigo { font-weight: 600; color: #0d6efd; }
+    .sug-nombre { color: #555; }
+    .input-wrapper { position: relative; }
+
+    /* ── Móvil ── */
+    @media (max-width: 768px) {
+        #sugerenciasBox { width: 90vw; }
+
+        .form-control,
+        .form-select { height: 48px; font-size: 1rem; }
+
+        .btn-success {
+            width: 100%;
+            height: 52px;
+            font-size: 1.1rem;
+            margin-top: 4px;
         }
-        #sugerenciasBox .sug-item {
-            padding: 8px 12px;
-            cursor: pointer;
-            font-size: 0.9rem;
-        }
-        #sugerenciasBox .sug-item:hover {
-            background-color: #f0f4ff;
-        }
-        #sugerenciasBox .sug-codigo {
-            font-weight: 600;
-            color: #0d6efd;
-        }
-        #sugerenciasBox .sug-nombre {
-            color: #555;
-        }
-        .input-wrapper {
-            position: relative;
-        }
-    </style>
+
+        .card { font-size: 0.9rem; }
+
+        /* Oculta columna Código en móvil para que quepa la tabla */
+        .table th:first-child,
+        .table td:first-child { display: none; }
+    }
+</style>
 </head>
 
 <div class="container mt-4">
@@ -107,7 +82,7 @@
     </div>
 
     <h3 class="mt-4">Productos escaneados</h3>
-<div class="table-responsive-wrapper"> 
+<div class="table-responsive"> 
     <table class="table table-bordered">
         <thead>
             <tr>

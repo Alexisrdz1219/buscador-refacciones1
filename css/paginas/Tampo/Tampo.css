@@ -242,3 +242,35 @@ label{
     }
 
 }
+/* ── Mejoras móvil ── */
+@media (max-width: 600px) {
+
+    /* Tabla: texto más chico y celdas compactas */
+    .table th,
+    .table td {
+        font-size: 0.78rem;
+        padding: 8px 6px;
+    }
+
+    /* Oculta columna Código — el nombre ya identifica el producto */
+    .table th:first-child,
+    .table td:first-child {
+        display: none;
+    }
+
+    /* Input cantidad más angosto */
+    .table input[type="number"] {
+        width: 60px;
+        padding: 4px;
+        height: 36px;
+    }
+
+    /* Botón eliminar más compacto */
+    .btn-danger {
+        padding: 4px 8px;
+        font-size: 0.78rem;
+    }
+
+    h2 { font-size: 1.1rem; }
+    h3 { font-size: 0.95rem; }
+}
