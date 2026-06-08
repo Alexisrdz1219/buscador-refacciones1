@@ -112,7 +112,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   despertarBackend();
 const token = localStorage.getItem("token");
-setInterval(cargarAlertas, 10000); // cada 10 segundos
+setInterval(cargarAlertas, 300000); // cada 10 segundos
 cargarAlertas(); // inicial
 
   if (!token) {
@@ -1223,9 +1223,6 @@ async function aplicarFiltros(pagina = 1) {
 
         } catch (error) {
             console.error("Error en búsqueda global:", error);
-            console.log("DATA:", data);
-console.log("TIPO:", typeof data);
-console.log("ES ARRAY:", Array.isArray(data));
             mostrarResultados([]);
           
         }
