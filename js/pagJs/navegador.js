@@ -158,16 +158,26 @@ cargarAlertas(); // inicial
 // if (formFiltros) {
 //   formFiltros.style.display = "none";
 // }
- dash?.classList.remove("d-none");
+dash?.classList.remove("d-none");
   formFiltros?.classList.add("d-none");
 
-  document.getElementById("buscarTitulo")?.addEventListener("input", aplicarFiltros);
-  document.getElementById("buscarRef")?.addEventListener("input", aplicarFiltros);
-  document.getElementById("buscarModelo")?.addEventListener("input", aplicarFiltros);
-  document.getElementById("filtroTipo")?.addEventListener("change", aplicarFiltros);
-  document.getElementById("filtroUnidad")?.addEventListener("change", aplicarFiltros);
-  document.getElementById("buscarPalabras")
-  ?.addEventListener("input", aplicarFiltros);
+  // document.getElementById("buscarTitulo")?.addEventListener("input", aplicarFiltros);
+  // document.getElementById("buscarRef")?.addEventListener("input", aplicarFiltros);
+  // document.getElementById("buscarModelo")?.addEventListener("input", aplicarFiltros);
+  // document.getElementById("filtroTipo")?.addEventListener("change", aplicarFiltros);
+  // document.getElementById("filtroUnidad")?.addEventListener("change", aplicarFiltros);
+  // document.getElementById("buscarPalabras")
+  // ?.addEventListener("input", aplicarFiltros);
+
+
+document.getElementById("buscarTitulo")?.addEventListener("input", aplicarFiltrosConDebounce);
+document.getElementById("buscarRef")?.addEventListener("input", aplicarFiltrosConDebounce);
+document.getElementById("buscarModelo")?.addEventListener("input", aplicarFiltrosConDebounce);
+document.getElementById("buscarPalabras")?.addEventListener("input", aplicarFiltrosConDebounce);
+
+// Selects: sin debounce, respuesta inmediata está bien
+document.getElementById("filtroTipo")?.addEventListener("change", aplicarFiltros);
+document.getElementById("filtroUnidad")?.addEventListener("change", aplicarFiltros);
 
 const inputTag = document.getElementById("inputTag");
 const contenedorTags = document.getElementById("contenedorTags");
@@ -504,26 +514,46 @@ function renderPaginacion() {
   cont.innerHTML = html;
 }
 
+// document.addEventListener("click", (e) => {
+//   const btn = e.target.closest("#paginacion button");
+//   if (!btn) return;
+
+//   const action = btn.dataset.page;
+
+//   if (action === "prev" && paginaActual > 1) {
+//     paginaActual--;
+//   } else if (action === "next" && paginaActual < totalPaginas) {
+//     paginaActual++;
+//   } else if (!isNaN(action)) {
+//     paginaActual = Number(action);
+//   }
+
+//   renderPagina();
+//   renderPaginacion();
+
+//   window.scrollTo({ top: 0, behavior: "smooth" }); // 👈 UX bonito
+// });
 document.addEventListener("click", (e) => {
-  const btn = e.target.closest("#paginacion button");
-  if (!btn) return;
+    const btn = e.target.closest("#paginacion button");
+    if (!btn) return;
 
-  const action = btn.dataset.page;
+    const action = btn.dataset.page;
+    let nuevaPagina = paginaActualGlobal;
 
-  if (action === "prev" && paginaActual > 1) {
-    paginaActual--;
-  } else if (action === "next" && paginaActual < totalPaginas) {
-    paginaActual++;
-  } else if (!isNaN(action)) {
-    paginaActual = Number(action);
-  }
+    if (action === "prev" && paginaActualGlobal > 1) nuevaPagina--;
+    else if (action === "next" && paginaActualGlobal < totalPaginasGlobal) nuevaPagina++;
+    else if (!isNaN(action)) nuevaPagina = Number(action);
 
-  renderPagina();
-  renderPaginacion();
+    if (modoGlobal) {
+        aplicarFiltros(nuevaPagina); // ← consulta al backend
+    } else {
+        paginaActual = nuevaPagina;
+        renderPagina();
+        renderPaginacion();
+    }
 
-  window.scrollTo({ top: 0, behavior: "smooth" }); // 👈 UX bonito
+    window.scrollTo({ top: 0, behavior: "smooth" });
 });
-
 
 
 async function obtenerUsos(refaccionId) {
@@ -1047,110 +1077,291 @@ function filtrarCards() {
   });
 }
 
-async function aplicarFiltros() {
+// async function aplicarFiltros() {
 
-  // console.log("🔥 aplicarFiltros ejecutado");
-  // console.log("modoGlobal:", modoGlobal);
-  // console.log("Ejemplo registro global:", data[0]);
+//   // console.log("🔥 aplicarFiltros ejecutado");
+//   // console.log("modoGlobal:", modoGlobal);
+//   // console.log("Ejemplo registro global:", data[0]);
 
-  const tit = document.getElementById("buscarTitulo")?.value.toLowerCase().trim() || "";
-  const ref = document.getElementById("buscarRef")?.value.toLowerCase().trim() || "";
-  const modelo = document.getElementById("buscarModelo")?.value.toLowerCase().trim() || "";
-  const tipo = document.getElementById("filtroTipo")?.value || "";
-  const unidad = document.getElementById("filtroUnidad")?.value || "";
+//   const tit = document.getElementById("buscarTitulo")?.value.toLowerCase().trim() || "";
+//   const ref = document.getElementById("buscarRef")?.value.toLowerCase().trim() || "";
+//   const modelo = document.getElementById("buscarModelo")?.value.toLowerCase().trim() || "";
+//   const tipo = document.getElementById("filtroTipo")?.value || "";
+//   const unidad = document.getElementById("filtroUnidad")?.value || "";
 
-  // 🔥 SOLO usamos tagsActivos como fuente real
-  const palabrasActivas = tagsActivos.map(t => t.toLowerCase());
+//   // 🔥 SOLO usamos tagsActivos como fuente real
+//   const palabrasActivas = tagsActivos.map(t => t.toLowerCase());
 
-  // =========================
-  // 🌎 MODO GLOBAL
-  // =========================
-  if (modoGlobal) {
+//   // =========================
+//   // 🌎 MODO GLOBAL
+//   // =========================
+//   if (modoGlobal) {
 
-    try {
+//     try {
 
-      const params = new URLSearchParams({
-        tit,
-        ref,
-        modelo,
-        tipo,
-        unidad,
-        palabras: palabrasActivas.join(" ") // 🔥 ahora sí manda los tags reales
-      });
+//       const params = new URLSearchParams({
+//         tit,
+//         ref,
+//         modelo,
+//         tipo,
+//         unidad,
+//         palabras: palabrasActivas.join(" ") // 🔥 ahora sí manda los tags reales
+//       });
 
-      const res = await fetch(`${API}/buscar-refacciones?${params}`);
-      const data = await res.json();
-      console.log("RESPUESTA BACK:", data);
+//       const res = await fetch(`${API}/buscar-refacciones?${params}`);
+//       const data = await res.json();
+//       console.log("RESPUESTA BACK:", data);
 
-      // console.log("Total registros global:", data.length);
+//       // console.log("Total registros global:", data.length);
 
-      resultadosActuales = data;
+//       resultadosActuales = data;
 
-actualizarSelectsDesdeResultados(data);
-mostrarResultados(data);
+// actualizarSelectsDesdeResultados(data);
+// mostrarResultados(data);
 
 
-    } catch (error) {
-      console.error("Error en búsqueda global:", error);
-      mostrarResultados([]);
-    }
+//     } catch (error) {
+//       console.error("Error en búsqueda global:", error);
+//       mostrarResultados([]);
+//     }
 
-    return;
-  }
+//     return;
+//   }
 
-  // =========================
-  // 🖥 MODO LOCAL (MÁQUINA ESPECÍFICA)
-  // =========================
+//   // =========================
+//   // 🖥 MODO LOCAL (MÁQUINA ESPECÍFICA)
+//   // =========================
 
-  if (!resultadosActuales || resultadosActuales.length === 0) {
-    // console.log("⚠ No hay datos locales cargados");
-    return;
-  }
+//   if (!resultadosActuales || resultadosActuales.length === 0) {
+//     // console.log("⚠ No hay datos locales cargados");
+//     return;
+//   }
 
-  const filtrados = resultadosActuales.filter(r => {
+//   const filtrados = resultadosActuales.filter(r => {
 
-    const coincideTitulo =
-      !tit || String(r.nombreprod || "").toLowerCase().includes(tit);
+//     const coincideTitulo =
+//       !tit || String(r.nombreprod || "").toLowerCase().includes(tit);
 
-    const coincideRef =
-      !ref || String(r.refinterna || "").toLowerCase().includes(ref);
+//     const coincideRef =
+//       !ref || String(r.refinterna || "").toLowerCase().includes(ref);
 
-    const coincideModelo =
-      !modelo || String(r.modelo || "").toLowerCase().includes(modelo);
+//     const coincideModelo =
+//       !modelo || String(r.modelo || "").toLowerCase().includes(modelo);
 
-    const coincideTipo =
-      !tipo || r.tipoprod === tipo;
+//     const coincideTipo =
+//       !tipo || r.tipoprod === tipo;
 
-    const coincideUnidad =
-      !unidad || r.unidad === unidad;
+//     const coincideUnidad =
+//       !unidad || r.unidad === unidad;
 
-    // 🔥 versión robusta para palclave tipo "valvula, aire, acero"
-    const palabrasRegistro = String(r.palclave || "")
-      .toLowerCase()
-      .split(",")
-      .map(p => p.trim());
+//     // 🔥 versión robusta para palclave tipo "valvula, aire, acero"
+//     const palabrasRegistro = String(r.palclave || "")
+//       .toLowerCase()
+//       .split(",")
+//       .map(p => p.trim());
 
-    const coincidePalabras =
-      palabrasActivas.length === 0 ||
-      palabrasActivas.every(tag =>
-        palabrasRegistro.some(pal => pal.includes(tag))
-      );
+//     const coincidePalabras =
+//       palabrasActivas.length === 0 ||
+//       palabrasActivas.every(tag =>
+//         palabrasRegistro.some(pal => pal.includes(tag))
+//       );
 
-    return coincideTitulo &&
-           coincideRef &&
-           coincideModelo &&
-           coincideTipo &&
-           coincideUnidad &&
-           coincidePalabras;
-  });
+//     return coincideTitulo &&
+//            coincideRef &&
+//            coincideModelo &&
+//            coincideTipo &&
+//            coincideUnidad &&
+//            coincidePalabras;
+//   });
 
-  // console.log("Total registros local:", filtrados.length);
+//   // console.log("Total registros local:", filtrados.length);
 
-  actualizarSelectsDesdeResultados(filtrados);
-mostrarResultados(filtrados);
+//   actualizarSelectsDesdeResultados(filtrados);
+// mostrarResultados(filtrados);
 
+// }
+// ─── DEBOUNCE ─────────────────────────────────────────────────────────────────
+let debounceFilters = null;
+
+function aplicarFiltrosConDebounce() {
+    clearTimeout(debounceFilters);
+    debounceFilters = setTimeout(() => aplicarFiltros(), 400);
 }
 
+// ─── PAGINACIÓN GLOBAL ────────────────────────────────────────────────────────
+let paginaActualGlobal = 1;
+let totalPaginasGlobal = 1;
+
+async function aplicarFiltros(pagina = 1) {
+    const tit = document.getElementById("buscarTitulo")?.value.toLowerCase().trim() || "";
+    const ref = document.getElementById("buscarRef")?.value.toLowerCase().trim() || "";
+    const modelo = document.getElementById("buscarModelo")?.value.toLowerCase().trim() || "";
+    const tipo = document.getElementById("filtroTipo")?.value || "";
+    const unidad = document.getElementById("filtroUnidad")?.value || "";
+    const palabrasActivas = tagsActivos.map(t => t.toLowerCase());
+
+    // =========================
+    // 🌎 MODO GLOBAL
+    // =========================
+    if (modoGlobal) {
+        try {
+            const params = new URLSearchParams({
+                tit, ref, modelo, tipo, unidad,
+                palabras: palabrasActivas.join(" "),
+                pagina: String(pagina)
+            });
+
+            const res = await fetch(`${API}/buscar-refacciones?${params}`);
+            const { datos, totalPaginas } = await res.json();
+            
+            paginaActualGlobal = pagina;
+            totalPaginasGlobal = totalPaginas;
+
+            resultadosActuales = datos;
+            actualizarSelectsDesdeResultados(datos);
+            mostrarResultadosPaginados(datos, totalPaginas, pagina);
+
+        } catch (error) {
+            console.error("Error en búsqueda global:", error);
+            console.log("DATA:", data);
+console.log("TIPO:", typeof data);
+console.log("ES ARRAY:", Array.isArray(data));
+            mostrarResultados([]);
+          
+        }
+        return;
+    }
+
+    // =========================
+    // 🖥 MODO LOCAL (sin cambios)
+    // =========================
+    if (!resultadosActuales || resultadosActuales.length === 0) return;
+
+    const filtrados = resultadosActuales.filter(r => {
+        const coincideTitulo = !tit || String(r.nombreprod || "").toLowerCase().includes(tit);
+        const coincideRef = !ref || String(r.refinterna || "").toLowerCase().includes(ref);
+        const coincideModelo = !modelo || String(r.modelo || "").toLowerCase().includes(modelo);
+        const coincideTipo = !tipo || r.tipoprod === tipo;
+        const coincideUnidad = !unidad || r.unidad === unidad;
+
+        const palabrasRegistro = String(r.palclave || "").toLowerCase().split(",").map(p => p.trim());
+        const coincidePalabras = palabrasActivas.length === 0 ||
+            palabrasActivas.every(tag => palabrasRegistro.some(pal => pal.includes(tag)));
+
+        return coincideTitulo && coincideRef && coincideModelo && coincideTipo && coincideUnidad && coincidePalabras;
+    });
+
+    actualizarSelectsDesdeResultados(filtrados);
+    mostrarResultados(filtrados);
+}
+
+// Muestra resultados con paginación del backend
+function mostrarResultadosPaginados(datos, totalPaginas, paginaActual) {
+    datosActuales = datos;
+    renderPaginaDirecta(datos);
+    renderPaginacionGlobal(totalPaginas, paginaActual);
+}
+
+function renderPaginaDirecta(datos) {
+    const cont = document.getElementById("resultados");
+    if (!cont) return;
+    cont.innerHTML = "";
+    cardsDOM = [];
+
+    const fragment = document.createDocumentFragment();
+    const rol = localStorage.getItem("rol");
+
+    let datosFiltrados = datos;
+    if (rol !== "admin") {
+        datosFiltrados = datos.filter(r => r.tipo === "refaccion");
+    }
+
+    datosFiltrados.forEach(r => {
+        const tags = typeof r.tags === "string" ? JSON.parse(r.tags) : r.tags;
+        const card = document.createElement("div");
+
+        if (vistaActual === "cards") {
+            card.className = "ref-card";
+            card.innerHTML = `
+                <div class="ref-img">
+                    <img src="${r.imagen || 'assets/img/no-image.jpg'}" alt="${r.nombreprod}"
+                        class="card-img-top"
+                        onerror="this.onerror=null; this.src='assets/img/no-image.jpg';" loading="lazy">
+                    <div class="card-actions">
+                        ${rol !== "personal" ? `
+                        <button class="btn-check-ref" data-id="${r.id}">
+                            <i class="bi ${r.completada ? 'bi-check-circle-fill text-success' : 'bi-circle'}"></i>
+                        </button>` : ""}
+                        <button class="btn-broadcast" data-id="${r.id}">
+                            <i class="bi ${r.destacada ? 'bi-broadcast text-primary' : 'bi-broadcast'}"></i>
+                        </button>
+                        <button class="btn-envio" data-id="${r.id}">
+                            <i class="bi ${r.en_envio ? 'bi-truck text-success' : 'bi-truck text-muted'}"></i>
+                        </button>
+                        <button class="btn-fullscreen" data-img="${r.imagen || 'assets/img/no-image.jpg'}">
+                            <i class="bi bi-fullscreen"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="ref-body">
+                    <h3 class="ref-title">${r.nombreprod}</h3>
+                    <div class="ref-modelo">Modelo: <strong>${r.modelo || '-'}</strong></div>
+                    <div class="ref-cantidad">Cantidad: <strong>${r.cantidad} ${r.unidad || ''}</strong></div>
+                    <div class="ref-tags">${(tags || []).map(tag => `<span class="tag">${tag}</span>`).join("")}</div>
+                    <div class="ref-ubicacion btn-mapa" data-ubicacion="${r.ubicacion || ''}" style="cursor:pointer">
+                        📍 ${r.ubicacion || 'Sin ubicación'}
+                    </div>
+                    ${rol !== "personal" ? `
+                    <div class="ref-actions">
+                        <a href="paginas/Editar/detalle.html?id=${r.id}" class="btn btn-primary btn-sm">Editar</a>
+                    </div>` : ""}
+                </div>
+            `;
+        } else {
+            card.className = "ref-lista-item";
+            card.innerHTML = `
+                <div class="lista-nombre">${r.nombreprod}</div>
+                <div class="lista-ref">${r.refinterna || '-'}</div>
+                <div class="lista-tags">${(tags || []).map(tag => `<span class="tag small">${tag}</span>`).join("")}</div>
+                <div class="lista-ubicacion btn-mapa" data-ubicacion="${r.ubicacion || ''}" style="cursor:pointer">
+                    ${r.ubicacion || 'Sin ubicación'}
+                </div>
+                <div>
+                    <a href="paginas/Editar/detalle.html?id=${r.id}" class="btn btn-sm btn-outline-primary">Editar</a>
+                </div>
+            `;
+        }
+
+        fragment.appendChild(card);
+        cardsDOM.push(card);
+    });
+
+    cont.appendChild(fragment);
+}
+
+function renderPaginacionGlobal(totalPaginas, paginaActual) {
+    const cont = document.getElementById("paginacion");
+    if (!cont) return;
+
+    cont.innerHTML = "";
+    let html = "";
+
+    html += `<button class="btn btn-sm btn-outline-primary me-1" ${paginaActual === 1 ? "disabled" : ""} data-page="prev">←</button>`;
+
+    // Máximo 5 botones visibles para no llenar la pantalla
+    const rango = 2;
+    for (let i = 1; i <= totalPaginas; i++) {
+        if (i === 1 || i === totalPaginas || (i >= paginaActual - rango && i <= paginaActual + rango)) {
+            html += `<button class="btn btn-sm ${i === paginaActual ? "btn-primary" : "btn-outline-primary"} me-1" data-page="${i}">${i}</button>`;
+        } else if (i === paginaActual - rango - 1 || i === paginaActual + rango + 1) {
+            html += `<span class="me-1">...</span>`;
+        }
+    }
+
+    html += `<button class="btn btn-sm btn-outline-primary" ${paginaActual === totalPaginas ? "disabled" : ""} data-page="next">→</button>`;
+
+    cont.innerHTML = html;
+}
 
 
 
