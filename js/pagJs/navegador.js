@@ -75,7 +75,7 @@ window.addEventListener("DOMContentLoaded", async () => {
   if (!usuario) return;
 
   bloquearBotonAtras();
-  cargarDestacadas();
+  cargarInicioDatos();
 });
 window.addEventListener("pageshow", () => validarSesion());
 
@@ -112,8 +112,8 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   despertarBackend();
 const token = localStorage.getItem("token");
-setInterval(cargarAlertas, 300000); // cada 10 segundos
-cargarAlertas(); // inicial
+setInterval(cargarInicioDatos, 2 * 60 * 1000); 
+cargarInicioDatos(); // inicial
 
   if (!token) {
     window.location.replace("index.html");
@@ -266,8 +266,8 @@ const data = await res.json(); // 🔥 FALTABA ESTO
   llenarSelects(data);
   actualizarTitulo();
   mostrarResultados(data);
-  cargarDestacadas();
-  cargarEnvios();
+  cargarInicioDatos();
+  cargarInicioDatos();
 });
 });
 
@@ -682,7 +682,7 @@ document.addEventListener("click", async (e) => {
           icon.classList.remove("text-success");
           icon.classList.add("text-muted");
         }
-        cargarEnvios();
+        cargarInicioDatos();
       }
 
     } catch (error) {
@@ -702,7 +702,7 @@ document.addEventListener("click", async (e) => {
       method: "PUT"
     });
 
-    cargarEnvios(); // refrescar
+    cargarInicioDatos(); // refrescar
   } catch (error) {
     console.error(error);
   }
@@ -1496,24 +1496,26 @@ document.addEventListener("click", async (e) => {
 //     console.error("Error cargando destacadas:", error);
 //   }
 // }
-async function cargarDestacadas() {
-  const contenedor = document.getElementById("contenedorResultadosDsah");
+
+// async function cargarDestacadas() {
+//   const contenedor = document.getElementById("contenedorResultadosDsah");
   
-  if (!contenedor) return; 
+//   if (!contenedor) return; 
 
-  try {
-    const res = await fetch(`${API}/refacciones/destacadas`);
-    if (!res.ok) throw new Error("Error en la respuesta del servidor");
+//   try {
+//     const res = await fetch(`${API}/refacciones/destacadas`);
+//     if (!res.ok) throw new Error("Error en la respuesta del servidor");
     
-    const data = await res.json();
-    console.log("RESPUESTA BACK:", data);
+//     const data = await res.json();
+//     console.log("RESPUESTA BACK:", data);
 
-    renderDestacadas(data.data); // 🔥 FIX
+//     renderDestacadas(data.data); // 🔥 FIX
 
-  } catch (error) {
-    console.error("Error cargando destacadas:", error);
-  }
-}
+//   } catch (error) {
+//     console.error("Error cargando destacadas:", error);
+//   }
+// }
+
 // 2. Función para generar el HTML del Dashboard
 function renderDestacadas(lista) {
   const contenedor = document.getElementById("contenedorResultadosDsah");
@@ -1573,7 +1575,7 @@ document.addEventListener("click", async (e) => {
       }
 
       // SIEMPRE actualizamos el dashboard para reflejar el cambio
-      await cargarDestacadas();
+      await cargarInicioDatos();
     }
   } catch (error) {
     alert("No se pudo actualizar el estado.");
@@ -1582,21 +1584,21 @@ document.addEventListener("click", async (e) => {
   }
 });
 
-async function cargarEnvios() {
-  const contenedor = document.getElementById("contenedorResultadosEnvio");
-  if (!contenedor) return;
+// async function cargarEnvios() {
+//   const contenedor = document.getElementById("contenedorResultadosEnvio");
+//   if (!contenedor) return;
 
-  try {
-    const res = await fetch(`${API}/refacciones/envio`);
-    const data = await res.json();
-console.log(data);
-    // console.log("RESPUESTA BACK:", data);
-    renderEnvios(data);
+//   try {
+//     const res = await fetch(`${API}/refacciones/envio`);
+//     const data = await res.json();
+// console.log(data);
+//     // console.log("RESPUESTA BACK:", data);
+//     renderEnvios(data);
 
-  } catch (error) {
-    console.error("Error cargando envíos:", error);
-  }
-}
+//   } catch (error) {
+//     console.error("Error cargando envíos:", error);
+//   }
+// }
 
 function renderEnvios(lista) {
   const contenedor = document.getElementById("contenedorResultadosEnvio");
@@ -1637,20 +1639,20 @@ function renderEnvios(lista) {
   `;
 }
 
-async function cargarAlertas() {
-  try {
-    const res = await fetch(`${API}/alertas`);
-    const data = await res.json();
+// async function cargarAlertas() {
+//   try {
+//     const res = await fetch(`${API}/alertas`);
+//     const data = await res.json();
 
-    const noLeidas = data.filter(a => !a.leida);
+//     const noLeidas = data.filter(a => !a.leida);
 
-    actualizarContador(noLeidas.length);
-    renderAlertas(data);
+//     actualizarContador(noLeidas.length);
+//     renderAlertas(data);
 
-  } catch (error) {
-    console.error("Error cargando alertas:", error);
-  }
-}
+//   } catch (error) {
+//     console.error("Error cargando alertas:", error);
+//   }
+// }
 
 function actualizarContador(cantidad) {
   const badge = document.getElementById("contadorAlertas");
@@ -1735,7 +1737,7 @@ async function marcarLeida(id) {
     method: "PUT"
   });
 
-  cargarAlertas(); // recargar
+  cargarInicioDatos(); // recargar
 }
 
 function toggleAlertas() {
@@ -1755,7 +1757,7 @@ async function eliminarAlerta(id) {
     });
 
     // 🔥 recargar alertas desde el servidor
-    cargarAlertas();
+    cargarInicioDatos();
 
   } catch (error) {
     console.error("Error eliminando alerta:", error);
@@ -1775,3 +1777,26 @@ document.addEventListener("click", (e) => {
     panel.style.display = "none";
   }
 });
+
+async function cargarInicioDatos() {
+    try {
+        const res = await fetch(`${API}/inicio-datos`);
+        const data = await res.json();
+
+        // Alertas
+        const noLeidas = data.alertas.filter(a => !a.leida);
+        actualizarContador(noLeidas.length);
+        renderAlertas(data.alertas);
+
+        // Destacadas
+        const contenedorDash = document.getElementById("contenedorResultadosDsah");
+        if (contenedorDash) renderDestacadas(data.destacadas);
+
+        // Envíos
+        const contenedorEnvio = document.getElementById("contenedorResultadosEnvio");
+        if (contenedorEnvio) renderEnvios(data.envios);
+
+    } catch (error) {
+        console.error("Error cargando datos de inicio:", error);
+    }
+}
